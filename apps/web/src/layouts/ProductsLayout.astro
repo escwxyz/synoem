@@ -1,0 +1,171 @@
+---
+import RootLayout from "~/layouts/RootLayout.astro";
+import type { Product } from "~/types/product";
+import config from "@synoem/payload/payload-config";
+import { getPayload } from "payload";
+import { defaultLocale, type Locale } from "@synoem/config";
+import {ProductGrid, ProductFiltersBar} from "~/components/react";
+import { filterMetadataStore } from "~/stores/product-filter";
+
+interface Props {
+  title: string;
+  description?: string;
+  category: "solar-panels" | "pump-controllers";
+  filterPresets?: Record<string, string | string[]>;
+}
+
+const { title, description, category, filterPresets = {} } = Astro.props;
+
+const effectiveLocale = (Astro.currentLocale ?? defaultLocale) as Locale;
+
+const payload = await getPayload({ config });
+
+let productsData: Product[] = [];
+let filterMetadata: Record<string, any> = {};
+
+if (category === "solar-panels") {
+  const solarPanelsData = await payload.find({
+    collection: "solar-panels",
+    limit: 100,
+    where: {
+      _status: {
+        equals: "published",
+      },
+    },
+    locale: effectiveLocale,
+  });
+
+  productsData = solarPanelsData.docs;
+
+  filterMetadata = {
+    cellTypes: [
+      ...new Set(
+        solarPanelsData.docs
+          .filter((p) => p.cell?.type)
+          .map((p) => p.cell.type),
+      ),
+    ].filter(Boolean),
+    powerRange: {
+      min: Math.min(
+        ...solarPanelsData.docs
+          .filter((p) => p.powerRange)
+          .map((p) => Number(p.powerRange.min)),
+      ),
+      max: Math.max(
+        ...solarPanelsData.docs
+          .filter((p) => p.powerRange)
+          .map((p) => Number(p.powerRange.max)),
+      ),
+    },
+    efficiencyRange: {
+      min: Math.min(
+        ...solarPanelsData.docs
+          .filter((p) => p.powerRange?.points)
+          .flatMap((p) =>
+            p.powerRange.points!.map((point) => Number(point.efficiency)),
+          )
+          .filter((e) => !isNaN(e)),
+      ),
+      max: Math.max(
+        ...solarPanelsData.docs
+          .filter((p) => p.powerRange?.points)
+          .flatMap((p) =>
+            p.powerRange.points!.map((point) => Number(point.efficiency)),
+          )
+          .filter((e) => !isNaN(e)),
+      ),
+    },
+  };
+  filterMetadataStore.set(filterMetadata);
+
+}
+
+if (category === "pump-controllers") {
+  const pumpControllersData = await payload.find({
+    collection: "pump-controllers",
+    limit: 100,
+    where: {
+      _status: {
+        equals: "published",
+      },
+    },
+    locale: effectiveLocale,
+  });
+
+  productsData = pumpControllersData.docs;
+
+  filterMetadata = {
+    types: [...new Set(pumpControllersData.docs.map((p) => p.type))].filter(
+      Boolean,
+    ),
+    voltageRange: {
+      min: Math.min(
+        ...pumpControllersData.docs
+          .filter((p) => p.maxVoltage)
+          .map((p) => Number(p.maxVoltage)),
+      ),
+      max: Math.max(
+        ...pumpControllersData.docs
+          .filter((p) => p.maxVoltage)
+          .map((p) => Number(p.maxVoltage)),
+      ),
+    },
+    currentRange: {
+      min: Math.min(
+        ...pumpControllersData.docs
+          .filter((p) => p.maxCurrent)
+          .map((p) => Number(p.maxCurrent)),
+      ),
+      max: Math.max(
+        ...pumpControllersData.docs
+          .filter((p) => p.maxCurrent)
+          .map((p) => Number(p.maxCurrent)),
+      ),
+    },
+  };
+  filterMetadataStore.set(filterMetadata);
+
+}
+
+const url = new URL(Astro.request.url);
+const initialParams = Object.fromEntries(url.searchParams);
+
+const initialFilters = {
+  ...initialParams,
+  ...filterPresets,
+};
+---
+
+<RootLayout>
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold mb-2">{title}</h1>
+    {description && <p class="text-lg text-muted-foreground">{description}</p>}
+  </div>
+  <div class="flex flex-col lg:flex-row gap-8">
+    <aside class="hidden lg:block w-64 flex-shrink-0 sticky top-24 self-start">
+      {category === "solar-panels" && <slot name="solar-panel-filters" />}
+      {
+        category === "pump-controllers" && (
+          <slot name="pump-controller-filters" />
+        )
+      }
+    </aside>
+  </div>
+  <div class="flex-1">
+    <!-- 顶部过滤栏 -->
+    <ProductFiltersBar client:load>
+      <!-- 移动端抽屉过滤器 -->
+      {
+        category === "solar-panels" && (
+          <slot name="solar-panel-filters" slot="default" />
+        )
+      }
+      {
+        category === "pump-controllers" && (
+          <slot name="pump-controller-filters" slot="default" />
+        )
+      }
+    </ProductFiltersBar>
+    <ProductGrid products={productsData} category={category} client:load />
+  </div>
+</RootLayout>

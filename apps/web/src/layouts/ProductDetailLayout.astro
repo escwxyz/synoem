@@ -1,0 +1,152 @@
+---
+import RootLayout from "~/layouts/RootLayout.astro";
+import { isSolarPanel } from "~/utils/check-product-type";
+import { ProductBreadcrumb, DeviceWrapper } from "~/components/astro";
+import {
+  ProductGalleryMobile,
+  ProductGalleryDesktop,
+  RequestQuoteDesktop,
+  RequestQuoteMobile,
+} from "~/components/react";
+import { Button } from "~/components/starwind/button";
+import { getDatasheetFile } from "~/utils/get-datasheet";
+import { getUrl } from "~/utils/get-url";
+import { getPayload } from "payload";
+import config from "@synoem/payload/payload-config";
+import { getGalleryImages } from "~/utils/get-image";
+import type { Product } from "~/types/product";
+
+// import {
+//   getRelatedPumpControllers,
+//   getRelatedSolarPanels,
+// } from "@/utils/get-related-products";
+// import { RelatedProducts } from "@/components/widgets/related-products";
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+
+const { gallery } = product;
+
+const payload = await getPayload({ config });
+
+const galleryImages = await getGalleryImages({
+  images: gallery,
+  payload,
+});
+
+const productCategory = isSolarPanel(product)
+  ? "solar-panels"
+  : "pump-controllers";
+const type = isSolarPanel(product) ? product.cell.type : product.type;
+
+const { title, desc, features, datasheet } = product;
+
+const datasheetUrl = await getDatasheetFile({
+  datasheet: datasheet,
+  payload,
+});
+
+const hasDatasheet = datasheetUrl !== null;
+
+// TODO
+// const relatedProductsData = isSolarPanel(product)
+//   ? await getRelatedSolarPanels({
+//       relatedProducts: relatedProducts as
+//         | (SolarPanel | number)[]
+//         | null
+//         | undefined,
+//       payload,
+//     })
+//   : await getRelatedPumpControllers({
+//       relatedProducts: relatedProducts as
+//         | (PumpController | number)[]
+//         | null
+//         | undefined,
+//       payload,
+//     });
+---
+
+<RootLayout>
+  <div class="flex flex-col container mx-auto py-6">
+    <ProductBreadcrumb productCategory={productCategory} type={type} />
+  </div>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+    <DeviceWrapper>
+      <ProductGalleryMobile slot="mobile" images={galleryImages} client:load />
+      <ProductGalleryDesktop
+        slot="desktop"
+        images={galleryImages}
+        client:load
+      />
+    </DeviceWrapper>
+    <div class="space-y-6 flex flex-col">
+      <div class="flex items-center justify-between">
+        <h1 class="text-3xl font-bold">{title}</h1>
+        <span class="bg-muted rounded-lg p-2">
+          {
+            isSolarPanel(product)
+              ? product.cell.type.toUpperCase()
+              : product.type.toUpperCase()
+          }
+        </span>
+      </div>
+      <div class="prose max-w-none">
+        <p>{desc}</p>
+      </div>
+      {
+        features && features.length > 0 && (
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {features.map((feature) => (
+              <div class="bg-muted rounded-lg p-4">
+                <h3 class="text-sm font-medium mb-2">{feature.title}</h3>
+                <p class="text-sm">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        )
+      }
+      <div
+        class="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-2"
+      >
+        <DeviceWrapper>
+          <RequestQuoteMobile product={product} client:load slot="mobile" />
+          <RequestQuoteDesktop product={product} client:load slot="desktop" />
+        </DeviceWrapper>
+        {
+          hasDatasheet && (
+            <Button
+              href={getUrl(datasheetUrl!)}
+              download={getUrl(datasheetUrl!)}
+              size="lg"
+              variant="outline"
+              target="_blank"
+            >
+              Download Datasheet
+            </Button>
+          )
+        }
+      </div>
+    </div>
+  </div>
+  <div class="space-y-6 mt-6">
+    <slot name="specs" />
+  </div>
+  <div class="space-y-6 mt-6">
+    <slot name="related-products" />
+  </div>
+  <div class="space-y-6 mt-6">
+    <slot name="downloads" />
+  </div>
+  <!-- <div class="mt-4">
+    {
+      relatedProductsData && relatedProductsData.length > 0 && (
+        <div>
+          <RelatedProducts relatedProducts={relatedProductsData} client:load />
+        </div>
+      )
+    }
+  </div> -->
+</RootLayout>

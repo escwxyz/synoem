@@ -1,0 +1,26 @@
+{
+  "extends": "@synoem/typescript-config/base.json",
+  "compilerOptions": {
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "incremental": true,
+    "jsx": "preserve",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "composite": true,
+    "baseUrl": ".",
+    "allowImportingTsExtensions": true,
+    "paths": {
+      "@synoem/config": ["../config/src"]
+    }
+  },
+  "include": ["src/**/*", "../config/src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

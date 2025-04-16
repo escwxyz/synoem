@@ -1,0 +1,41 @@
+{
+  "name": "@synoem/payload",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.ts",
+    "./blocks/*": "./src/blocks/*",
+    "./components/*": "./src/components/*/index.ts",
+    "./collections/*": "./src/collections/*/index.ts",
+    "./globals/*": "./src/globals/*.ts",
+    "./payload-types": "./src/payload-types.ts",
+    "./payload-config": "./src/payload.config.ts"
+  },
+  "scripts": {
+    "generate:types": "dmno run -- payload generate:types"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@payloadcms/db-postgres": "catalog:",
+    "@payloadcms/email-resend": "catalog:",
+    "@payloadcms/plugin-seo": "catalog:",
+    "@payloadcms/richtext-lexical": "catalog:",
+    "@payloadcms/storage-s3": "catalog:",
+    "@payloadcms/ui": "catalog:",
+    "@seshuk/payload-storage-bunny": "^1.2.0",
+    "@synoem/config": "workspace:*",
+    "@synoem/typescript-config": "workspace:*",
+    "@tabler/icons": "catalog:",
+    "dmno": "^0.0.39",
+    "payload": "catalog:",
+    "react": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "typescript": "catalog:"
+  }
+}

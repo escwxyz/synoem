@@ -1,0 +1,39 @@
+{
+  "name": "@synoem/cms",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "cross-env NODE_OPTIONS=--no-deprecation dmno run -- next build",
+    "dev": "cross-env NODE_OPTIONS=--no-deprecation dmno run -w -- next dev",
+    "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation dmno run -- payload generate:importmap",
+    "lint": "cross-env NODE_OPTIONS=--no-deprecation dmno run -- next lint",
+    "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
+    "start": "cross-env NODE_OPTIONS=--no-deprecation dmno run -- next start"
+  },
+  "dependencies": {
+    "@dmno/nextjs-integration": "^0.0.14",
+    "@payloadcms/db-postgres": "catalog:",
+    "@payloadcms/next": "catalog:",
+    "@payloadcms/payload-cloud": "catalog:",
+    "@payloadcms/richtext-lexical": "catalog:",
+    "@synoem/payload": "workspace:*",
+    "@synoem/ui": "workspace:*",
+    "cross-env": "^7.0.3",
+    "dmno": "^0.0.39",
+    "next": "15.3.0",
+    "payload": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "typescript": "catalog:"
+  },
+  "exports": {
+    "./components/*": "./src/components/*"
+  }
+}

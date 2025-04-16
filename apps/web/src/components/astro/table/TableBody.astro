@@ -1,0 +1,18 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "@synoem/ui/lib/utils";
+
+interface Props extends HTMLAttributes<"tbody"> {
+  class?: string;
+}
+
+const { class: className, ...rest }: Props = Astro.props;
+---
+
+<tbody
+  data-slot="table-body"
+  class={cn("[&_tr:last-child]:border-0", className)}
+  {...rest}
+>
+  <slot />
+</tbody>

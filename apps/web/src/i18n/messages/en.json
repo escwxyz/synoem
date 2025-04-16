@@ -1,0 +1,27 @@
+{
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Welcome to our website"
+  },
+  "SEO": {
+    "title": "Solar Panels in Germany"
+  },
+  "OEM": {
+    "moq": "Minimum Order Quantity",
+    "leadTime": "Lead Time",
+    "packaging": "Packaging",
+    "unitPackage": "Unit Package",
+    "packagingUnit": "Packaging Unit",
+    "palletConfig": "Pallet Config",
+    "qtyPerPallet": "Qty Per Pallet",
+    "containerConfig": "Container Config",
+    "containerType": "Container Type",
+    "palletsPerContainer": "Pallets per Container",
+    "totalQtyPerContainer": "Total Qty per Container"
+  }
+}

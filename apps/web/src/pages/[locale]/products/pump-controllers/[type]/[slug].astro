@@ -1,0 +1,62 @@
+---
+import ProductDetailLayout from "~/layouts/ProductDetailLayout.astro";
+import { getPayloadClient } from "@synoem/payload/client";
+import type { GetStaticPaths } from "astro";
+import { PumpControllerSpecs } from "~/components/astro";
+
+export const prerender = true;
+
+export const getStaticPaths = (async () => {
+  const payload = await getPayloadClient();
+  const pumpControllers = await payload.find({
+    collection: "pump-controllers",
+    depth: 0,
+    draft: false,
+    where: {
+      _status: {
+        equals: "published",
+      },
+    },
+    select: {
+      slug: true,
+      type: true,
+    },
+  });
+
+  const result = pumpControllers.docs.map(({ id, slug, type }) => ({
+    params: {
+      type,
+      slug,
+    },
+    props: {
+      id,
+    },
+  }));
+
+  return result;
+}) satisfies GetStaticPaths;
+
+const { id } = Astro.props;
+
+const payload = await getPayloadClient();
+const pumpControllerData = await payload.find({
+  collection: "pump-controllers",
+  where: {
+    id: {
+      equals: id,
+    },
+  },
+});
+
+if (pumpControllerData.docs.length === 0) {
+  return Astro.redirect("/404");
+}
+
+const pumpController = pumpControllerData.docs[0];
+---
+
+<ProductDetailLayout product={pumpController}>
+  <div slot="specs">
+    <PumpControllerSpecs pumpController={pumpController} />
+  </div>
+</ProductDetailLayout>

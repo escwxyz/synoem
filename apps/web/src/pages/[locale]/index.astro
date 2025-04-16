@@ -1,0 +1,13 @@
+---
+import RootLayout from "~/layouts/RootLayout.astro";
+import { SceneCanvas, SimpleInquiryForm } from "~/components/react";
+---
+
+<RootLayout>
+  <div class="fixed inset-0 pointer-events-none">
+    <SceneCanvas client:load />
+  </div>
+  <div class="relative">
+    <SimpleInquiryForm client:load />
+  </div>
+</RootLayout>

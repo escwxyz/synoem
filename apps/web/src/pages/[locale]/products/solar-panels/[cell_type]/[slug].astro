@@ -1,0 +1,107 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getPayloadClient } from "@synoem/payload/client";
+// import { RelatedProducts } from "@/widgets/related-products";
+import ProductDetailLayout from "~/layouts/ProductDetailLayout.astro";
+import { SolarPanelSpecs } from "~/components/astro";
+import { defaultLocale, type Locale, locales } from "@synoem/config";
+
+export const prerender = true;
+
+export const getStaticPaths = (async () => {
+  const payload = await getPayloadClient();
+  const solarPanels = await payload.find({
+    collection: "solar-panels",
+    depth: 0,
+    draft: false,
+    where: {
+      _status: {
+        equals: "published",
+      },
+    },
+    select: {
+      slug: true,
+      cell: {
+        type: true,
+      },
+    },
+  });
+
+  const result = [];
+
+  for (const locale of locales) {
+    for (const solarPanel of solarPanels.docs) {
+      result.push({
+        params: {
+          locale,
+          cell_type: solarPanel.cell.type,
+          slug: solarPanel.slug,
+        },
+        props: {
+          id: solarPanel.id,
+        },
+      });
+    }
+  }
+  return result;
+}) satisfies GetStaticPaths;
+
+const { id } = Astro.props;
+
+const effectiveLocale = (Astro.currentLocale ?? defaultLocale) as Locale;
+
+const payload = await getPayloadClient();
+const solarPanelData = await payload.find({
+  collection: "solar-panels",
+  where: {
+    id: {
+      equals: id,
+    },
+  },
+  limit: 1,
+  locale: effectiveLocale,
+});
+
+if (solarPanelData.docs.length === 0) {
+  return Astro.redirect("/404");
+}
+
+const solarPanel = solarPanelData.docs[0];
+
+const relatedProductsData = solarPanel.relatedProducts || [];
+
+const relatedProductPromises = relatedProductsData.map(async (product) => {
+  if (typeof product === "number") {
+    try {
+      const productData = await payload.find({
+        collection: "solar-panels",
+        where: {
+          id: {
+            equals: product,
+          },
+        },
+        limit: 1,
+      });
+      return productData.docs.length > 0 ? productData.docs[0] : null;
+    } catch (error) {
+      console.error(`Error fetching related product: ${error}`);
+      return null;
+    }
+  }
+  return product;
+});
+
+const relatedProducts = (await Promise.all(relatedProductPromises)).filter(
+  Boolean,
+);
+---
+
+<ProductDetailLayout product={solarPanel}>
+  <div slot="specs">
+    <SolarPanelSpecs solarPanel={solarPanel} />
+  </div>
+  <!-- <div slot="related-products">
+    <RelatedProducts relatedProducts={relatedProducts} client:load />
+  </div> -->
+  <div id="downloads" slot="downloads">TODO</div>
+</ProductDetailLayout>

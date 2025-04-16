@@ -1,0 +1,44 @@
+---
+import "~/styles/shadcn.css";
+import "~/styles/starwind.css";
+import { defaultLocale, type Locale } from "@synoem/config";
+import { useTranslations } from "~/i18n/utils";
+import { JotaiProvider } from "~/components/react";
+const currentLocale = Astro.currentLocale;
+
+const effectiveLocale = (currentLocale ?? defaultLocale) as Locale;
+
+const { t } = useTranslations(effectiveLocale);
+
+// TODO: SEO Head
+---
+
+<!doctype html>
+<html
+  lang={effectiveLocale}
+  class="dark overflow-x-hidden max-w-full min-h-screen"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{t("SEO.title")}</title>
+  </head>
+  <body class="dark flex min-h-screen flex-col">
+    <JotaiProvider client:load>
+      <main class="w-full max-w-none flex-1 p-8 md:p-16 lg:px-16">
+        <slot />
+      </main>
+    </JotaiProvider>
+  </body>
+</html>
+
+<style>
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>

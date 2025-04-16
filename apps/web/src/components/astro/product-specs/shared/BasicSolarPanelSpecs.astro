@@ -1,0 +1,154 @@
+---
+import Table from "~/components/astro/table";
+import type { SolarPanel } from "@synoem/payload/payload-types";
+
+type Props = Pick<
+  SolarPanel,
+  | "cell"
+  | "glass"
+  | "facial"
+  | "bifaciality"
+  | "frame"
+  | "junction"
+  | "connector"
+  | "hail"
+  | "temp"
+  | "loads"
+>;
+
+const {
+  cell,
+  glass,
+  facial,
+  bifaciality,
+  frame,
+  junction,
+  connector,
+  hail,
+  temp,
+  loads,
+}: Props = Astro.props;
+
+const isBifacial = facial === "bifacial";
+---
+
+<div class="space-y-6 overflow-x-auto">
+  <div class="mb-6">
+    <h4 class="text-base font-medium mb-2 border-l-4 border-primary pl-2">
+      Cell
+    </h4>
+    <Table.Root class="w-full min-w-[300px]">
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell class="py-2 font-medium text-sm w-1/3 md:w-1/2">
+            Cell Type
+          </Table.Cell>
+          <Table.Cell class="py-2 text-sm">
+            {cell.type.toUpperCase()}
+          </Table.Cell>
+        </Table.Row>
+
+        <Table.Row>
+          <Table.Cell class="py-2 font-medium text-sm">Cell Count</Table.Cell>
+          <Table.Cell class="py-2 text-sm">{cell.count}pcs</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell class="py-2 font-medium text-sm">Cell Size</Table.Cell>
+          <Table.Cell class="py-2 text-sm"
+            >{cell.size.length} x {cell.size.width} mm</Table.Cell
+          >
+        </Table.Row>
+      </Table.Body>
+    </Table.Root>
+  </div>
+
+  <div class="mb-6">
+    <h4 class="text-base font-medium mb-2 border-l-4 border-primary pl-2">
+      Material Structure
+    </h4>
+    <Table.Root class="w-full min-w-[300px]">
+      <Table.Row>
+        <Table.Cell class="py-2 font-medium text-sm w-1/3 md:w-1/2">
+          Glass Type</Table.Cell
+        >
+        <Table.Cell class="py-2 text-sm">{facial.toUpperCase()}</Table.Cell>
+      </Table.Row>
+      {
+        isBifacial && bifaciality && (
+          <Table.Row>
+            <Table.Cell class="py-2 font-medium text-sm">
+              Bifaciality
+            </Table.Cell>
+            <Table.Cell class="py-2 text-sm">{bifaciality}%</Table.Cell>
+          </Table.Row>
+        )
+      }
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell class="py-2 font-medium text-sm">
+            Glass Thickness</Table.Cell
+          >
+          <Table.Cell class="py-2 text-sm">{glass.thickness} mm</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell class="py-2 font-medium text-sm">
+            Glass Material
+          </Table.Cell>
+          <Table.Cell class="py-2 text-sm">{glass.desc}</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell class="py-2 font-medium text-sm">
+            Frame Material
+          </Table.Cell>
+          <Table.Cell class="py-2 text-sm">{frame}</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell class="py-2 font-medium text-sm">
+            Junction Box
+          </Table.Cell>
+          <Table.Cell class="py-2 text-sm">{junction}</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell class="py-2 font-medium text-sm"> Connector </Table.Cell>
+          <Table.Cell class="py-2 text-sm">{connector}</Table.Cell>
+        </Table.Row>
+      </Table.Body>
+    </Table.Root>
+  </div>
+
+  <div class="mb-6">
+    <h4 class="text-base font-medium mb-2 border-l-4 border-primary pl-2">
+      Environment Conditions
+    </h4>
+    <Table.Root class="w-full min-w-[300px]">
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell class="py-2 font-medium text-sm w-1/3 md:w-1/2"
+            >Temperature Range</Table.Cell
+          >
+          <Table.Cell class="py-2 text-sm"
+            >{temp.min}°C ~ {temp.max}°C</Table.Cell
+          >
+        </Table.Row>
+        {
+          hail && (
+            <Table.Row>
+              <Table.Cell class="py-2 font-medium text-sm">
+                Hail Protection
+              </Table.Cell>
+              <Table.Cell class="py-2 text-sm">{hail}</Table.Cell>
+            </Table.Row>
+          )
+        }
+        <Table.Row>
+          <Table.Cell class="py-2 font-medium text-sm">Wind Load</Table.Cell>
+          <Table.Cell class="py-2 text-sm">{loads.wind} Pa</Table.Cell>
+        </Table.Row>
+        <Table.Row>
+          <Table.Cell class="py-2 font-medium text-sm">Snow Load</Table.Cell>
+          <Table.Cell class="py-2 text-sm">{loads.snow} Pa</Table.Cell>
+        </Table.Row>
+      </Table.Body>
+    </Table.Root>
+  </div>
+</div>

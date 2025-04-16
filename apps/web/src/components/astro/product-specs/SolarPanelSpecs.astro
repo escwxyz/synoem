@@ -1,0 +1,101 @@
+---
+import type { SolarPanel } from "@synoem/payload/payload-types";
+import { Card, CardContent } from "~/components/starwind/card";
+import OEMSpecs from "./shared/OEMSpecs.astro";
+import BasicSpecs from "./shared/BasicSolarPanelSpecs.astro";
+import DimensionSpecs from "./shared/DimensionSpecs.astro";
+import ElectricalSpecs from "./shared/SolarPanelElectricalSpecs.astro";
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "~/components/starwind/tabs";
+
+const tabs = [
+  {
+    value: "specifications",
+    label: "Specifications",
+  },
+  {
+    value: "dimensions",
+    label: "Dimensions",
+  },
+  {
+    value: "electrical-characteristics",
+    label: "Electrical Characteristics",
+  },
+  {
+    value: "oem-information",
+    label: "OEM Information",
+  },
+];
+
+interface Props {
+  solarPanel: SolarPanel;
+}
+
+const { solarPanel } = Astro.props;
+
+const { maxRatings, tempCo, leadTime, moq, packagingConfig } = solarPanel;
+---
+
+<Tabs defaultValue="specifications" class="max-w-[400px] lg:max-w-full">
+  <TabsList class="overflow-x-auto">
+    {
+      tabs.map((tab) => (
+        <TabsTrigger value={tab.value}>{tab.label}</TabsTrigger>
+      ))
+    }
+  </TabsList>
+  <TabsContent value="specifications">
+    <Card>
+      <CardContent class="p-8">
+        <BasicSpecs
+          cell={solarPanel.cell}
+          glass={solarPanel.glass}
+          facial={solarPanel.facial}
+          bifaciality={solarPanel.bifaciality}
+          frame={solarPanel.frame}
+          junction={solarPanel.junction}
+          connector={solarPanel.connector}
+          hail={solarPanel.hail}
+          temp={solarPanel.temp}
+          loads={solarPanel.loads}
+        />
+      </CardContent>
+    </Card>
+  </TabsContent>
+  <TabsContent value="dimensions">
+    <Card>
+      <CardContent class="p-8">
+        <DimensionSpecs
+          dimensions={solarPanel.dimensions}
+          drawing={solarPanel.drawing}
+        />
+      </CardContent>
+    </Card>
+  </TabsContent>
+  <TabsContent value="electrical-characteristics">
+    <Card>
+      <CardContent class="p-8">
+        <ElectricalSpecs
+          powerPoints={solarPanel.powerRange.points}
+          maxRatings={maxRatings}
+          tempCo={tempCo}
+        />
+      </CardContent>
+    </Card>
+  </TabsContent>
+  <TabsContent value="oem-information">
+    <Card>
+      <CardContent class="p-8">
+        <OEMSpecs
+          moq={moq}
+          packagingConfig={packagingConfig}
+          leadTime={leadTime}
+        />
+      </CardContent>
+    </Card>
+  </TabsContent>
+</Tabs>

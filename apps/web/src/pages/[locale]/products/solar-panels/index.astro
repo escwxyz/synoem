@@ -1,0 +1,8 @@
+---
+import ProductsLayout from "~/layouts/ProductsLayout.astro";
+import { SolarPanelFilters } from "~/components/react";
+---
+
+<ProductsLayout title="Solar Panels" category="solar-panels">
+  <SolarPanelFilters client:load slot="solar-panel-filters" />
+</ProductsLayout>

@@ -1,0 +1,15 @@
+{
+  "extends": "@synoem/typescript-config/astro.json",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"]
+      // "@synoem/ui/*": ["../../packages/ui/src/*"]
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "esModuleInterop": true
+  }
+}
