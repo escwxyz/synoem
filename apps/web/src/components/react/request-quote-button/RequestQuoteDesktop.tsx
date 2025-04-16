@@ -61,8 +61,10 @@ export const RequestQuoteDesktop = ({
             a quote for this product.
           </DialogDescription>
         </DialogHeader>
+        {
+          // TODO: add comprehensive information
+        }
         <div className="flex h-[calc(85vh-120px)] max-h-[700px]">
-          {/* 左侧信息区域 */}
           <div className="w-1/2 p-8 border-r bg-muted/20">
             <h3 className="text-xl font-semibold mb-6">Contact Information</h3>
             <div className="space-y-6">
@@ -91,7 +93,6 @@ export const RequestQuoteDesktop = ({
             </div>
           </div>
 
-          {/* 右侧表单区域 */}
           <div className="w-1/2 flex flex-col">
             {isSuccess ? (
               <div className="flex items-center justify-center h-full p-6">

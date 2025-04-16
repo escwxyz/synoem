@@ -1,8 +1,7 @@
 ---
 import type { SolarPanel } from "@synoem/payload/payload-types";
-import { getPayload } from "payload";
+import { getPayloadClient } from "@synoem/payload/client";
 import { getDrawing } from "~/utils/get-drawing";
-import config from "@synoem/payload/payload-config";
 import { Card, CardContent, CardFooter } from "~/components/starwind/card";
 import { Image } from "@unpic/astro";
 import { getImage } from "~/utils/get-image";
@@ -18,7 +17,7 @@ const { dimensions: dimensionsData, drawing: drawingData }: Props = Astro.props;
 const hasDimensions =
   dimensionsData && Object.values(dimensionsData).length === 4;
 
-const payload = await getPayload({ config });
+const payload = await getPayloadClient();
 
 const drawing = await getDrawing({
   drawing: drawingData,

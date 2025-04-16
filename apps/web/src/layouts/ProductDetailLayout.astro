@@ -11,8 +11,7 @@ import {
 import { Button } from "~/components/starwind/button";
 import { getDatasheetFile } from "~/utils/get-datasheet";
 import { getUrl } from "~/utils/get-url";
-import { getPayload } from "payload";
-import config from "@synoem/payload/payload-config";
+import { getPayloadClient } from "@synoem/payload/client";
 import { getGalleryImages } from "~/utils/get-image";
 import type { Product } from "~/types/product";
 
@@ -30,7 +29,7 @@ const { product } = Astro.props;
 
 const { gallery } = product;
 
-const payload = await getPayload({ config });
+const payload = await getPayloadClient();
 
 const galleryImages = await getGalleryImages({
   images: gallery,

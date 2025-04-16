@@ -1,8 +1,7 @@
 ---
 import type { PumpController, SolarPanel } from "@synoem/payload/payload-types";
 import { getPackagingConfig } from "~/utils/get-packaging-config";
-import config from "@synoem/payload/payload-config";
-import { getPayload } from "payload";
+import { getPayloadClient } from "@synoem/payload/client";
 import { useTranslations } from "~/i18n/utils";
 import Table from "~/components/astro/table";
 
@@ -20,7 +19,7 @@ const {
   packagingConfig: packagingConfigData,
 } = Astro.props;
 
-const payload = await getPayload({ config });
+const payload = await getPayloadClient();
 
 const packagingConfig = await getPackagingConfig({
   packagingConfig: packagingConfigData,

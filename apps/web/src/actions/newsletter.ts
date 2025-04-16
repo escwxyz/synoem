@@ -1,7 +1,6 @@
 import { newsletterSchema } from "~/schemas/newsletter";
 import { ActionError, defineAction } from "astro:actions";
-import { getPayload } from "payload";
-import config from "@synoem/payload/payload-config";
+import { getPayloadClient } from "@synoem/payload/client";
 import { getMetadata } from "~/utils/get-metadata";
 
 const subscribeNewsletterAction = defineAction({
@@ -16,7 +15,7 @@ const subscribeNewsletterAction = defineAction({
     }
 
     try {
-      const payload = await getPayload({ config });
+      const payload = await getPayloadClient();
 
       const metadata = getMetadata(context.request.headers);
 
