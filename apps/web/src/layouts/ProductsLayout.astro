@@ -1,171 +1,432 @@
 ---
 import RootLayout from "~/layouts/RootLayout.astro";
 import type { Product } from "~/types/product";
-import config from "@synoem/payload/payload-config";
-import { getPayload } from "payload";
-import { defaultLocale, type Locale } from "@synoem/config";
-import {ProductGrid, ProductFiltersBar} from "~/components/react";
+import { getPayloadClient } from "@synoem/payload/client";
+import {
+  defaultLocale,
+  type ProductCategoryPluralSlug,
+  type Locale,
+  PRODUCTS_PER_PAGE,
+} from "@synoem/config";
+import {
+  ProductGrid,
+  ProductFiltersBar,
+  SolarPanelFilters,
+} from "~/components/react";
 import { filterMetadataStore } from "~/stores/product-filter";
+import { Image } from "@unpic/astro";
+import { ProductFiltersDesktop } from "~/components/react/product-filters/ProductFiltersDesktop";
 
 interface Props {
   title: string;
-  description?: string;
-  category: "solar-panels" | "pump-controllers";
-  filterPresets?: Record<string, string | string[]>;
+  description: string;
+  imageUrl?: string;
+  category: ProductCategoryPluralSlug;
+  initialFilters?: Record<string, string | string[]>;
 }
 
-const { title, description, category, filterPresets = {} } = Astro.props;
+const { title, description, imageUrl, category } = Astro.props;
+
+const url = new URL(Astro.request.url);
+const page = parseInt(url.searchParams.get("page") || "1");
+const limit = PRODUCTS_PER_PAGE;
+const cellTypes = url.searchParams.getAll("cellType");
+const powerMin = url.searchParams.get("powerMin")
+  ? Number(url.searchParams.get("powerMin"))
+  : undefined;
+const powerMax = url.searchParams.get("powerMax")
+  ? Number(url.searchParams.get("powerMax"))
+  : undefined;
+const efficiencyMin = url.searchParams.get("efficiencyMin")
+  ? Number(url.searchParams.get("efficiencyMin"))
+  : undefined;
+const efficiencyMax = url.searchParams.get("efficiencyMax")
+  ? Number(url.searchParams.get("efficiencyMax"))
+  : undefined;
+const sort = url.searchParams.get("sort") || "featured";
 
 const effectiveLocale = (Astro.currentLocale ?? defaultLocale) as Locale;
+const payload = await getPayloadClient();
 
-const payload = await getPayload({ config });
-
-let productsData: Product[] = [];
+let initialPageProducts: Product[] = [];
+let totalProducts = 0;
 let filterMetadata: Record<string, any> = {};
 
 if (category === "solar-panels") {
-  const solarPanelsData = await payload.find({
-    collection: "solar-panels",
-    limit: 100,
-    where: {
-      _status: {
-        equals: "published",
+  try {
+    const metadataQuery = await payload.find({
+      collection: "solar-panels",
+      limit: 1000,
+      where: {
+        _status: {
+          equals: "published",
+        },
       },
-    },
-    locale: effectiveLocale,
-  });
+      select: {
+        cell: {
+          type: true,
+        },
+        powerRange: {
+          min: true,
+          max: true,
+          points: {
+            efficiency: true,
+          },
+        },
+      },
+      locale: effectiveLocale,
+      depth: 0,
+    });
 
-  productsData = solarPanelsData.docs;
+    filterMetadata = {
+      cellTypes: [
+        ...new Set(
+          metadataQuery.docs
+            .filter((p) => p.cell?.type)
+            .map((p) => p.cell.type),
+        ),
+      ].filter(Boolean),
+      powerRange: {
+        min: Math.min(
+          ...metadataQuery.docs
+            .filter((p) => p.powerRange)
+            .map((p) => Number(p.powerRange.min))
+            .filter((val) => !isNaN(val)),
+        ),
+        max: Math.max(
+          ...metadataQuery.docs
+            .filter((p) => p.powerRange)
+            .map((p) => Number(p.powerRange.max))
+            .filter((val) => !isNaN(val)),
+        ),
+      },
+      efficiencyRange: {
+        min: Math.min(
+          ...metadataQuery.docs
+            .filter((p) => p.powerRange?.points)
+            .flatMap((p) =>
+              p.powerRange.points!.map((point) => Number(point.efficiency)),
+            )
+            .filter((e) => !isNaN(e)),
+        ),
+        max: Math.max(
+          ...metadataQuery.docs
+            .filter((p) => p.powerRange?.points)
+            .flatMap((p) =>
+              p.powerRange.points!.map((point) => Number(point.efficiency)),
+            )
+            .filter((e) => !isNaN(e)),
+        ),
+      },
+    };
 
-  filterMetadata = {
-    cellTypes: [
-      ...new Set(
-        solarPanelsData.docs
-          .filter((p) => p.cell?.type)
-          .map((p) => p.cell.type),
-      ),
-    ].filter(Boolean),
-    powerRange: {
-      min: Math.min(
-        ...solarPanelsData.docs
-          .filter((p) => p.powerRange)
-          .map((p) => Number(p.powerRange.min)),
-      ),
-      max: Math.max(
-        ...solarPanelsData.docs
-          .filter((p) => p.powerRange)
-          .map((p) => Number(p.powerRange.max)),
-      ),
-    },
-    efficiencyRange: {
-      min: Math.min(
-        ...solarPanelsData.docs
-          .filter((p) => p.powerRange?.points)
-          .flatMap((p) =>
-            p.powerRange.points!.map((point) => Number(point.efficiency)),
-          )
-          .filter((e) => !isNaN(e)),
-      ),
-      max: Math.max(
-        ...solarPanelsData.docs
-          .filter((p) => p.powerRange?.points)
-          .flatMap((p) =>
-            p.powerRange.points!.map((point) => Number(point.efficiency)),
-          )
-          .filter((e) => !isNaN(e)),
-      ),
-    },
-  };
-  filterMetadataStore.set(filterMetadata);
+    filterMetadataStore.set(filterMetadata);
 
+    const query: any = {
+      collection: "solar-panels",
+      where: {
+        _status: {
+          equals: "published",
+        },
+      },
+      locale: effectiveLocale,
+      limit,
+      page,
+      depth: 1,
+      sort: sort === "newest" ? "-createdAt" : "order",
+    };
+
+    const andConditions = [];
+
+    if (cellTypes.length > 0) {
+      andConditions.push({
+        "cell.type": {
+          in: cellTypes,
+        },
+      });
+    }
+
+    if (powerMin !== undefined || powerMax !== undefined) {
+      if (powerMin !== undefined) {
+        andConditions.push({
+          "powerRange.max": {
+            greater_than_equal: powerMin,
+          },
+        });
+      }
+      if (powerMax !== undefined) {
+        andConditions.push({
+          "powerRange.min": {
+            less_than_equal: powerMax,
+          },
+        });
+      }
+    }
+
+    if (efficiencyMin !== undefined || efficiencyMax !== undefined) {
+      if (efficiencyMin !== undefined) {
+        andConditions.push({
+          "powerRange.points.efficiency": {
+            greater_than_equal: efficiencyMin,
+          },
+        });
+      }
+      if (efficiencyMax !== undefined) {
+        andConditions.push({
+          "powerRange.points.efficiency": {
+            less_than_equal: efficiencyMax,
+          },
+        });
+      }
+    }
+
+    if (andConditions.length > 0) {
+      query.where.and = andConditions;
+    }
+
+    const productResponse = await payload.find(query);
+    initialPageProducts = productResponse.docs as Product[];
+    totalProducts = productResponse.totalDocs;
+
+  } catch (error) {
+    console.error("Failed to fetch solar panels:", error);
+    initialPageProducts = [];
+    totalProducts = 0;
+  }
 }
 
 if (category === "pump-controllers") {
-  const pumpControllersData = await payload.find({
-    collection: "pump-controllers",
-    limit: 100,
-    where: {
-      _status: {
-        equals: "published",
+  try {
+    const query: any = {
+      collection: "pump-controllers",
+      where: {
+        _status: {
+          equals: "published",
+        },
       },
-    },
-    locale: effectiveLocale,
-  });
+      locale: effectiveLocale,
+      limit,
+      page,
+      depth: 1,
+      sort: sort === "newest" ? "-createdAt" : "order",
+    };
 
-  productsData = pumpControllersData.docs;
+    const andConditions = [];
 
-  filterMetadata = {
-    types: [...new Set(pumpControllersData.docs.map((p) => p.type))].filter(
-      Boolean,
-    ),
-    voltageRange: {
-      min: Math.min(
-        ...pumpControllersData.docs
-          .filter((p) => p.maxVoltage)
-          .map((p) => Number(p.maxVoltage)),
-      ),
-      max: Math.max(
-        ...pumpControllersData.docs
-          .filter((p) => p.maxVoltage)
-          .map((p) => Number(p.maxVoltage)),
-      ),
-    },
-    currentRange: {
-      min: Math.min(
-        ...pumpControllersData.docs
-          .filter((p) => p.maxCurrent)
-          .map((p) => Number(p.maxCurrent)),
-      ),
-      max: Math.max(
-        ...pumpControllersData.docs
-          .filter((p) => p.maxCurrent)
-          .map((p) => Number(p.maxCurrent)),
-      ),
-    },
-  };
-  filterMetadataStore.set(filterMetadata);
+    const controllerTypes = url.searchParams.getAll("type");
+    if (controllerTypes.length > 0) {
+      andConditions.push({
+        type: {
+          in: controllerTypes,
+        },
+      });
+    }
 
+    const voltageMin = url.searchParams.get("voltageMin")
+      ? Number(url.searchParams.get("voltageMin"))
+      : undefined;
+    const voltageMax = url.searchParams.get("voltageMax")
+      ? Number(url.searchParams.get("voltageMax"))
+      : undefined;
+
+    if (voltageMin !== undefined) {
+      andConditions.push({
+        maxVoltage: {
+          greater_than_equal: voltageMin,
+        },
+      });
+    }
+    if (voltageMax !== undefined) {
+      andConditions.push({
+        maxVoltage: {
+          less_than_equal: voltageMax,
+        },
+      });
+    }
+
+    const currentMin = url.searchParams.get("currentMin")
+      ? Number(url.searchParams.get("currentMin"))
+      : undefined;
+    const currentMax = url.searchParams.get("currentMax")
+      ? Number(url.searchParams.get("currentMax"))
+      : undefined;
+
+    if (currentMin !== undefined) {
+      andConditions.push({
+        maxCurrent: {
+          greater_than_equal: currentMin,
+        },
+      });
+    }
+    if (currentMax !== undefined) {
+      andConditions.push({
+        maxCurrent: {
+          less_than_equal: currentMax,
+        },
+      });
+    }
+
+    if (andConditions.length > 0) {
+      query.where.and = andConditions;
+    }
+
+    const metadataQuery = await payload.find({
+      collection: "pump-controllers",
+      limit: 1000,
+      select: {
+        type: true,
+        maxVoltage: true,
+        maxCurrent: true,
+      },
+      locale: effectiveLocale,
+      depth: 0,
+    });
+
+    filterMetadata = {
+      types: [...new Set(metadataQuery.docs.map((p) => p.type))].filter(
+        Boolean,
+      ),
+      voltageRange: {
+        min: Math.min(
+          ...metadataQuery.docs
+            .filter((p) => p.maxVoltage)
+            .map((p) => Number(p.maxVoltage))
+            .filter((val) => !isNaN(val)),
+        ),
+        max: Math.max(
+          ...metadataQuery.docs
+            .filter((p) => p.maxVoltage)
+            .map((p) => Number(p.maxVoltage))
+            .filter((val) => !isNaN(val)),
+        ),
+      },
+      currentRange: {
+        min: Math.min(
+          ...metadataQuery.docs
+            .filter((p) => p.maxCurrent)
+            .map((p) => Number(p.maxCurrent))
+            .filter((val) => !isNaN(val)),
+        ),
+        max: Math.max(
+          ...metadataQuery.docs
+            .filter((p) => p.maxCurrent)
+            .map((p) => Number(p.maxCurrent))
+            .filter((val) => !isNaN(val)),
+        ),
+      },
+    };
+
+    const productResponse = await payload.find(query);
+    initialPageProducts = productResponse.docs as Product[];
+    totalProducts = productResponse.totalDocs;
+  } catch (error) {
+    console.error("Failed to fetch pump controllers:", error);
+    initialPageProducts = [];
+    totalProducts = 0;
+  }
 }
 
-const url = new URL(Astro.request.url);
-const initialParams = Object.fromEntries(url.searchParams);
 
-const initialFilters = {
-  ...initialParams,
-  ...filterPresets,
+const effectiveInitialFilters = {
+  cellType: cellTypes,
+  powerMin: powerMin?.toString(),
+  powerMax: powerMax?.toString(),
+  efficiencyMin: efficiencyMin?.toString(),
+  efficiencyMax: efficiencyMax?.toString(),
+  sort,
+  page: page.toString(),
 };
 ---
 
 <RootLayout>
-  <div class="mb-8">
-    <h1 class="text-3xl font-bold mb-2">{title}</h1>
-    {description && <p class="text-lg text-muted-foreground">{description}</p>}
+  <div
+    class="relative w-full h-[300px] md:h-[400px] rounded-lg overflow-hidden mb-8"
+  >
+    {
+      imageUrl ? (
+        <Image
+          src={imageUrl}
+          alt="Hero image"
+          class="object-cover"
+          priority
+          height={400}
+          width={1200}
+        />
+      ) : (
+        <div class="absolute inset-0 bg-muted flex flex-col justify-center px-6 md:px-12" />
+      )
+    }
+    <div class="absolute inset-0 flex flex-col justify-center px-6 md:px-12">
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+        {title}
+      </h1>
+      <p class="text-white/90 text-lg md:text-xl max-w-xl">
+        {description}
+      </p>
+    </div>
   </div>
+
   <div class="flex flex-col lg:flex-row gap-8">
-    <aside class="hidden lg:block w-64 flex-shrink-0 sticky top-24 self-start">
-      {category === "solar-panels" && <slot name="solar-panel-filters" />}
-      {
-        category === "pump-controllers" && (
-          <slot name="pump-controller-filters" />
-        )
-      }
-    </aside>
-  </div>
-  <div class="flex-1">
-    <!-- 顶部过滤栏 -->
-    <ProductFiltersBar client:load>
-      <!-- 移动端抽屉过滤器 -->
+    <ProductFiltersDesktop client:load>
       {
         category === "solar-panels" && (
-          <slot name="solar-panel-filters" slot="default" />
+          <SolarPanelFilters
+            client:only="react"
+            initialFilters={effectiveInitialFilters}
+            filterMetadata={filterMetadata}
+          />
         )
       }
-      {
-        category === "pump-controllers" && (
-          <slot name="pump-controller-filters" slot="default" />
-        )
-      }
-    </ProductFiltersBar>
-    <ProductGrid products={productsData} category={category} client:load />
+      <!-- {category === "pump-controllers" && <PumpControllerFilters client:load initialFilters={effectiveInitialFilters} />} -->
+    </ProductFiltersDesktop>
+
+    <div class="flex-1">
+      <ProductFiltersBar
+        client:load
+        totalProducts={totalProducts}
+        initialFilters={effectiveInitialFilters}
+      >
+        {
+          category === "solar-panels" && (
+            <SolarPanelFilters
+              client:only="react"
+              initialFilters={effectiveInitialFilters}
+              filterMetadata={filterMetadata}
+            />
+          )
+        }
+        <!-- {category === "pump-controllers" && <PumpControllerFilters client:load initialFilters={effectiveInitialFilters} />} -->
+      </ProductFiltersBar>
+
+      <ProductGrid
+        client:only="react"
+        initialProducts={initialPageProducts}
+        totalProducts={totalProducts}
+        category={category}
+        initialFilters={effectiveInitialFilters}
+        filterMetadata={filterMetadata}
+      />
+    </div>
   </div>
 </RootLayout>
+
+<script
+  is:inline
+  define:vars={{
+    metadata: filterMetadata,
+    initialProducts: initialPageProducts,
+    totalProducts,
+    category,
+    initialPage: page,
+    initialFilters: effectiveInitialFilters,
+  }}
+>
+  window.initialProductData = {
+    metadata,
+    initialProducts,
+    totalProducts,
+    category,
+    initialPage,
+    initialFilters,
+  };
+</script>

@@ -15,11 +15,12 @@ import { getPayloadClient } from "@synoem/payload/client";
 import { getGalleryImages } from "~/utils/get-image";
 import type { Product } from "~/types/product";
 
-// import {
-//   getRelatedPumpControllers,
-//   getRelatedSolarPanels,
-// } from "@/utils/get-related-products";
-// import { RelatedProducts } from "@/components/widgets/related-products";
+import {
+  getRelatedPumpControllers,
+  getRelatedSolarPanels,
+} from "~/utils/get-related-products";
+import { RelatedProducts } from "~/components/react/RelatedProducts";
+import type { PumpController, SolarPanel } from "@synoem/payload/payload-types";
 
 interface Props {
   product: Product;
@@ -41,7 +42,7 @@ const productCategory = isSolarPanel(product)
   : "pump-controllers";
 const type = isSolarPanel(product) ? product.cell.type : product.type;
 
-const { title, desc, features, datasheet } = product;
+const { title, desc, features, datasheet, relatedProducts } = product;
 
 const datasheetUrl = await getDatasheetFile({
   datasheet: datasheet,
@@ -50,22 +51,21 @@ const datasheetUrl = await getDatasheetFile({
 
 const hasDatasheet = datasheetUrl !== null;
 
-// TODO
-// const relatedProductsData = isSolarPanel(product)
-//   ? await getRelatedSolarPanels({
-//       relatedProducts: relatedProducts as
-//         | (SolarPanel | number)[]
-//         | null
-//         | undefined,
-//       payload,
-//     })
-//   : await getRelatedPumpControllers({
-//       relatedProducts: relatedProducts as
-//         | (PumpController | number)[]
-//         | null
-//         | undefined,
-//       payload,
-//     });
+const relatedProductsData = isSolarPanel(product)
+  ? await getRelatedSolarPanels({
+      relatedProducts: relatedProducts as
+        | (SolarPanel | number)[]
+        | null
+        | undefined,
+      payload,
+    })
+  : await getRelatedPumpControllers({
+      relatedProducts: relatedProducts as
+        | (PumpController | number)[]
+        | null
+        | undefined,
+      payload,
+    });
 ---
 
 <RootLayout>
@@ -134,18 +134,25 @@ const hasDatasheet = datasheetUrl !== null;
     <slot name="specs" />
   </div>
   <div class="space-y-6 mt-6">
-    <slot name="related-products" />
+    {
+      relatedProductsData &&
+        relatedProductsData.length > 0 &&
+        relatedProductsData.filter(Boolean).length > 0 && (
+          <div>
+            <RelatedProducts
+              relatedProducts={
+                relatedProductsData.filter(Boolean) as (
+                  | SolarPanel
+                  | PumpController
+                )[]
+              }
+              client:visible
+            />
+          </div>
+        )
+    }
   </div>
   <div class="space-y-6 mt-6">
     <slot name="downloads" />
   </div>
-  <!-- <div class="mt-4">
-    {
-      relatedProductsData && relatedProductsData.length > 0 && (
-        <div>
-          <RelatedProducts relatedProducts={relatedProductsData} client:load />
-        </div>
-      )
-    }
-  </div> -->
 </RootLayout>

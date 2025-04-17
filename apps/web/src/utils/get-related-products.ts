@@ -5,9 +5,7 @@ type AnyProduct = SolarPanel | PumpController;
 
 type ProductPointer<T extends AnyProduct> = number | T;
 
-export const processRelatedProducts = async <
-  T extends SolarPanel | PumpController,
->({
+export const processRelatedProducts = async <T extends SolarPanel | PumpController>({
   relatedProducts,
   payload,
   collection,
@@ -16,11 +14,7 @@ export const processRelatedProducts = async <
   payload: BasePayload;
   collection: CollectionSlug;
 }): Promise<(T | null)[]> => {
-  if (
-    !relatedProducts ||
-    !Array.isArray(relatedProducts) ||
-    relatedProducts.length === 0
-  ) {
+  if (!relatedProducts || !Array.isArray(relatedProducts) || relatedProducts.length === 0) {
     return [];
   }
 

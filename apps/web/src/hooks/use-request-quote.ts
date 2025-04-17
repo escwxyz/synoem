@@ -18,15 +18,13 @@ export const useRequestQuote = ({
   const [error, setError] = useState<string | null>(null);
 
   const productCategory = isSolarPanel(product)
-    ? PRODUCT_CATEGORIES.solarPanel
-    : PRODUCT_CATEGORIES.pumpController;
+    ? PRODUCT_CATEGORIES.solarPanel.slug
+    : PRODUCT_CATEGORIES.pumpController.slug;
 
   const productName = product.modelName;
 
   const relatedProductId = product.id;
-  const relatedProductType = isSolarPanel(product)
-    ? "solar-panels"
-    : "pump-controllers";
+  const relatedProductType = isSolarPanel(product) ? "solar-panels" : "pump-controllers";
 
   const { form } = useHookFormAstroAction({
     action: actions.inquiry.createProductInquiryAction,
@@ -66,14 +64,8 @@ export const useRequestQuote = ({
     formData.append("quantity", String(data.quantity));
     formData.append("quantityUnit", data.quantityUnit);
 
-    formData.append(
-      "relatedProductId",
-      String(data.relatedProductId || relatedProductId),
-    );
-    formData.append(
-      "relatedProductType",
-      data.relatedProductType || relatedProductType,
-    );
+    formData.append("relatedProductId", String(data.relatedProductId || relatedProductId));
+    formData.append("relatedProductType", data.relatedProductType || relatedProductType);
 
     if (data.frequency) formData.append("frequency", data.frequency);
     if (data.destination) formData.append("destination", data.destination);

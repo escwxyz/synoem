@@ -1,8 +1,17 @@
 ---
 import ProductsLayout from "~/layouts/ProductsLayout.astro";
-import { SolarPanelFilters } from "~/components/react";
+
+const url = new URL(Astro.request.url);
+const initialParams = Object.fromEntries(url.searchParams);
+
+const initialFilters = {
+  ...initialParams,
+};
 ---
 
-<ProductsLayout title="Solar Panels" category="solar-panels">
-  <SolarPanelFilters client:load slot="solar-panel-filters" />
-</ProductsLayout>
+<ProductsLayout
+  title="Solar Panels"
+  description="Bridge together for a better future"
+  category="solar-panels"
+  initialFilters={initialFilters}
+/>

@@ -13,53 +13,53 @@
  * via the `definition` "supportedTimezones".
  */
 export type SupportedTimezones =
-  | "Pacific/Midway"
-  | "Pacific/Niue"
-  | "Pacific/Honolulu"
-  | "Pacific/Rarotonga"
-  | "America/Anchorage"
-  | "Pacific/Gambier"
-  | "America/Los_Angeles"
-  | "America/Tijuana"
-  | "America/Denver"
-  | "America/Phoenix"
-  | "America/Chicago"
-  | "America/Guatemala"
-  | "America/New_York"
-  | "America/Bogota"
-  | "America/Caracas"
-  | "America/Santiago"
-  | "America/Buenos_Aires"
-  | "America/Sao_Paulo"
-  | "Atlantic/South_Georgia"
-  | "Atlantic/Azores"
-  | "Atlantic/Cape_Verde"
-  | "Europe/London"
-  | "Europe/Berlin"
-  | "Africa/Lagos"
-  | "Europe/Athens"
-  | "Africa/Cairo"
-  | "Europe/Moscow"
-  | "Asia/Riyadh"
-  | "Asia/Dubai"
-  | "Asia/Baku"
-  | "Asia/Karachi"
-  | "Asia/Tashkent"
-  | "Asia/Calcutta"
-  | "Asia/Dhaka"
-  | "Asia/Almaty"
-  | "Asia/Jakarta"
-  | "Asia/Bangkok"
-  | "Asia/Shanghai"
-  | "Asia/Singapore"
-  | "Asia/Tokyo"
-  | "Asia/Seoul"
-  | "Australia/Brisbane"
-  | "Australia/Sydney"
-  | "Pacific/Guam"
-  | "Pacific/Noumea"
-  | "Pacific/Auckland"
-  | "Pacific/Fiji";
+  | 'Pacific/Midway'
+  | 'Pacific/Niue'
+  | 'Pacific/Honolulu'
+  | 'Pacific/Rarotonga'
+  | 'America/Anchorage'
+  | 'Pacific/Gambier'
+  | 'America/Los_Angeles'
+  | 'America/Tijuana'
+  | 'America/Denver'
+  | 'America/Phoenix'
+  | 'America/Chicago'
+  | 'America/Guatemala'
+  | 'America/New_York'
+  | 'America/Bogota'
+  | 'America/Caracas'
+  | 'America/Santiago'
+  | 'America/Buenos_Aires'
+  | 'America/Sao_Paulo'
+  | 'Atlantic/South_Georgia'
+  | 'Atlantic/Azores'
+  | 'Atlantic/Cape_Verde'
+  | 'Europe/London'
+  | 'Europe/Berlin'
+  | 'Africa/Lagos'
+  | 'Europe/Athens'
+  | 'Africa/Cairo'
+  | 'Europe/Moscow'
+  | 'Asia/Riyadh'
+  | 'Asia/Dubai'
+  | 'Asia/Baku'
+  | 'Asia/Karachi'
+  | 'Asia/Tashkent'
+  | 'Asia/Calcutta'
+  | 'Asia/Dhaka'
+  | 'Asia/Almaty'
+  | 'Asia/Jakarta'
+  | 'Asia/Bangkok'
+  | 'Asia/Shanghai'
+  | 'Asia/Singapore'
+  | 'Asia/Tokyo'
+  | 'Asia/Seoul'
+  | 'Australia/Brisbane'
+  | 'Australia/Sydney'
+  | 'Pacific/Guam'
+  | 'Pacific/Noumea'
+  | 'Pacific/Auckland'
+  | 'Pacific/Fiji';
 
 export interface Config {
   auth: {
@@ -72,31 +72,31 @@ export interface Config {
     industries: Industry;
     notifications: Notification;
     inquiries: Inquiry;
-    "newsletter-subscribers": NewsletterSubscriber;
+    'newsletter-subscribers': NewsletterSubscriber;
     images: Image;
     videos: Video;
     models: Model;
     documents: Document;
     attachments: Attachment;
-    "solar-panels": SolarPanel;
-    "pump-controllers": PumpController;
+    'solar-panels': SolarPanel;
+    'pump-controllers': PumpController;
     warranties: Warranty;
     instructions: Instruction;
     certifications: Certification;
-    "packaging-configs": PackagingConfig;
+    'packaging-configs': PackagingConfig;
     datasheets: Datasheet;
     drawings: Drawing;
-    "payload-jobs": PayloadJob;
-    "payload-locked-documents": PayloadLockedDocument;
-    "payload-preferences": PayloadPreference;
-    "payload-migrations": PayloadMigration;
+    'payload-jobs': PayloadJob;
+    'payload-locked-documents': PayloadLockedDocument;
+    'payload-preferences': PayloadPreference;
+    'payload-migrations': PayloadMigration;
   };
   collectionsJoins: {
-    "solar-panels": {
-      relatedInquires: "inquiries";
+    'solar-panels': {
+      relatedInquires: 'inquiries';
     };
-    "pump-controllers": {
-      relatedInquires: "inquiries";
+    'pump-controllers': {
+      relatedInquires: 'inquiries';
     };
   };
   collectionsSelect: {
@@ -105,36 +105,24 @@ export interface Config {
     industries: IndustriesSelect<false> | IndustriesSelect<true>;
     notifications: NotificationsSelect<false> | NotificationsSelect<true>;
     inquiries: InquiriesSelect<false> | InquiriesSelect<true>;
-    "newsletter-subscribers":
-      | NewsletterSubscribersSelect<false>
-      | NewsletterSubscribersSelect<true>;
+    'newsletter-subscribers': NewsletterSubscribersSelect<false> | NewsletterSubscribersSelect<true>;
     images: ImagesSelect<false> | ImagesSelect<true>;
     videos: VideosSelect<false> | VideosSelect<true>;
     models: ModelsSelect<false> | ModelsSelect<true>;
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
     attachments: AttachmentsSelect<false> | AttachmentsSelect<true>;
-    "solar-panels": SolarPanelsSelect<false> | SolarPanelsSelect<true>;
-    "pump-controllers":
-      | PumpControllersSelect<false>
-      | PumpControllersSelect<true>;
+    'solar-panels': SolarPanelsSelect<false> | SolarPanelsSelect<true>;
+    'pump-controllers': PumpControllersSelect<false> | PumpControllersSelect<true>;
     warranties: WarrantiesSelect<false> | WarrantiesSelect<true>;
     instructions: InstructionsSelect<false> | InstructionsSelect<true>;
     certifications: CertificationsSelect<false> | CertificationsSelect<true>;
-    "packaging-configs":
-      | PackagingConfigsSelect<false>
-      | PackagingConfigsSelect<true>;
+    'packaging-configs': PackagingConfigsSelect<false> | PackagingConfigsSelect<true>;
     datasheets: DatasheetsSelect<false> | DatasheetsSelect<true>;
     drawings: DrawingsSelect<false> | DrawingsSelect<true>;
-    "payload-jobs": PayloadJobsSelect<false> | PayloadJobsSelect<true>;
-    "payload-locked-documents":
-      | PayloadLockedDocumentsSelect<false>
-      | PayloadLockedDocumentsSelect<true>;
-    "payload-preferences":
-      | PayloadPreferencesSelect<false>
-      | PayloadPreferencesSelect<true>;
-    "payload-migrations":
-      | PayloadMigrationsSelect<false>
-      | PayloadMigrationsSelect<true>;
+    'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
+    'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
+    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
+    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
     defaultIDType: number;
@@ -142,18 +130,18 @@ export interface Config {
   globals: {
     footer: Footer;
     header: Header;
-    "company-info": CompanyInfo;
-    "contact-info": ContactInfo;
+    'company-info': CompanyInfo;
+    'contact-info': ContactInfo;
   };
   globalsSelect: {
     footer: FooterSelect<false> | FooterSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
-    "company-info": CompanyInfoSelect<false> | CompanyInfoSelect<true>;
-    "contact-info": ContactInfoSelect<false> | ContactInfoSelect<true>;
+    'company-info': CompanyInfoSelect<false> | CompanyInfoSelect<true>;
+    'contact-info': ContactInfoSelect<false> | ContactInfoSelect<true>;
   };
-  locale: "en" | "de";
+  locale: 'en' | 'de';
   user: User & {
-    collection: "users";
+    collection: 'users';
   };
   jobs: {
     tasks: {
@@ -191,7 +179,7 @@ export interface UserAuthOperations {
 export interface User {
   id: number;
   name?: string | null;
-  roles: ("admin" | "editor" | "customer")[];
+  roles: ('admin' | 'editor' | 'customer')[];
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -210,13 +198,7 @@ export interface User {
 export interface Page {
   id: number;
   title: string;
-  layout: (
-    | HeroBlockType
-    | ContentBlockType
-    | CallToActionBlockType
-    | MediaBlockType
-    | FeatureBlockType
-  )[];
+  layout: (HeroBlockType | ContentBlockType | CallToActionBlockType | MediaBlockType | FeatureBlockType)[];
   meta?: {
     title?: string | null;
     /**
@@ -230,7 +212,7 @@ export interface Page {
   slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
-  _status?: ("draft" | "published") | null;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -254,22 +236,22 @@ export interface HeroBlockType {
    */
   desc?: string | null;
   ctaPrimary?: {
-    type?: ("internal" | "external") | null;
+    type?: ('internal' | 'external') | null;
     internal?:
       | ({
-          relationTo: "pages";
+          relationTo: 'pages';
           value: number | Page;
         } | null)
       | ({
-          relationTo: "solar-panels";
+          relationTo: 'solar-panels';
           value: number | SolarPanel;
         } | null)
       | ({
-          relationTo: "pump-controllers";
+          relationTo: 'pump-controllers';
           value: number | PumpController;
         } | null)
       | ({
-          relationTo: "industries";
+          relationTo: 'industries';
           value: number | Industry;
         } | null);
     /**
@@ -280,25 +262,25 @@ export interface HeroBlockType {
     /**
      * Choose how the link should be rendered.
      */
-    appearance?: ("default" | "outline") | null;
+    appearance?: ('default' | 'outline') | null;
   };
   ctaSecondary?: {
-    type?: ("internal" | "external") | null;
+    type?: ('internal' | 'external') | null;
     internal?:
       | ({
-          relationTo: "pages";
+          relationTo: 'pages';
           value: number | Page;
         } | null)
       | ({
-          relationTo: "solar-panels";
+          relationTo: 'solar-panels';
           value: number | SolarPanel;
         } | null)
       | ({
-          relationTo: "pump-controllers";
+          relationTo: 'pump-controllers';
           value: number | PumpController;
         } | null)
       | ({
-          relationTo: "industries";
+          relationTo: 'industries';
           value: number | Industry;
         } | null);
     /**
@@ -309,22 +291,22 @@ export interface HeroBlockType {
     /**
      * Choose how the link should be rendered.
      */
-    appearance?: ("default" | "outline") | null;
+    appearance?: ('default' | 'outline') | null;
   };
   /**
    * Select an image, video, or model to display in the hero section.
    */
   media:
     | {
-        relationTo: "images";
+        relationTo: 'images';
         value: number | Image;
       }
     | {
-        relationTo: "videos";
+        relationTo: 'videos';
         value: number | Video;
       }
     | {
-        relationTo: "models";
+        relationTo: 'models';
         value: number | Model;
       };
   posX?: number | null;
@@ -336,11 +318,9 @@ export interface HeroBlockType {
   scale?: number | null;
   animations?:
     | {
-        type: "position" | "rotation" | "scale";
-        trigger: "scroll" | "view" | "time";
-        easing?:
-          | ("linear" | "easeIn" | "easeOut" | "easeInOut" | "spring")
-          | null;
+        type: 'position' | 'rotation' | 'scale';
+        trigger: 'scroll' | 'view' | 'time';
+        easing?: ('linear' | 'easeIn' | 'easeOut' | 'easeInOut' | 'spring') | null;
         /**
          * Duration in seconds
          */
@@ -388,14 +368,14 @@ export interface HeroBlockType {
   /**
    * Select if text is on the left or the right.
    */
-  textPlacement?: ("left" | "right") | null;
+  textPlacement?: ('left' | 'right') | null;
   /**
    * Align text within its column (left, center, or right).
    */
-  textAlignment?: ("start" | "center" | "end") | null;
+  textAlignment?: ('start' | 'center' | 'end') | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: "heroBlock";
+  blockType: 'heroBlock';
 }
 /**
  * Manage your solar panel products
@@ -471,29 +451,29 @@ export interface SolarPanel {
     h?: number | null;
     w?: number | null;
     d?: number | null;
-    unit?: ("mm" | "cm" | "m") | null;
+    unit?: ('mm' | 'cm' | 'm') | null;
   };
   weight?: {
     value?: number | null;
-    unit?: ("g" | "kg") | null;
+    unit?: ('g' | 'kg') | null;
   };
   drawing?: (number | null) | Drawing;
   cell: {
-    type: "perc" | "hjt" | "topcon";
-    tech?: ("0bb" | "smbb" | "mbb" | "bc" | "perovskite")[] | null;
+    type: 'perc' | 'hjt' | 'topcon';
+    tech?: ('0bb' | 'smbb' | 'mbb' | 'bc' | 'perovskite')[] | null;
     size: {
       length: number;
       width: number;
     };
     count: number;
   };
-  facial: "monofacial" | "bifacial";
+  facial: 'monofacial' | 'bifacial';
   /**
    * Enter the bifaciality of the panel
    */
   bifaciality?: number | null;
   glass: {
-    type: "single" | "double";
+    type: 'single' | 'double';
     thickness: number;
     desc: string;
   };
@@ -571,7 +551,7 @@ export interface SolarPanel {
   };
   moq?: {
     value?: number | null;
-    unit?: ("pcs" | "sets" | "plts" | "ctns") | null;
+    unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
   };
   /**
    * Specify lead times for different quantity ranges
@@ -584,18 +564,18 @@ export interface SolarPanel {
            */
           min?: {
             value?: number | null;
-            unit?: ("pcs" | "sets" | "plts" | "ctns") | null;
+            unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
           };
           /**
            * Upper bound of the range. Leave empty for no upper limit.
            */
           max?: {
             value?: number | null;
-            unit?: ("pcs" | "sets" | "plts" | "ctns") | null;
+            unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
           };
           duration?: {
             value?: number | null;
-            unit?: ("days" | "weeks" | "months" | "years") | null;
+            unit?: ('days' | 'weeks' | 'months' | 'years') | null;
           };
         };
         id?: string | null;
@@ -623,7 +603,7 @@ export interface SolarPanel {
   relatedProducts?: (number | SolarPanel)[] | null;
   updatedAt: string;
   createdAt: string;
-  _status?: ("draft" | "published") | null;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -682,23 +662,23 @@ export interface Document {
  */
 export interface Inquiry {
   id: number;
-  formType: "simple" | "product" | "full";
+  formType: 'simple' | 'product' | 'full';
   /**
    * Product inquiry related product
    */
   relatedProduct?:
     | ({
-        relationTo: "solar-panels";
+        relationTo: 'solar-panels';
         value: number | SolarPanel;
       } | null)
     | ({
-        relationTo: "pump-controllers";
+        relationTo: 'pump-controllers';
         value: number | PumpController;
       } | null);
   /**
    * Inquiry status
    */
-  status?: ("new" | "replied" | "following" | "converted" | "closed") | null;
+  status?: ('new' | 'replied' | 'following' | 'converted' | 'closed') | null;
   /**
    * Only for internal use, not displayed to customers
    */
@@ -719,529 +699,517 @@ export interface Inquiry {
   companyInfo?: {
     company?: string | null;
     position?: string | null;
-    type?:
-      | (
-          | "wholesaler"
-          | "retailer"
-          | "manufacturer"
-          | "project-developer"
-          | "other"
-        )
-      | null;
+    type?: ('wholesaler' | 'retailer' | 'manufacturer' | 'project-developer' | 'other') | null;
     country?:
       | (
-          | "AF"
-          | "AX"
-          | "AL"
-          | "DZ"
-          | "AS"
-          | "AD"
-          | "AO"
-          | "AI"
-          | "AQ"
-          | "AG"
-          | "AR"
-          | "AM"
-          | "AW"
-          | "AU"
-          | "AT"
-          | "AZ"
-          | "BS"
-          | "BH"
-          | "BD"
-          | "BB"
-          | "BY"
-          | "BE"
-          | "BZ"
-          | "BJ"
-          | "BM"
-          | "BT"
-          | "BO"
-          | "BA"
-          | "BW"
-          | "BV"
-          | "BR"
-          | "IO"
-          | "BN"
-          | "BG"
-          | "BF"
-          | "BI"
-          | "KH"
-          | "CM"
-          | "CA"
-          | "CV"
-          | "KY"
-          | "CF"
-          | "TD"
-          | "CL"
-          | "CN"
-          | "CX"
-          | "CC"
-          | "CO"
-          | "KM"
-          | "CG"
-          | "CD"
-          | "CK"
-          | "CR"
-          | "CI"
-          | "HR"
-          | "CU"
-          | "CY"
-          | "CZ"
-          | "DK"
-          | "DJ"
-          | "DM"
-          | "DO"
-          | "EC"
-          | "EG"
-          | "SV"
-          | "GQ"
-          | "ER"
-          | "EE"
-          | "ET"
-          | "FK"
-          | "FO"
-          | "FJ"
-          | "FI"
-          | "FR"
-          | "GF"
-          | "PF"
-          | "TF"
-          | "GA"
-          | "GM"
-          | "GE"
-          | "DE"
-          | "GH"
-          | "GI"
-          | "GR"
-          | "GL"
-          | "GD"
-          | "GP"
-          | "GU"
-          | "GT"
-          | "GG"
-          | "GN"
-          | "GW"
-          | "GY"
-          | "HT"
-          | "HM"
-          | "VA"
-          | "HN"
-          | "HK"
-          | "HU"
-          | "IS"
-          | "IN"
-          | "ID"
-          | "IR"
-          | "IQ"
-          | "IE"
-          | "IM"
-          | "IL"
-          | "IT"
-          | "JM"
-          | "JP"
-          | "JE"
-          | "JO"
-          | "KZ"
-          | "KE"
-          | "KI"
-          | "KP"
-          | "KR"
-          | "XK"
-          | "KW"
-          | "KG"
-          | "LA"
-          | "LV"
-          | "LB"
-          | "LS"
-          | "LR"
-          | "LY"
-          | "LI"
-          | "LT"
-          | "LU"
-          | "MO"
-          | "MK"
-          | "MG"
-          | "MW"
-          | "MY"
-          | "MV"
-          | "ML"
-          | "MT"
-          | "MH"
-          | "MQ"
-          | "MR"
-          | "MU"
-          | "YT"
-          | "MX"
-          | "FM"
-          | "MD"
-          | "MC"
-          | "MN"
-          | "ME"
-          | "MS"
-          | "MA"
-          | "MZ"
-          | "MM"
-          | "NA"
-          | "NR"
-          | "NP"
-          | "NL"
-          | "AN"
-          | "NC"
-          | "NZ"
-          | "NI"
-          | "NE"
-          | "NG"
-          | "NU"
-          | "NF"
-          | "MP"
-          | "NO"
-          | "OM"
-          | "PK"
-          | "PW"
-          | "PS"
-          | "PA"
-          | "PG"
-          | "PY"
-          | "PE"
-          | "PH"
-          | "PN"
-          | "PL"
-          | "PT"
-          | "PR"
-          | "QA"
-          | "RE"
-          | "RO"
-          | "RU"
-          | "RW"
-          | "SH"
-          | "KN"
-          | "LC"
-          | "PM"
-          | "VC"
-          | "WS"
-          | "SM"
-          | "ST"
-          | "SA"
-          | "SN"
-          | "RS"
-          | "SC"
-          | "SL"
-          | "SG"
-          | "SK"
-          | "SI"
-          | "SB"
-          | "SO"
-          | "ZA"
-          | "GS"
-          | "ES"
-          | "LK"
-          | "SD"
-          | "SR"
-          | "SJ"
-          | "SZ"
-          | "SE"
-          | "CH"
-          | "SY"
-          | "TW"
-          | "TJ"
-          | "TZ"
-          | "TH"
-          | "TL"
-          | "TG"
-          | "TK"
-          | "TO"
-          | "TT"
-          | "TN"
-          | "TR"
-          | "TM"
-          | "TC"
-          | "TV"
-          | "UG"
-          | "UA"
-          | "AE"
-          | "GB"
-          | "US"
-          | "UM"
-          | "UY"
-          | "UZ"
-          | "VU"
-          | "VE"
-          | "VN"
-          | "VG"
-          | "VI"
-          | "WF"
-          | "EH"
-          | "YE"
-          | "ZM"
-          | "ZW"
+          | 'AF'
+          | 'AX'
+          | 'AL'
+          | 'DZ'
+          | 'AS'
+          | 'AD'
+          | 'AO'
+          | 'AI'
+          | 'AQ'
+          | 'AG'
+          | 'AR'
+          | 'AM'
+          | 'AW'
+          | 'AU'
+          | 'AT'
+          | 'AZ'
+          | 'BS'
+          | 'BH'
+          | 'BD'
+          | 'BB'
+          | 'BY'
+          | 'BE'
+          | 'BZ'
+          | 'BJ'
+          | 'BM'
+          | 'BT'
+          | 'BO'
+          | 'BA'
+          | 'BW'
+          | 'BV'
+          | 'BR'
+          | 'IO'
+          | 'BN'
+          | 'BG'
+          | 'BF'
+          | 'BI'
+          | 'KH'
+          | 'CM'
+          | 'CA'
+          | 'CV'
+          | 'KY'
+          | 'CF'
+          | 'TD'
+          | 'CL'
+          | 'CN'
+          | 'CX'
+          | 'CC'
+          | 'CO'
+          | 'KM'
+          | 'CG'
+          | 'CD'
+          | 'CK'
+          | 'CR'
+          | 'CI'
+          | 'HR'
+          | 'CU'
+          | 'CY'
+          | 'CZ'
+          | 'DK'
+          | 'DJ'
+          | 'DM'
+          | 'DO'
+          | 'EC'
+          | 'EG'
+          | 'SV'
+          | 'GQ'
+          | 'ER'
+          | 'EE'
+          | 'ET'
+          | 'FK'
+          | 'FO'
+          | 'FJ'
+          | 'FI'
+          | 'FR'
+          | 'GF'
+          | 'PF'
+          | 'TF'
+          | 'GA'
+          | 'GM'
+          | 'GE'
+          | 'DE'
+          | 'GH'
+          | 'GI'
+          | 'GR'
+          | 'GL'
+          | 'GD'
+          | 'GP'
+          | 'GU'
+          | 'GT'
+          | 'GG'
+          | 'GN'
+          | 'GW'
+          | 'GY'
+          | 'HT'
+          | 'HM'
+          | 'VA'
+          | 'HN'
+          | 'HK'
+          | 'HU'
+          | 'IS'
+          | 'IN'
+          | 'ID'
+          | 'IR'
+          | 'IQ'
+          | 'IE'
+          | 'IM'
+          | 'IL'
+          | 'IT'
+          | 'JM'
+          | 'JP'
+          | 'JE'
+          | 'JO'
+          | 'KZ'
+          | 'KE'
+          | 'KI'
+          | 'KP'
+          | 'KR'
+          | 'XK'
+          | 'KW'
+          | 'KG'
+          | 'LA'
+          | 'LV'
+          | 'LB'
+          | 'LS'
+          | 'LR'
+          | 'LY'
+          | 'LI'
+          | 'LT'
+          | 'LU'
+          | 'MO'
+          | 'MK'
+          | 'MG'
+          | 'MW'
+          | 'MY'
+          | 'MV'
+          | 'ML'
+          | 'MT'
+          | 'MH'
+          | 'MQ'
+          | 'MR'
+          | 'MU'
+          | 'YT'
+          | 'MX'
+          | 'FM'
+          | 'MD'
+          | 'MC'
+          | 'MN'
+          | 'ME'
+          | 'MS'
+          | 'MA'
+          | 'MZ'
+          | 'MM'
+          | 'NA'
+          | 'NR'
+          | 'NP'
+          | 'NL'
+          | 'AN'
+          | 'NC'
+          | 'NZ'
+          | 'NI'
+          | 'NE'
+          | 'NG'
+          | 'NU'
+          | 'NF'
+          | 'MP'
+          | 'NO'
+          | 'OM'
+          | 'PK'
+          | 'PW'
+          | 'PS'
+          | 'PA'
+          | 'PG'
+          | 'PY'
+          | 'PE'
+          | 'PH'
+          | 'PN'
+          | 'PL'
+          | 'PT'
+          | 'PR'
+          | 'QA'
+          | 'RE'
+          | 'RO'
+          | 'RU'
+          | 'RW'
+          | 'SH'
+          | 'KN'
+          | 'LC'
+          | 'PM'
+          | 'VC'
+          | 'WS'
+          | 'SM'
+          | 'ST'
+          | 'SA'
+          | 'SN'
+          | 'RS'
+          | 'SC'
+          | 'SL'
+          | 'SG'
+          | 'SK'
+          | 'SI'
+          | 'SB'
+          | 'SO'
+          | 'ZA'
+          | 'GS'
+          | 'ES'
+          | 'LK'
+          | 'SD'
+          | 'SR'
+          | 'SJ'
+          | 'SZ'
+          | 'SE'
+          | 'CH'
+          | 'SY'
+          | 'TW'
+          | 'TJ'
+          | 'TZ'
+          | 'TH'
+          | 'TL'
+          | 'TG'
+          | 'TK'
+          | 'TO'
+          | 'TT'
+          | 'TN'
+          | 'TR'
+          | 'TM'
+          | 'TC'
+          | 'TV'
+          | 'UG'
+          | 'UA'
+          | 'AE'
+          | 'GB'
+          | 'US'
+          | 'UM'
+          | 'UY'
+          | 'UZ'
+          | 'VU'
+          | 'VE'
+          | 'VN'
+          | 'VG'
+          | 'VI'
+          | 'WF'
+          | 'EH'
+          | 'YE'
+          | 'ZM'
+          | 'ZW'
         )
       | null;
     website?: string | null;
-    employees?:
-      | ("1-10" | "11-50" | "51-200" | "201-500" | "501-1000" | "1000+")
-      | null;
+    employees?: ('1-10' | '11-50' | '51-200' | '201-500' | '501-1000' | '1000+') | null;
   };
   productInfo?: {
-    productCategory?: ("pumpController" | "solarPanel") | null;
+    productCategory?: ('solar-panel' | 'pump-controller') | null;
     productName?: string | null;
     qty?: {
       value?: number | null;
-      unit?: ("pcs" | "sets" | "plts" | "ctns") | null;
+      unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
     };
-    frequency?: ("one-time" | "monthly" | "quarterly" | "yearly") | null;
+    frequency?: ('one-time' | 'monthly' | 'quarterly' | 'yearly') | null;
     destination?:
       | (
-          | "AF"
-          | "AX"
-          | "AL"
-          | "DZ"
-          | "AS"
-          | "AD"
-          | "AO"
-          | "AI"
-          | "AQ"
-          | "AG"
-          | "AR"
-          | "AM"
-          | "AW"
-          | "AU"
-          | "AT"
-          | "AZ"
-          | "BS"
-          | "BH"
-          | "BD"
-          | "BB"
-          | "BY"
-          | "BE"
-          | "BZ"
-          | "BJ"
-          | "BM"
-          | "BT"
-          | "BO"
-          | "BA"
-          | "BW"
-          | "BV"
-          | "BR"
-          | "IO"
-          | "BN"
-          | "BG"
-          | "BF"
-          | "BI"
-          | "KH"
-          | "CM"
-          | "CA"
-          | "CV"
-          | "KY"
-          | "CF"
-          | "TD"
-          | "CL"
-          | "CN"
-          | "CX"
-          | "CC"
-          | "CO"
-          | "KM"
-          | "CG"
-          | "CD"
-          | "CK"
-          | "CR"
-          | "CI"
-          | "HR"
-          | "CU"
-          | "CY"
-          | "CZ"
-          | "DK"
-          | "DJ"
-          | "DM"
-          | "DO"
-          | "EC"
-          | "EG"
-          | "SV"
-          | "GQ"
-          | "ER"
-          | "EE"
-          | "ET"
-          | "FK"
-          | "FO"
-          | "FJ"
-          | "FI"
-          | "FR"
-          | "GF"
-          | "PF"
-          | "TF"
-          | "GA"
-          | "GM"
-          | "GE"
-          | "DE"
-          | "GH"
-          | "GI"
-          | "GR"
-          | "GL"
-          | "GD"
-          | "GP"
-          | "GU"
-          | "GT"
-          | "GG"
-          | "GN"
-          | "GW"
-          | "GY"
-          | "HT"
-          | "HM"
-          | "VA"
-          | "HN"
-          | "HK"
-          | "HU"
-          | "IS"
-          | "IN"
-          | "ID"
-          | "IR"
-          | "IQ"
-          | "IE"
-          | "IM"
-          | "IL"
-          | "IT"
-          | "JM"
-          | "JP"
-          | "JE"
-          | "JO"
-          | "KZ"
-          | "KE"
-          | "KI"
-          | "KP"
-          | "KR"
-          | "XK"
-          | "KW"
-          | "KG"
-          | "LA"
-          | "LV"
-          | "LB"
-          | "LS"
-          | "LR"
-          | "LY"
-          | "LI"
-          | "LT"
-          | "LU"
-          | "MO"
-          | "MK"
-          | "MG"
-          | "MW"
-          | "MY"
-          | "MV"
-          | "ML"
-          | "MT"
-          | "MH"
-          | "MQ"
-          | "MR"
-          | "MU"
-          | "YT"
-          | "MX"
-          | "FM"
-          | "MD"
-          | "MC"
-          | "MN"
-          | "ME"
-          | "MS"
-          | "MA"
-          | "MZ"
-          | "MM"
-          | "NA"
-          | "NR"
-          | "NP"
-          | "NL"
-          | "AN"
-          | "NC"
-          | "NZ"
-          | "NI"
-          | "NE"
-          | "NG"
-          | "NU"
-          | "NF"
-          | "MP"
-          | "NO"
-          | "OM"
-          | "PK"
-          | "PW"
-          | "PS"
-          | "PA"
-          | "PG"
-          | "PY"
-          | "PE"
-          | "PH"
-          | "PN"
-          | "PL"
-          | "PT"
-          | "PR"
-          | "QA"
-          | "RE"
-          | "RO"
-          | "RU"
-          | "RW"
-          | "SH"
-          | "KN"
-          | "LC"
-          | "PM"
-          | "VC"
-          | "WS"
-          | "SM"
-          | "ST"
-          | "SA"
-          | "SN"
-          | "RS"
-          | "SC"
-          | "SL"
-          | "SG"
-          | "SK"
-          | "SI"
-          | "SB"
-          | "SO"
-          | "ZA"
-          | "GS"
-          | "ES"
-          | "LK"
-          | "SD"
-          | "SR"
-          | "SJ"
-          | "SZ"
-          | "SE"
-          | "CH"
-          | "SY"
-          | "TW"
-          | "TJ"
-          | "TZ"
-          | "TH"
-          | "TL"
-          | "TG"
-          | "TK"
-          | "TO"
-          | "TT"
-          | "TN"
-          | "TR"
-          | "TM"
-          | "TC"
-          | "TV"
-          | "UG"
-          | "UA"
-          | "AE"
-          | "GB"
-          | "US"
-          | "UM"
-          | "UY"
-          | "UZ"
-          | "VU"
-          | "VE"
-          | "VN"
-          | "VG"
-          | "VI"
-          | "WF"
-          | "EH"
-          | "YE"
-          | "ZM"
-          | "ZW"
+          | 'AF'
+          | 'AX'
+          | 'AL'
+          | 'DZ'
+          | 'AS'
+          | 'AD'
+          | 'AO'
+          | 'AI'
+          | 'AQ'
+          | 'AG'
+          | 'AR'
+          | 'AM'
+          | 'AW'
+          | 'AU'
+          | 'AT'
+          | 'AZ'
+          | 'BS'
+          | 'BH'
+          | 'BD'
+          | 'BB'
+          | 'BY'
+          | 'BE'
+          | 'BZ'
+          | 'BJ'
+          | 'BM'
+          | 'BT'
+          | 'BO'
+          | 'BA'
+          | 'BW'
+          | 'BV'
+          | 'BR'
+          | 'IO'
+          | 'BN'
+          | 'BG'
+          | 'BF'
+          | 'BI'
+          | 'KH'
+          | 'CM'
+          | 'CA'
+          | 'CV'
+          | 'KY'
+          | 'CF'
+          | 'TD'
+          | 'CL'
+          | 'CN'
+          | 'CX'
+          | 'CC'
+          | 'CO'
+          | 'KM'
+          | 'CG'
+          | 'CD'
+          | 'CK'
+          | 'CR'
+          | 'CI'
+          | 'HR'
+          | 'CU'
+          | 'CY'
+          | 'CZ'
+          | 'DK'
+          | 'DJ'
+          | 'DM'
+          | 'DO'
+          | 'EC'
+          | 'EG'
+          | 'SV'
+          | 'GQ'
+          | 'ER'
+          | 'EE'
+          | 'ET'
+          | 'FK'
+          | 'FO'
+          | 'FJ'
+          | 'FI'
+          | 'FR'
+          | 'GF'
+          | 'PF'
+          | 'TF'
+          | 'GA'
+          | 'GM'
+          | 'GE'
+          | 'DE'
+          | 'GH'
+          | 'GI'
+          | 'GR'
+          | 'GL'
+          | 'GD'
+          | 'GP'
+          | 'GU'
+          | 'GT'
+          | 'GG'
+          | 'GN'
+          | 'GW'
+          | 'GY'
+          | 'HT'
+          | 'HM'
+          | 'VA'
+          | 'HN'
+          | 'HK'
+          | 'HU'
+          | 'IS'
+          | 'IN'
+          | 'ID'
+          | 'IR'
+          | 'IQ'
+          | 'IE'
+          | 'IM'
+          | 'IL'
+          | 'IT'
+          | 'JM'
+          | 'JP'
+          | 'JE'
+          | 'JO'
+          | 'KZ'
+          | 'KE'
+          | 'KI'
+          | 'KP'
+          | 'KR'
+          | 'XK'
+          | 'KW'
+          | 'KG'
+          | 'LA'
+          | 'LV'
+          | 'LB'
+          | 'LS'
+          | 'LR'
+          | 'LY'
+          | 'LI'
+          | 'LT'
+          | 'LU'
+          | 'MO'
+          | 'MK'
+          | 'MG'
+          | 'MW'
+          | 'MY'
+          | 'MV'
+          | 'ML'
+          | 'MT'
+          | 'MH'
+          | 'MQ'
+          | 'MR'
+          | 'MU'
+          | 'YT'
+          | 'MX'
+          | 'FM'
+          | 'MD'
+          | 'MC'
+          | 'MN'
+          | 'ME'
+          | 'MS'
+          | 'MA'
+          | 'MZ'
+          | 'MM'
+          | 'NA'
+          | 'NR'
+          | 'NP'
+          | 'NL'
+          | 'AN'
+          | 'NC'
+          | 'NZ'
+          | 'NI'
+          | 'NE'
+          | 'NG'
+          | 'NU'
+          | 'NF'
+          | 'MP'
+          | 'NO'
+          | 'OM'
+          | 'PK'
+          | 'PW'
+          | 'PS'
+          | 'PA'
+          | 'PG'
+          | 'PY'
+          | 'PE'
+          | 'PH'
+          | 'PN'
+          | 'PL'
+          | 'PT'
+          | 'PR'
+          | 'QA'
+          | 'RE'
+          | 'RO'
+          | 'RU'
+          | 'RW'
+          | 'SH'
+          | 'KN'
+          | 'LC'
+          | 'PM'
+          | 'VC'
+          | 'WS'
+          | 'SM'
+          | 'ST'
+          | 'SA'
+          | 'SN'
+          | 'RS'
+          | 'SC'
+          | 'SL'
+          | 'SG'
+          | 'SK'
+          | 'SI'
+          | 'SB'
+          | 'SO'
+          | 'ZA'
+          | 'GS'
+          | 'ES'
+          | 'LK'
+          | 'SD'
+          | 'SR'
+          | 'SJ'
+          | 'SZ'
+          | 'SE'
+          | 'CH'
+          | 'SY'
+          | 'TW'
+          | 'TJ'
+          | 'TZ'
+          | 'TH'
+          | 'TL'
+          | 'TG'
+          | 'TK'
+          | 'TO'
+          | 'TT'
+          | 'TN'
+          | 'TR'
+          | 'TM'
+          | 'TC'
+          | 'TV'
+          | 'UG'
+          | 'UA'
+          | 'AE'
+          | 'GB'
+          | 'US'
+          | 'UM'
+          | 'UY'
+          | 'UZ'
+          | 'VU'
+          | 'VE'
+          | 'VN'
+          | 'VG'
+          | 'VI'
+          | 'WF'
+          | 'EH'
+          | 'YE'
+          | 'ZM'
+          | 'ZW'
         )
       | null;
-    timeline?:
-      | ("immediate" | "1-month" | "3-months" | "6-months" | "1-year")
-      | null;
+    timeline?: ('immediate' | '1-month' | '3-months' | '6-months' | '1-year') | null;
   };
   contactPreferences?: {
     contactEmail?: boolean | null;
@@ -1258,17 +1226,7 @@ export interface Inquiry {
       }[]
     | null;
   metadata?: {
-    source?:
-      | (
-          | "website"
-          | "exhibition"
-          | "referral"
-          | "social-media"
-          | "email"
-          | "phone"
-          | "other"
-        )
-      | null;
+    source?: ('website' | 'exhibition' | 'referral' | 'social-media' | 'email' | 'phone' | 'other') | null;
     page?: string | null;
     ipAddress?: string | null;
     userAgent?: string | null;
@@ -1346,7 +1304,7 @@ export interface PumpController {
    * Add features to the product
    */
   features?: ProductFeatureBlockType[] | null;
-  type: "smart" | "standard";
+  type: 'smart' | 'standard';
   maxVoltage: number;
   maxCurrent: number;
   maxPower: number;
@@ -1358,7 +1316,7 @@ export interface PumpController {
   };
   moq?: {
     value?: number | null;
-    unit?: ("pcs" | "sets" | "plts" | "ctns") | null;
+    unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
   };
   /**
    * Specify lead times for different quantity ranges
@@ -1371,18 +1329,18 @@ export interface PumpController {
            */
           min?: {
             value?: number | null;
-            unit?: ("pcs" | "sets" | "plts" | "ctns") | null;
+            unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
           };
           /**
            * Upper bound of the range. Leave empty for no upper limit.
            */
           max?: {
             value?: number | null;
-            unit?: ("pcs" | "sets" | "plts" | "ctns") | null;
+            unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
           };
           duration?: {
             value?: number | null;
-            unit?: ("days" | "weeks" | "months" | "years") | null;
+            unit?: ('days' | 'weeks' | 'months' | 'years') | null;
           };
         };
         id?: string | null;
@@ -1410,7 +1368,7 @@ export interface PumpController {
   relatedProducts?: (number | PumpController)[] | null;
   updatedAt: string;
   createdAt: string;
-  _status?: ("draft" | "published") | null;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1438,14 +1396,14 @@ export interface PumpControllerVariantBlockType {
    * The SKU for the product
    */
   sku: string;
-  color: "purple" | "blue" | "green" | "yellow" | "orange";
+  color: 'purple' | 'blue' | 'green' | 'yellow' | 'orange';
   /**
    * Upload images for the product
    */
   gallery?: (number | Image)[] | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: "pcv";
+  blockType: 'pcv';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1474,7 +1432,7 @@ export interface ProductFeatureBlockType {
   description: string;
   id?: string | null;
   blockName?: string | null;
-  blockType: "productFeatureBlock";
+  blockType: 'productFeatureBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1492,7 +1450,7 @@ export interface PackagingConfig {
    */
   unitQty?: {
     value?: number | null;
-    unit?: ("pcs" | "sets" | "plts" | "ctns") | null;
+    unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
   };
   /**
    * Dimensions of a single package
@@ -1501,14 +1459,14 @@ export interface PackagingConfig {
     h?: number | null;
     w?: number | null;
     d?: number | null;
-    unit?: ("mm" | "cm" | "m") | null;
+    unit?: ('mm' | 'cm' | 'm') | null;
   };
   /**
    * Weight of a single packaged unit
    */
   unitWeight?: {
     value?: number | null;
-    unit?: ("g" | "kg") | null;
+    unit?: ('g' | 'kg') | null;
   };
   /**
    * Number of pieces that can fit on one pallet
@@ -1521,19 +1479,19 @@ export interface PackagingConfig {
     h?: number | null;
     w?: number | null;
     d?: number | null;
-    unit?: ("mm" | "cm" | "m") | null;
+    unit?: ('mm' | 'cm' | 'm') | null;
   };
   /**
    * Total weight of a fully loaded pallet (including pallet weight)
    */
   palletWeight?: {
     value?: number | null;
-    unit?: ("g" | "kg") | null;
+    unit?: ('g' | 'kg') | null;
   };
   /**
    * Standard shipping container type
    */
-  containerType?: ("20GP" | "40GP" | "40HQ") | null;
+  containerType?: ('20GP' | '40GP' | '40HQ') | null;
   /**
    * Number of pallets that can fit in the container
    */
@@ -1556,7 +1514,7 @@ export interface PackagingConfig {
 export interface Warranty {
   id: number;
   title: string;
-  type?: ("product" | "power") | null;
+  type?: ('product' | 'power') | null;
   /**
    * Description of the warranty
    */
@@ -1566,7 +1524,7 @@ export interface Warranty {
    */
   duration?: {
     value?: number | null;
-    unit?: ("days" | "weeks" | "months" | "years") | null;
+    unit?: ('days' | 'weeks' | 'months' | 'years') | null;
   };
   /**
    * File of the warranty
@@ -1631,15 +1589,15 @@ export interface SolarPanelVariantBlockType {
    * The SKU for the product
    */
   sku: string;
-  frame: "black" | "silver";
-  panel: "all-black" | "transparent" | "full-black";
+  frame: 'black' | 'silver';
+  panel: 'all-black' | 'transparent' | 'full-black';
   /**
    * Upload images for the product
    */
   gallery?: (number | Image)[] | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: "spv";
+  blockType: 'spv';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1679,7 +1637,7 @@ export interface Video {
 export interface ContentBlockType {
   columns?:
     | {
-        size?: ("oneThird" | "half" | "twoThirds" | "full") | null;
+        size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
         richText?: {
           root: {
             type: string;
@@ -1688,15 +1646,8 @@ export interface ContentBlockType {
               version: number;
               [k: string]: unknown;
             }[];
-            direction: ("ltr" | "rtl") | null;
-            format:
-              | "left"
-              | "start"
-              | "center"
-              | "right"
-              | "end"
-              | "justify"
-              | "";
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
             indent: number;
             version: number;
           };
@@ -1704,22 +1655,22 @@ export interface ContentBlockType {
         } | null;
         enableLink?: boolean | null;
         link?: {
-          type?: ("internal" | "external") | null;
+          type?: ('internal' | 'external') | null;
           internal?:
             | ({
-                relationTo: "pages";
+                relationTo: 'pages';
                 value: number | Page;
               } | null)
             | ({
-                relationTo: "solar-panels";
+                relationTo: 'solar-panels';
                 value: number | SolarPanel;
               } | null)
             | ({
-                relationTo: "pump-controllers";
+                relationTo: 'pump-controllers';
                 value: number | PumpController;
               } | null)
             | ({
-                relationTo: "industries";
+                relationTo: 'industries';
                 value: number | Industry;
               } | null);
           /**
@@ -1730,14 +1681,14 @@ export interface ContentBlockType {
           /**
            * Choose how the link should be rendered.
            */
-          appearance?: ("default" | "outline") | null;
+          appearance?: ('default' | 'outline') | null;
         };
         id?: string | null;
       }[]
     | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: "contentBlock";
+  blockType: 'contentBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1752,8 +1703,8 @@ export interface CallToActionBlockType {
         version: number;
         [k: string]: unknown;
       }[];
-      direction: ("ltr" | "rtl") | null;
-      format: "left" | "start" | "center" | "right" | "end" | "justify" | "";
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
       indent: number;
       version: number;
     };
@@ -1762,22 +1713,22 @@ export interface CallToActionBlockType {
   links?:
     | {
         link?: {
-          type?: ("internal" | "external") | null;
+          type?: ('internal' | 'external') | null;
           internal?:
             | ({
-                relationTo: "pages";
+                relationTo: 'pages';
                 value: number | Page;
               } | null)
             | ({
-                relationTo: "solar-panels";
+                relationTo: 'solar-panels';
                 value: number | SolarPanel;
               } | null)
             | ({
-                relationTo: "pump-controllers";
+                relationTo: 'pump-controllers';
                 value: number | PumpController;
               } | null)
             | ({
-                relationTo: "industries";
+                relationTo: 'industries';
                 value: number | Industry;
               } | null);
           /**
@@ -1788,14 +1739,14 @@ export interface CallToActionBlockType {
           /**
            * Choose how the link should be rendered.
            */
-          appearance?: ("default" | "outline") | null;
+          appearance?: ('default' | 'outline') | null;
         };
         id?: string | null;
       }[]
     | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: "callToActionBlock";
+  blockType: 'callToActionBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1807,20 +1758,20 @@ export interface MediaBlockType {
    */
   media:
     | {
-        relationTo: "images";
+        relationTo: 'images';
         value: number | Image;
       }
     | {
-        relationTo: "videos";
+        relationTo: 'videos';
         value: number | Video;
       }
     | {
-        relationTo: "models";
+        relationTo: 'models';
         value: number | Model;
       };
   id?: string | null;
   blockName?: string | null;
-  blockType: "mediaBlock";
+  blockType: 'mediaBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1838,22 +1789,22 @@ export interface FeatureBlockType {
   subtitle?: string | null;
   desc?: string | null;
   ctaPrimary?: {
-    type?: ("internal" | "external") | null;
+    type?: ('internal' | 'external') | null;
     internal?:
       | ({
-          relationTo: "pages";
+          relationTo: 'pages';
           value: number | Page;
         } | null)
       | ({
-          relationTo: "solar-panels";
+          relationTo: 'solar-panels';
           value: number | SolarPanel;
         } | null)
       | ({
-          relationTo: "pump-controllers";
+          relationTo: 'pump-controllers';
           value: number | PumpController;
         } | null)
       | ({
-          relationTo: "industries";
+          relationTo: 'industries';
           value: number | Industry;
         } | null);
     /**
@@ -1864,25 +1815,25 @@ export interface FeatureBlockType {
     /**
      * Choose how the link should be rendered.
      */
-    appearance?: ("default" | "outline") | null;
+    appearance?: ('default' | 'outline') | null;
   };
   ctaSecondary?: {
-    type?: ("internal" | "external") | null;
+    type?: ('internal' | 'external') | null;
     internal?:
       | ({
-          relationTo: "pages";
+          relationTo: 'pages';
           value: number | Page;
         } | null)
       | ({
-          relationTo: "solar-panels";
+          relationTo: 'solar-panels';
           value: number | SolarPanel;
         } | null)
       | ({
-          relationTo: "pump-controllers";
+          relationTo: 'pump-controllers';
           value: number | PumpController;
         } | null)
       | ({
-          relationTo: "industries";
+          relationTo: 'industries';
           value: number | Industry;
         } | null);
     /**
@@ -1893,7 +1844,7 @@ export interface FeatureBlockType {
     /**
      * Choose how the link should be rendered.
      */
-    appearance?: ("default" | "outline") | null;
+    appearance?: ('default' | 'outline') | null;
   };
   features: {
     image?: (number | null) | Image;
@@ -1904,14 +1855,14 @@ export interface FeatureBlockType {
   /**
    * Select if text is on the top or the bottom.
    */
-  textPlacement?: ("top" | "bottom") | null;
+  textPlacement?: ('top' | 'bottom') | null;
   /**
    * Align text within its column (left, center, or right).
    */
-  textAlignment?: ("start" | "center" | "end") | null;
+  textAlignment?: ('start' | 'center' | 'end') | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: "featureBlock";
+  blockType: 'featureBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1921,10 +1872,10 @@ export interface Notification {
   id: number;
   title: string;
   link?: {
-    relationTo: "pages";
+    relationTo: 'pages';
     value: number | Page;
   } | null;
-  state?: ("active" | "inactive") | null;
+  state?: ('active' | 'inactive') | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1947,7 +1898,7 @@ export interface NewsletterSubscriber {
   /**
    * Subscription status
    */
-  status?: ("subscribed" | "unsubscribed") | null;
+  status?: ('subscribed' | 'unsubscribed') | null;
   metadata?: {
     /**
      * The page the subscriber subscribed from
@@ -2011,7 +1962,7 @@ export interface PayloadJob {
     | {
         executedAt: string;
         completedAt: string;
-        taskSlug: "inline" | "schedulePublish";
+        taskSlug: 'inline' | 'schedulePublish';
         taskID: string;
         input?:
           | {
@@ -2031,7 +1982,7 @@ export interface PayloadJob {
           | number
           | boolean
           | null;
-        state: "failed" | "succeeded";
+        state: 'failed' | 'succeeded';
         error?:
           | {
               [k: string]: unknown;
@@ -2044,7 +1995,7 @@ export interface PayloadJob {
         id?: string | null;
       }[]
     | null;
-  taskSlug?: ("inline" | "schedulePublish") | null;
+  taskSlug?: ('inline' | 'schedulePublish') | null;
   queue?: string | null;
   waitUntil?: string | null;
   processing?: boolean | null;
@@ -2059,88 +2010,88 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
-        relationTo: "users";
+        relationTo: 'users';
         value: number | User;
       } | null)
     | ({
-        relationTo: "pages";
+        relationTo: 'pages';
         value: number | Page;
       } | null)
     | ({
-        relationTo: "industries";
+        relationTo: 'industries';
         value: number | Industry;
       } | null)
     | ({
-        relationTo: "notifications";
+        relationTo: 'notifications';
         value: number | Notification;
       } | null)
     | ({
-        relationTo: "inquiries";
+        relationTo: 'inquiries';
         value: number | Inquiry;
       } | null)
     | ({
-        relationTo: "newsletter-subscribers";
+        relationTo: 'newsletter-subscribers';
         value: number | NewsletterSubscriber;
       } | null)
     | ({
-        relationTo: "images";
+        relationTo: 'images';
         value: number | Image;
       } | null)
     | ({
-        relationTo: "videos";
+        relationTo: 'videos';
         value: number | Video;
       } | null)
     | ({
-        relationTo: "models";
+        relationTo: 'models';
         value: number | Model;
       } | null)
     | ({
-        relationTo: "documents";
+        relationTo: 'documents';
         value: number | Document;
       } | null)
     | ({
-        relationTo: "attachments";
+        relationTo: 'attachments';
         value: number | Attachment;
       } | null)
     | ({
-        relationTo: "solar-panels";
+        relationTo: 'solar-panels';
         value: number | SolarPanel;
       } | null)
     | ({
-        relationTo: "pump-controllers";
+        relationTo: 'pump-controllers';
         value: number | PumpController;
       } | null)
     | ({
-        relationTo: "warranties";
+        relationTo: 'warranties';
         value: number | Warranty;
       } | null)
     | ({
-        relationTo: "instructions";
+        relationTo: 'instructions';
         value: number | Instruction;
       } | null)
     | ({
-        relationTo: "certifications";
+        relationTo: 'certifications';
         value: number | Certification;
       } | null)
     | ({
-        relationTo: "packaging-configs";
+        relationTo: 'packaging-configs';
         value: number | PackagingConfig;
       } | null)
     | ({
-        relationTo: "datasheets";
+        relationTo: 'datasheets';
         value: number | Datasheet;
       } | null)
     | ({
-        relationTo: "drawings";
+        relationTo: 'drawings';
         value: number | Drawing;
       } | null)
     | ({
-        relationTo: "payload-jobs";
+        relationTo: 'payload-jobs';
         value: number | PayloadJob;
       } | null);
   globalSlug?: string | null;
   user: {
-    relationTo: "users";
+    relationTo: 'users';
     value: number | User;
   };
   updatedAt: string;
@@ -2153,7 +2104,7 @@ export interface PayloadLockedDocument {
 export interface PayloadPreference {
   id: number;
   user: {
-    relationTo: "users";
+    relationTo: 'users';
     value: number | User;
   };
   key?: string | null;
@@ -2915,9 +2866,7 @@ export interface PumpControllersSelect<T extends boolean = true> {
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "PumpControllerVariantBlockType_select".
  */
-export interface PumpControllerVariantBlockTypeSelect<
-  T extends boolean = true,
-> {
+export interface PumpControllerVariantBlockTypeSelect<T extends boolean = true> {
   sku?: T;
   color?: T;
   gallery?: T;
@@ -3108,9 +3057,9 @@ export interface Footer {
    * Company Section for the footer
    */
   companySection?: {
-    logo?: ("withSlogan" | "withoutSlogan") | null;
-    useCompanyDescription?: ("yes" | "no") | null;
-    companyDescription?: ("shortDescription" | "longDescription") | null;
+    logo?: ('withSlogan' | 'withoutSlogan') | null;
+    useCompanyDescription?: ('yes' | 'no') | null;
+    companyDescription?: ('shortDescription' | 'longDescription') | null;
     /**
      * Enable social links in the footer
      */
@@ -3125,29 +3074,29 @@ export interface Footer {
    */
   columns?:
     | {
-        size?: ("small" | "medium" | "large") | null;
-        blockType?: ("linkGroup" | "content" | "contactInfo") | null;
+        size?: ('small' | 'medium' | 'large') | null;
+        blockType?: ('linkGroup' | 'content' | 'contactInfo') | null;
         linkGroup?: {
           title: string;
           links?:
             | {
                 link?: {
-                  type?: ("internal" | "external") | null;
+                  type?: ('internal' | 'external') | null;
                   internal?:
                     | ({
-                        relationTo: "pages";
+                        relationTo: 'pages';
                         value: number | Page;
                       } | null)
                     | ({
-                        relationTo: "solar-panels";
+                        relationTo: 'solar-panels';
                         value: number | SolarPanel;
                       } | null)
                     | ({
-                        relationTo: "pump-controllers";
+                        relationTo: 'pump-controllers';
                         value: number | PumpController;
                       } | null)
                     | ({
-                        relationTo: "industries";
+                        relationTo: 'industries';
                         value: number | Industry;
                       } | null);
                   /**
@@ -3170,15 +3119,8 @@ export interface Footer {
                 version: number;
                 [k: string]: unknown;
               }[];
-              direction: ("ltr" | "rtl") | null;
-              format:
-                | "left"
-                | "start"
-                | "center"
-                | "right"
-                | "end"
-                | "justify"
-                | "";
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
               indent: number;
               version: number;
             };
@@ -3193,22 +3135,22 @@ export interface Footer {
     links?:
       | {
           link?: {
-            type?: ("internal" | "external") | null;
+            type?: ('internal' | 'external') | null;
             internal?:
               | ({
-                  relationTo: "pages";
+                  relationTo: 'pages';
                   value: number | Page;
                 } | null)
               | ({
-                  relationTo: "solar-panels";
+                  relationTo: 'solar-panels';
                   value: number | SolarPanel;
                 } | null)
               | ({
-                  relationTo: "pump-controllers";
+                  relationTo: 'pump-controllers';
                   value: number | PumpController;
                 } | null)
               | ({
-                  relationTo: "industries";
+                  relationTo: 'industries';
                   value: number | Industry;
                 } | null);
             /**
@@ -3239,22 +3181,22 @@ export interface Header {
     | {
         text: string;
         link?: {
-          type?: ("internal" | "external") | null;
+          type?: ('internal' | 'external') | null;
           internal?:
             | ({
-                relationTo: "pages";
+                relationTo: 'pages';
                 value: number | Page;
               } | null)
             | ({
-                relationTo: "solar-panels";
+                relationTo: 'solar-panels';
                 value: number | SolarPanel;
               } | null)
             | ({
-                relationTo: "pump-controllers";
+                relationTo: 'pump-controllers';
                 value: number | PumpController;
               } | null)
             | ({
-                relationTo: "industries";
+                relationTo: 'industries';
                 value: number | Industry;
               } | null);
           /**
@@ -3265,14 +3207,14 @@ export interface Header {
           /**
            * Choose how the link should be rendered.
            */
-          appearance?: ("default" | "outline") | null;
+          appearance?: ('default' | 'outline') | null;
         };
         /**
          * Add sections to create a dropdown or mega menu
          */
         sections?:
           | {
-              type?: ("links" | "banner") | null;
+              type?: ('links' | 'banner') | null;
               linksSection?: {
                 title?: string | null;
                 items?:
@@ -3280,22 +3222,22 @@ export interface Header {
                       title: string;
                       desc?: string | null;
                       link: {
-                        type?: ("internal" | "external") | null;
+                        type?: ('internal' | 'external') | null;
                         internal?:
                           | ({
-                              relationTo: "pages";
+                              relationTo: 'pages';
                               value: number | Page;
                             } | null)
                           | ({
-                              relationTo: "solar-panels";
+                              relationTo: 'solar-panels';
                               value: number | SolarPanel;
                             } | null)
                           | ({
-                              relationTo: "pump-controllers";
+                              relationTo: 'pump-controllers';
                               value: number | PumpController;
                             } | null)
                           | ({
-                              relationTo: "industries";
+                              relationTo: 'industries';
                               value: number | Industry;
                             } | null);
                         /**
@@ -3306,7 +3248,7 @@ export interface Header {
                         /**
                          * Choose how the link should be rendered.
                          */
-                        appearance?: ("default" | "outline") | null;
+                        appearance?: ('default' | 'outline') | null;
                       };
                       id?: string | null;
                     }[]
@@ -3318,30 +3260,30 @@ export interface Header {
                 desc?: string | null;
                 media?:
                   | ({
-                      relationTo: "images";
+                      relationTo: 'images';
                       value: number | Image;
                     } | null)
                   | ({
-                      relationTo: "videos";
+                      relationTo: 'videos';
                       value: number | Video;
                     } | null);
                 link?: {
-                  type?: ("internal" | "external") | null;
+                  type?: ('internal' | 'external') | null;
                   internal?:
                     | ({
-                        relationTo: "pages";
+                        relationTo: 'pages';
                         value: number | Page;
                       } | null)
                     | ({
-                        relationTo: "solar-panels";
+                        relationTo: 'solar-panels';
                         value: number | SolarPanel;
                       } | null)
                     | ({
-                        relationTo: "pump-controllers";
+                        relationTo: 'pump-controllers';
                         value: number | PumpController;
                       } | null)
                     | ({
-                        relationTo: "industries";
+                        relationTo: 'industries';
                         value: number | Industry;
                       } | null);
                   /**
@@ -3352,7 +3294,7 @@ export interface Header {
                   /**
                    * Choose how the link should be rendered.
                    */
-                  appearance?: ("default" | "outline") | null;
+                  appearance?: ('default' | 'outline') | null;
                 };
               };
               id?: string | null;
@@ -3363,11 +3305,11 @@ export interface Header {
     | null;
   settings?: {
     desktop?: {
-      alignment?: ("left" | "center" | "right") | null;
+      alignment?: ('left' | 'center' | 'right') | null;
     };
     mobile?: {
-      hamburgerPosition?: ("left" | "right") | null;
-      animation?: ("slide" | "fade") | null;
+      hamburgerPosition?: ('left' | 'right') | null;
+      animation?: ('slide' | 'fade') | null;
       showAuthButtons?: boolean | null;
     };
   };
@@ -3604,19 +3546,19 @@ export interface ContactInfoSelect<T extends boolean = true> {
  */
 export interface TaskSchedulePublish {
   input: {
-    type?: ("publish" | "unpublish") | null;
+    type?: ('publish' | 'unpublish') | null;
     locale?: string | null;
     doc?:
       | ({
-          relationTo: "pages";
+          relationTo: 'pages';
           value: number | Page;
         } | null)
       | ({
-          relationTo: "solar-panels";
+          relationTo: 'solar-panels';
           value: number | SolarPanel;
         } | null)
       | ({
-          relationTo: "pump-controllers";
+          relationTo: 'pump-controllers';
           value: number | PumpController;
         } | null);
     global?: string | null;
@@ -3632,6 +3574,7 @@ export interface Auth {
   [k: string]: unknown;
 }
 
-declare module "payload" {
+
+declare module 'payload' {
   export interface GeneratedTypes extends Config {}
 }

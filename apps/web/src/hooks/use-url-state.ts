@@ -2,19 +2,16 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-export function useUrlState<T>(
-  key: string,
-  defaultValue: T,
-  options?: {
-    parser?: (value: string) => T;
-    serializer?: (value: T) => string;
-  },
-) {
-  // 参数解析器和序列化器
+interface UseUrlStateOptions<T> {
+  parser?: (value: string) => T;
+  serializer?: (value: T) => string;
+  onChange?: (value: T) => void;
+}
+
+export function useUrlState<T>(key: string, defaultValue: T, options?: UseUrlStateOptions<T>) {
   const parser = options?.parser || ((v: string) => v as unknown as T);
   const serializer = options?.serializer || ((v: T) => String(v));
 
-  // 初始化状态
   const [value, setValue] = useState<T>(() => {
     if (typeof window === "undefined") return defaultValue;
 
@@ -24,14 +21,11 @@ export function useUrlState<T>(
     return param ? parser(param) : defaultValue;
   });
 
-  // 更新 URL 参数并同步状态
   const updateValue = useCallback(
     (newValue: T | ((prev: T) => T)) => {
       setValue((prev) => {
         const resolvedValue =
-          typeof newValue === "function"
-            ? (newValue as (prev: T) => T)(prev)
-            : newValue;
+          typeof newValue === "function" ? (newValue as (prev: T) => T)(prev) : newValue;
 
         const params = new URLSearchParams(window.location.search);
 
@@ -57,7 +51,6 @@ export function useUrlState<T>(
     [key, defaultValue, serializer],
   );
 
-  // 同步 URL 变化到状态
   useEffect(() => {
     const handlePopState = () => {
       const params = new URLSearchParams(window.location.search);
