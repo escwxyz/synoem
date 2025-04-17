@@ -1430,6 +1430,7 @@ export interface Model {
 export interface ProductFeatureBlockType {
   title: string;
   description: string;
+  iconName?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'productFeatureBlock';
@@ -2760,6 +2761,7 @@ export interface SolarPanelVariantBlockTypeSelect<T extends boolean = true> {
 export interface ProductFeatureBlockTypeSelect<T extends boolean = true> {
   title?: T;
   description?: T;
+  iconName?: T;
   id?: T;
   blockName?: T;
 }

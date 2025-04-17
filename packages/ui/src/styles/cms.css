@@ -1,4 +1,26 @@
 @import "./globals.css";
+@layer base {
+  .twp {
+    @import "tailwindcss/preflight.css";
+
+    * {
+      @apply border-border outline-ring/50;
+    }
+    body {
+      @apply bg-background text-foreground;
+    }
+  }
+
+  .twp .no-twp {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+      all: revert-layer;
+    }
+  }
+}
 
 :root {
   --radius: 0.75rem;

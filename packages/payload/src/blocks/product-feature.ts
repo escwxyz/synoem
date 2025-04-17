@@ -1,4 +1,5 @@
 import type { Block } from "payload";
+import { createIconSelectField } from "../fields/icon-select";
 
 // TODO: add more style options
 // TODO: add row label & validation
@@ -17,12 +18,6 @@ export const ProductFeatureBlock: Block = {
       required: true,
     },
     // TODO
-    // {
-    //   name: "icon",
-    //   type: "text",
-    //   admin: {
-    //     components: {},
-    //   },
-    // },
+    createIconSelectField({}),
   ],
 };
