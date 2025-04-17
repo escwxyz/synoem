@@ -10,20 +10,14 @@ import {
   DialogTrigger,
 } from "@synoem/ui/components/dialog";
 import { useRequestQuote } from "~/hooks/use-request-quote";
-import type { PumpController, SolarPanel } from "@synoem/payload/payload-types";
 import { ScrollArea } from "@synoem/ui/components/scroll-area";
 import { ProductInquiryForm } from "~/components/react/ProductInquiryForm";
 import { SubmissionConfirmation } from "~/components/react/SubmissionConfirmation";
 import { Form } from "@synoem/ui/components/form";
 import { useState } from "react";
+import type { Props } from "./types";
 
-export const RequestQuoteDesktop = ({
-  product,
-  buttonSize = "lg",
-}: {
-  product: SolarPanel | PumpController;
-  buttonSize?: "lg" | "sm";
-}) => {
+export const RequestQuoteDesktop = ({ product, ...props }: Props) => {
   const { isSubmitting, isSuccess, error, form, onSubmit } = useRequestQuote({
     product,
   });
@@ -51,7 +45,7 @@ export const RequestQuoteDesktop = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size={buttonSize}>Request Quote</Button>
+        <Button {...props}>Request Quote</Button>
       </DialogTrigger>
       <DialogContent className="max-w-[1200px] w-[90vw] min-w-[1000px] p-0 overflow-hidden">
         <DialogHeader className="p-6 pb-2">
