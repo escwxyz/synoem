@@ -1,3 +1,4 @@
+"use client";
 import { isSolarPanel } from "~/utils/check-product-type";
 import { PRODUCT_CATEGORIES } from "@synoem/config";
 import type { SolarPanel } from "@synoem/payload/payload-types";
