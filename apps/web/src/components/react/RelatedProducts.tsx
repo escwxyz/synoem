@@ -2,7 +2,6 @@
 
 "use client";
 
-import { Card, CardContent } from "@synoem/ui/components/card";
 import { useState, useEffect } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import { Button } from "@synoem/ui/components/button";
@@ -17,17 +16,14 @@ import {
   type CarouselApi,
 } from "@synoem/ui/components/carousel";
 import { getUrl } from "~/utils/get-url";
+import { cn } from "@synoem/ui/lib/utils";
 
 type Props = {
-  relatedProducts: (SolarPanel | number)[] | (PumpController | number)[];
+  relatedProducts: (SolarPanel | PumpController)[];
 };
 
-export function RelatedProducts({ relatedProducts }: Props) {
+export const RelatedProducts = ({ relatedProducts }: Props) => {
   if (relatedProducts.length === 0) {
-    return null;
-  }
-
-  if (relatedProducts.some((product) => typeof product === "number")) {
     return null;
   }
 
@@ -51,11 +47,11 @@ export function RelatedProducts({ relatedProducts }: Props) {
   return (
     <div className="mt-16 space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Related Products</h2>
+        <h2 className="text-2xl font-bold">Maybe you'll like these</h2>
         <div className="flex space-x-2">
           <Button
             variant="outline"
-            size="icon"
+            size="sm"
             id="prev-related"
             aria-label="Previous related products"
             onClick={() => api?.scrollPrev()}
@@ -65,7 +61,7 @@ export function RelatedProducts({ relatedProducts }: Props) {
           </Button>
           <Button
             variant="outline"
-            size="icon"
+            size="sm"
             id="next-related"
             aria-label="Next related products"
             onClick={() => api?.scrollNext()}
@@ -76,8 +72,11 @@ export function RelatedProducts({ relatedProducts }: Props) {
         </div>
       </div>
 
-      <Carousel className="w-full" setApi={setApi}>
-        <CarouselContent>
+      <Carousel
+        className="w-full max-w-[400px] md:max-w-[100vw] rounded-lg"
+        setApi={setApi}
+      >
+        <CarouselContent className="md:-ml-4 rounded-lg">
           {relatedProducts.map((relatedProduct) => {
             const product = relatedProduct as SolarPanel | PumpController;
             const { cover } = product;
@@ -85,29 +84,33 @@ export function RelatedProducts({ relatedProducts }: Props) {
             return (
               <CarouselItem
                 key={product.id}
-                className="md:basis-1/2 lg:basis-1/4"
+                className={cn(
+                  relatedProducts.length === 1 && "lg:basis-full",
+                  relatedProducts.length === 2 && "lg:basis-1/2",
+                  relatedProducts.length === 3 && "lg:basis-1/3",
+                  relatedProducts.length === 4 && "lg:basis-1/4",
+                )}
               >
-                <Card className="h-full">
-                  <CardContent className="p-4">
-                    <div className="space-y-3">
-                      {typeof cover === "number" ? (
-                        <div>TODO</div>
-                      ) : (
-                        <Image
-                          src={getUrl(cover.url || "")}
-                          aspectRatio={4 / 3}
-                          height={400}
-                        />
-                      )}
-                      <div className="space-y-1 text-center">
-                        <h3 className="font-medium text-sm">{product.title}</h3>
-                      </div>
-                      <Button asChild variant="outline" className="w-full">
-                        <a href={getProductUrl(product)}>View Details</a>
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
+                <div className="space-y-3">
+                  {typeof cover === "number" ? (
+                    <div>TODO</div>
+                  ) : (
+                    <Image
+                      src={getUrl(cover.url || "")}
+                      alt={cover.alt || ""}
+                      aspectRatio={1}
+                      width={400}
+                      layout="constrained"
+                      className="w-full h-full object-cover rounded-lg max-w-[400px]"
+                    />
+                  )}
+                  <div className="space-y-1 text-center">
+                    <h3 className="font-medium text-sm">{product.title}</h3>
+                  </div>
+                  <Button asChild variant="outline" className="w-full">
+                    <a href={getProductUrl(product)}>View Details</a>
+                  </Button>
+                </div>
               </CarouselItem>
             );
           })}
@@ -115,4 +118,4 @@ export function RelatedProducts({ relatedProducts }: Props) {
       </Carousel>
     </div>
   );
-}
+};

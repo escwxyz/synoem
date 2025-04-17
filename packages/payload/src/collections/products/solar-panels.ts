@@ -67,6 +67,7 @@ const relatedSolarPanelsTab: Tab = {
           },
           id: {
             // @ts-expect-error siblingData is not typed
+            // TODO: fix this
             not_equals: siblingData?.id,
           },
         };
@@ -313,9 +314,7 @@ const electricalCharacteristicsTab: Tab = {
             description: "Click the button to generate the power points",
             components: {
               RowLabel: "@synoem/payload/components/row-labels#PowerPointLabel",
-              beforeInput: [
-                "@synoem/payload/components/power-points#GeneratePowerPointsButton",
-              ],
+              beforeInput: ["@synoem/payload/components/power-points#GeneratePowerPointsButton"],
             },
           },
           fields: [

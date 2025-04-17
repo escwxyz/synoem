@@ -6,6 +6,7 @@ import {
   CUSTOMER_TYPES,
   PRODUCT_CATEGORIES,
   INQUIRY_SOURCES,
+  getProductCategoryOptions,
 } from "@synoem/config";
 
 export const Inquiries: CollectionConfig<"inquiries"> = {
@@ -194,10 +195,7 @@ export const Inquiries: CollectionConfig<"inquiries"> = {
           name: "productCategory",
           type: "select",
           label: "Product Category",
-          options: Object.entries(PRODUCT_CATEGORIES).map(([key, value]) => ({
-            label: value,
-            value: key,
-          })),
+          options: getProductCategoryOptions(),
         },
         {
           name: "productName",

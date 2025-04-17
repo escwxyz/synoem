@@ -45,7 +45,6 @@ export function ProductGalleryDesktop({ images }: Props) {
 
   return (
     <div className="space-y-4 w-full">
-      {/* 主图显示 */}
       <Image
         src={getUrl(selectedImage.url)}
         alt={selectedImage.alt}
@@ -54,7 +53,6 @@ export function ProductGalleryDesktop({ images }: Props) {
         height={800}
         className="w-full object-contain rounded-lg"
       />
-      {/* 缩略图轮播 */}
       <Carousel
         setApi={setApi}
         opts={{

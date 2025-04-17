@@ -13,19 +13,13 @@ import {
 import { Button } from "@synoem/ui/components/button";
 import { ScrollArea } from "@synoem/ui/components/scroll-area";
 import { useRequestQuote } from "~/hooks/use-request-quote";
-import type { PumpController, SolarPanel } from "@synoem/payload/payload-types";
 import { ProductInquiryForm } from "~/components/react/ProductInquiryForm";
 import { Form } from "@synoem/ui/components/form";
 import { useState } from "react";
 import { SubmissionConfirmation } from "~/components/react/SubmissionConfirmation";
+import type { Props } from "./types";
 
-export const RequestQuoteMobile = ({
-  product,
-  buttonSize = "lg",
-}: {
-  product: SolarPanel | PumpController;
-  buttonSize?: "lg" | "sm";
-}) => {
+export const RequestQuoteMobile = ({ product, ...props }: Props) => {
   const [open, setOpen] = useState<boolean>(false);
 
   const { isSubmitting, isSuccess, error, form, onSubmit } = useRequestQuote({
@@ -47,7 +41,7 @@ export const RequestQuoteMobile = ({
         dismissible={false}
       >
         <DrawerTrigger asChild>
-          <Button size={buttonSize}>Request Quote</Button>
+          <Button {...props}>Request Quote</Button>
         </DrawerTrigger>
         <DrawerContent className="flex flex-col h-full max-h-[85vh] pb-0">
           <DrawerHeader className="text-left shrink-0 border-b">

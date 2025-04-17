@@ -5,6 +5,14 @@ import OEMSpecs from "./shared/OEMSpecs.astro";
 import BasicSpecs from "./shared/BasicSolarPanelSpecs.astro";
 import DimensionSpecs from "./shared/DimensionSpecs.astro";
 import ElectricalSpecs from "./shared/SolarPanelElectricalSpecs.astro";
+import { DeviceWrapper } from "~/components/astro";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "~/components/starwind/accordion";
+
 import {
   Tabs,
   TabsList,
@@ -40,17 +48,75 @@ const { solarPanel } = Astro.props;
 const { maxRatings, tempCo, leadTime, moq, packagingConfig } = solarPanel;
 ---
 
-<Tabs defaultValue="specifications" class="max-w-[400px] lg:max-w-full">
-  <TabsList class="overflow-x-auto">
-    {
-      tabs.map((tab) => (
-        <TabsTrigger value={tab.value}>{tab.label}</TabsTrigger>
-      ))
-    }
-  </TabsList>
-  <TabsContent value="specifications">
-    <Card>
-      <CardContent class="p-8">
+<DeviceWrapper>
+  <Tabs
+    slot="desktop"
+    defaultValue="specifications"
+    class="max-w-full"
+  >
+    <TabsList class="overflow-x-auto">
+      {
+        tabs.map((tab) => (
+          <TabsTrigger value={tab.value}>{tab.label}</TabsTrigger>
+        ))
+      }
+    </TabsList>
+    <TabsContent value="specifications">
+      <Card>
+        <CardContent class="p-8">
+          <BasicSpecs
+            cell={solarPanel.cell}
+            glass={solarPanel.glass}
+            facial={solarPanel.facial}
+            bifaciality={solarPanel.bifaciality}
+            frame={solarPanel.frame}
+            junction={solarPanel.junction}
+            connector={solarPanel.connector}
+            hail={solarPanel.hail}
+            temp={solarPanel.temp}
+            loads={solarPanel.loads}
+          />
+        </CardContent>
+      </Card>
+    </TabsContent>
+    <TabsContent value="dimensions">
+      <Card>
+        <CardContent class="p-8">
+          <DimensionSpecs
+            dimensions={solarPanel.dimensions}
+            drawing={solarPanel.drawing}
+            variant="desktop"
+          />
+        </CardContent>
+      </Card>
+    </TabsContent>
+    <TabsContent value="electrical-characteristics">
+      <Card>
+        <CardContent class="p-8">
+          <ElectricalSpecs
+            powerPoints={solarPanel.powerRange.points}
+            maxRatings={maxRatings}
+            tempCo={tempCo}
+          />
+        </CardContent>
+      </Card>
+    </TabsContent>
+    <TabsContent value="oem-information">
+      <Card>
+        <CardContent class="p-8">
+          <OEMSpecs
+            moq={moq}
+            packagingConfig={packagingConfig}
+            leadTime={leadTime}
+          />
+        </CardContent>
+      </Card>
+    </TabsContent>
+  </Tabs>
+  <Accordion slot="mobile" defaultValue="specifications" class="max-w-[400px] overflow-x-auto">
+    <AccordionItem value="specifications">
+      <AccordionTrigger>Specifications</AccordionTrigger>
+      <AccordionContent>
         <BasicSpecs
           cell={solarPanel.cell}
           glass={solarPanel.glass}
@@ -63,39 +129,37 @@ const { maxRatings, tempCo, leadTime, moq, packagingConfig } = solarPanel;
           temp={solarPanel.temp}
           loads={solarPanel.loads}
         />
-      </CardContent>
-    </Card>
-  </TabsContent>
-  <TabsContent value="dimensions">
-    <Card>
-      <CardContent class="p-8">
+      </AccordionContent>
+    </AccordionItem>
+    <AccordionItem value="dimensions">
+      <AccordionTrigger>Dimensions</AccordionTrigger>
+      <AccordionContent>
         <DimensionSpecs
           dimensions={solarPanel.dimensions}
           drawing={solarPanel.drawing}
+          variant="mobile"
         />
-      </CardContent>
-    </Card>
-  </TabsContent>
-  <TabsContent value="electrical-characteristics">
-    <Card>
-      <CardContent class="p-8">
+      </AccordionContent>
+    </AccordionItem>
+    <AccordionItem value="electrical-characteristics">
+      <AccordionTrigger>Electrical Characteristics</AccordionTrigger>
+      <AccordionContent>
         <ElectricalSpecs
           powerPoints={solarPanel.powerRange.points}
           maxRatings={maxRatings}
           tempCo={tempCo}
         />
-      </CardContent>
-    </Card>
-  </TabsContent>
-  <TabsContent value="oem-information">
-    <Card>
-      <CardContent class="p-8">
+      </AccordionContent>
+    </AccordionItem>
+    <AccordionItem value="oem-information">
+      <AccordionTrigger>OEM Information</AccordionTrigger>
+      <AccordionContent>
         <OEMSpecs
           moq={moq}
           packagingConfig={packagingConfig}
           leadTime={leadTime}
         />
-      </CardContent>
-    </Card>
-  </TabsContent>
-</Tabs>
+      </AccordionContent>
+    </AccordionItem>
+  </Accordion>
+</DeviceWrapper>

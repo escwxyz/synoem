@@ -10,20 +10,14 @@ import {
   DialogTrigger,
 } from "@synoem/ui/components/dialog";
 import { useRequestQuote } from "~/hooks/use-request-quote";
-import type { PumpController, SolarPanel } from "@synoem/payload/payload-types";
 import { ScrollArea } from "@synoem/ui/components/scroll-area";
 import { ProductInquiryForm } from "~/components/react/ProductInquiryForm";
 import { SubmissionConfirmation } from "~/components/react/SubmissionConfirmation";
 import { Form } from "@synoem/ui/components/form";
 import { useState } from "react";
+import type { Props } from "./types";
 
-export const RequestQuoteDesktop = ({
-  product,
-  buttonSize = "lg",
-}: {
-  product: SolarPanel | PumpController;
-  buttonSize?: "lg" | "sm";
-}) => {
+export const RequestQuoteDesktop = ({ product, ...props }: Props) => {
   const { isSubmitting, isSuccess, error, form, onSubmit } = useRequestQuote({
     product,
   });
@@ -51,7 +45,7 @@ export const RequestQuoteDesktop = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size={buttonSize}>Request Quote</Button>
+        <Button {...props}>Request Quote</Button>
       </DialogTrigger>
       <DialogContent className="max-w-[1200px] w-[90vw] min-w-[1000px] p-0 overflow-hidden">
         <DialogHeader className="p-6 pb-2">
@@ -61,8 +55,10 @@ export const RequestQuoteDesktop = ({
             a quote for this product.
           </DialogDescription>
         </DialogHeader>
+        {
+          // TODO: add comprehensive information
+        }
         <div className="flex h-[calc(85vh-120px)] max-h-[700px]">
-          {/* 左侧信息区域 */}
           <div className="w-1/2 p-8 border-r bg-muted/20">
             <h3 className="text-xl font-semibold mb-6">Contact Information</h3>
             <div className="space-y-6">
@@ -91,7 +87,6 @@ export const RequestQuoteDesktop = ({
             </div>
           </div>
 
-          {/* 右侧表单区域 */}
           <div className="w-1/2 flex flex-col">
             {isSuccess ? (
               <div className="flex items-center justify-center h-full p-6">

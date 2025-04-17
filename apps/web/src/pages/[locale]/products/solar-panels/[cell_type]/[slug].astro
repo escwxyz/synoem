@@ -1,7 +1,6 @@
 ---
 import type { GetStaticPaths } from "astro";
 import { getPayloadClient } from "@synoem/payload/client";
-// import { RelatedProducts } from "@/widgets/related-products";
 import ProductDetailLayout from "~/layouts/ProductDetailLayout.astro";
 import { SolarPanelSpecs } from "~/components/astro";
 import { defaultLocale, type Locale, locales } from "@synoem/config";
@@ -97,11 +96,6 @@ const relatedProducts = (await Promise.all(relatedProductPromises)).filter(
 ---
 
 <ProductDetailLayout product={solarPanel}>
-  <div slot="specs">
-    <SolarPanelSpecs solarPanel={solarPanel} />
-  </div>
-  <!-- <div slot="related-products">
-    <RelatedProducts relatedProducts={relatedProducts} client:load />
-  </div> -->
+    <SolarPanelSpecs slot="specs" solarPanel={solarPanel} />
   <div id="downloads" slot="downloads">TODO</div>
 </ProductDetailLayout>

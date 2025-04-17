@@ -10,3 +10,4 @@ export * from "./ProductGrid";
 export * from "./AnimatedModel";
 export * from "./SceneCanvas";
 export * from "./Newsletter";
+export * from "./ImageViewer";
