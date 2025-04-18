@@ -13,6 +13,7 @@ import { ContactInfo } from "./globals/contact-info";
 import { CompanyInfo } from "./globals/company-info";
 import { Header } from "./globals/header";
 import { Footer } from "./globals/footer";
+import { SocialLinks } from "./globals/social-links";
 // Media
 import { Videos } from "./collections/media/videos";
 import { Images } from "./collections/media/images";
@@ -92,7 +93,7 @@ export default buildConfig({
     // Drawings
     Drawings,
   ],
-  globals: [Footer, Header, CompanyInfo, ContactInfo],
+  globals: [Footer, Header, CompanyInfo, ContactInfo, SocialLinks],
   plugins: plugins(),
   localization: {
     defaultLocale,

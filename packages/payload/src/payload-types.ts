@@ -132,12 +132,14 @@ export interface Config {
     header: Header;
     'company-info': CompanyInfo;
     'contact-info': ContactInfo;
+    'social-links': SocialLink;
   };
   globalsSelect: {
     footer: FooterSelect<false> | FooterSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
     'company-info': CompanyInfoSelect<false> | CompanyInfoSelect<true>;
     'contact-info': ContactInfoSelect<false> | ContactInfoSelect<true>;
+    'social-links': SocialLinksSelect<false> | SocialLinksSelect<true>;
   };
   locale: 'en' | 'de';
   user: User & {
@@ -3357,6 +3359,22 @@ export interface ContactInfo {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social-links".
+ */
+export interface SocialLink {
+  id: number;
+  links?:
+    | {
+        platform: 'facebook' | 'twitter' | 'linkedin' | 'instagram' | 'whatsapp' | 'tiktok' | 'youtube';
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
@@ -3536,6 +3554,22 @@ export interface ContactInfoSelect<T extends boolean = true> {
         state?: T;
         zip?: T;
         country?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social-links_select".
+ */
+export interface SocialLinksSelect<T extends boolean = true> {
+  links?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
         id?: T;
       };
   updatedAt?: T;

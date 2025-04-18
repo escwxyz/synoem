@@ -18,6 +18,7 @@ import { SlugComponent as SlugComponent_9e24dc6147290673571e0ed5f08a56e4 } from 
 import { IconSelectField as IconSelectField_3eed72395f8af8d98751d478fd2d8a5e } from '@synoem/payload/components/icon-select-field'
 import { GeneratePowerPointsButton as GeneratePowerPointsButton_f16d4b8e549d00b3a01d99d758b4895b } from '@synoem/payload/components/power-points'
 import { PowerPointLabel as PowerPointLabel_68e89eb917a18c9c02e4abc5b97bdb66 } from '@synoem/payload/components/row-labels'
+import { SocialLinkRowLabel as SocialLinkRowLabel_68e89eb917a18c9c02e4abc5b97bdb66 } from '@synoem/payload/components/row-labels'
 
 export const importMap = {
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
@@ -39,5 +40,6 @@ export const importMap = {
   "@synoem/payload/components/slug-field#SlugComponent": SlugComponent_9e24dc6147290673571e0ed5f08a56e4,
   "@synoem/payload/components/icon-select-field#IconSelectField": IconSelectField_3eed72395f8af8d98751d478fd2d8a5e,
   "@synoem/payload/components/power-points#GeneratePowerPointsButton": GeneratePowerPointsButton_f16d4b8e549d00b3a01d99d758b4895b,
-  "@synoem/payload/components/row-labels#PowerPointLabel": PowerPointLabel_68e89eb917a18c9c02e4abc5b97bdb66
+  "@synoem/payload/components/row-labels#PowerPointLabel": PowerPointLabel_68e89eb917a18c9c02e4abc5b97bdb66,
+  "@synoem/payload/components/row-labels#SocialLinkRowLabel": SocialLinkRowLabel_68e89eb917a18c9c02e4abc5b97bdb66
 }
