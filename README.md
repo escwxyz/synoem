@@ -1,6 +1,9 @@
 # TODO
 
-- Payload custom icon select field https://github.com/shefing/payload-tools/tree/main/packages/icon-select
 - Astro i18n
 - Product Variants / Options
 - More filters
+- History Timeline
+- Downloads / Warranty / Certs
+- Richtext description
+- FAQ
