@@ -66,33 +66,6 @@ if (solarPanelData.docs.length === 0) {
 }
 
 const solarPanel = solarPanelData.docs[0];
-
-const relatedProductsData = solarPanel.relatedProducts || [];
-
-const relatedProductPromises = relatedProductsData.map(async (product) => {
-  if (typeof product === "number") {
-    try {
-      const productData = await payload.find({
-        collection: "solar-panels",
-        where: {
-          id: {
-            equals: product,
-          },
-        },
-        limit: 1,
-      });
-      return productData.docs.length > 0 ? productData.docs[0] : null;
-    } catch (error) {
-      console.error(`Error fetching related product: ${error}`);
-      return null;
-    }
-  }
-  return product;
-});
-
-const relatedProducts = (await Promise.all(relatedProductPromises)).filter(
-  Boolean,
-);
 ---
 
 <ProductDetailLayout product={solarPanel}>
