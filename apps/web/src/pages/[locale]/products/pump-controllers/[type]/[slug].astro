@@ -3,6 +3,7 @@ import ProductDetailLayout from "~/layouts/ProductDetailLayout.astro";
 import { getPayloadClient } from "@synoem/payload/client";
 import type { GetStaticPaths } from "astro";
 import { PumpControllerSpecs } from "~/components/astro";
+import { locales } from "@synoem/config";
 
 export const prerender = true;
 
@@ -23,15 +24,22 @@ export const getStaticPaths = (async () => {
     },
   });
 
-  const result = pumpControllers.docs.map(({ id, slug, type }) => ({
-    params: {
-      type,
-      slug,
-    },
-    props: {
-      id,
-    },
-  }));
+  const result = [];
+
+  for (const locale of locales) {
+    for (const pumpController of pumpControllers.docs) {
+      result.push({
+        params: {
+          locale,
+          type: pumpController.type,
+          slug: pumpController.slug,
+        },
+        props: {
+          id: pumpController.id,
+        },
+      });
+    }
+  }
 
   return result;
 }) satisfies GetStaticPaths;

@@ -68,6 +68,7 @@ export const IconSelectField: React.FC<TextFieldClientProps> = (props) => {
 
   const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const [selectedIcon, setSelectedIcon] = useState<any>(null);
 
   useEffect(() => {
