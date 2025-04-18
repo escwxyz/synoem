@@ -1,0 +1,50 @@
+---
+import type { SocialLink } from "@synoem/payload/payload-types";
+import { getPlatformIconSVG } from "@synoem/config";
+
+interface Props {
+  socialLinks: SocialLink;
+  size?: number;
+  iconColor?: string;
+}
+
+const { socialLinks, size = 24, iconColor = "#ffffff" } = Astro.props;
+
+const { links } = socialLinks;
+---
+
+{
+  links &&
+    links.length > 0 &&
+    links.map((link) => {
+      const { platform, url } = link;
+
+      const icon = getPlatformIconSVG(platform);
+
+      const modifiedSvg = icon
+        .replace(/fill="[^"]*"/g, "")
+    .replace("<svg", `<svg fill="${iconColor}"`);
+
+
+      return (
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Visit our ${platform} page`}
+        >
+          <span class="sr-only">{platform}</span>
+          <span
+            style={`width: ${size}px; height: ${size}px;`}
+            class:list={[
+              "text-2xl",
+              "inline-flex",
+              "items-center",
+              "justify-center",
+            ]}
+            set:html={modifiedSvg}
+          />
+        </a>
+      );
+    })
+}

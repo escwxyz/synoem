@@ -4,3 +4,4 @@ export * from "./countries";
 export * from "./customers";
 export * from "./products";
 export * from "./inquiry";
+export * from "./social-media";

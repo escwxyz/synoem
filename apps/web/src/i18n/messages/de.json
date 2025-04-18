@@ -10,5 +10,12 @@
   },
   "SEO": {
     "title": "Solarmodule.de - Solar Module"
+  },
+  "CookieConsent": {
+    "title": "Wir verwenden Cookies",
+    "description": "Wir verwenden Cookies, um Ihnen die beste Erfahrung auf unserer Website zu gewährleisten. Für weitere Informationen darüber, wie wir Cookies verwenden, bitte sehen Sie unsere",
+    "privacyPolicy": "Datenschutzerklärung",
+    "accept": "Akzeptieren",
+    "decline": "Ablehnen"
   }
 }

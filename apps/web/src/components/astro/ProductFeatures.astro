@@ -1,0 +1,30 @@
+---
+import type { Product } from "~/types/product";
+import { getIconComponent } from "~/utils/get-icon";
+
+interface Props {
+  features: Product["features"];
+}
+
+const { features } = Astro.props;
+---
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  {
+    features &&
+      features.length > 0 &&
+      features.map((feature) => (
+        <div class="flex items-start gap-3 rounded-lg">
+          {feature.iconName &&
+            (() => {
+              const Icon = getIconComponent(feature.iconName);
+              return Icon && <Icon className="size-6 text-primary" />;
+            })()}
+          <div>
+            <h3 class="font-medium text-lg">{feature.title}</h3>
+            <p class="text-muted-foreground">{feature.description}</p>
+          </div>
+        </div>
+      ))
+  }
+</div>

@@ -23,5 +23,12 @@
     "containerType": "Container Type",
     "palletsPerContainer": "Pallets per Container",
     "totalQtyPerContainer": "Total Qty per Container"
+  },
+  "CookieConsent": {
+    "title": "We use cookies",
+    "description": "We use cookies to ensure you get the best experience on our website. For more information on how we use cookies, please see our",
+    "privacyPolicy": "privacy policy",
+    "accept": "Accept",
+    "decline": "Decline"
   }
 }

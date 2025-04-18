@@ -1,0 +1,17 @@
+---
+import ProductsLayout from "~/layouts/ProductsLayout.astro";
+
+const url = new URL(Astro.request.url);
+const initialParams = Object.fromEntries(url.searchParams);
+
+const initialFilters = {
+  ...initialParams,
+};
+---
+
+<ProductsLayout
+  title="Pump Controllers"
+  description="Pump controllers for your home or business"
+  category="pump-controllers"
+  initialFilters={initialFilters}
+/>

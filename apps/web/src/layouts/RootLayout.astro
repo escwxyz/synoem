@@ -4,7 +4,8 @@ import "@synoem/ui/web.css";
 
 import { defaultLocale, type Locale } from "@synoem/config";
 import { useTranslations } from "~/i18n/utils";
-import { JotaiProvider } from "~/components/react";
+import { JotaiProvider, CookieConsent } from "~/components/react";
+
 const currentLocale = Astro.currentLocale;
 
 const effectiveLocale = (currentLocale ?? defaultLocale) as Locale;
@@ -32,6 +33,7 @@ const { t } = useTranslations(effectiveLocale);
         <slot />
       </main>
     </JotaiProvider>
+    <CookieConsent client:only="react" />
   </body>
 </html>
 

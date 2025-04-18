@@ -19,8 +19,9 @@ import {
   getRelatedPumpControllers,
   getRelatedSolarPanels,
 } from "~/utils/get-related-products";
-import { RelatedProducts } from "~/components/react/RelatedProducts";
+import { RelatedProducts } from "~/components/react";
 import type { PumpController, SolarPanel } from "@synoem/payload/payload-types";
+import { ProductFeatures } from "~/components/astro";
 
 interface Props {
   product: Product;
@@ -42,7 +43,7 @@ const productCategory = isSolarPanel(product)
   : "pump-controllers";
 const type = isSolarPanel(product) ? product.cell.type : product.type;
 
-const { title, desc, features, datasheet, relatedProducts } = product;
+const { title, desc, features, datasheet, relatedProducts, certifications, warranties } = product;
 
 const datasheetUrl = await getDatasheetFile({
   datasheet: datasheet,
@@ -95,18 +96,7 @@ const relatedProductsData = isSolarPanel(product)
       <div class="prose max-w-none">
         <p>{desc}</p>
       </div>
-      {
-        features && features.length > 0 && (
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {features.map((feature) => (
-              <div class="bg-muted rounded-lg p-4">
-                <h3 class="text-sm font-medium mb-2">{feature.title}</h3>
-                <p class="text-sm">{feature.description}</p>
-              </div>
-            ))}
-          </div>
-        )
-      }
+      <ProductFeatures features={features} />
       <div
         class="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-2"
       >
@@ -154,5 +144,8 @@ const relatedProductsData = isSolarPanel(product)
   </div>
   <div class="space-y-6 mt-6">
     <slot name="downloads" />
+    {
+      /** TODO: we need to add the certifications and warranties here */
+    }
   </div>
 </RootLayout>
