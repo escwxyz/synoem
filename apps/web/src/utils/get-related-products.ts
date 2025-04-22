@@ -1,75 +1,149 @@
-import type { PumpController, SolarPanel } from "@synoem/payload/payload-types";
-import type { BasePayload, CollectionSlug } from "payload";
+import { PRODUCT_CATEGORIES } from "@synoem/config";
+import type { Product } from "@synoem/payload/payload-types";
 
-type AnyProduct = SolarPanel | PumpController;
+export const getRelatedProducts = (
+  currentProduct: Product,
+  allProducts: Product[],
+  maxProducts = 6,
+): Product[] => {
+  const otherProducts = allProducts.filter((p) => p.id !== currentProduct.id);
 
-type ProductPointer<T extends AnyProduct> = number | T;
+  const sameCategoryProducts = otherProducts.filter((p) => p.category === currentProduct.category);
 
-export const processRelatedProducts = async <T extends SolarPanel | PumpController>({
-  relatedProducts,
-  payload,
-  collection,
-}: {
-  relatedProducts: ProductPointer<T>[] | null | undefined;
-  payload: BasePayload;
-  collection: CollectionSlug;
-}): Promise<(T | null)[]> => {
-  if (!relatedProducts || !Array.isArray(relatedProducts) || relatedProducts.length === 0) {
+  if (sameCategoryProducts.length === 0) {
     return [];
   }
 
-  const result = await Promise.all(
-    relatedProducts.map(async (p): Promise<T | null> => {
-      if (typeof p !== "number") {
-        return p as T;
-      }
+  let scoredProducts: { product: Product; score: number }[] = [];
 
-      try {
-        const result = await payload.find({
-          collection,
-          where: {
-            id: {
-              equals: p,
-            },
-          },
-          limit: 1,
-        });
+  if (currentProduct.category === PRODUCT_CATEGORIES.solarPanel.pluralSlug) {
+    scoredProducts = getScoredSolarPanels(currentProduct, sameCategoryProducts);
+  } else if (currentProduct.category === PRODUCT_CATEGORIES.pumpController.pluralSlug) {
+    scoredProducts = getScoredPumpControllers(currentProduct, sameCategoryProducts);
+  }
 
-        return result.docs.length > 0 ? (result.docs[0] as T) : null;
-      } catch (error) {
-        console.error(`Error fetching related product (ID: ${p}):`, error);
-        return null;
-      }
-    }),
-  );
+  scoredProducts.sort((a, b) => {
+    if (b.score !== a.score) {
+      return b.score - a.score;
+    }
 
-  return (await Promise.all(result)).filter(Boolean);
-};
-
-export const getRelatedSolarPanels = async ({
-  relatedProducts,
-  payload,
-}: {
-  relatedProducts: ProductPointer<SolarPanel>[] | null | undefined;
-  payload: BasePayload;
-}): Promise<(SolarPanel | null)[]> => {
-  return processRelatedProducts<SolarPanel>({
-    relatedProducts,
-    payload,
-    collection: "solar-panels",
+    const dateA = new Date(a.product.createdAt);
+    const dateB = new Date(b.product.createdAt);
+    return dateB.getTime() - dateA.getTime();
   });
+
+  return scoredProducts.slice(0, maxProducts).map((item) => item.product);
 };
 
-export const getRelatedPumpControllers = async ({
-  relatedProducts,
-  payload,
-}: {
-  relatedProducts: ProductPointer<PumpController>[] | null | undefined;
-  payload: BasePayload;
-}): Promise<(PumpController | null)[]> => {
-  return processRelatedProducts<PumpController>({
-    relatedProducts,
-    payload,
-    collection: "pump-controllers",
+function getScoredSolarPanels(
+  currentProduct: Product,
+  products: Product[],
+): { product: Product; score: number }[] {
+  const currentSolarPanel = currentProduct.solarPanel?.[0];
+
+  if (!currentSolarPanel) {
+    return products.map((p) => ({ product: p, score: 0 }));
+  }
+
+  return products.map((product) => {
+    const solarPanel = product.solarPanel?.[0];
+
+    if (!solarPanel) {
+      return { product, score: 0 };
+    }
+
+    let score = 0;
+
+    if (solarPanel.type === currentSolarPanel.type) {
+      score += 10;
+    }
+
+    if (currentProduct.dimensions && product.dimensions) {
+      const currentArea = (currentProduct.dimensions.w || 0) * (currentProduct.dimensions.h || 0);
+      const productArea = (product.dimensions.w || 0) * (product.dimensions.h || 0);
+
+      if (currentArea > 0 && productArea > 0) {
+        const areaDiffPercentage = Math.abs(currentArea - productArea) / currentArea;
+
+        if (areaDiffPercentage <= 0.1) {
+          score += 5;
+        } else if (areaDiffPercentage <= 0.2) {
+          score += 3;
+        } else if (areaDiffPercentage <= 0.3) {
+          score += 1;
+        }
+      }
+    }
+
+    if (currentSolarPanel.power && solarPanel.power) {
+      const currentPower =
+        (Number(currentSolarPanel.power.min) + Number(currentSolarPanel.power.max)) / 2;
+      const power = (Number(solarPanel.power.min) + Number(solarPanel.power.max)) / 2;
+
+      if (!Number.isNaN(currentPower) && !Number.isNaN(power) && currentPower > 0) {
+        const powerDiffPercentage = Math.abs(currentPower - power) / currentPower;
+
+        if (powerDiffPercentage <= 0.1) {
+          score += 3;
+        } else if (powerDiffPercentage <= 0.2) {
+          score += 2;
+        } else if (powerDiffPercentage <= 0.3) {
+          score += 1;
+        }
+      }
+    }
+
+    return { product, score };
   });
-};
+}
+
+function getScoredPumpControllers(
+  currentProduct: Product,
+  products: Product[],
+): { product: Product; score: number }[] {
+  const currentController = currentProduct.pumpController?.[0];
+
+  if (!currentController) {
+    return products.map((p) => ({ product: p, score: 0 }));
+  }
+
+  return products.map((product) => {
+    const controller = product.pumpController?.[0];
+
+    if (!controller) {
+      return { product, score: 0 };
+    }
+
+    let score = 0;
+
+    // 相同类型得高分
+    if (controller.type === currentController.type) {
+      score += 10;
+    }
+
+    if (
+      currentController.maxVoltage !== undefined &&
+      currentController.maxCurrent !== undefined &&
+      controller.maxVoltage !== undefined &&
+      controller.maxCurrent !== undefined
+    ) {
+      const currentMaxPower =
+        Number(currentController.maxVoltage) * Number(currentController.maxCurrent);
+      const maxPower = Number(controller.maxVoltage) * Number(controller.maxCurrent);
+
+      if (!Number.isNaN(currentMaxPower) && !Number.isNaN(maxPower) && currentMaxPower > 0) {
+        const powerDiffPercentage = Math.abs(currentMaxPower - maxPower) / currentMaxPower;
+
+        if (powerDiffPercentage <= 0.1) {
+          score += 5;
+        } else if (powerDiffPercentage <= 0.2) {
+          score += 3;
+        } else if (powerDiffPercentage <= 0.3) {
+          score += 1;
+        }
+      }
+    }
+
+    return { product, score };
+  });
+}
