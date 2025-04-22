@@ -6,14 +6,13 @@ import {
   CarouselItem,
   type CarouselApi,
 } from "@synoem/ui/components/carousel";
-import { Button } from "@synoem/ui/components/button";
 import { Image } from "@unpic/react";
 import type { Props } from "./types";
 import { getUrl } from "~/utils/get-url";
 import { useEffect, useState } from "react";
 import { cn } from "@synoem/ui/lib/utils";
-import { Play } from "lucide-react";
 import { ProductModelViewer } from "../ProductModelViewer";
+import { ViewSwitch } from "./ViewSwitch";
 
 export const ProductGalleryMobile = ({ images, three }: Props) => {
   if (images.length === 0) {
@@ -47,65 +46,53 @@ export const ProductGalleryMobile = ({ images, three }: Props) => {
     setCurrent(index);
   };
 
-  if (showModelView) {
-    return (
-      <div className="w-full flex flex-col">
-        <div className="relative w-full aspect-square">
-          <ProductModelViewer three={three} />
-          <Button
-            variant="outline"
-            size="sm"
-            className="absolute top-4 right-4 z-10 rounded-full p-1.5 shadow-md backdrop-blur-sm"
-            onClick={() => setShowModelView(false)}
-          >
-            Back
-          </Button>
-        </div>
-      </div>
-    );
-  }
+  const toggleModelView = () => {
+    setShowModelView(!showModelView);
+  };
 
   return (
     <div className="w-full flex flex-col items-center gap-4">
       <div className="relative w-full aspect-square rounded-lg overflow-hidden">
-        <Carousel className="w-full h-full rounded-lg" setApi={setApi}>
-          <CarouselContent className="rounded-lg h-full">
-            {images.map((image) => (
-              <CarouselItem key={image.id} className="w-full h-full rounded-lg">
-                <Image
-                  src={getUrl(image.url)}
-                  alt={image.alt}
-                  aspectRatio={1}
-                  layout="fullWidth"
-                  className="w-full h-full object-cover"
+        {showModelView ? (
+          <ProductModelViewer three={three} />
+        ) : (
+          <Carousel className="w-full h-full rounded-lg" setApi={setApi}>
+            <CarouselContent className="rounded-lg h-full">
+              {images.map((image) => (
+                <CarouselItem
+                  key={image.id}
+                  className="w-full h-full rounded-lg"
+                >
+                  <Image
+                    src={getUrl(image.url)}
+                    alt={image.alt}
+                    aspectRatio={1}
+                    layout="fullWidth"
+                    className="w-full h-full object-cover"
+                  />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="absolute bottom-4 left-0 right-0 z-10 w-full flex justify-center">
+              {new Array(images.length).fill(0).map((_, index) => (
+                <button
+                  key={images[index].id}
+                  type="button"
+                  onClick={() => handleDotClick(index)}
+                  className={cn(
+                    "w-3 h-3 rounded-full bg-white/50 mx-2",
+                    current === index && "bg-white",
+                  )}
                 />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <div className="absolute bottom-4 left-0 right-0 z-10 w-full flex justify-center">
-            {new Array(images.length).fill(0).map((_, index) => (
-              <button
-                key={images[index].id}
-                type="button"
-                onClick={() => handleDotClick(index)}
-                className={cn(
-                  "w-3 h-3 rounded-full bg-white/50 mx-2",
-                  current === index && "bg-white",
-                )}
-              />
-            ))}
-          </div>
-        </Carousel>
+              ))}
+            </div>
+          </Carousel>
+        )}
+
         {hasModel && (
-          <Button
-            variant="outline"
-            size="sm"
-            className="absolute bottom-4 right-4 z-10 rounded-full p-1.5 shadow-md backdrop-blur-sm flex items-center gap-1"
-            onClick={() => setShowModelView(true)}
-          >
-            <Play size={14} />
-            <span className="text-xs">3D View</span>
-          </Button>
+          <div className="absolute bottom-4 right-4 z-10">
+            <ViewSwitch onClick={toggleModelView} isActive={showModelView} />
+          </div>
         )}
       </div>
     </div>

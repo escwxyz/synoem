@@ -1,12 +1,15 @@
+// TODO: support product variants
+
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import { OrbitControls, useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
 import { getUrl } from "~/utils/get-url";
 import type { Product } from "@synoem/payload/payload-types";
 import { useMediaQuery } from "usehooks-ts";
+import { motion } from "motion/react";
 
 export const ProductModelViewer = ({ three }: { three: Product["three"] }) => {
   if (!three?.model || typeof three.model === "number" || !three.model?.url) {
@@ -37,22 +40,55 @@ export const ProductModelViewer = ({ three }: { three: Product["three"] }) => {
   }, []);
 
   return (
-    <Canvas
-      key={mountKey}
-      className="w-full h-[400px] md:h-[600px]"
-      gl={{
-        powerPreference: "default",
-        antialias: true,
-        stencil: false,
-        depth: true,
-      }}
-      camera={{
-        position: isMobile ? [0, 0, 7] : [0, 0, 5],
-        fov: isMobile ? 60 : 50,
-      }}
-    >
-      <SceneContent url={modelUrl} />
-    </Canvas>
+    <Suspense fallback={<ModelLoadingIndicator />}>
+      <Canvas
+        key={mountKey}
+        className="w-full h-[400px] md:h-[600px] cursor-pointer"
+        gl={{
+          powerPreference: "default",
+          antialias: true,
+          stencil: false,
+          depth: true,
+        }}
+        camera={{
+          position: isMobile ? [0, 0, 7] : [0, 0, 5],
+          fov: isMobile ? 60 : 50,
+        }}
+      >
+        <SceneContent url={modelUrl} />
+      </Canvas>
+    </Suspense>
+  );
+};
+
+const ModelLoadingIndicator = () => {
+  return (
+    <div className="grid place-items-center h-[400px] md:h-[600px]">
+      <div className="flex flex-col items-center gap-3">
+        <div className="relative w-12 h-12">
+          <motion.div
+            className="absolute inset-0 rounded-full border-4 border-primary/20"
+            animate={{ rotate: 360 }}
+            transition={{
+              duration: 2,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "linear",
+            }}
+          />
+          <motion.div
+            className="absolute inset-1 rounded-full border-4 border-t-primary border-l-transparent border-r-transparent border-b-transparent"
+            initial={{ rotate: 0 }}
+            animate={{ rotate: 360 }}
+            transition={{
+              duration: 1.5,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "linear",
+            }}
+          />
+        </div>
+        <p className="text-sm font-medium">Loading 3D Model...</p>
+      </div>
+    </div>
   );
 };
 
