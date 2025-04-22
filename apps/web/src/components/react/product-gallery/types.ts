@@ -1,3 +1,5 @@
+import type { Product } from "@synoem/payload/payload-types";
+
 export interface GalleryImage {
   id: number | string;
   url: string;
@@ -6,4 +8,5 @@ export interface GalleryImage {
 
 export interface Props {
   images: GalleryImage[];
+  three?: Product["three"];
 }

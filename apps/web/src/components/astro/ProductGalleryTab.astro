@@ -1,0 +1,44 @@
+---
+import type { Product } from "@synoem/payload/payload-types";
+import DeviceWrapper from "./DeviceWrapper.astro";
+import {
+  ProductGalleryMobile,
+  ProductGalleryDesktop,
+} from "~/components/react";
+import { getGalleryImages } from "~/utils/get-image";
+import { getPayloadClient } from "@synoem/payload/client";
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+
+const { gallery } = product;
+
+const payload = await getPayloadClient();
+
+const galleryImages = await getGalleryImages({
+  images: gallery,
+  payload,
+});
+---
+
+<section class="mb-8">
+  <div class="grid grid-cols-1">
+    <DeviceWrapper>
+      <ProductGalleryMobile
+        slot="mobile"
+        images={galleryImages}
+        three={product.three}
+        client:visible
+      />
+      <ProductGalleryDesktop
+        slot="desktop"
+        images={galleryImages}
+        three={product.three}
+        client:visible
+      />
+    </DeviceWrapper>
+  </div>
+</section>
