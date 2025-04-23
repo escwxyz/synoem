@@ -31,13 +31,13 @@ const galleryImages = await getGalleryImages({
         slot="mobile"
         images={galleryImages}
         three={product.three}
-        client:visible
+        client:only="react"
       />
       <ProductGalleryDesktop
         slot="desktop"
         images={galleryImages}
         three={product.three}
-        client:visible
+        client:only="react"
       />
     </DeviceWrapper>
   </div>

@@ -1,34 +1,86 @@
 {
-  "nav": {
-    "home": "Home",
-    "products": "Products",
-    "about": "About",
-    "contact": "Contact"
-  },
-  "hero": {
-    "title": "Welcome to our website"
-  },
-  "SEO": {
-    "title": "Solar Panels in Germany"
-  },
-  "OEM": {
-    "moq": "Minimum Order Quantity",
-    "leadTime": "Lead Time",
-    "packaging": "Packaging",
-    "unitPackage": "Unit Package",
-    "packagingUnit": "Packaging Unit",
-    "palletConfig": "Pallet Config",
-    "qtyPerPallet": "Qty Per Pallet",
-    "containerConfig": "Container Config",
-    "containerType": "Container Type",
-    "palletsPerContainer": "Pallets per Container",
-    "totalQtyPerContainer": "Total Qty per Container"
-  },
-  "CookieConsent": {
-    "title": "We use cookies",
-    "description": "We use cookies to ensure you get the best experience on our website. For more information on how we use cookies, please see our",
-    "privacyPolicy": "privacy policy",
-    "accept": "Accept",
-    "decline": "Decline"
+  "Component": {
+    "RequestQuoteButton": {
+      "requestQuote": "Request Quote",
+      "description": "Please fill in the form below to request a quote for the product."
+    },
+    "RelatedProducts": {
+      "title": "Maybe you'll like these",
+      "viewDetails": "View Details"
+    },
+    "ProductCard": {
+      "maxVoltage": "Max Voltage",
+      "maxCurrent": "Max Current",
+      "viewDetails": "View Details"
+    },
+    "CookieConsent": {
+      "title": "We use cookies",
+      "description": "We use cookies to ensure you get the best experience on our website. For more information on how we use cookies, please see our",
+      "privacyPolicy": "privacy policy",
+      "accept": "Accept",
+      "decline": "Decline"
+    },
+    "ProductOverview": {
+      "productDescription": "Product Description",
+      "technicalDrawing": "Technical Drawing"
+    },
+    "SolarPanelSpecificationsTab": {
+      "physicalSpecifications": "Physical Specifications",
+      "dimensions": "Dimensions",
+      "weight": "Weight",
+      "cellType": "Cell Type",
+      "cellNumber": "Cell Number",
+      "glass": "Glass",
+      "bifaciality": "Bifaciality",
+      "frame": "Frame",
+      "junctionBox": "Junction Box",
+      "connector": "Connector",
+      "environmentalConditions": "Environmental Conditions",
+      "operatingTemperature": "Operating Temperature",
+      "snowLoad": "Snow Load",
+      "windLoad": "Wind Load",
+      "electricalSpecifications": "Electrical Specifications (STC*)",
+      "standardTestConditions": "*Standard Test Conditions: 1000 W/m², AM 1.5, 25°C",
+      "model": "Model",
+      "maxPower": "Max Power",
+      "openCircuitVoltage": "Open Circuit Voltage",
+      "maximumPowerPointVoltage": "Maximum Power Point Voltage",
+      "shortCircuitCurrent": "Short Circuit Current",
+      "maximumPowerPointCurrent": "Maximum Power Point Current",
+      "moduleEfficiency": "Module Efficiency",
+      "powerTolerance": "Power Tolerance",
+      "shortCircuitCurrentTemperatureCoefficient": "Short Circuit Current Temperature Coefficient",
+      "openCircuitVoltageTemperatureCoefficient": "Open Circuit Voltage Temperature Coefficient",
+      "maximumPowerTemperatureCoefficient": "Maximum Power Temperature Coefficient",
+      "noct": "NOCT",
+      "maximumSystemVoltage": "Maximum System Voltage",
+      "maximumSeriesFuseRating": "Maximum Series Fuse Rating",
+      "fireRating": "Fire Rating"
+    },
+    "SolarPanelWarrantyTab": {
+      "warrantyInformation": "Warranty Information",
+      "productWarranty": "Product Warranty",
+      "powerWarranty": "Power Warranty",
+      "outputPowerDegradation": "Output Power Degradation",
+      "powerDegradationComparison": "Power Degradation Comparison",
+      "powerDegradationPrognosis": "Power Degradation Prognosis",
+      "powerDegradationDetails": "1% degradation rate for the first year",
+      "initialYearGuarantee": "Initial Year Guarantee",
+      "annualDegradation": "Annual Degradation",
+      "endYearGuarantee": "End Year Guarantee",
+      "chart": {
+        "powerGuarantee": "Power Guarantee",
+        "industryStandard": "Industry Standard",
+        "xAxis": "Time / Years",
+        "yAxis": "Degradation Rate [%]",
+        "year": "Year"
+      }
+    },
+    "ProductGallery": {
+      "back": "Back",
+      "backToPhotos": "Back to Photos",
+      "3DView": "3D View",
+      "view3DModel": "View 3D Model"
+    }
   }
 }

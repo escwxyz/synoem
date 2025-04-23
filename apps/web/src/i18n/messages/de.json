@@ -1,21 +1,86 @@
 {
-  "nav": {
-    "home": "Home",
-    "products": "Products",
-    "about": "About",
-    "contact": "Contact"
-  },
-  "hero": {
-    "title": "Welcome to our website"
-  },
-  "SEO": {
-    "title": "Solarmodule.de - Solar Module"
-  },
-  "CookieConsent": {
-    "title": "Wir verwenden Cookies",
-    "description": "Wir verwenden Cookies, um Ihnen die beste Erfahrung auf unserer Website zu gewährleisten. Für weitere Informationen darüber, wie wir Cookies verwenden, bitte sehen Sie unsere",
-    "privacyPolicy": "Datenschutzerklärung",
-    "accept": "Akzeptieren",
-    "decline": "Ablehnen"
+  "Component": {
+    "RequestQuoteButton": {
+      "requestQuote": "Anfragen",
+      "description": "Bitte füllen Sie das Formular unten aus, um eine Anfrage für das Produkt zu stellen."
+    },
+    "RelatedProducts": {
+      "title": "Vielleicht gefällt Ihnen auch diese",
+      "viewDetails": "Details anzeigen"
+    },
+    "ProductCard": {
+      "maxVoltage": "Max Spannung",
+      "maxCurrent": "Max Strom",
+      "viewDetails": "Details anzeigen"
+    },
+    "CookieConsent": {
+      "title": "Wir verwenden Cookies",
+      "description": "Wir verwenden Cookies, um Ihnen die beste Erfahrung auf unserer Website zu gewährleisten. Für weitere Informationen darüber, wie wir Cookies verwenden, bitte sehen Sie unsere",
+      "privacyPolicy": "Datenschutzerklärung",
+      "accept": "Akzeptieren",
+      "decline": "Ablehnen"
+    },
+    "ProductOverview": {
+      "productDescription": "Produktbeschreibung",
+      "technicalDrawing": "Technische Zeichnung"
+    },
+    "SolarPanelSpecificationsTab": {
+      "physicalSpecifications": "Physikalische Spezifikationen",
+      "dimensions": "Abmessungen",
+      "weight": "Gewicht",
+      "cellType": "Zelltyp",
+      "cellNumber": "Zellanzahl",
+      "glass": "Glas",
+      "bifaciality": "Bifacialität",
+      "frame": "Rahmen",
+      "junctionBox": "Junction Box",
+      "connector": "Connector",
+      "environmentalConditions": "Umgebungsbedingungen",
+      "operatingTemperature": "Betriebstemperatur",
+      "snowLoad": "Schneelast",
+      "windLoad": "Windlast",
+      "electricalSpecifications": "Elektrische Spezifikationen (STC*)",
+      "standardTestConditions": "*Standard Testbedingungen: 1000 W/m², AM 1.5, 25°C",
+      "model": "Modell",
+      "maxPower": "Max Leistung",
+      "openCircuitVoltage": "Leerlaufspannung",
+      "maximumPowerPointVoltage": "Maximaler Leistungspunktspannung",
+      "shortCircuitCurrent": "Kurzschlussstrom",
+      "maximumPowerPointCurrent": "Maximaler Leistungspunktstrom",
+      "moduleEfficiency": "Modulwirkungsgrad",
+      "powerTolerance": "Leistungstoleranz",
+      "shortCircuitCurrentTemperatureCoefficient": "Kurzschlussstrom Temperaturkoeffizient",
+      "openCircuitVoltageTemperatureCoefficient": "Leerlaufspannung Temperaturkoeffizient",
+      "maximumPowerTemperatureCoefficient": "Maximalleistung Temperaturkoeffizient",
+      "noct": "NOCT",
+      "maximumSystemVoltage": "Maximale Systemspannung",
+      "maximumSeriesFuseRating": "Maximaler Serienfuses",
+      "fireRating": "Feuerwiderstand"
+    },
+    "SolarPanelWarrantyTab": {
+      "warrantyInformation": "Garantieinformationen",
+      "productWarranty": "Produktgarantie",
+      "powerWarranty": "Leistungsgarantie",
+      "outputPowerDegradation": "Ausgangsleistungsschwund",
+      "powerDegradationComparison": "Leistungsschwundvergleich",
+      "powerDegradationPrognosis": "Leistungsschwundprognose",
+      "powerDegradationDetails": "1% Schwundrate für das erste Jahr",
+      "initialYearGuarantee": "Initial Jahresgarantie",
+      "annualDegradation": "Jährliche Degradation",
+      "endYearGuarantee": "Endjahresgarantie",
+      "chart": {
+        "powerGuarantee": "Leistungsgarantie",
+        "industryStandard": "Industriestandard",
+        "xAxis": "Zeit / Jahre",
+        "yAxis": "Schwundrate [%]",
+        "year": "Jahr"
+      }
+    },
+    "ProductGallery": {
+      "back": "Zurück",
+      "backToPhotos": "Zurück zu den Fotos",
+      "3DView": "3D Ansicht",
+      "view3DModel": "3D Modell anzeigen"
+    }
   }
 }

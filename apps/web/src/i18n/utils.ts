@@ -2,9 +2,7 @@ import { type Locale, defaultLocale, locales } from "@synoem/config";
 
 export const getLocalizedPathname = (pathname: string, locale: Locale) => {
   const cleanPath = pathname.replace(/^\/[a-z]{2}(?:\/|$)/, "/");
-  return locale === defaultLocale
-    ? `/${defaultLocale}${cleanPath}`
-    : `/${locale}${cleanPath}`;
+  return locale === defaultLocale ? `/${defaultLocale}${cleanPath}` : `/${locale}${cleanPath}`;
 };
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
@@ -26,9 +24,7 @@ export function useTranslations(locale: Locale = defaultLocale) {
     let value = messages[optLocale];
 
     if (!value) {
-      console.warn(
-        `Translation messages for locale "${optLocale}" not loaded yet`,
-      );
+      console.warn(`Translation messages for locale "${optLocale}" not loaded yet`);
       return key;
     }
 
@@ -44,10 +40,7 @@ export function useTranslations(locale: Locale = defaultLocale) {
     }
 
     if (typeof value === "string") {
-      return value.replace(
-        /\{(\w+)\}/g,
-        (_, param) => params[param]?.toString() || `{${param}}`,
-      );
+      return value.replace(/\{(\w+)\}/g, (_, param) => params[param]?.toString() || `{${param}}`);
     }
 
     return value?.toString() || key;
@@ -55,7 +48,6 @@ export function useTranslations(locale: Locale = defaultLocale) {
 
   return {
     t,
-    locale,
   };
 }
 

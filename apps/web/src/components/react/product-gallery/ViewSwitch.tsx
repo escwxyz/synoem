@@ -3,6 +3,7 @@
 import { Button } from "@synoem/ui/components/button";
 import { ArrowLeft, Play } from "lucide-react";
 import { useMediaQuery } from "usehooks-ts";
+import { getLocaleFromUrl, useTranslations } from "~/i18n/utils";
 
 export const ViewSwitch = ({
   onClick,
@@ -11,6 +12,10 @@ export const ViewSwitch = ({
   onClick: () => void;
   isActive: boolean;
 }) => {
+  const locale = getLocaleFromUrl(new URL(window.location.href));
+
+  const { t } = useTranslations(locale);
+
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   return (
@@ -35,11 +40,11 @@ export const ViewSwitch = ({
       <span>
         {isActive
           ? isMobile
-            ? "Back"
-            : "Back to Photos"
+            ? t("Component.ProductGallery.back")
+            : t("Component.ProductGallery.backToPhotos")
           : isMobile
-            ? "3D View"
-            : "View 3D Model"}
+            ? t("Component.ProductGallery.3DView")
+            : t("Component.ProductGallery.view3DModel")}
       </span>
     </Button>
   );
