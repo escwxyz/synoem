@@ -1,6 +1,6 @@
 "use client";
 
-import { PRODUCT_CATEGORIES } from "@synoem/config";
+import { PRODUCT_CATEGORIES, type Locale } from "@synoem/config";
 import type { Product } from "@synoem/payload/payload-types";
 import { ShieldCheck, Zap } from "lucide-react";
 import {
@@ -27,12 +27,14 @@ import {
   CardTitle,
 } from "@synoem/ui/components/card";
 import { RichText } from "./RichText";
+import { getLocaleFromUrl, useTranslations } from "~/i18n/utils";
 
 interface Props {
   product: Product;
+  locale: Locale;
 }
 
-export const SolarPanelWarrantyTab = ({ product }: Props) => {
+export const SolarPanelWarrantyTab = ({ product, locale }: Props) => {
   const { solarPanel } = product;
 
   const isSolarPanel =
@@ -145,16 +147,18 @@ export const SolarPanelWarrantyTab = ({ product }: Props) => {
     "industryValue",
   );
 
+  const { t } = useTranslations(locale);
+
   const chartConfig: ChartConfig = {
     productValue: {
-      label: "Power Guarantee",
+      label: t("Component.SolarPanelWarrantyTab.chart.powerGuarantee"),
       color: "hsl(var(--chart-1))",
     },
   };
 
   if (hasIndustryComparison) {
     chartConfig.industryValue = {
-      label: "Industry Standard",
+      label: t("Component.SolarPanelWarrantyTab.chart.industryStandard"),
       color: "hsl(var(--chart-2))",
     };
   }
@@ -162,7 +166,9 @@ export const SolarPanelWarrantyTab = ({ product }: Props) => {
   return (
     <section className="flex gap-8 w-full flex-col">
       <div>
-        <h3 className="text-xl font-bold mb-4">Warranty Information</h3>
+        <h3 className="text-xl font-bold mb-4">
+          {t("Component.SolarPanelWarrantyTab.warrantyInformation")}
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {hasProductWarranty && (
             <Card>
@@ -171,7 +177,9 @@ export const SolarPanelWarrantyTab = ({ product }: Props) => {
                   <div className="rounded-full bg-muted p-2">
                     <ShieldCheck size={20} />
                   </div>
-                  <div className="text-xl">Product Warranty</div>
+                  <div className="text-xl">
+                    {t("Component.SolarPanelWarrantyTab.productWarranty")}
+                  </div>
                 </div>
               </CardHeader>
               <CardContent>
@@ -186,7 +194,9 @@ export const SolarPanelWarrantyTab = ({ product }: Props) => {
                   <div className="rounded-full bg-muted p-2">
                     <Zap size={20} />
                   </div>
-                  <div className="text-xl">Power Warranty</div>
+                  <div className="text-xl">
+                    {t("Component.SolarPanelWarrantyTab.powerWarranty")}
+                  </div>
                 </div>
               </CardHeader>
               <CardContent>
@@ -199,16 +209,22 @@ export const SolarPanelWarrantyTab = ({ product }: Props) => {
 
       {powerDegradation && (
         <div>
-          <h3 className="text-xl font-bold mb-4">Output Power Degradation</h3>
+          <h3 className="text-xl font-bold mb-4">
+            {t("Component.SolarPanelWarrantyTab.outputPowerDegradation")}
+          </h3>
           <Card>
             <CardHeader>
               <CardTitle>
                 {hasIndustryComparison
-                  ? "Power Degradation Comparision"
-                  : "Power Degradation Prognosis"}
+                  ? t(
+                      "Component.SolarPanelWarrantyTab.powerDegradationComparison",
+                    )
+                  : t(
+                      "Component.SolarPanelWarrantyTab.powerDegradationPrognosis",
+                    )}
               </CardTitle>
               <CardDescription>
-                1% degradation rate for the first year
+                {t("Component.SolarPanelWarrantyTab.powerDegradationDetails")}
               </CardDescription>
             </CardHeader>
             <CardContent className="w-full">
@@ -235,21 +251,24 @@ export const SolarPanelWarrantyTab = ({ product }: Props) => {
                       ),
                     ]}
                     label={{
-                      value: "Time / Years",
+                      value: t("Component.SolarPanelWarrantyTab.chart.xAxis"),
                       position: "insideBottom",
                       offset: -10,
                     }}
                   />
                   <YAxis
                     label={{
-                      value: "Degradation Rate [%]",
+                      value: t("Component.SolarPanelWarrantyTab.chart.yAxis"),
                       angle: -90,
                       position: "insideLeft",
                     }}
                     domain={[50, 100]}
                     ticks={[50, 60, 70, 80, 90, 100]}
                   />
-                  <ChartTooltip cursor={false} content={<CustomTooltip />} />
+                  <ChartTooltip
+                    cursor={false}
+                    content={<CustomTooltip locale={locale} />}
+                  />
                   <ChartLegend
                     verticalAlign="top"
                     align="right"
@@ -264,7 +283,9 @@ export const SolarPanelWarrantyTab = ({ product }: Props) => {
                   />
 
                   <Area
-                    name="Power Guarantee"
+                    name={t(
+                      "Component.SolarPanelWarrantyTab.chart.powerGuarantee",
+                    )}
                     dataKey="productValue"
                     type="monotone"
                     fill="hsl(var(--chart-1))"
@@ -273,7 +294,9 @@ export const SolarPanelWarrantyTab = ({ product }: Props) => {
                   />
                   {hasIndustryComparison && (
                     <Area
-                      name="Industry Standard"
+                      name={t(
+                        "Component.SolarPanelWarrantyTab.chart.industryStandard",
+                      )}
                       dataKey="industryValue"
                       type="monotone"
                       fill="hsl(var(--chart-2))"
@@ -285,25 +308,25 @@ export const SolarPanelWarrantyTab = ({ product }: Props) => {
               </ChartContainer>
             </CardContent>
             <CardFooter className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-gray-50 p-4 rounded-lg">
+              <div className="bg-muted p-4 rounded-lg">
                 <h4 className="font-semibold text-gray-700 mb-2">
-                  Initial Year Guarantee
+                  {t("Component.SolarPanelWarrantyTab.initialYearGuarantee")}
                 </h4>
                 <p className="text-2xl font-bold text-emerald-600">
                   {powerDegradation.initialGuarantee}%
                 </p>
               </div>
-              <div className="bg-gray-50 p-4 rounded-lg">
+              <div className="bg-muted p-4 rounded-lg">
                 <h4 className="font-semibold text-gray-700 mb-2">
-                  Annual Degradation
+                  {t("Component.SolarPanelWarrantyTab.annualDegradation")}
                 </h4>
                 <p className="text-2xl font-bold text-emerald-600">
                   {powerDegradation.annual}%
                 </p>
               </div>
-              <div className="bg-gray-50 p-4 rounded-lg">
+              <div className="bg-muted p-4 rounded-lg">
                 <h4 className="font-semibold text-gray-700 mb-2">
-                  30-Year Guarantee
+                  {t("Component.SolarPanelWarrantyTab.endYearGuarantee")}
                 </h4>
                 <p className="text-2xl font-bold text-emerald-600">
                   {powerDegradation.endYearGuarantee}%
@@ -321,15 +344,22 @@ const CustomTooltip = ({
   active,
   payload,
   label,
+  locale,
 }: Pick<
   React.ComponentProps<typeof Tooltip>,
   "active" | "payload" | "label"
->) => {
+> & {
+  locale: Locale;
+}) => {
   if (!active || !payload?.length) return null;
+
+  const { t } = useTranslations(locale);
 
   return (
     <div className="border-border/50 bg-background grid min-w-[8rem] rounded-lg border p-2.5 shadow-xl">
-      <div className="font-medium">Year: {label}</div>
+      <div className="font-medium">
+        {t("Component.SolarPanelWarrantyTab.chart.year")}: {label}
+      </div>
       <div className="grid gap-1.5 mt-1">
         {payload.map((item) => (
           <div key={item.name} className="flex items-center gap-2">
