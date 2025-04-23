@@ -1,3 +1,4 @@
+import type { Locale } from "@synoem/config";
 import type { Product } from "@synoem/payload/payload-types";
 import {
   Table,
@@ -12,9 +13,10 @@ import { isSolarPanel } from "~/utils/check-product-type";
 
 interface Props {
   product: Product;
+  locale: Locale;
 }
 
-export const SolarPanelSpecificationsTab = ({ product }: Props) => {
+export const SolarPanelSpecificationsTab = ({ product, locale }: Props) => {
   const { solarPanel, dimensions, weight } = product;
 
   if (!isSolarPanel(product)) {
@@ -55,7 +57,7 @@ export const SolarPanelSpecificationsTab = ({ product }: Props) => {
 
   const { points } = power;
 
-  const { t } = useTranslations();
+  const { t } = useTranslations(locale);
 
   return (
     <section>
