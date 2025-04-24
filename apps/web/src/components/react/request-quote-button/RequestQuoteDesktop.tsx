@@ -16,11 +16,14 @@ import { SubmissionConfirmation } from "~/components/react/SubmissionConfirmatio
 import { Form } from "@synoem/ui/components/form";
 import { useState } from "react";
 import type { Props } from "./types";
+import { useTranslations } from "~/i18n/utils";
 
-export const RequestQuoteDesktop = ({ product, ...props }: Props) => {
+export const RequestQuoteDesktop = ({ product, locale, ...props }: Props) => {
   const { isSubmitting, isSuccess, error, form, onSubmit } = useRequestQuote({
     product,
   });
+
+  const { t } = useTranslations(locale);
 
   const [open, setOpen] = useState(false);
 
@@ -45,14 +48,17 @@ export const RequestQuoteDesktop = ({ product, ...props }: Props) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button {...props}>Request Quote</Button>
+        <Button className="min-w-[200px]" {...props}>
+          {t("Component.RequestQuoteButton.requestQuote")}
+        </Button>
       </DialogTrigger>
       <DialogContent className="max-w-[1200px] w-[90vw] min-w-[1000px] p-0 overflow-hidden">
         <DialogHeader className="p-6 pb-2">
-          <DialogTitle className="text-2xl">Request Quote</DialogTitle>
+          <DialogTitle className="text-2xl">
+            {t("Component.RequestQuoteButton.requestQuote")}
+          </DialogTitle>
           <DialogDescription className="text-base">
-            Please contact us by the infos below or fill in the form to request
-            a quote for this product.
+            {t("Component.RequestQuoteButton.description")}
           </DialogDescription>
         </DialogHeader>
         {

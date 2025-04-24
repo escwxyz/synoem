@@ -8,24 +8,23 @@ import { actions } from "astro:actions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { productFormSchema, type ProductFormValues } from "~/schemas/inquiry";
 import { useHookFormAstroAction } from "./use-form-with-astro-action";
+import type { Product } from "@synoem/payload/payload-types";
 
 export const useRequestQuote = ({
   product,
 }: {
-  product: SolarPanel | PumpController;
+  product: Product;
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const productCategory = isSolarPanel(product)
-    ? PRODUCT_CATEGORIES.solarPanel.slug
-    : PRODUCT_CATEGORIES.pumpController.slug;
+  const productCategory = product.category;
 
   const productName = product.modelName;
 
   const relatedProductId = product.id;
-  const relatedProductType = isSolarPanel(product) ? "solar-panels" : "pump-controllers";
+  const relatedProductType = productCategory;
 
   const { form } = useHookFormAstroAction({
     action: actions.inquiry.createProductInquiryAction,

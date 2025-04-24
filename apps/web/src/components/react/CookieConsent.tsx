@@ -6,11 +6,15 @@ import { useEffect, useState } from "react";
 import { cn } from "@synoem/ui/lib/utils";
 import { getLocaleFromUrl, useTranslations } from "~/i18n/utils";
 
-export function CookieConsent({
+export const CookieConsent = ({
   mode = false,
   onAcceptCallback = () => {},
   onDeclineCallback = () => {},
-}) {
+}: {
+  mode?: boolean;
+  onAcceptCallback?: () => void;
+  onDeclineCallback?: () => void;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hide, setHide] = useState(false);
 
@@ -65,15 +69,15 @@ export function CookieConsent({
       <div className="m-0 sm:m-3 dark:bg-card bg-background border border-border rounded-lg shadow-lg">
         <div className="flex items-center justify-between p-3">
           <h1 className="text-base sm:text-lg font-medium">
-            {t("CookieConsent.title")}
+            {t("Component.CookieConsent.title")}
           </h1>
           <CookieIcon className="h-4 w-4 sm:h-[1.2rem] sm:w-[1.2rem]" />
         </div>
         <div className="p-3 -mt-2">
           <p className="text-xs sm:text-sm text-left text-muted-foreground">
-            {t("CookieConsent.description")}{" "}
+            {t("Component.CookieConsent.description")}{" "}
             <a href={`/${locale}/privacy-policy`} className="underline">
-              {t("CookieConsent.privacyPolicy")}
+              {t("Component.CookieConsent.privacyPolicy")}
             </a>
             .
           </p>
@@ -84,16 +88,16 @@ export function CookieConsent({
             className="w-full sm:w-32 h-8 sm:h-9 text-xs sm:text-sm"
             variant="outline"
           >
-            {t("CookieConsent.decline")}
+            {t("Component.CookieConsent.decline")}
           </Button>
           <Button
             onClick={accept}
             className="w-full sm:w-32 h-8 sm:h-9 text-xs sm:text-sm"
           >
-            {t("CookieConsent.accept")}
+            {t("Component.CookieConsent.accept")}
           </Button>
         </div>
       </div>
     </div>
   );
-}
+};

@@ -81,6 +81,28 @@
       "backToPhotos": "Zurück zu den Fotos",
       "3DView": "3D Ansicht",
       "view3DModel": "3D Modell anzeigen"
+    },
+    "SolarPanelTabs": {
+      "overview": "Übersicht",
+      "gallery": "Galerie",
+      "specifications": "Spezifikationen",
+      "warranty": "Garantie",
+      "documents": "Dokumente"
+    },
+    "PumpControllerTabs": {
+      "overview": "Übersicht",
+      "gallery": "Galerie",
+      "specifications": "Spezifikationen",
+      "documents": "Dokumente"
+    },
+    "ProductBreadcrumb": {
+      "home": "Startseite",
+      "products": "Produkte",
+      "solarPanel": "Solarmodule",
+      "pumpController": "Pumpensteuerung"
+    },
+    "DownloadDatasheetButton": {
+      "download": "Datenblatt herunterladen"
     }
   }
 }
