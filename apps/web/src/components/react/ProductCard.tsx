@@ -1,6 +1,6 @@
 "use client";
 
-import type { Product } from "~/types/product";
+import type { Product } from "@synoem/payload/payload-types";
 import { Image } from "@unpic/react";
 import { getProductUrl } from "~/utils/get-product-url";
 import { isPumpController, isSolarPanel } from "~/utils/check-product-type";
@@ -8,32 +8,46 @@ import { useMediaQuery } from "usehooks-ts";
 import { RequestQuoteDesktop, RequestQuoteMobile } from "~/components/react";
 import { Bolt, Sun, Zap } from "lucide-react";
 import { Button } from "@synoem/ui/components/button";
-import type { ProductCategoryPluralSlug } from "@synoem/config";
 import { Card, CardContent, CardFooter } from "@synoem/ui/components/card";
 import { getEfficiencyRange } from "~/utils/get-efficiency-range";
+import { getLocaleFromUrl, useTranslations } from "~/i18n/utils";
+import type { Locale } from "@synoem/config";
 
 export const ProductCard = ({
   product,
-  category,
+  locale,
 }: {
   product: Product;
-  category: ProductCategoryPluralSlug;
+  locale: Locale;
 }) => {
-  const { cover, title } = product; // TODO: 3d model or video
+  const { t } = useTranslations(locale);
+
+  const { coverImage, title, gallery, three } = product;
+
+  const hasModel = three?.enabled && three?.model;
 
   const url = getProductUrl(product);
-  const imageUrl = typeof cover === "number" ? null : cover.url;
+
+  const imageUrl =
+    typeof gallery[0] === "number"
+      ? typeof coverImage === "number"
+        ? null
+        : coverImage.url
+      : gallery[0].url;
 
   const tagText = isSolarPanel(product)
-    ? product.cell.type.toUpperCase()
-    : product.type.toUpperCase();
+    ? // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      product.solarPanel![0].type!.toUpperCase()
+    : product.pumpController?.[0].type.toUpperCase();
 
-  const description = `${product.desc.slice(0, 70)}...`;
+  const excerpt = `${product.excerpt.slice(0, 70)}...`;
 
   const efficiencyRange = () => {
-    if (isSolarPanel(product) && product.powerRange.points) {
+    if (isSolarPanel(product) && product.solarPanel?.[0].power?.points) {
       // biome-ignore lint/style/noNonNullAssertion: powerRange.points is not null
-      const { min, max } = getEfficiencyRange(product.powerRange.points)!;
+      const { min, max } = getEfficiencyRange(
+        product.solarPanel?.[0].power?.points,
+      )!;
       return `${min}% ~ ${max}%`;
     }
     return null;
@@ -62,8 +76,15 @@ export const ProductCard = ({
                 </div>
               )}
             </a>
+            {hasModel && (
+              <div className="absolute top-3 left-3">
+                <span className="min-w-[72px] inline-flex justify-center items-center px-2.5 py-1 rounded-full text-xs font-medium backdrop-blur-2xl text-muted-foreground bg-muted/50 shadow-sm">
+                  3D
+                </span>
+              </div>
+            )}
             <div className="absolute top-3 right-3">
-              <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium backdrop-blur-xl text-muted-foreground bg-muted/50 shadow-sm">
+              <span className="min-w-[72px] inline-flex justify-center items-center px-2.5 py-1 rounded-full text-xs font-medium backdrop-blur-2xl text-muted-foreground bg-muted/50 shadow-sm">
                 {tagText}
               </span>
             </div>
@@ -72,15 +93,16 @@ export const ProductCard = ({
           <div className="flex flex-col flex-grow p-4 gap-2">
             <h3 className="font-semibold text-lg line-clamp-2 mb-1">{title}</h3>
 
-            {category === "solar-panels" && isSolarPanel(product) && (
+            {isSolarPanel(product) && (
               <>
                 <div className="flex items-center gap-2 text-sm">
                   <Zap className="h-4 w-4 text-amber-500" />
                   <span>
-                    {product.powerRange?.min}W ~ {product.powerRange?.max}W
+                    {product.solarPanel?.[0].power?.min}W ~{" "}
+                    {product.solarPanel?.[0].power?.max}W
                   </span>
                 </div>
-                {product.powerRange?.points?.[0]?.efficiency && (
+                {product.solarPanel?.[0].power?.points?.[0]?.efficiency && (
                   <div className="flex items-center gap-2 text-sm">
                     <Sun className="h-4 w-4 text-amber-500" />
                     <span>{efficiencyRange()}</span>
@@ -89,39 +111,47 @@ export const ProductCard = ({
               </>
             )}
 
-            {category === "pump-controllers" && isPumpController(product) && (
+            {isPumpController(product) && (
               <>
                 <div className="flex items-center gap-2 text-sm">
                   <Zap className="h-4 w-4 text-amber-500" />
-                  <span>Max Voltage: {product.maxVoltage}V</span>
+                  <span>
+                    {t("Component.ProductCard.maxVoltage")}:{" "}
+                    {product.pumpController?.[0].maxVoltage}V
+                  </span>
                 </div>
-                {product.maxCurrent && (
+                {product.pumpController?.[0].maxCurrent && (
                   <div className="flex items-center gap-2 text-sm">
                     <Bolt className="h-4 w-4 text-amber-500" />
-                    <span>Max Current: {product.maxCurrent}A</span>
+                    <span>
+                      {t("Component.ProductCard.maxCurrent")}:{" "}
+                      {product.pumpController?.[0].maxCurrent}A
+                    </span>
                   </div>
                 )}
               </>
             )}
-            <p className="text-sm line-clamp-2 mb-auto">{description}</p>
+            <p className="text-sm line-clamp-2 mb-auto">{excerpt}</p>
           </div>
         </CardContent>
         <CardFooter className="p-4 w-full flex flex-col gap-2">
           {isDesktop ? (
             <RequestQuoteDesktop
               product={product}
+              locale={locale}
               className="w-full"
               size="sm"
             />
           ) : (
             <RequestQuoteMobile
               product={product}
+              locale={locale}
               className="w-full"
               size="sm"
             />
           )}
           <Button asChild size="sm" variant="outline" className="w-full">
-            <a href={url}>View Details</a>
+            <a href={url}>{t("Component.ProductCard.viewDetails")}</a>
           </Button>
         </CardFooter>
       </Card>
