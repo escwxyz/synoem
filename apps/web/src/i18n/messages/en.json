@@ -115,6 +115,9 @@
       "filters": "Filters",
       "description": "Filter products by specs and more.",
       "reset": "Reset"
+    },
+    "ModelLoadingIndicator": {
+      "loading": "Loading 3D Model..."
     }
   }
 }

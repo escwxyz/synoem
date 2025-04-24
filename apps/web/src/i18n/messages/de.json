@@ -115,6 +115,9 @@
       "filters": "Filter",
       "description": "Filter Produkte nach Spezifikationen und mehr.",
       "reset": "Zurücksetzen"
+    },
+    "ModelLoadingIndicator": {
+      "loading": "3D Modell wird geladen..."
     }
   }
 }

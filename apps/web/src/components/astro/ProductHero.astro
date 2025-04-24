@@ -111,13 +111,14 @@ const locale = getLocaleFromUrl(Astro.url);
           </div>
         </div>
 
-        <div class="hidden md:block md:w-1/2 h-full">
+        <div id="product-hero-model" class="hidden md:block md:w-1/2 h-full">
           {
             three && (
               <ProductModelViewer
                 client:only="react"
                 three={three}
                 className="h-full"
+                locale={locale}
               />
             )
           }
@@ -135,3 +136,25 @@ const locale = getLocaleFromUrl(Astro.url);
     </div>
   </div>
 </section>
+
+<script>
+  import { modelViewerStateStore } from "~/stores/model-view";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const heroModelElement = document.querySelector("#product-hero-model");
+    if (heroModelElement) {
+      modelViewerStateStore.subscribe(({ galleryModelActive }) => {
+        if (galleryModelActive) {
+          (heroModelElement as HTMLElement).style.visibility = "hidden";
+          (heroModelElement as HTMLElement).style.opacity = "0";
+        } else {
+          (heroModelElement as HTMLElement).style.visibility = "visible";
+          (heroModelElement as HTMLElement).style.opacity = "1";
+
+          const event = new CustomEvent("hero-model-restore");
+          window.dispatchEvent(event);
+        }
+      });
+    }
+  });
+</script>

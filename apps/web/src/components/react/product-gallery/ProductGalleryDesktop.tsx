@@ -17,8 +17,9 @@ import type { Props, GalleryImage } from "./types";
 import { ProductModelViewer } from "../ProductModelViewer";
 import { ViewSwitch } from "./ViewSwitch";
 import { motion, AnimatePresence } from "motion/react";
+import { modelViewerStateStore } from "~/stores/model-view";
 
-export function ProductGalleryDesktop({ images, three }: Props) {
+export function ProductGalleryDesktop({ images, three, locale }: Props) {
   if (images.length === 0) {
     console.warn("ProductGalleryDesktop: No images provided");
     return null;
@@ -48,13 +49,27 @@ export function ProductGalleryDesktop({ images, three }: Props) {
     }
   }, [current, api]);
 
+  useEffect(() => {
+    return () => {
+      modelViewerStateStore.set({
+        galleryModelActive: false,
+      });
+    };
+  }, []);
+
   const handleThumbnailClick = (index: number) => {
     setCurrent(index);
     setSelectedImage(images[index]);
   };
 
   const toggleModelView = () => {
-    setShowModelView(!showModelView);
+    const newState = !showModelView;
+
+    modelViewerStateStore.set({
+      galleryModelActive: newState,
+    });
+
+    setShowModelView(newState);
   };
 
   return (
@@ -62,7 +77,11 @@ export function ProductGalleryDesktop({ images, three }: Props) {
       <div className="relative rounded-lg overflow-hidden">
         {showModelView ? (
           <div className="w-full aspect-[16/9] rounded-lg overflow-hidden">
-            <ProductModelViewer three={three} />
+            <ProductModelViewer
+              three={three}
+              key={`gallery-model-${Date.now()}`}
+              locale={locale}
+            />
           </div>
         ) : (
           <Image
