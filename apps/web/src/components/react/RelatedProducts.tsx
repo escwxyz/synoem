@@ -1,12 +1,13 @@
-// TODO
-
 "use client";
 
 import { useState, useEffect } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import { Button } from "@synoem/ui/components/button";
 
-import type { PumpController, SolarPanel } from "@synoem/payload/payload-types";
+import type {
+  Image as ImageType,
+  Product,
+} from "@synoem/payload/payload-types";
 import { getProductUrl } from "~/utils/get-product-url";
 import { Image } from "@unpic/react";
 import {
@@ -16,14 +17,19 @@ import {
   type CarouselApi,
 } from "@synoem/ui/components/carousel";
 import { getUrl } from "~/utils/get-url";
-import { cn } from "@synoem/ui/lib/utils";
+import { useTranslations } from "~/i18n/utils";
 
 type Props = {
-  relatedProducts: (SolarPanel | PumpController)[];
+  relatedProducts: Product[];
 };
 
 export const RelatedProducts = ({ relatedProducts }: Props) => {
-  if (relatedProducts.length === 0) {
+  const { t } = useTranslations();
+
+  if (
+    relatedProducts.length === 0 ||
+    relatedProducts.some((product) => typeof product.coverImage === "number")
+  ) {
     return null;
   }
 
@@ -47,7 +53,9 @@ export const RelatedProducts = ({ relatedProducts }: Props) => {
   return (
     <div className="mt-16 space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Maybe you'll like these</h2>
+        <h2 className="text-2xl font-bold">
+          {t("Component.RelatedProducts.title")}
+        </h2>
         <div className="flex space-x-2">
           <Button
             variant="outline"
@@ -78,37 +86,34 @@ export const RelatedProducts = ({ relatedProducts }: Props) => {
       >
         <CarouselContent className="md:-ml-4 rounded-lg">
           {relatedProducts.map((relatedProduct) => {
-            const product = relatedProduct as SolarPanel | PumpController;
-            const { cover } = product;
+            const { coverImage } = relatedProduct;
 
             return (
               <CarouselItem
-                key={product.id}
-                className={cn(
-                  relatedProducts.length === 1 && "lg:basis-full",
-                  relatedProducts.length === 2 && "lg:basis-1/2",
-                  relatedProducts.length === 3 && "lg:basis-1/3",
-                  relatedProducts.length === 4 && "lg:basis-1/4",
-                )}
+                key={relatedProduct.id}
+                className="basis-1 md:basis-1/3"
               >
                 <div className="space-y-3">
-                  {typeof cover === "number" ? (
-                    <div>TODO</div>
-                  ) : (
+                  <a href={getProductUrl(relatedProduct)}>
                     <Image
-                      src={getUrl(cover.url || "")}
-                      alt={cover.alt || ""}
+                      src={getUrl((coverImage as ImageType).url || "")}
+                      alt={(coverImage as ImageType).alt || ""}
                       aspectRatio={1}
                       width={400}
                       layout="constrained"
                       className="w-full h-full object-cover rounded-lg max-w-[400px]"
                     />
-                  )}
+                  </a>
+
                   <div className="space-y-1 text-center">
-                    <h3 className="font-medium text-sm">{product.title}</h3>
+                    <h3 className="font-medium text-sm">
+                      {relatedProduct.title}
+                    </h3>
                   </div>
                   <Button asChild variant="outline" className="w-full">
-                    <a href={getProductUrl(product)}>View Details</a>
+                    <a href={getProductUrl(relatedProduct)}>
+                      {t("Component.RelatedProducts.viewDetails")}
+                    </a>
                   </Button>
                 </div>
               </CarouselItem>

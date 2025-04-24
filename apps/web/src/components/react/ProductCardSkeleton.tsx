@@ -10,7 +10,7 @@ export const ProductCardSkeleton = () => {
           <div className="relative aspect-[4/3] overflow-hidden">
             <div className="w-full h-full bg-muted-foreground/20 animate-pulse" />
             <div className="absolute top-3 right-3">
-              <div className="w-16 h-5 rounded-full bg-muted-foreground/20 animate-pulse" />
+              <div className="w-[72px] h-6 rounded-full bg-muted-foreground/20 animate-pulse" />
             </div>
           </div>
 
@@ -33,8 +33,8 @@ export const ProductCardSkeleton = () => {
         </CardContent>
 
         <CardFooter className="p-4 w-full flex flex-col gap-2">
-          <div className="w-full h-9 bg-muted-foreground rounded animate-pulse" />
-          <div className="w-full h-9 bg-muted-foreground/50 rounded animate-pulse" />
+          <div className="w-full h-9 bg-muted-foreground rounded-md animate-pulse" />
+          <div className="w-full h-9 bg-muted-foreground/50 rounded-md animate-pulse" />
         </CardFooter>
       </Card>
     </div>

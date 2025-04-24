@@ -78,27 +78,20 @@ export interface Config {
     models: Model;
     documents: Document;
     attachments: Attachment;
-    'solar-panels': SolarPanel;
-    'pump-controllers': PumpController;
+    products: Product;
     warranties: Warranty;
     instructions: Instruction;
     certifications: Certification;
     'packaging-configs': PackagingConfig;
     datasheets: Datasheet;
     drawings: Drawing;
+    faqs: Faq;
     'payload-jobs': PayloadJob;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {
-    'solar-panels': {
-      relatedInquires: 'inquiries';
-    };
-    'pump-controllers': {
-      relatedInquires: 'inquiries';
-    };
-  };
+  collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
@@ -111,14 +104,14 @@ export interface Config {
     models: ModelsSelect<false> | ModelsSelect<true>;
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
     attachments: AttachmentsSelect<false> | AttachmentsSelect<true>;
-    'solar-panels': SolarPanelsSelect<false> | SolarPanelsSelect<true>;
-    'pump-controllers': PumpControllersSelect<false> | PumpControllersSelect<true>;
+    products: ProductsSelect<false> | ProductsSelect<true>;
     warranties: WarrantiesSelect<false> | WarrantiesSelect<true>;
     instructions: InstructionsSelect<false> | InstructionsSelect<true>;
     certifications: CertificationsSelect<false> | CertificationsSelect<true>;
     'packaging-configs': PackagingConfigsSelect<false> | PackagingConfigsSelect<true>;
     datasheets: DatasheetsSelect<false> | DatasheetsSelect<true>;
     drawings: DrawingsSelect<false> | DrawingsSelect<true>;
+    faqs: FaqsSelect<false> | FaqsSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -245,12 +238,8 @@ export interface HeroBlockType {
           value: number | Page;
         } | null)
       | ({
-          relationTo: 'solar-panels';
-          value: number | SolarPanel;
-        } | null)
-      | ({
-          relationTo: 'pump-controllers';
-          value: number | PumpController;
+          relationTo: 'products';
+          value: number | Product;
         } | null)
       | ({
           relationTo: 'industries';
@@ -274,12 +263,8 @@ export interface HeroBlockType {
           value: number | Page;
         } | null)
       | ({
-          relationTo: 'solar-panels';
-          value: number | SolarPanel;
-        } | null)
-      | ({
-          relationTo: 'pump-controllers';
-          value: number | PumpController;
+          relationTo: 'products';
+          value: number | Product;
         } | null)
       | ({
           relationTo: 'industries';
@@ -380,34 +365,43 @@ export interface HeroBlockType {
   blockType: 'heroBlock';
 }
 /**
- * Manage your solar panel products
- *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "solar-panels".
+ * via the `definition` "products".
  */
-export interface SolarPanel {
+export interface Product {
   id: number;
   title: string;
+  category: 'solar-panels' | 'pump-controllers';
   slug: string;
   slugLock?: boolean | null;
+  excerpt: string;
   /**
-   * The cover image for the product
+   * Use a landscape image as cover image, which will be placed on the hero section of the product page
    */
-  cover: number | Image;
-  datasheet?: (number | null) | Datasheet;
-  /**
-   * Related inquiries
-   */
-  relatedInquires?: {
-    docs?: (number | Inquiry)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
+  coverImage: number | Image;
+  visibility?: boolean | null;
   /**
    * The model name or number of the product.
    */
   modelName: string;
-  desc: string;
+  /**
+   * Comprehensive description of the product
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   /**
    * Select the industry that this product belongs to.
    */
@@ -415,40 +409,36 @@ export interface SolarPanel {
   /**
    * Upload images for the product
    */
-  gallery?: (number | Image)[] | null;
-  enableVariants?: boolean | null;
-  vars?: SolarPanelVariantBlockType[] | null;
+  gallery: (number | Image)[];
+  /**
+   * Add features to the product
+   */
+  features?: ProductFeatureBlockType[] | null;
   three?: {
     enabled?: boolean | null;
     /**
      * Upload a 3D model file
      */
     model?: (number | null) | Model;
-    variants?:
+    /**
+     * Add annotations to specific parts of the 3D model
+     */
+    annotations?:
       | {
-          name: string;
-          color: {
-            /**
-             * Hex color code or material name
-             */
-            frame: string;
-            /**
-             * Hex color code or material name
-             */
-            glass: string;
-            /**
-             * Hex color code or material name
-             */
-            backsheet: string;
+          title: string;
+          description?: string | null;
+          /**
+           * Custom position for the annotation (optional)
+           */
+          position?: {
+            x?: number | null;
+            y?: number | null;
+            z?: number | null;
           };
           id?: string | null;
         }[]
       | null;
   };
-  /**
-   * Add features to the product
-   */
-  features?: ProductFeatureBlockType[] | null;
   dimensions?: {
     h?: number | null;
     w?: number | null;
@@ -459,98 +449,40 @@ export interface SolarPanel {
     value?: number | null;
     unit?: ('g' | 'kg') | null;
   };
+  solarPanel?: SolarPanelBlockType[] | null;
+  pumpController?: PumpControllerBlockType[] | null;
   drawing?: (number | null) | Drawing;
-  cell: {
-    type: 'perc' | 'hjt' | 'topcon';
-    tech?: ('0bb' | 'smbb' | 'mbb' | 'bc' | 'perovskite')[] | null;
-    size: {
-      length: number;
-      width: number;
+  /**
+   * Select the warranty for the product
+   */
+  warranty?: (number | null) | Warranty;
+  /**
+   * Select the instructions for the product
+   */
+  instructions?: (number | Instruction)[] | null;
+  datasheet?: (number | null) | Datasheet;
+  /**
+   * Select the certifications for the product
+   */
+  certifications?: (number | Certification)[] | null;
+  /**
+   * OEM description
+   */
+  oem?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
     };
-    count: number;
-  };
-  facial: 'monofacial' | 'bifacial';
-  /**
-   * Enter the bifaciality of the panel
-   */
-  bifaciality?: number | null;
-  glass: {
-    type: 'single' | 'double';
-    thickness: number;
-    desc: string;
-  };
-  /**
-   * Enter the description of the frame
-   */
-  frame: string;
-  /**
-   * Enter the description of the junction box
-   */
-  junction: string;
-  /**
-   * Enter the description of the connector
-   */
-  connector: string;
-  /**
-   * Enter the workingtemperature range of the panel / cell
-   */
-  temp: {
-    min: number;
-    max: number;
-  };
-  /**
-   * Enter the description of the hail
-   */
-  hail?: string | null;
-  loads: {
-    wind: number;
-    snow: number;
-  };
-  powerRange: {
-    min: number;
-    max: number;
-    /**
-     * Step must be a multiple of 5
-     */
-    step: number;
-    /**
-     * Click the button to generate the power points
-     */
-    points?:
-      | {
-          /**
-           * This is automatically generated
-           */
-          pmax?: number | null;
-          /**
-           * This is automatically generated
-           */
-          efficiency?: number | null;
-          vmp: number;
-          imp: number;
-          voc: number;
-          isc: number;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  tempCo: {
-    pmax: number;
-    isc: number;
-    voc: number;
-    noct: number;
-  };
-  maxRatings: {
-    fuse: number;
-    /**
-     * Enter the maximum system voltage
-     */
-    voltage: string;
-    /**
-     * Enter the fire rating
-     */
-    fire: string;
-  };
+    [k: string]: unknown;
+  } | null;
   moq?: {
     value?: number | null;
     unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
@@ -587,22 +519,6 @@ export interface SolarPanel {
    * Select the packaging configuration for the product
    */
   packagingConfig: number | PackagingConfig;
-  /**
-   * Select the warranties for the product
-   */
-  warranties?: (number | Warranty)[] | null;
-  /**
-   * Select the instructions for the product
-   */
-  instructions?: (number | Instruction)[] | null;
-  /**
-   * Select the certifications for the product
-   */
-  certifications?: (number | Certification)[] | null;
-  /**
-   * Select related products (max 10)
-   */
-  relatedProducts?: (number | SolarPanel)[] | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -629,16 +545,222 @@ export interface Image {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "datasheets".
+ * via the `definition` "industries".
  */
-export interface Datasheet {
+export interface Industry {
   id: number;
   title: string;
-  desc?: string | null;
+  desc: string;
   /**
-   * Upload a PDF file for the datasheet
+   * The cover image for the product
+   */
+  cover: number | Image;
+  slug: string;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductFeatureBlockType".
+ */
+export interface ProductFeatureBlockType {
+  title: string;
+  description: string;
+  iconName?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'productFeatureBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "models".
+ */
+export interface Model {
+  id: number;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SolarPanelBlockType".
+ */
+export interface SolarPanelBlockType {
+  type?: ('topcon' | 'perc' | 'hjt') | null;
+  cellDesc: string;
+  cellLength: number;
+  cellWidth: number;
+  cellCount: number;
+  glassType: 'monofacial' | 'bifacial';
+  bifaciality?: number | null;
+  glassThickness: number;
+  glassDesc: string;
+  frameDesc: string;
+  junctionDesc: string;
+  connDesc: string;
+  connLength: number;
+  /**
+   * Enter the workingtemperature range of the panel / cell
+   */
+  temp: {
+    min: number;
+    max: number;
+  };
+  snow: number;
+  wind: number;
+  hail: number;
+  tolerance?: {
+    min?: number | null;
+    max?: number | null;
+  };
+  power: {
+    min: number;
+    max: number;
+    /**
+     * Step must be a multiple of 5
+     */
+    step: number;
+    /**
+     * Click the button to generate the power points
+     */
+    points?:
+      | {
+          pmax?: number | null;
+          efficiency?: number | null;
+          vmp: number;
+          imp: number;
+          voc: number;
+          isc: number;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  tempCo: {
+    pmax: number;
+    isc: number;
+    voc: number;
+    noct: number;
+  };
+  ratings: {
+    fuse: number;
+    voltage: string;
+    fire: string;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'solarPanelBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PumpControllerBlockType".
+ */
+export interface PumpControllerBlockType {
+  type: 'smart' | 'standard';
+  maxVoltage: number;
+  voltageRange: {
+    min: number;
+    max: number;
+  };
+  maxCurrent: number;
+  maxPower: number;
+  startingPressure: number;
+  maxPressure: number;
+  tempRange: {
+    min: number;
+    max: number;
+  };
+  protectionGrade: string;
+  frequency: string;
+  threadInterface?: string | null;
+  maxWorkingPressure: number;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'pumpControllerBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "drawings".
+ */
+export interface Drawing {
+  id: number;
+  title: string;
+  description?: string | null;
+  file: number | Image;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "warranties".
+ */
+export interface Warranty {
+  id: number;
+  title: string;
+  productWarranty?: boolean | null;
+  descProduct?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  durationProduct?: {
+    value?: number | null;
+    unit?: ('days' | 'weeks' | 'months' | 'years') | null;
+  };
+  powerWarranty?: boolean | null;
+  descPower?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  durationPower?: {
+    value?: number | null;
+    unit?: ('days' | 'weeks' | 'months' | 'years') | null;
+  };
+  powerDegradation?: {
+    initialGuarantee: number;
+    annual: number;
+    endYearGuarantee: number;
+    compareWithIndustry?: boolean | null;
+    industryStd?: {
+      initialValue?: number | null;
+      annualDegradation?: number | null;
+      endYearValue?: number | null;
+    };
+  };
+  /**
+   * File of the warranty
    */
   file?: (number | null) | Document;
+  fileDesc?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -660,6 +782,373 @@ export interface Document {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "instructions".
+ */
+export interface Instruction {
+  id: number;
+  title: string;
+  description?: string | null;
+  /**
+   * Upload a PDF file for the instructions
+   */
+  file?: (number | null) | Document;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "datasheets".
+ */
+export interface Datasheet {
+  id: number;
+  title: string;
+  desc?: string | null;
+  /**
+   * Upload a PDF file for the datasheet
+   */
+  file?: (number | null) | Document;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "certifications".
+ */
+export interface Certification {
+  id: number;
+  name: string;
+  desc?: string | null;
+  file?: (number | null) | Document;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "packaging-configs".
+ */
+export interface PackagingConfig {
+  id: number;
+  title: string;
+  /**
+   * Description of the packaging configuration
+   */
+  description?: string | null;
+  /**
+   * How the product is packaged individually (e.g., pieces, sets)
+   */
+  unitQty?: {
+    value?: number | null;
+    unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
+  };
+  /**
+   * Dimensions of a single package
+   */
+  unitDimensions?: {
+    h?: number | null;
+    w?: number | null;
+    d?: number | null;
+    unit?: ('mm' | 'cm' | 'm') | null;
+  };
+  /**
+   * Weight of a single packaged unit
+   */
+  unitWeight?: {
+    value?: number | null;
+    unit?: ('g' | 'kg') | null;
+  };
+  /**
+   * Number of pieces that can fit on one pallet
+   */
+  qtyPerPallet?: number | null;
+  /**
+   * Dimensions of a fully loaded pallet
+   */
+  palletDimensions?: {
+    h?: number | null;
+    w?: number | null;
+    d?: number | null;
+    unit?: ('mm' | 'cm' | 'm') | null;
+  };
+  /**
+   * Total weight of a fully loaded pallet (including pallet weight)
+   */
+  palletWeight?: {
+    value?: number | null;
+    unit?: ('g' | 'kg') | null;
+  };
+  /**
+   * Standard shipping container type
+   */
+  containerType?: ('20GP' | '40GP' | '40HQ') | null;
+  /**
+   * Number of pallets that can fit in the container
+   */
+  pltsPerContainer?: number | null;
+  /**
+   * Total number of pieces in the container (Pallets × Units per Pallet)
+   */
+  totalQty?: number | null;
+  /**
+   * Total weight of all pallets in the container (kg)
+   */
+  totalWeight?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "videos".
+ */
+export interface Video {
+  id: number;
+  duration?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentBlockType".
+ */
+export interface ContentBlockType {
+  columns?:
+    | {
+        size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
+        richText?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        enableLink?: boolean | null;
+        link?: {
+          type?: ('internal' | 'external') | null;
+          internal?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'products';
+                value: number | Product;
+              } | null)
+            | ({
+                relationTo: 'industries';
+                value: number | Industry;
+              } | null);
+          /**
+           * External URL will be opened in a new tab.
+           */
+          url?: string | null;
+          label?: string | null;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contentBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CallToActionBlockType".
+ */
+export interface CallToActionBlockType {
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  links?:
+    | {
+        link?: {
+          type?: ('internal' | 'external') | null;
+          internal?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'products';
+                value: number | Product;
+              } | null)
+            | ({
+                relationTo: 'industries';
+                value: number | Industry;
+              } | null);
+          /**
+           * External URL will be opened in a new tab.
+           */
+          url?: string | null;
+          label?: string | null;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'callToActionBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaBlockType".
+ */
+export interface MediaBlockType {
+  /**
+   * Select a media item to display
+   */
+  media:
+    | {
+        relationTo: 'images';
+        value: number | Image;
+      }
+    | {
+        relationTo: 'videos';
+        value: number | Video;
+      }
+    | {
+        relationTo: 'models';
+        value: number | Model;
+      };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'mediaBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeatureBlockType".
+ */
+export interface FeatureBlockType {
+  /**
+   * A short, optional heading above the main title.
+   */
+  eyebrow?: string | null;
+  title: string;
+  /**
+   * Secondary heading under the main title.
+   */
+  subtitle?: string | null;
+  desc?: string | null;
+  ctaPrimary?: {
+    type?: ('internal' | 'external') | null;
+    internal?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'products';
+          value: number | Product;
+        } | null)
+      | ({
+          relationTo: 'industries';
+          value: number | Industry;
+        } | null);
+    /**
+     * External URL will be opened in a new tab.
+     */
+    url?: string | null;
+    label?: string | null;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: ('default' | 'outline') | null;
+  };
+  ctaSecondary?: {
+    type?: ('internal' | 'external') | null;
+    internal?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'products';
+          value: number | Product;
+        } | null)
+      | ({
+          relationTo: 'industries';
+          value: number | Industry;
+        } | null);
+    /**
+     * External URL will be opened in a new tab.
+     */
+    url?: string | null;
+    label?: string | null;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: ('default' | 'outline') | null;
+  };
+  features: {
+    image?: (number | null) | Image;
+    title: string;
+    desc?: string | null;
+    id?: string | null;
+  }[];
+  /**
+   * Select if text is on the top or the bottom.
+   */
+  textPlacement?: ('top' | 'bottom') | null;
+  /**
+   * Align text within its column (left, center, or right).
+   */
+  textAlignment?: ('start' | 'center' | 'end') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featureBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notifications".
+ */
+export interface Notification {
+  id: number;
+  title: string;
+  link?: {
+    relationTo: 'pages';
+    value: number | Page;
+  } | null;
+  state?: ('active' | 'inactive') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "inquiries".
  */
 export interface Inquiry {
@@ -668,15 +1157,10 @@ export interface Inquiry {
   /**
    * Product inquiry related product
    */
-  relatedProduct?:
-    | ({
-        relationTo: 'solar-panels';
-        value: number | SolarPanel;
-      } | null)
-    | ({
-        relationTo: 'pump-controllers';
-        value: number | PumpController;
-      } | null);
+  relatedProduct?: {
+    relationTo: 'products';
+    value: number | Product;
+  } | null;
   /**
    * Inquiry status
    */
@@ -1237,333 +1721,6 @@ export interface Inquiry {
   createdAt: string;
 }
 /**
- * Manage your pump controller products
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pump-controllers".
- */
-export interface PumpController {
-  id: number;
-  title: string;
-  slug: string;
-  slugLock?: boolean | null;
-  /**
-   * The cover image for the product
-   */
-  cover: number | Image;
-  datasheet?: (number | null) | Datasheet;
-  /**
-   * Related inquiries
-   */
-  relatedInquires?: {
-    docs?: (number | Inquiry)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  /**
-   * The model name or number of the product.
-   */
-  modelName: string;
-  desc: string;
-  /**
-   * Select the industry that this product belongs to.
-   */
-  industry: number | Industry;
-  /**
-   * Upload images for the product
-   */
-  gallery?: (number | Image)[] | null;
-  enableVariants?: boolean | null;
-  vars?: PumpControllerVariantBlockType[] | null;
-  three?: {
-    enabled?: boolean | null;
-    /**
-     * Upload a 3D model file
-     */
-    model?: (number | null) | Model;
-    variants?:
-      | {
-          name: string;
-          color: {
-            /**
-             * Hex color code or material name
-             */
-            frame: string;
-            /**
-             * Hex color code or material name
-             */
-            glass: string;
-            /**
-             * Hex color code or material name
-             */
-            backsheet: string;
-          };
-          id?: string | null;
-        }[]
-      | null;
-  };
-  /**
-   * Add features to the product
-   */
-  features?: ProductFeatureBlockType[] | null;
-  type: 'smart' | 'standard';
-  maxVoltage: number;
-  maxCurrent: number;
-  maxPower: number;
-  startingPressure: number;
-  maxPressure: number;
-  tempRange: {
-    min: number;
-    max: number;
-  };
-  moq?: {
-    value?: number | null;
-    unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
-  };
-  /**
-   * Specify lead times for different quantity ranges
-   */
-  leadTime?:
-    | {
-        range?: {
-          /**
-           * Lower bound of the range. Leave empty for no lower limit.
-           */
-          min?: {
-            value?: number | null;
-            unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
-          };
-          /**
-           * Upper bound of the range. Leave empty for no upper limit.
-           */
-          max?: {
-            value?: number | null;
-            unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
-          };
-          duration?: {
-            value?: number | null;
-            unit?: ('days' | 'weeks' | 'months' | 'years') | null;
-          };
-        };
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Select the packaging configuration for the product
-   */
-  packagingConfig: number | PackagingConfig;
-  /**
-   * Select the warranties for the product
-   */
-  warranties?: (number | Warranty)[] | null;
-  /**
-   * Select the instructions for the product
-   */
-  instructions?: (number | Instruction)[] | null;
-  /**
-   * Select the certifications for the product
-   */
-  certifications?: (number | Certification)[] | null;
-  /**
-   * Select related products (max 10)
-   */
-  relatedProducts?: (number | PumpController)[] | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "industries".
- */
-export interface Industry {
-  id: number;
-  title: string;
-  desc: string;
-  /**
-   * The cover image for the product
-   */
-  cover: number | Image;
-  slug: string;
-  slugLock?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "PumpControllerVariantBlockType".
- */
-export interface PumpControllerVariantBlockType {
-  /**
-   * The SKU for the product
-   */
-  sku: string;
-  color: 'purple' | 'blue' | 'green' | 'yellow' | 'orange';
-  /**
-   * Upload images for the product
-   */
-  gallery?: (number | Image)[] | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'pcv';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "models".
- */
-export interface Model {
-  id: number;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ProductFeatureBlockType".
- */
-export interface ProductFeatureBlockType {
-  title: string;
-  description: string;
-  iconName?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'productFeatureBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "packaging-configs".
- */
-export interface PackagingConfig {
-  id: number;
-  title: string;
-  /**
-   * Description of the packaging configuration
-   */
-  description?: string | null;
-  /**
-   * How the product is packaged individually (e.g., pieces, sets)
-   */
-  unitQty?: {
-    value?: number | null;
-    unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
-  };
-  /**
-   * Dimensions of a single package
-   */
-  unitDimensions?: {
-    h?: number | null;
-    w?: number | null;
-    d?: number | null;
-    unit?: ('mm' | 'cm' | 'm') | null;
-  };
-  /**
-   * Weight of a single packaged unit
-   */
-  unitWeight?: {
-    value?: number | null;
-    unit?: ('g' | 'kg') | null;
-  };
-  /**
-   * Number of pieces that can fit on one pallet
-   */
-  qtyPerPallet?: number | null;
-  /**
-   * Dimensions of a fully loaded pallet
-   */
-  palletDimensions?: {
-    h?: number | null;
-    w?: number | null;
-    d?: number | null;
-    unit?: ('mm' | 'cm' | 'm') | null;
-  };
-  /**
-   * Total weight of a fully loaded pallet (including pallet weight)
-   */
-  palletWeight?: {
-    value?: number | null;
-    unit?: ('g' | 'kg') | null;
-  };
-  /**
-   * Standard shipping container type
-   */
-  containerType?: ('20GP' | '40GP' | '40HQ') | null;
-  /**
-   * Number of pallets that can fit in the container
-   */
-  pltsPerContainer?: number | null;
-  /**
-   * Total number of pieces in the container (Pallets × Units per Pallet)
-   */
-  totalQty?: number | null;
-  /**
-   * Total weight of all pallets in the container (kg)
-   */
-  totalWeight?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "warranties".
- */
-export interface Warranty {
-  id: number;
-  title: string;
-  type?: ('product' | 'power') | null;
-  /**
-   * Description of the warranty
-   */
-  desc?: string | null;
-  /**
-   * Duration of the warranty
-   */
-  duration?: {
-    value?: number | null;
-    unit?: ('days' | 'weeks' | 'months' | 'years') | null;
-  };
-  /**
-   * File of the warranty
-   */
-  file?: (number | null) | Document;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "instructions".
- */
-export interface Instruction {
-  id: number;
-  title: string;
-  description?: string | null;
-  /**
-   * Upload a PDF file for the instructions
-   */
-  file?: (number | null) | Document;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "certifications".
- */
-export interface Certification {
-  id: number;
-  name: string;
-  desc?: string | null;
-  file?: (number | null) | Document;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
  * Customer uploaded files
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1582,305 +1739,6 @@ export interface Attachment {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "SolarPanelVariantBlockType".
- */
-export interface SolarPanelVariantBlockType {
-  /**
-   * The SKU for the product
-   */
-  sku: string;
-  frame: 'black' | 'silver';
-  panel: 'all-black' | 'transparent' | 'full-black';
-  /**
-   * Upload images for the product
-   */
-  gallery?: (number | Image)[] | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'spv';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "drawings".
- */
-export interface Drawing {
-  id: number;
-  title: string;
-  description?: string | null;
-  file: number | Image;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "videos".
- */
-export interface Video {
-  id: number;
-  duration?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ContentBlockType".
- */
-export interface ContentBlockType {
-  columns?:
-    | {
-        size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
-        richText?: {
-          root: {
-            type: string;
-            children: {
-              type: string;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
-        enableLink?: boolean | null;
-        link?: {
-          type?: ('internal' | 'external') | null;
-          internal?:
-            | ({
-                relationTo: 'pages';
-                value: number | Page;
-              } | null)
-            | ({
-                relationTo: 'solar-panels';
-                value: number | SolarPanel;
-              } | null)
-            | ({
-                relationTo: 'pump-controllers';
-                value: number | PumpController;
-              } | null)
-            | ({
-                relationTo: 'industries';
-                value: number | Industry;
-              } | null);
-          /**
-           * External URL will be opened in a new tab.
-           */
-          url?: string | null;
-          label?: string | null;
-          /**
-           * Choose how the link should be rendered.
-           */
-          appearance?: ('default' | 'outline') | null;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'contentBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CallToActionBlockType".
- */
-export interface CallToActionBlockType {
-  richText?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  links?:
-    | {
-        link?: {
-          type?: ('internal' | 'external') | null;
-          internal?:
-            | ({
-                relationTo: 'pages';
-                value: number | Page;
-              } | null)
-            | ({
-                relationTo: 'solar-panels';
-                value: number | SolarPanel;
-              } | null)
-            | ({
-                relationTo: 'pump-controllers';
-                value: number | PumpController;
-              } | null)
-            | ({
-                relationTo: 'industries';
-                value: number | Industry;
-              } | null);
-          /**
-           * External URL will be opened in a new tab.
-           */
-          url?: string | null;
-          label?: string | null;
-          /**
-           * Choose how the link should be rendered.
-           */
-          appearance?: ('default' | 'outline') | null;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'callToActionBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MediaBlockType".
- */
-export interface MediaBlockType {
-  /**
-   * Select a media item to display
-   */
-  media:
-    | {
-        relationTo: 'images';
-        value: number | Image;
-      }
-    | {
-        relationTo: 'videos';
-        value: number | Video;
-      }
-    | {
-        relationTo: 'models';
-        value: number | Model;
-      };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'mediaBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FeatureBlockType".
- */
-export interface FeatureBlockType {
-  /**
-   * A short, optional heading above the main title.
-   */
-  eyebrow?: string | null;
-  title: string;
-  /**
-   * Secondary heading under the main title.
-   */
-  subtitle?: string | null;
-  desc?: string | null;
-  ctaPrimary?: {
-    type?: ('internal' | 'external') | null;
-    internal?:
-      | ({
-          relationTo: 'pages';
-          value: number | Page;
-        } | null)
-      | ({
-          relationTo: 'solar-panels';
-          value: number | SolarPanel;
-        } | null)
-      | ({
-          relationTo: 'pump-controllers';
-          value: number | PumpController;
-        } | null)
-      | ({
-          relationTo: 'industries';
-          value: number | Industry;
-        } | null);
-    /**
-     * External URL will be opened in a new tab.
-     */
-    url?: string | null;
-    label?: string | null;
-    /**
-     * Choose how the link should be rendered.
-     */
-    appearance?: ('default' | 'outline') | null;
-  };
-  ctaSecondary?: {
-    type?: ('internal' | 'external') | null;
-    internal?:
-      | ({
-          relationTo: 'pages';
-          value: number | Page;
-        } | null)
-      | ({
-          relationTo: 'solar-panels';
-          value: number | SolarPanel;
-        } | null)
-      | ({
-          relationTo: 'pump-controllers';
-          value: number | PumpController;
-        } | null)
-      | ({
-          relationTo: 'industries';
-          value: number | Industry;
-        } | null);
-    /**
-     * External URL will be opened in a new tab.
-     */
-    url?: string | null;
-    label?: string | null;
-    /**
-     * Choose how the link should be rendered.
-     */
-    appearance?: ('default' | 'outline') | null;
-  };
-  features: {
-    image?: (number | null) | Image;
-    title: string;
-    desc?: string | null;
-    id?: string | null;
-  }[];
-  /**
-   * Select if text is on the top or the bottom.
-   */
-  textPlacement?: ('top' | 'bottom') | null;
-  /**
-   * Align text within its column (left, center, or right).
-   */
-  textAlignment?: ('start' | 'center' | 'end') | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'featureBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "notifications".
- */
-export interface Notification {
-  id: number;
-  title: string;
-  link?: {
-    relationTo: 'pages';
-    value: number | Page;
-  } | null;
-  state?: ('active' | 'inactive') | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * Users who have subscribed to the newsletter
@@ -1910,6 +1768,25 @@ export interface NewsletterSubscriber {
     ipAddress?: string | null;
     userAgent?: string | null;
   };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs".
+ */
+export interface Faq {
+  id: number;
+  title: string;
+  description?: string | null;
+  type?: ('general' | 'solar-panel' | 'pump-controller') | null;
+  content?:
+    | {
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -2057,12 +1934,8 @@ export interface PayloadLockedDocument {
         value: number | Attachment;
       } | null)
     | ({
-        relationTo: 'solar-panels';
-        value: number | SolarPanel;
-      } | null)
-    | ({
-        relationTo: 'pump-controllers';
-        value: number | PumpController;
+        relationTo: 'products';
+        value: number | Product;
       } | null)
     | ({
         relationTo: 'warranties';
@@ -2087,6 +1960,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'drawings';
         value: number | Drawing;
+      } | null)
+    | ({
+        relationTo: 'faqs';
+        value: number | Faq;
       } | null)
     | ({
         relationTo: 'payload-jobs';
@@ -2573,48 +2450,44 @@ export interface AttachmentsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "solar-panels_select".
+ * via the `definition` "products_select".
  */
-export interface SolarPanelsSelect<T extends boolean = true> {
+export interface ProductsSelect<T extends boolean = true> {
   title?: T;
+  category?: T;
   slug?: T;
   slugLock?: T;
-  cover?: T;
-  datasheet?: T;
-  relatedInquires?: T;
+  excerpt?: T;
+  coverImage?: T;
+  visibility?: T;
   modelName?: T;
-  desc?: T;
+  description?: T;
   industry?: T;
   gallery?: T;
-  enableVariants?: T;
-  vars?:
+  features?:
     | T
     | {
-        spv?: T | SolarPanelVariantBlockTypeSelect<T>;
+        productFeatureBlock?: T | ProductFeatureBlockTypeSelect<T>;
       };
   three?:
     | T
     | {
         enabled?: T;
         model?: T;
-        variants?:
+        annotations?:
           | T
           | {
-              name?: T;
-              color?:
+              title?: T;
+              description?: T;
+              position?:
                 | T
                 | {
-                    frame?: T;
-                    glass?: T;
-                    backsheet?: T;
+                    x?: T;
+                    y?: T;
+                    z?: T;
                   };
               id?: T;
             };
-      };
-  features?:
-    | T
-    | {
-        productFeatureBlock?: T | ProductFeatureBlockTypeSelect<T>;
       };
   dimensions?:
     | T
@@ -2630,46 +2503,105 @@ export interface SolarPanelsSelect<T extends boolean = true> {
         value?: T;
         unit?: T;
       };
-  drawing?: T;
-  cell?:
+  solarPanel?:
     | T
     | {
-        type?: T;
-        tech?: T;
-        size?:
+        solarPanelBlock?: T | SolarPanelBlockTypeSelect<T>;
+      };
+  pumpController?:
+    | T
+    | {
+        pumpControllerBlock?: T | PumpControllerBlockTypeSelect<T>;
+      };
+  drawing?: T;
+  warranty?: T;
+  instructions?: T;
+  datasheet?: T;
+  certifications?: T;
+  oem?: T;
+  moq?:
+    | T
+    | {
+        value?: T;
+        unit?: T;
+      };
+  leadTime?:
+    | T
+    | {
+        range?:
           | T
           | {
-              length?: T;
-              width?: T;
+              min?:
+                | T
+                | {
+                    value?: T;
+                    unit?: T;
+                  };
+              max?:
+                | T
+                | {
+                    value?: T;
+                    unit?: T;
+                  };
+              duration?:
+                | T
+                | {
+                    value?: T;
+                    unit?: T;
+                  };
             };
-        count?: T;
+        id?: T;
       };
-  facial?: T;
+  packagingConfig?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductFeatureBlockType_select".
+ */
+export interface ProductFeatureBlockTypeSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  iconName?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SolarPanelBlockType_select".
+ */
+export interface SolarPanelBlockTypeSelect<T extends boolean = true> {
+  type?: T;
+  cellDesc?: T;
+  cellLength?: T;
+  cellWidth?: T;
+  cellCount?: T;
+  glassType?: T;
   bifaciality?: T;
-  glass?:
-    | T
-    | {
-        type?: T;
-        thickness?: T;
-        desc?: T;
-      };
-  frame?: T;
-  junction?: T;
-  connector?: T;
+  glassThickness?: T;
+  glassDesc?: T;
+  frameDesc?: T;
+  junctionDesc?: T;
+  connDesc?: T;
+  connLength?: T;
   temp?:
     | T
     | {
         min?: T;
         max?: T;
       };
+  snow?: T;
+  wind?: T;
   hail?: T;
-  loads?:
+  tolerance?:
     | T
     | {
-        wind?: T;
-        snow?: T;
+        min?: T;
+        max?: T;
       };
-  powerRange?:
+  power?:
     | T
     | {
         min?: T;
@@ -2695,125 +2627,29 @@ export interface SolarPanelsSelect<T extends boolean = true> {
         voc?: T;
         noct?: T;
       };
-  maxRatings?:
+  ratings?:
     | T
     | {
         fuse?: T;
         voltage?: T;
         fire?: T;
       };
-  moq?:
-    | T
-    | {
-        value?: T;
-        unit?: T;
-      };
-  leadTime?:
-    | T
-    | {
-        range?:
-          | T
-          | {
-              min?:
-                | T
-                | {
-                    value?: T;
-                    unit?: T;
-                  };
-              max?:
-                | T
-                | {
-                    value?: T;
-                    unit?: T;
-                  };
-              duration?:
-                | T
-                | {
-                    value?: T;
-                    unit?: T;
-                  };
-            };
-        id?: T;
-      };
-  packagingConfig?: T;
-  warranties?: T;
-  instructions?: T;
-  certifications?: T;
-  relatedProducts?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "SolarPanelVariantBlockType_select".
- */
-export interface SolarPanelVariantBlockTypeSelect<T extends boolean = true> {
-  sku?: T;
-  frame?: T;
-  panel?: T;
-  gallery?: T;
   id?: T;
   blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ProductFeatureBlockType_select".
+ * via the `definition` "PumpControllerBlockType_select".
  */
-export interface ProductFeatureBlockTypeSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
-  iconName?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pump-controllers_select".
- */
-export interface PumpControllersSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  slugLock?: T;
-  cover?: T;
-  datasheet?: T;
-  relatedInquires?: T;
-  modelName?: T;
-  desc?: T;
-  industry?: T;
-  gallery?: T;
-  enableVariants?: T;
-  vars?:
-    | T
-    | {
-        pcv?: T | PumpControllerVariantBlockTypeSelect<T>;
-      };
-  three?:
-    | T
-    | {
-        enabled?: T;
-        model?: T;
-        variants?:
-          | T
-          | {
-              name?: T;
-              color?:
-                | T
-                | {
-                    frame?: T;
-                    glass?: T;
-                    backsheet?: T;
-                  };
-              id?: T;
-            };
-      };
-  features?:
-    | T
-    | {
-        productFeatureBlock?: T | ProductFeatureBlockTypeSelect<T>;
-      };
+export interface PumpControllerBlockTypeSelect<T extends boolean = true> {
   type?: T;
   maxVoltage?: T;
+  voltageRange?:
+    | T
+    | {
+        min?: T;
+        max?: T;
+      };
   maxCurrent?: T;
   maxPower?: T;
   startingPressure?: T;
@@ -2824,56 +2660,10 @@ export interface PumpControllersSelect<T extends boolean = true> {
         min?: T;
         max?: T;
       };
-  moq?:
-    | T
-    | {
-        value?: T;
-        unit?: T;
-      };
-  leadTime?:
-    | T
-    | {
-        range?:
-          | T
-          | {
-              min?:
-                | T
-                | {
-                    value?: T;
-                    unit?: T;
-                  };
-              max?:
-                | T
-                | {
-                    value?: T;
-                    unit?: T;
-                  };
-              duration?:
-                | T
-                | {
-                    value?: T;
-                    unit?: T;
-                  };
-            };
-        id?: T;
-      };
-  packagingConfig?: T;
-  warranties?: T;
-  instructions?: T;
-  certifications?: T;
-  relatedProducts?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "PumpControllerVariantBlockType_select".
- */
-export interface PumpControllerVariantBlockTypeSelect<T extends boolean = true> {
-  sku?: T;
-  color?: T;
-  gallery?: T;
+  protectionGrade?: T;
+  frequency?: T;
+  threadInterface?: T;
+  maxWorkingPressure?: T;
   id?: T;
   blockName?: T;
 }
@@ -2883,15 +2673,39 @@ export interface PumpControllerVariantBlockTypeSelect<T extends boolean = true> 
  */
 export interface WarrantiesSelect<T extends boolean = true> {
   title?: T;
-  type?: T;
-  desc?: T;
-  duration?:
+  productWarranty?: T;
+  descProduct?: T;
+  durationProduct?:
     | T
     | {
         value?: T;
         unit?: T;
       };
+  powerWarranty?: T;
+  descPower?: T;
+  durationPower?:
+    | T
+    | {
+        value?: T;
+        unit?: T;
+      };
+  powerDegradation?:
+    | T
+    | {
+        initialGuarantee?: T;
+        annual?: T;
+        endYearGuarantee?: T;
+        compareWithIndustry?: T;
+        industryStd?:
+          | T
+          | {
+              initialValue?: T;
+              annualDegradation?: T;
+              endYearValue?: T;
+            };
+      };
   file?: T;
+  fileDesc?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -2985,6 +2799,24 @@ export interface DrawingsSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   file?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs_select".
+ */
+export interface FaqsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  type?: T;
+  content?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -3092,12 +2924,8 @@ export interface Footer {
                         value: number | Page;
                       } | null)
                     | ({
-                        relationTo: 'solar-panels';
-                        value: number | SolarPanel;
-                      } | null)
-                    | ({
-                        relationTo: 'pump-controllers';
-                        value: number | PumpController;
+                        relationTo: 'products';
+                        value: number | Product;
                       } | null)
                     | ({
                         relationTo: 'industries';
@@ -3146,12 +2974,8 @@ export interface Footer {
                   value: number | Page;
                 } | null)
               | ({
-                  relationTo: 'solar-panels';
-                  value: number | SolarPanel;
-                } | null)
-              | ({
-                  relationTo: 'pump-controllers';
-                  value: number | PumpController;
+                  relationTo: 'products';
+                  value: number | Product;
                 } | null)
               | ({
                   relationTo: 'industries';
@@ -3192,12 +3016,8 @@ export interface Header {
                 value: number | Page;
               } | null)
             | ({
-                relationTo: 'solar-panels';
-                value: number | SolarPanel;
-              } | null)
-            | ({
-                relationTo: 'pump-controllers';
-                value: number | PumpController;
+                relationTo: 'products';
+                value: number | Product;
               } | null)
             | ({
                 relationTo: 'industries';
@@ -3233,12 +3053,8 @@ export interface Header {
                               value: number | Page;
                             } | null)
                           | ({
-                              relationTo: 'solar-panels';
-                              value: number | SolarPanel;
-                            } | null)
-                          | ({
-                              relationTo: 'pump-controllers';
-                              value: number | PumpController;
+                              relationTo: 'products';
+                              value: number | Product;
                             } | null)
                           | ({
                               relationTo: 'industries';
@@ -3279,12 +3095,8 @@ export interface Header {
                         value: number | Page;
                       } | null)
                     | ({
-                        relationTo: 'solar-panels';
-                        value: number | SolarPanel;
-                      } | null)
-                    | ({
-                        relationTo: 'pump-controllers';
-                        value: number | PumpController;
+                        relationTo: 'products';
+                        value: number | Product;
                       } | null)
                     | ({
                         relationTo: 'industries';
@@ -3590,12 +3402,8 @@ export interface TaskSchedulePublish {
           value: number | Page;
         } | null)
       | ({
-          relationTo: 'solar-panels';
-          value: number | SolarPanel;
-        } | null)
-      | ({
-          relationTo: 'pump-controllers';
-          value: number | PumpController;
+          relationTo: 'products';
+          value: number | Product;
         } | null);
     global?: string | null;
     user?: (number | null) | User;

@@ -18,8 +18,9 @@ import { Form } from "@synoem/ui/components/form";
 import { useState } from "react";
 import { SubmissionConfirmation } from "~/components/react/SubmissionConfirmation";
 import type { Props } from "./types";
+import { useTranslations } from "~/i18n/utils";
 
-export const RequestQuoteMobile = ({ product, ...props }: Props) => {
+export const RequestQuoteMobile = ({ product, locale, ...props }: Props) => {
   const [open, setOpen] = useState<boolean>(false);
 
   const { isSubmitting, isSuccess, error, form, onSubmit } = useRequestQuote({
@@ -31,6 +32,8 @@ export const RequestQuoteMobile = ({ product, ...props }: Props) => {
     form.reset();
   };
 
+  const { t } = useTranslations(locale);
+
   return (
     <>
       <Drawer
@@ -41,13 +44,17 @@ export const RequestQuoteMobile = ({ product, ...props }: Props) => {
         dismissible={false}
       >
         <DrawerTrigger asChild>
-          <Button {...props}>Request Quote</Button>
+          <Button className="min-w-[200px]" {...props}>
+            {t("Component.RequestQuoteButton.requestQuote")}
+          </Button>
         </DrawerTrigger>
         <DrawerContent className="flex flex-col h-full max-h-[85vh] pb-0">
           <DrawerHeader className="text-left shrink-0 border-b">
-            <DrawerTitle className="text-center">Request Quote</DrawerTitle>
+            <DrawerTitle className="text-center">
+              {t("Component.RequestQuoteButton.requestQuote")}
+            </DrawerTitle>
             <DrawerDescription>
-              Please fill in the form below to request a quote for the product.
+              {t("Component.RequestQuoteButton.description")}
             </DrawerDescription>
           </DrawerHeader>
           <div className="flex-1 flex-col h-full overflow-hidden">

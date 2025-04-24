@@ -1,8 +1,10 @@
 ---
 import ProductsLayout from "~/layouts/ProductsLayout.astro";
-
+import type { Product } from "@synoem/payload/payload-types";
 const url = new URL(Astro.request.url);
 const initialParams = Object.fromEntries(url.searchParams);
+
+const { category, type } = Astro.params;
 
 const initialFilters = {
   ...initialParams,
@@ -10,8 +12,8 @@ const initialFilters = {
 ---
 
 <ProductsLayout
-  title="Solar Panels"
-  description="Bridge together for a better future"
-  category="solar-panels"
+  title={`Just for test ${type}`}
+  description={`${type} products`}
+  category={category as Product["category"]}
   initialFilters={initialFilters}
 />

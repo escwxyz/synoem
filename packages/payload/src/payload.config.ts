@@ -24,8 +24,7 @@ import { Attachments } from "./collections/media/attachments";
 import { Inquiries } from "./collections/inquiries";
 import { NewsletterSubscribers } from "./collections/newsletter";
 // Products
-import { SolarPanels } from "./collections/products/solar-panels";
-import { PumpControllers } from "./collections/products/pump-controller";
+import { Products } from "./collections/products";
 // Product Related
 import { Instructions } from "./collections/instructions";
 import { Certifications } from "./collections/certifications";
@@ -41,6 +40,8 @@ import { Industries } from "./collections/industries";
 import { Pages } from "./collections/pages";
 // Notifications
 import { Notifications } from "./collections/notifications";
+
+import { FAQs } from "./collections/faqs";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -78,8 +79,7 @@ export default buildConfig({
     Documents,
     Attachments,
     // Products
-    SolarPanels,
-    PumpControllers,
+    Products,
     // Warranty
     Warranties,
     // Instructions
@@ -92,6 +92,7 @@ export default buildConfig({
     Datasheets,
     // Drawings
     Drawings,
+    FAQs,
   ],
   globals: [Footer, Header, CompanyInfo, ContactInfo, SocialLinks],
   plugins: plugins(),
@@ -99,6 +100,9 @@ export default buildConfig({
     defaultLocale,
     locales: mutableLocales,
     fallback: true,
+  },
+  cors: {
+    origins: "*", // TODO: modify when in poroduction mode
   },
   secret: DMNO_CONFIG.PAYLOAD_SECRET,
   typescript: {

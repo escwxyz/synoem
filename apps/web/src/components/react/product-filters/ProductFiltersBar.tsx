@@ -1,16 +1,7 @@
 "use client";
 
-import { Filter, SlidersHorizontal, ChevronDown } from "lucide-react";
+import { Filter } from "lucide-react";
 import { Button } from "@synoem/ui/components/button";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@synoem/ui/components/dropdown-menu";
-import { useUrlState } from "~/hooks/use-url-state";
 import { ProductCount } from "./ProductCount";
 import {
   Drawer,
@@ -21,23 +12,28 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@synoem/ui/components/drawer";
+import type { Locale } from "@synoem/config";
+import { useTranslations } from "~/i18n/utils";
 
 interface ProductFiltersBarProps {
   initialFilters?: Record<string, string | string[] | number | undefined>;
   children?: React.ReactNode;
   totalProducts: number;
+  locale: Locale;
 }
 
 // Desktop sort and Mobile filters
 export function ProductFiltersBar({
   children,
-  initialFilters,
+  // initialFilters,
   totalProducts,
+  locale,
 }: ProductFiltersBarProps) {
-  const [sort, setSort] = useUrlState(
-    "sort",
-    initialFilters?.sort || "featured",
-  );
+  const { t } = useTranslations(locale);
+  // const [sort, setSort] = useUrlState(
+  //   "sort",
+  //   initialFilters?.sort || "featured",
+  // );
 
   const resetFilters = () => {
     window.history.pushState({}, "", window.location.pathname);
@@ -47,32 +43,37 @@ export function ProductFiltersBar({
   return (
     <div className="mb-8">
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-2">
-          <Drawer modal={false}>
+        <div className="flex justify-between items-center gap-2 w-full">
+          {/**
+           * NOTE: AutoFocus is related to the issue https://github.com/emilkowalski/vaul/issues/517
+           */}
+          <Drawer modal={false} autoFocus>
             <DrawerTrigger asChild>
               <Button variant="outline" size="sm" className="lg:hidden">
                 <Filter className="h-4 w-4" />
-                Filters
+                {t("Component.ProductFiltersBar.filters")}
               </Button>
             </DrawerTrigger>
             <DrawerContent>
               <DrawerHeader>
-                <DrawerTitle>Filters</DrawerTitle>
+                <DrawerTitle>
+                  {t("Component.ProductFiltersBar.filters")}
+                </DrawerTitle>
                 <DrawerDescription>
-                  Filter products by specs and more.
+                  {t("Component.ProductFiltersBar.description")}
                 </DrawerDescription>
               </DrawerHeader>
               <div className="p-4">{children}</div>
               <DrawerFooter className="flex w-full">
                 <Button variant="outline" onClick={resetFilters}>
-                  Reset
+                  {t("Component.ProductFiltersBar.reset")}
                 </Button>
               </DrawerFooter>
             </DrawerContent>
           </Drawer>
 
-          {/* TODO: sort */}
-          <DropdownMenu>
+          {/* TODO: sort / native select on mobile */}
+          {/* <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="outline"
@@ -100,7 +101,7 @@ export function ProductFiltersBar({
                 Newest
               </DropdownMenuCheckboxItem>
             </DropdownMenuContent>
-          </DropdownMenu>
+          </DropdownMenu> */}
         </div>
 
         <ProductCount initialCount={totalProducts} />

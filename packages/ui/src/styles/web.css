@@ -21,11 +21,11 @@
   --border: oklch(0.9 0.02 160);
   --input: oklch(0.9 0.02 160);
   --ring: oklch(0.6 0.1 160);
-  --chart-1: oklch(0.7 0.15 160);
-  --chart-2: oklch(0.6 0.12 190);
-  --chart-3: oklch(0.5 0.15 220);
-  --chart-4: oklch(0.7 0.18 130);
-  --chart-5: oklch(0.65 0.2 100);
+  --chart-1: 12 76% 61%;
+  --chart-2: 173 58% 39%;
+  --chart-3: 197 37% 24%;
+  --chart-4: 43 74% 66%;
+  --chart-5: 27 87% 67%;
   --sidebar: oklch(0.98 0 0);
   --sidebar-foreground: oklch(0.2 0.03 160);
   --sidebar-primary: oklch(0.5 0.15 160);
@@ -55,11 +55,11 @@
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.5 0.1 160);
-  --chart-1: oklch(0.6 0.2 160);
-  --chart-2: oklch(0.7 0.15 190);
-  --chart-3: oklch(0.65 0.18 70);
-  --chart-4: oklch(0.6 0.2 130);
-  --chart-5: oklch(0.55 0.22 20);
+  --chart-1: 220 70% 50%; /*TODO: Change color schemes*/
+  --chart-2: 160 60% 45%;
+  --chart-3: 30 80% 55%;
+  --chart-4: 280 65% 60%;
+  --chart-5: 340 75% 55%;
   --sidebar: oklch(0.2 0.05 160);
   --sidebar-foreground: oklch(0.98 0 0);
   --sidebar-primary: oklch(0.6 0.15 160);

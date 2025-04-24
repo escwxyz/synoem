@@ -16,17 +16,24 @@ export const Models: CollectionConfig = {
     useAsTitle: "filename",
   },
   fields: [
-    // TODO: add some configs for r3f to apply to the model
+    {
+      name: "info",
+      type: "json",
+      admin: {
+        readOnly: true,
+        description: "Information about the model",
+        components: {
+          beforeInput: ["@synoem/payload/components/model-field#ModelField"],
+        },
+      },
+    },
   ],
   upload: {
-    staticDir: path.resolve(
-      dirname,
-      "../../../../../apps/payload/public/media",
-    ),
+    staticDir: path.resolve(dirname, "../../../../../apps/cms/public/media"),
     // TODO: not working as expected, need to find a way to only allow 3d models
-    // mimeTypes: [
-    //   "model/gltf-binary",
-    //   "model/gltf+json",
-    // ],
+    // mimeTypes: ["application/octet-stream", "application/macbinary"],
+  },
+  hooks: {
+    afterChange: [],
   },
 };

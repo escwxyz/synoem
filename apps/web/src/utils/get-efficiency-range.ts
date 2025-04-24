@@ -1,6 +1,6 @@
-import type { SolarPanel } from "@synoem/payload/payload-types";
+import type { SolarPanelBlockType } from "@synoem/payload/payload-types";
 
-export const getEfficiencyRange = (powerPoints: SolarPanel["powerRange"]["points"]) => {
+export const getEfficiencyRange = (powerPoints: SolarPanelBlockType["power"]["points"]) => {
   if (!powerPoints) return null;
 
   const min = Math.min(...powerPoints.map((point) => point.efficiency ?? 0));

@@ -3,5 +3,5 @@ export const getUrl = (url: string) => {
     return url;
   }
 
-  return `${DMNO_CONFIG.PUBLIC_API_URL}${url}`;
+  return `${DMNO_PUBLIC_CONFIG.PUBLIC_API_URL}${url}`;
 };
