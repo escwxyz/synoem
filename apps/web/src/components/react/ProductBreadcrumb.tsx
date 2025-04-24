@@ -13,7 +13,7 @@ import {
   BreadcrumbLink,
   BreadcrumbSeparator,
 } from "@synoem/ui/components/breadcrumb";
-import { useTranslations } from "~/i18n/utils";
+import { getLocalizedPathname, useTranslations } from "~/i18n/utils";
 import { isPumpController, isSolarPanel } from "~/utils/check-product-type";
 
 export const ProductBreadcrumb = ({
@@ -46,7 +46,10 @@ export const ProductBreadcrumb = ({
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink href="/">
+          <BreadcrumbLink
+            href={getLocalizedPathname("/", locale)}
+            className="text-primary-foreground/70 hover:text-primary-foreground"
+          >
             {t("Component.ProductBreadcrumb.home")}
           </BreadcrumbLink>
         </BreadcrumbItem>
@@ -54,7 +57,10 @@ export const ProductBreadcrumb = ({
         <BreadcrumbSeparator />
 
         <BreadcrumbItem>
-          <BreadcrumbLink href="/products">
+          <BreadcrumbLink
+            href={getLocalizedPathname("/products", locale)}
+            className="text-primary-foreground/70 hover:text-primary-foreground"
+          >
             {t("Component.ProductBreadcrumb.products")}
           </BreadcrumbLink>
         </BreadcrumbItem>
@@ -62,7 +68,10 @@ export const ProductBreadcrumb = ({
         <BreadcrumbSeparator />
 
         <BreadcrumbItem>
-          <BreadcrumbLink href={`/products/${category}`}>
+          <BreadcrumbLink
+            href={getLocalizedPathname(`/products/${category}`, locale)}
+            className="text-primary-foreground/70 hover:text-primary-foreground"
+          >
             {isSolarPanel(product)
               ? t("Component.ProductBreadcrumb.solarPanel")
               : t("Component.ProductBreadcrumb.pumpController")}
@@ -73,7 +82,13 @@ export const ProductBreadcrumb = ({
 
         {type && (
           <BreadcrumbItem>
-            <BreadcrumbLink href={`/products/${category}/${type}`}>
+            <BreadcrumbLink
+              href={getLocalizedPathname(
+                `/products/${category}/${type}`,
+                locale,
+              )}
+              className="text-primary-foreground/70 hover:text-primary-foreground"
+            >
               {type.toUpperCase()}
             </BreadcrumbLink>
           </BreadcrumbItem>
