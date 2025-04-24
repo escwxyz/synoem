@@ -27,7 +27,20 @@ export const Users: CollectionConfig = {
       type: "select",
       required: true,
       hasMany: true,
-      options: ["admin", "editor", "customer"],
+      options: [
+        {
+          label: "Admin",
+          value: "admin",
+        },
+        {
+          label: "Editor",
+          value: "editor",
+        },
+        {
+          label: "Customer",
+          value: "customer",
+        },
+      ],
     },
   ],
 };

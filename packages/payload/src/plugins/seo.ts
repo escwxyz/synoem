@@ -1,7 +1,7 @@
 import { seoPlugin } from "@payloadcms/plugin-seo";
 
 export const seo = seoPlugin({
-  collections: ["solar-panels"],
+  collections: ["products"],
   uploadsCollection: "images",
   tabbedUI: false,
   generateTitle: ({ doc }) => `${doc?.title} | SynOEM`,

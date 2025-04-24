@@ -1,0 +1,208 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getPayloadClient } from "@synoem/payload/client";
+import {
+  defaultLocale,
+  locales,
+  PRODUCT_CATEGORIES,
+  type Locale,
+} from "@synoem/config";
+import { PumpControllerTabs, SolarPanelTabs } from "~/components/astro";
+import { getLocaleFromUrl, isValidLocale } from "~/i18n/utils";
+import type { PaginatedDocs } from "payload";
+import type { Faq } from "@synoem/payload/payload-types";
+import { isPumpController, isSolarPanel } from "~/utils/check-product-type";
+import ProductDetailLayout from "~/layouts/ProductDetailLayout.astro";
+import { getRelatedProducts } from "~/utils/get-related-products";
+import { RelatedProducts } from "~/components/react";
+
+export const prerender = true;
+
+export const getStaticPaths = (async () => {
+  const payload = await getPayloadClient();
+
+  const products = await payload.find({
+    collection: "products",
+    draft: false,
+    where: {
+      and: [
+        {
+          _status: {
+            equals: "published",
+          },
+        },
+        {
+          visibility: {
+            equals: true,
+          },
+        },
+      ],
+    },
+    select: {
+      slug: true,
+      category: true,
+      solarPanel: {
+        solarPanelBlock: {
+          type: true,
+        },
+      },
+      pumpController: {
+        pumpControllerBlock: {
+          type: true,
+        },
+      },
+    },
+  });
+
+  const results = [];
+
+  for (const product of products.docs) {
+    const { category, slug } = product;
+
+    const type = isSolarPanel(product)
+      ? product.solarPanel?.[0].type
+      : product.pumpController?.[0].type;
+
+    if (!type) {
+      console.warn(`Product ${id} is missing type value`);
+      continue;
+    }
+
+    for (const locale of locales) {
+      results.push({
+        props: {
+          id: product.id,
+        },
+        params: {
+          locale,
+          category,
+          type,
+          slug,
+        },
+      });
+    }
+  }
+
+  return results;
+}) satisfies GetStaticPaths;
+
+const { id } = Astro.props;
+
+const locale = getLocaleFromUrl(Astro.url);
+
+console.log("locale", locale);
+
+const payload = await getPayloadClient();
+
+const productData = await payload.find({
+  collection: "products",
+  draft: false,
+  where: {
+    id: {
+      equals: id,
+    },
+  },
+  depth: 2,
+  locale,
+});
+
+// console.log(productData);
+
+if (productData.docs.length === 0) {
+  return Astro.redirect("/404");
+}
+
+const product = productData.docs[0];
+
+if (!isSolarPanel(product) && !isPumpController(product)) {
+  return Astro.redirect("/404");
+}
+
+const allProductsResponse = await payload.find({
+  collection: "products",
+  where: {
+    and: [
+      { _status: { equals: "published" } },
+      { visibility: { equals: true } },
+    ],
+  },
+  select: {
+    id: true,
+    title: true,
+    slug: true,
+    category: true,
+    coverImage: true,
+    modelName: true,
+    createdAt: true,
+    dimensions: true,
+    solarPanel: {
+      solarPanelBlock: {
+        type: true,
+        power: { min: true, max: true },
+      },
+    },
+    pumpController: {
+      pumpControllerBlock: {
+        type: true,
+        maxVoltage: true,
+        maxCurrent: true,
+      },
+    },
+  },
+  locale,
+});
+
+const relatedProducts = getRelatedProducts(product, allProductsResponse.docs);
+
+let faqData: PaginatedDocs<Faq> | null;
+
+if (isSolarPanel(product)) {
+  faqData = await payload.find({
+    collection: "faqs",
+    where: {
+      type: {
+        equals: PRODUCT_CATEGORIES.solarPanel.id,
+      },
+    },
+    limit: 1,
+    locale,
+  });
+} else if (isPumpController(product)) {
+  faqData = await payload.find({
+    collection: "faqs",
+    where: {
+      type: {
+        equals: PRODUCT_CATEGORIES.pumpController.id,
+      },
+    },
+    limit: 1,
+    locale,
+  });
+} else {
+  faqData = null;
+}
+
+const faq = faqData ? faqData.docs[0] : undefined;
+---
+
+<ProductDetailLayout product={product} faq={faq}>
+  {
+    isSolarPanel(product) && (
+      <SolarPanelTabs slot="solar-panel-tabs" product={product} />
+    )
+  }
+  {
+    isPumpController(product) && (
+      <PumpControllerTabs slot="pump-controller-tabs" product={product} />
+    )
+  }
+  {
+    relatedProducts.length > 0 && (
+      <RelatedProducts
+        slot="related-products"
+        relatedProducts={relatedProducts}
+        client:visible
+      />
+    )
+  }
+</ProductDetailLayout>

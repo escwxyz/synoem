@@ -103,6 +103,18 @@
     },
     "DownloadDatasheetButton": {
       "download": "Download Datasheet"
+    },
+    "ProductFilters": {
+      "cellType": "Cell Type",
+      "powerRange": "Power Range",
+      "efficiencyRange": "Efficiency Range",
+      "type": "Type",
+      "voltageRange": "Voltage Range"
+    },
+    "ProductFiltersBar": {
+      "filters": "Filters",
+      "description": "Filter products by specs and more.",
+      "reset": "Reset"
     }
   }
 }

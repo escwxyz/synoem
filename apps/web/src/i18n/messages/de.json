@@ -103,6 +103,18 @@
     },
     "DownloadDatasheetButton": {
       "download": "Datenblatt herunterladen"
+    },
+    "ProductFilters": {
+      "cellType": "Zelltyp",
+      "powerRange": "Leistungsbereich",
+      "efficiencyRange": "Wirkungsgradbereich",
+      "type": "Typ",
+      "voltageRange": "Spannungsbereich"
+    },
+    "ProductFiltersBar": {
+      "filters": "Filter",
+      "description": "Filter Produkte nach Spezifikationen und mehr.",
+      "reset": "Zurücksetzen"
     }
   }
 }

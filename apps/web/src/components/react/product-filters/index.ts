@@ -1,4 +1,3 @@
-export { SolarPanelFilters } from "./SolarPanelFilters";
-// export { PumpControllerFilters } from "./PumpControllerFilters";
+export { ProductFilters } from "./ProductFilters";
 export { ProductFiltersBar } from "./ProductFiltersBar";
 export { ProductFiltersDesktop } from "./ProductFiltersDesktop";

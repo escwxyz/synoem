@@ -6,11 +6,11 @@ import { getProductUrl } from "~/utils/get-product-url";
 import { isPumpController, isSolarPanel } from "~/utils/check-product-type";
 import { useMediaQuery } from "usehooks-ts";
 import { RequestQuoteDesktop, RequestQuoteMobile } from "~/components/react";
-import { Bolt, Sun, Zap } from "lucide-react";
+import { PlugZap, Sun, Zap } from "lucide-react";
 import { Button } from "@synoem/ui/components/button";
 import { Card, CardContent, CardFooter } from "@synoem/ui/components/card";
 import { getEfficiencyRange } from "~/utils/get-efficiency-range";
-import { getLocaleFromUrl, useTranslations } from "~/i18n/utils";
+import { useTranslations } from "~/i18n/utils";
 import type { Locale } from "@synoem/config";
 
 export const ProductCard = ({
@@ -122,7 +122,7 @@ export const ProductCard = ({
                 </div>
                 {product.pumpController?.[0].maxCurrent && (
                   <div className="flex items-center gap-2 text-sm">
-                    <Bolt className="h-4 w-4 text-amber-500" />
+                    <PlugZap className="h-4 w-4 text-amber-500" />
                     <span>
                       {t("Component.ProductCard.maxCurrent")}:{" "}
                       {product.pumpController?.[0].maxCurrent}A

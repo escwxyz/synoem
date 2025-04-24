@@ -1,7 +1,7 @@
 import { defaultLocale } from "@synoem/config";
 import { getPayloadClient } from "@synoem/payload/client";
 import type { APIRoute } from "astro";
-import type { CollectionSlug, Locale } from "payload";
+import type { Locale } from "payload";
 import { isValidLocale } from "~/i18n/utils";
 import { PRODUCTS_CACHE_DURATION } from "@synoem/config";
 
@@ -31,10 +31,13 @@ export const GET: APIRoute = async ({ params, request, locals }) => {
 
   try {
     const query = {
-      collection: category as CollectionSlug,
+      collection: "products",
       where: {
         _status: {
           equals: "published",
+        },
+        category: {
+          equals: category,
         },
       },
       limit,
