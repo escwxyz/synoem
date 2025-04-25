@@ -15,7 +15,13 @@ import {
 } from "@synoem/ui/components/form";
 import { Button } from "@synoem/ui/components/button";
 import confetti from "canvas-confetti";
-import { AlertCircle, CheckIcon } from "lucide-react";
+import {
+  AlertCircle,
+  CheckIcon,
+  Mail,
+  SendHorizonal,
+  Loader2,
+} from "lucide-react";
 import type { Locale } from "@synoem/config";
 import { useTranslations } from "~/i18n/utils";
 import { z } from "zod";
@@ -108,32 +114,32 @@ export const Newsletter = ({ locale }: { locale: Locale }) => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-2"
+          className="flex flex-col gap-2 max-w-sm my-2"
         >
-          <div className="flex gap-2">
-            <FormField
-              control={form.control}
-              name="email"
-              rules={{
-                validate: (value) => {
-                  const result = emailSchema.safeParse(value);
-                  return (
-                    result.success || t("Component.Newsletter.email.invalid")
-                  );
-                },
-              }}
-              render={({ field }) => (
-                <FormItem className="flex-1 max-w-[240px]">
+          <FormField
+            control={form.control}
+            name="email"
+            rules={{
+              validate: (value) => {
+                const result = emailSchema.safeParse(value);
+                return (
+                  result.success || t("Component.Newsletter.email.invalid")
+                );
+              },
+            }}
+            render={({ field }) => (
+              <div className="bg-background has-[input:focus]:ring-muted relative grid grid-cols-[1fr_auto] items-center rounded-xl border pr-3 shadow shadow-zinc-950/5 has-[input:focus]:ring-2">
+                <Mail className="text-caption pointer-events-none absolute inset-y-0 left-5 my-auto size-5" />
+                <FormItem className="flex-1">
                   <FormControl>
                     <Input
                       type="email"
-                      autoComplete="email"
                       placeholder="example@email.com"
                       aria-label={t("Component.Newsletter.emailPlaceholder")}
+                      className="h-14 w-full bg-transparent pl-12 focus:outline-none border-none shadow-none focus:border-none focus:ring-0 focus-visible:border-none focus-visible:ring-0"
                       {...field}
                       onChange={(e) => {
                         field.onChange(e);
-
                         if (status === "error") {
                           setStatus("idle");
                           setErrorMessage(null);
@@ -142,58 +148,47 @@ export const Newsletter = ({ locale }: { locale: Locale }) => {
                     />
                   </FormControl>
                 </FormItem>
-              )}
-            />
-
-            <Button
-              type="submit"
-              disabled={isButtonDisabled}
-              className={`relative ${status === "submitting" ? "pl-8" : ""}`}
-              variant={
-                status === "success"
-                  ? "secondary"
-                  : status === "error"
-                    ? "destructive"
-                    : "default"
-              }
-            >
-              {status === "submitting" && (
-                <div className="absolute left-2 flex items-center justify-center">
-                  <svg
-                    className="animate-spin h-4 w-4 text-current"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
+                <div className="md:pr-1.5 lg:pr-0">
+                  <Button
+                    type="submit"
+                    aria-label="Submit"
+                    disabled={isButtonDisabled}
+                    className={`relative rounded-xl ${status === "submitting" ? "pl-8" : ""}`}
+                    variant={
+                      status === "success"
+                        ? "secondary"
+                        : status === "error"
+                          ? "destructive"
+                          : "default"
+                    }
                   >
-                    <title>Loading...</title>
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    />
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    />
-                  </svg>
+                    <span className="hidden md:block">
+                      {status === "submitting"
+                        ? t("Component.Newsletter.subscribing")
+                        : status === "success"
+                          ? t("Component.Newsletter.subscribed")
+                          : status === "error"
+                            ? t("Component.Newsletter.failed")
+                            : t("Component.Newsletter.subscribe")}
+                    </span>
+                    <span className="block md:hidden">
+                      {status === "submitting" ? (
+                        <div className="animate-spin absolute inset-0 flex items-center justify-center">
+                          <Loader2 className="h-4 w-4" />
+                        </div>
+                      ) : status === "success" ? (
+                        <CheckIcon className="h-4 w-4" />
+                      ) : status === "error" ? (
+                        <AlertCircle className="h-4 w-4" />
+                      ) : (
+                        <SendHorizonal className="h-4 w-4" />
+                      )}
+                    </span>
+                  </Button>
                 </div>
-              )}
-
-              {status === "submitting"
-                ? t("Component.Newsletter.subscribing")
-                : status === "success"
-                  ? t("Component.Newsletter.subscribed")
-                  : status === "error"
-                    ? t("Component.Newsletter.failed")
-                    : t("Component.Newsletter.subscribe")}
-
-              {status === "success" && <CheckIcon className="ml-2 w-4 h-4" />}
-            </Button>
-          </div>
+              </div>
+            )}
+          />
 
           {status === "error" && errorMessage && (
             <div className="flex items-center gap-2 text-destructive text-sm mt-1">
