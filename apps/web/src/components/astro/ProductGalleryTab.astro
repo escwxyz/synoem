@@ -7,6 +7,7 @@ import {
 } from "~/components/react";
 import { getGalleryImages } from "~/utils/get-image";
 import { getPayloadClient } from "@synoem/payload/client";
+import { getLocaleFromUrl } from "~/i18n/utils";
 
 interface Props {
   product: Product;
@@ -22,6 +23,8 @@ const galleryImages = await getGalleryImages({
   images: gallery,
   payload,
 });
+
+const locale = getLocaleFromUrl(Astro.url);
 ---
 
 <section class="mb-8">
@@ -31,12 +34,14 @@ const galleryImages = await getGalleryImages({
         slot="mobile"
         images={galleryImages}
         three={product.three}
+        locale={locale}
         client:only="react"
       />
       <ProductGalleryDesktop
         slot="desktop"
         images={galleryImages}
         three={product.three}
+        locale={locale}
         client:only="react"
       />
     </DeviceWrapper>

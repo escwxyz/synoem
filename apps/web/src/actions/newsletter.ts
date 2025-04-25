@@ -6,36 +6,48 @@ import { getMetadata } from "~/utils/get-metadata";
 const subscribeNewsletterAction = defineAction({
   accept: "form",
   input: newsletterSchema,
-  handler: async ({ email, name, terms }, context) => {
-    if (!terms) {
-      throw new ActionError({
-        code: "BAD_REQUEST",
-        message: "newsletter.action.acceptTerms",
-      });
-    }
-
+  handler: async ({ email }, context) => {
     try {
       const payload = await getPayloadClient();
 
       const metadata = getMetadata(context.request.headers);
 
+      const existingSubscriber = await payload.find({
+        collection: "newsletter-subscribers",
+        where: {
+          email: {
+            equals: email,
+          },
+        },
+      });
+
+      if (existingSubscriber.docs.length > 0) {
+        throw new ActionError({
+          code: "BAD_REQUEST",
+          message: "action.newsletter.alreadySubscribed",
+        });
+      }
+
       await payload.create({
         collection: "newsletter-subscribers",
         data: {
           email,
-          name,
           metadata: {
             page: metadata.referer,
-            ipAddress: metadata.forwardedFor,
+            ipAddress: metadata.ipAddress,
             userAgent: metadata.userAgent,
           },
         },
       });
     } catch (error) {
+      if (error instanceof ActionError) {
+        throw error;
+      }
+
       console.error(error);
       throw new ActionError({
         code: "INTERNAL_SERVER_ERROR",
-        message: "newsletter.action.error",
+        message: "action.newsletter.error",
       });
     }
   },

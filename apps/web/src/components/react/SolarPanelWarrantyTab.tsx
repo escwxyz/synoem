@@ -27,7 +27,8 @@ import {
   CardTitle,
 } from "@synoem/ui/components/card";
 import { RichText } from "./RichText";
-import { getLocaleFromUrl, useTranslations } from "~/i18n/utils";
+import { useTranslations } from "~/i18n/utils";
+import { NumberTicker } from "@synoem/ui/components/number-ticker";
 
 interface Props {
   product: Product;
@@ -152,14 +153,14 @@ export const SolarPanelWarrantyTab = ({ product, locale }: Props) => {
   const chartConfig: ChartConfig = {
     productValue: {
       label: t("Component.SolarPanelWarrantyTab.chart.powerGuarantee"),
-      color: "hsl(var(--chart-1))",
+      color: "var(--chart-1)",
     },
   };
 
   if (hasIndustryComparison) {
     chartConfig.industryValue = {
       label: t("Component.SolarPanelWarrantyTab.chart.industryStandard"),
-      color: "hsl(var(--chart-2))",
+      color: "var(--chart-2)",
     };
   }
 
@@ -288,9 +289,9 @@ export const SolarPanelWarrantyTab = ({ product, locale }: Props) => {
                     )}
                     dataKey="productValue"
                     type="monotone"
-                    fill="hsl(var(--chart-1))"
+                    fill="var(--chart-1)"
                     fillOpacity={0.4}
-                    stroke="hsl(var(--chart-1))"
+                    stroke="var(--chart-1)"
                   />
                   {hasIndustryComparison && (
                     <Area
@@ -299,9 +300,9 @@ export const SolarPanelWarrantyTab = ({ product, locale }: Props) => {
                       )}
                       dataKey="industryValue"
                       type="monotone"
-                      fill="hsl(var(--chart-2))"
+                      fill="var(--chart-2)"
                       fillOpacity={0.4}
-                      stroke="hsl(var(--chart-2))"
+                      stroke="var(--chart-2)"
                     />
                   )}
                 </AreaChart>
@@ -313,7 +314,13 @@ export const SolarPanelWarrantyTab = ({ product, locale }: Props) => {
                   {t("Component.SolarPanelWarrantyTab.initialYearGuarantee")}
                 </h4>
                 <p className="text-2xl font-bold text-emerald-600">
-                  {powerDegradation.initialGuarantee}%
+                  <NumberTicker
+                    value={powerDegradation.initialGuarantee}
+                    startValue={90.0}
+                    decimalPlaces={1}
+                    className="text-2xl font-bold text-emerald-600"
+                  />
+                  %
                 </p>
               </div>
               <div className="bg-muted p-4 rounded-lg">
@@ -321,15 +328,28 @@ export const SolarPanelWarrantyTab = ({ product, locale }: Props) => {
                   {t("Component.SolarPanelWarrantyTab.annualDegradation")}
                 </h4>
                 <p className="text-2xl font-bold text-emerald-600">
-                  {powerDegradation.annual}%
+                  <NumberTicker
+                    value={powerDegradation.annual}
+                    startValue={0.0}
+                    decimalPlaces={1}
+                    className="text-2xl font-bold text-emerald-600"
+                  />
+                  %
                 </p>
               </div>
               <div className="bg-muted p-4 rounded-lg">
                 <h4 className="font-semibold text-gray-700 mb-2">
                   {t("Component.SolarPanelWarrantyTab.endYearGuarantee")}
                 </h4>
+
                 <p className="text-2xl font-bold text-emerald-600">
-                  {powerDegradation.endYearGuarantee}%
+                  <NumberTicker
+                    value={powerDegradation.endYearGuarantee}
+                    startValue={80.0}
+                    decimalPlaces={1}
+                    className="text-2xl font-bold text-emerald-600"
+                  />
+                  %
                 </p>
               </div>
             </CardFooter>

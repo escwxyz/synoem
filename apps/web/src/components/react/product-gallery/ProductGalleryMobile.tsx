@@ -14,7 +14,7 @@ import { cn } from "@synoem/ui/lib/utils";
 import { ProductModelViewer } from "../ProductModelViewer";
 import { ViewSwitch } from "./ViewSwitch";
 
-export const ProductGalleryMobile = ({ images, three }: Props) => {
+export const ProductGalleryMobile = ({ images, three, locale }: Props) => {
   if (images.length === 0) {
     console.warn("ProductGalleryMobile: No images provided");
     return null;
@@ -54,7 +54,7 @@ export const ProductGalleryMobile = ({ images, three }: Props) => {
     <div className="w-full flex flex-col items-center gap-4">
       <div className="relative w-full aspect-square rounded-lg overflow-hidden">
         {showModelView ? (
-          <ProductModelViewer three={three} />
+          <ProductModelViewer three={three} locale={locale} />
         ) : (
           <Carousel className="w-full h-full rounded-lg" setApi={setApi}>
             <CarouselContent className="rounded-lg h-full">

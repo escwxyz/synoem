@@ -4,6 +4,12 @@ import { isValidLocale } from "~/i18n/utils";
 
 export const onRequest = defineMiddleware(({ request, locals, redirect, params }, next) => {
   const url = new URL(request.url);
+
+  if (url.pathname.startsWith("/_actions/")) {
+    // ignore actions
+    return next();
+  }
+
   const pathSegments = url.pathname.split("/").filter(Boolean);
   const firstSegment = pathSegments[0];
 
