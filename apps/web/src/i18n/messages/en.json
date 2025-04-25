@@ -118,6 +118,31 @@
     },
     "ModelLoadingIndicator": {
       "loading": "Loading 3D Model..."
+    },
+    "ProductInquiryForm": {
+      "attachments": {
+        "label": "Attachments (Optional, max 3 files)",
+        "description": "Upload any relevant documents (PDF, Word, Excel) or images",
+        "uploader": {
+          "label": "Drag & drop files here or",
+          "description": "click to browse files",
+          "supportedFileTypes": "PDF, Word, Excel, JPG, PNG (max 3 files, 10MB total)"
+        }
+      }
+    },
+    "Newsletter": {
+      "title": "Subscribe to our newsletter",
+      "subscribe": "Subscribe",
+      "subscribed": "Subscribed",
+      "subscribing": "Subscribing...",
+      "failed": "Failed",
+      "email.invalid": "Please enter a valid email address",
+      "action": {
+        "newsletter": {
+          "alreadySubscribed": "You are already subscribed to our newsletter.",
+          "error": "An error occurred while subscribing to the newsletter."
+        }
+      }
     }
   }
 }
