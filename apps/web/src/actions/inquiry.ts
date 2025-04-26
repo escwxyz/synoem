@@ -32,7 +32,7 @@ const createSimpleInquiryAction = defineAction({
           },
           metadata: {
             page: metadata.referer,
-            ipAddress: metadata.forwardedFor,
+            ipAddress: metadata.ipAddress,
             userAgent: metadata.userAgent,
           },
         },
@@ -57,17 +57,7 @@ const createProductInquiryAction = defineAction({
   accept: "form",
   input: productFormSchema,
   handler: async (
-    {
-      terms,
-      name,
-      email,
-      phone,
-      requirements,
-      attachments,
-      relatedProductId,
-      relatedProductType,
-      ...rest
-    },
+    { terms, name, email, phone, requirements, attachments, relatedProductId, ...rest },
     context,
   ) => {
     if (!terms) {
@@ -77,13 +67,12 @@ const createProductInquiryAction = defineAction({
       });
     }
 
-    const relatedProduct =
-      relatedProductId && relatedProductType
-        ? {
-            relationTo: relatedProductType,
-            value: relatedProductId,
-          }
-        : undefined;
+    const relatedProduct: { relationTo: "products"; value: number } | undefined = relatedProductId
+      ? {
+          relationTo: "products",
+          value: relatedProductId,
+        }
+      : undefined;
 
     const attachmentResults = [];
 
@@ -133,7 +122,7 @@ const createProductInquiryAction = defineAction({
           },
           metadata: {
             page: metadata.referer,
-            ipAddress: metadata.forwardedFor,
+            ipAddress: metadata.ipAddress,
             userAgent: metadata.userAgent,
           },
           attachments: attachmentResults,
@@ -149,6 +138,12 @@ const createProductInquiryAction = defineAction({
     }
   },
 });
+
+// const createFullInquiryAction = defineAction({
+
+//   accept: "form",
+
+// })
 
 export const inquiry = {
   createSimpleInquiryAction,

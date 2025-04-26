@@ -1,8 +1,14 @@
 import { type Locale, defaultLocale, locales } from "@synoem/config";
 
+/**
+ * Get the localized relative pathname
+ * @param pathname - The pathname to get the localized pathname for
+ * @param locale - The locale to get the localized pathname for
+ * @returns The localized pathname
+ */
 export const getLocalizedPathname = (pathname: string, locale: Locale) => {
   const cleanPath = pathname.replace(/^\/[a-z]{2}(?:\/|$)/, "/");
-  return locale === defaultLocale ? `/${defaultLocale}${cleanPath}` : `/${locale}${cleanPath}`;
+  return `/${locale}${cleanPath}`;
 };
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>

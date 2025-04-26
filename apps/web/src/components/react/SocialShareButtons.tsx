@@ -11,6 +11,7 @@ import {
   WhatsappShareButton,
 } from "react-share";
 import { cn } from "@synoem/ui/lib/utils";
+
 interface Props {
   url: string;
   className?: string;
@@ -19,7 +20,7 @@ interface Props {
 
 export const SocialShareButtons = ({ url, className, size = 32 }: Props) => {
   return (
-    <div className={cn("flex gap-2", className)}>
+    <div className={cn("flex gap-2 items-center", className)}>
       <FacebookShareButton url={url}>
         <FacebookIcon size={size} round />
       </FacebookShareButton>

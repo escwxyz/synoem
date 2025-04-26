@@ -143,6 +143,10 @@
           "error": "Ein Fehler ist aufgetreten, während das Abonnieren des Newsletters."
         }
       }
+    },
+    "LanguageSwitch": {
+      "en": "Englisch",
+      "de": "Deutsch"
     }
   }
 }

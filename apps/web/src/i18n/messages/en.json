@@ -143,6 +143,10 @@
           "error": "An error occurred while subscribing to the newsletter."
         }
       }
+    },
+    "LanguageSwitch": {
+      "en": "English",
+      "de": "German"
     }
   }
 }
