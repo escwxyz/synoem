@@ -147,6 +147,10 @@
     "LanguageSwitch": {
       "en": "English",
       "de": "German"
+    },
+    "Testimonials": {
+      "title": "What our customers say",
+      "description": "Hear from organizations and individuals who have transformed their energy usage with our solar solutions."
     }
   }
 }
