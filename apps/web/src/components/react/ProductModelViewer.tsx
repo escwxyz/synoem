@@ -52,15 +52,6 @@ export const ProductModelViewer = ({
 
   const modelUrl = getUrl(three.model.url);
 
-  // const modelInfo = three.model.info;
-
-  // const annotations = three.annotations;
-
-  // const hasAnnotations =
-  //   annotations &&
-  //   annotations.length > 0 &&
-  //   annotations.every((a) => a.position !== undefined);
-
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   const [mountKey, setMountKey] = useState(Date.now());

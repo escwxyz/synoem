@@ -1,13 +1,15 @@
-import type { Field, GroupField } from "payload";
+import type {
+  Field,
+  GroupField,
+  RelationshipFieldManyValidation,
+  RelationshipFieldValidation,
+} from "payload";
 import { deepMerge } from "payload";
-import { validateUrl } from "../validation/validate-url";
+import { validateExternalLink, validateRelativeLink } from "../validation/validate-url";
 
 export type LinkAppearances = "default" | "outline";
 
-export const appearanceOptions: Record<
-  LinkAppearances,
-  { label: string; value: string }
-> = {
+export const appearanceOptions: Record<LinkAppearances, { label: string; value: string }> = {
   default: {
     label: "Default",
     value: "default",
@@ -18,22 +20,22 @@ export const appearanceOptions: Record<
   },
 };
 
-type LinkType = (options?: {
+interface LinkProps {
   appearances?: LinkAppearances[] | false;
   disableLabel?: boolean;
   localizedLabel?: boolean;
   overrides?: Partial<GroupField>;
   required?: boolean;
-}) => Field;
+}
 
-export const link: LinkType = ({
+export const link = ({
   appearances,
   disableLabel = false,
   localizedLabel = false,
   overrides = {},
   required = false,
-} = {}) => {
-  const linkResult: Field = {
+}: LinkProps) => {
+  const linkResult: GroupField = {
     name: "link",
     type: "group",
     admin: {
@@ -50,8 +52,12 @@ export const link: LinkType = ({
             value: "internal",
           },
           {
-            label: "External URL",
+            label: "External link",
             value: "external",
+          },
+          {
+            label: "Relative link",
+            value: "relative",
           },
         ],
       },
@@ -63,24 +69,32 @@ export const link: LinkType = ({
       name: "internal",
       type: "relationship",
       label: "Document to link to",
-      relationTo: ["pages", "solar-panels", "pump-controllers", "industries"], // TODO: add other collections
-      required,
+      relationTo: ["pages", "products", "industries"], // TODO: add other collections
       admin: {
         condition: (_, siblingData) => siblingData?.type === "internal",
-        width: "50%",
+        width: "100%",
       },
+      validate: requireInternalLink,
     },
     {
-      name: "url",
+      name: "relative",
+      type: "text",
+      label: "Relative URL",
+      admin: {
+        condition: (_, siblingData) => siblingData?.type === "relative",
+        width: "100%",
+      },
+      validate: validateRelativeLink,
+    },
+    {
+      name: "external",
       type: "text",
       label: "External URL",
-      required,
       admin: {
         condition: (_, siblingData) => siblingData?.type === "external",
-        width: "50%",
-        description: "External URL will be opened in a new tab.",
+        width: "100%",
       },
-      validate: validateUrl,
+      validate: validateExternalLink,
     },
   ];
 
@@ -114,15 +128,10 @@ export const link: LinkType = ({
   }
 
   if (appearances !== false) {
-    let appearanceOptionsToUse = [
-      appearanceOptions.default,
-      appearanceOptions.outline,
-    ];
+    let appearanceOptionsToUse = [appearanceOptions.default, appearanceOptions.outline];
 
     if (appearances) {
-      appearanceOptionsToUse = appearances.map(
-        (appearance) => appearanceOptions[appearance],
-      );
+      appearanceOptionsToUse = appearances.map((appearance) => appearanceOptions[appearance]);
     }
 
     linkResult.fields.push({
@@ -137,4 +146,15 @@ export const link: LinkType = ({
   }
 
   return deepMerge(linkResult, overrides);
+};
+
+const requireInternalLink: RelationshipFieldValidation = (value, { siblingData }) => {
+  if (!value) {
+    // @ts-expect-error
+    if (siblingData?.type === "internal") {
+      return "Internal link is required";
+    }
+  }
+
+  return true;
 };

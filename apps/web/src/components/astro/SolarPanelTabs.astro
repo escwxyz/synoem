@@ -1,0 +1,90 @@
+---
+import type { Product } from "@synoem/payload/payload-types";
+import DeviceWrapper from "./DeviceWrapper.astro";
+import ProductOverview from "./ProductOverview.astro";
+import ProductGalleryTab from "./ProductGalleryTab.astro";
+import ProductDocumentsTab from "./ProductDocumentsTab.astro";
+import {
+  SolarPanelWarrantyTab,
+  SolarPanelSpecificationsTab,
+  SolarPanelTabsMobile,
+  ProductTabs,
+} from "~/components/react";
+import { isSolarPanel } from "~/utils/check-product-type";
+import { getLocaleFromUrl, useTranslations } from "~/i18n/utils";
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+
+const locale = getLocaleFromUrl(Astro.url);
+
+const { t } = useTranslations(locale);
+
+const tabs = [
+  {
+    value: "overview",
+    labelKey: "Component.SolarPanelTabs.overview",
+  },
+  {
+    value: "gallery",
+    labelKey: "Component.SolarPanelTabs.gallery",
+  },
+  {
+    value: "specifications",
+    labelKey: "Component.SolarPanelTabs.specifications",
+  },
+  {
+    value: "warranty",
+    labelKey: "Component.SolarPanelTabs.warranty",
+  },
+  {
+    value: "documents",
+    labelKey: "Component.SolarPanelTabs.documents",
+  },
+];
+
+if (!isSolarPanel(product)) {
+  throw new Error("No solar panel data");
+}
+---
+
+<DeviceWrapper>
+  <ProductTabs locale={locale} tabs={tabs} slot="desktop" client:only="react">
+    <ProductOverview product={product} slot="overview-tab" />
+    <ProductGalleryTab product={product} slot="gallery-tab" />
+    <SolarPanelSpecificationsTab
+      product={product}
+      locale={locale}
+      slot="specifications-tab"
+      client:visible
+    />
+    <SolarPanelWarrantyTab
+      product={product}
+      locale={locale}
+      slot="warranty-tab"
+      client:visible
+    />
+    <ProductDocumentsTab product={product} slot="documents-tab" />
+  </ProductTabs>
+
+  <SolarPanelTabsMobile slot="mobile" locale={locale} client:load>
+    <ProductOverview product={product} slot="overview-tab" />
+    <ProductGalleryTab product={product} slot="gallery-tab" />
+    <SolarPanelSpecificationsTab
+      product={product}
+      locale={locale}
+      slot="specifications-tab"
+      client:visible
+    />
+    <SolarPanelWarrantyTab
+      product={product}
+      locale={locale}
+      slot="warranty-tab"
+      client:visible
+    />
+    <ProductDocumentsTab product={product} slot="documents-tab" />
+  </SolarPanelTabsMobile>
+</DeviceWrapper>

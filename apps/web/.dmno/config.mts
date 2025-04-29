@@ -10,6 +10,7 @@ export default defineDmnoService({
     BUNNY_STORAGE_HOST_NAME: pick("cms", "BUNNY_STORAGE_HOST_NAME"),
     BUNNY_STORAGE_ZONE_NAME: pick("cms", "BUNNY_STORAGE_ZONE_NAME"),
     BUNNY_STORAGE_REGION: pick("cms", "BUNNY_STORAGE_REGION"),
+    RESEND_API_KEY: pick("cms", "RESEND_API_KEY"),
     PUBLIC_SITE_URL: {
       extends: DmnoBaseTypes.url,
       description: "The URL of the frontend site",

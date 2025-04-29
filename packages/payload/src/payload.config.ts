@@ -3,7 +3,6 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { plugins } from "./plugins";
 import { mutableLocales, defaultLocale } from "@synoem/config";
-// import { resendAdapter } from "@payloadcms/email-resend";
 
 import { buildConfig } from "payload";
 import { defaultLexical } from "./fields/default-lexical";
@@ -11,8 +10,9 @@ import { defaultLexical } from "./fields/default-lexical";
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { ContactInfo } from "./globals/contact-info";
 import { CompanyInfo } from "./globals/company-info";
-import { Header } from "./globals/header";
+
 import { Footer } from "./globals/footer";
+import { Header } from "./globals/header";
 import { SocialLinks } from "./globals/social-links";
 // Media
 import { Videos } from "./collections/media/videos";
@@ -25,6 +25,8 @@ import { Inquiries } from "./collections/inquiries";
 import { NewsletterSubscribers } from "./collections/newsletter";
 // Products
 import { Products } from "./collections/products";
+// Testimonials
+import { Testimonials } from "./collections/testimonials";
 // Product Related
 import { Instructions } from "./collections/instructions";
 import { Certifications } from "./collections/certifications";
@@ -42,6 +44,7 @@ import { Pages } from "./collections/pages";
 import { Notifications } from "./collections/notifications";
 
 import { FAQs } from "./collections/faqs";
+import { resendAdapter } from "@payloadcms/email-resend";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -93,8 +96,10 @@ export default buildConfig({
     // Drawings
     Drawings,
     FAQs,
+    // Testimonials
+    Testimonials,
   ],
-  globals: [Footer, Header, CompanyInfo, ContactInfo, SocialLinks],
+  globals: [Footer, CompanyInfo, ContactInfo, SocialLinks, Header],
   plugins: plugins(),
   localization: {
     defaultLocale,
@@ -111,10 +116,10 @@ export default buildConfig({
   graphQL: {
     disable: true,
   },
-  // email: resendAdapter({
-  //   defaultFromAddress: "info@updates.synoem.com",
-  //   defaultFromName: "SynOEM",
-  //   apiKey: DMNO_CONFIG,
-  // }),
+  email: resendAdapter({
+    defaultFromAddress: "info@updates.synoem.com",
+    defaultFromName: "SynOEM",
+    apiKey: DMNO_CONFIG.RESEND_API_KEY || "",
+  }),
   telemetry: false,
 });

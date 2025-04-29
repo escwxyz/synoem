@@ -5,7 +5,7 @@ import { isValidLocale } from "~/i18n/utils";
 export const onRequest = defineMiddleware(({ request, locals, redirect, params }, next) => {
   const url = new URL(request.url);
 
-  if (url.pathname.startsWith("/_actions/")) {
+  if (url.pathname.startsWith("/_actions/") || url.pathname.startsWith("/api/")) {
     // ignore actions
     return next();
   }

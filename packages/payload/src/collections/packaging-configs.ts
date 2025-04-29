@@ -11,7 +11,7 @@ export const PackagingConfigs: CollectionConfig = {
   },
   admin: {
     useAsTitle: "title",
-    group: "Product Related",
+    group: "Products",
   },
   fields: [
     {
@@ -41,8 +41,7 @@ export const PackagingConfigs: CollectionConfig = {
       fields: [
         createQuantityGroup("unitQty", "Package Unit", {
           admin: {
-            description:
-              "How the product is packaged individually (e.g., pieces, sets)",
+            description: "How the product is packaged individually (e.g., pieces, sets)",
           },
         }),
         createDimensionsGroup({
@@ -63,8 +62,7 @@ export const PackagingConfigs: CollectionConfig = {
       type: "collapsible",
       label: "Pallet Configuration",
       admin: {
-        description:
-          "Pallet-level packaging information (only for products packed in pieces)",
+        description: "Pallet-level packaging information (only for products packed in pieces)",
         condition: (data, siblingData) => {
           return siblingData?.unitQty?.unit === "pcs";
         },
@@ -89,8 +87,7 @@ export const PackagingConfigs: CollectionConfig = {
         }),
         createWeightGroup("palletWeight", "Pallet Weight", {
           admin: {
-            description:
-              "Total weight of a fully loaded pallet (including pallet weight)",
+            description: "Total weight of a fully loaded pallet (including pallet weight)",
           },
         }),
       ],
@@ -102,8 +99,7 @@ export const PackagingConfigs: CollectionConfig = {
         condition: (data, siblingData) => {
           return !!siblingData?.qtyPerPallet;
         },
-        description:
-          "Container-level shipping information (only available when using pallets)",
+        description: "Container-level shipping information (only available when using pallets)",
       },
       fields: [
         {
@@ -135,8 +131,7 @@ export const PackagingConfigs: CollectionConfig = {
           label: "Total Quantity",
           admin: {
             readOnly: true,
-            description:
-              "Total number of pieces in the container (Pallets × Units per Pallet)",
+            description: "Total number of pieces in the container (Pallets × Units per Pallet)",
             placeholder: "Automatically calculated",
           },
           hooks: {

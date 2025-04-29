@@ -143,6 +143,14 @@
           "error": "Ein Fehler ist aufgetreten, während das Abonnieren des Newsletters."
         }
       }
+    },
+    "LanguageSwitch": {
+      "en": "Englisch",
+      "de": "Deutsch"
+    },
+    "Testimonials": {
+      "title": "Was unsere Kunden sagen",
+      "description": "Hören Sie von Organisationen und Einzelpersonen, die ihre Energieverwendung mit unseren Solarlösungen revolutioniert haben."
     }
   }
 }

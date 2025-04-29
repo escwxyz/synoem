@@ -86,6 +86,7 @@ export interface Config {
     datasheets: Datasheet;
     drawings: Drawing;
     faqs: Faq;
+    testimonials: Testimonial;
     'payload-jobs': PayloadJob;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -112,6 +113,7 @@ export interface Config {
     datasheets: DatasheetsSelect<false> | DatasheetsSelect<true>;
     drawings: DrawingsSelect<false> | DrawingsSelect<true>;
     faqs: FaqsSelect<false> | FaqsSelect<true>;
+    testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -122,17 +124,17 @@ export interface Config {
   };
   globals: {
     footer: Footer;
-    header: Header;
     'company-info': CompanyInfo;
     'contact-info': ContactInfo;
     'social-links': SocialLink;
+    header: Header;
   };
   globalsSelect: {
     footer: FooterSelect<false> | FooterSelect<true>;
-    header: HeaderSelect<false> | HeaderSelect<true>;
     'company-info': CompanyInfoSelect<false> | CompanyInfoSelect<true>;
     'contact-info': ContactInfoSelect<false> | ContactInfoSelect<true>;
     'social-links': SocialLinksSelect<false> | SocialLinksSelect<true>;
+    header: HeaderSelect<false> | HeaderSelect<true>;
   };
   locale: 'en' | 'de';
   user: User & {
@@ -203,6 +205,10 @@ export interface Page {
     description?: string | null;
   };
   publishedAt?: string | null;
+  /**
+   * Whether to prerender the page
+   */
+  prerender?: boolean | null;
   slug: string;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -231,7 +237,7 @@ export interface HeroBlockType {
    */
   desc?: string | null;
   ctaPrimary?: {
-    type?: ('internal' | 'external') | null;
+    type?: ('internal' | 'external' | 'relative') | null;
     internal?:
       | ({
           relationTo: 'pages';
@@ -245,10 +251,8 @@ export interface HeroBlockType {
           relationTo: 'industries';
           value: number | Industry;
         } | null);
-    /**
-     * External URL will be opened in a new tab.
-     */
-    url?: string | null;
+    relative?: string | null;
+    external?: string | null;
     label?: string | null;
     /**
      * Choose how the link should be rendered.
@@ -256,7 +260,7 @@ export interface HeroBlockType {
     appearance?: ('default' | 'outline') | null;
   };
   ctaSecondary?: {
-    type?: ('internal' | 'external') | null;
+    type?: ('internal' | 'external' | 'relative') | null;
     internal?:
       | ({
           relationTo: 'pages';
@@ -270,10 +274,8 @@ export interface HeroBlockType {
           relationTo: 'industries';
           value: number | Industry;
         } | null);
-    /**
-     * External URL will be opened in a new tab.
-     */
-    url?: string | null;
+    relative?: string | null;
+    external?: string | null;
     label?: string | null;
     /**
      * Choose how the link should be rendered.
@@ -530,7 +532,6 @@ export interface Product {
 export interface Image {
   id: number;
   alt: string;
-  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -939,7 +940,7 @@ export interface ContentBlockType {
         } | null;
         enableLink?: boolean | null;
         link?: {
-          type?: ('internal' | 'external') | null;
+          type?: ('internal' | 'external' | 'relative') | null;
           internal?:
             | ({
                 relationTo: 'pages';
@@ -953,10 +954,8 @@ export interface ContentBlockType {
                 relationTo: 'industries';
                 value: number | Industry;
               } | null);
-          /**
-           * External URL will be opened in a new tab.
-           */
-          url?: string | null;
+          relative?: string | null;
+          external?: string | null;
           label?: string | null;
           /**
            * Choose how the link should be rendered.
@@ -993,7 +992,7 @@ export interface CallToActionBlockType {
   links?:
     | {
         link?: {
-          type?: ('internal' | 'external') | null;
+          type?: ('internal' | 'external' | 'relative') | null;
           internal?:
             | ({
                 relationTo: 'pages';
@@ -1007,10 +1006,8 @@ export interface CallToActionBlockType {
                 relationTo: 'industries';
                 value: number | Industry;
               } | null);
-          /**
-           * External URL will be opened in a new tab.
-           */
-          url?: string | null;
+          relative?: string | null;
+          external?: string | null;
           label?: string | null;
           /**
            * Choose how the link should be rendered.
@@ -1065,7 +1062,7 @@ export interface FeatureBlockType {
   subtitle?: string | null;
   desc?: string | null;
   ctaPrimary?: {
-    type?: ('internal' | 'external') | null;
+    type?: ('internal' | 'external' | 'relative') | null;
     internal?:
       | ({
           relationTo: 'pages';
@@ -1079,10 +1076,8 @@ export interface FeatureBlockType {
           relationTo: 'industries';
           value: number | Industry;
         } | null);
-    /**
-     * External URL will be opened in a new tab.
-     */
-    url?: string | null;
+    relative?: string | null;
+    external?: string | null;
     label?: string | null;
     /**
      * Choose how the link should be rendered.
@@ -1090,7 +1085,7 @@ export interface FeatureBlockType {
     appearance?: ('default' | 'outline') | null;
   };
   ctaSecondary?: {
-    type?: ('internal' | 'external') | null;
+    type?: ('internal' | 'external' | 'relative') | null;
     internal?:
       | ({
           relationTo: 'pages';
@@ -1104,10 +1099,8 @@ export interface FeatureBlockType {
           relationTo: 'industries';
           value: number | Industry;
         } | null);
-    /**
-     * External URL will be opened in a new tab.
-     */
-    url?: string | null;
+    relative?: string | null;
+    external?: string | null;
     label?: string | null;
     /**
      * Choose how the link should be rendered.
@@ -1139,10 +1132,15 @@ export interface FeatureBlockType {
 export interface Notification {
   id: number;
   title: string;
-  link?: {
-    relationTo: 'pages';
-    value: number | Page;
-  } | null;
+  link?:
+    | ({
+        relationTo: 'pages';
+        value: number | Page;
+      } | null)
+    | ({
+        relationTo: 'products';
+        value: number | Product;
+      } | null);
   state?: ('active' | 'inactive') | null;
   updatedAt: string;
   createdAt: string;
@@ -1753,10 +1751,6 @@ export interface NewsletterSubscriber {
    */
   email: string;
   /**
-   * The subscriber's name (optional)
-   */
-  name?: string | null;
-  /**
    * Subscription status
    */
   status?: ('subscribed' | 'unsubscribed') | null;
@@ -1787,6 +1781,25 @@ export interface Faq {
         id?: string | null;
       }[]
     | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials".
+ */
+export interface Testimonial {
+  id: number;
+  name: string;
+  /**
+   * The designation of the person giving the testimonial
+   */
+  designation?: string | null;
+  quote: string;
+  /**
+   * The avatar of the person giving the testimonial
+   */
+  avatar?: (number | null) | Image;
   updatedAt: string;
   createdAt: string;
 }
@@ -1966,6 +1979,10 @@ export interface PayloadLockedDocument {
         value: number | Faq;
       } | null)
     | ({
+        relationTo: 'testimonials';
+        value: number | Testimonial;
+      } | null)
+    | ({
         relationTo: 'payload-jobs';
         value: number | PayloadJob;
       } | null);
@@ -2051,6 +2068,7 @@ export interface PagesSelect<T extends boolean = true> {
         description?: T;
       };
   publishedAt?: T;
+  prerender?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -2071,7 +2089,8 @@ export interface HeroBlockTypeSelect<T extends boolean = true> {
     | {
         type?: T;
         internal?: T;
-        url?: T;
+        relative?: T;
+        external?: T;
         label?: T;
         appearance?: T;
       };
@@ -2080,7 +2099,8 @@ export interface HeroBlockTypeSelect<T extends boolean = true> {
     | {
         type?: T;
         internal?: T;
-        url?: T;
+        relative?: T;
+        external?: T;
         label?: T;
         appearance?: T;
       };
@@ -2172,7 +2192,8 @@ export interface ContentBlockTypeSelect<T extends boolean = true> {
           | {
               type?: T;
               internal?: T;
-              url?: T;
+              relative?: T;
+              external?: T;
               label?: T;
               appearance?: T;
             };
@@ -2195,7 +2216,8 @@ export interface CallToActionBlockTypeSelect<T extends boolean = true> {
           | {
               type?: T;
               internal?: T;
-              url?: T;
+              relative?: T;
+              external?: T;
               label?: T;
               appearance?: T;
             };
@@ -2227,7 +2249,8 @@ export interface FeatureBlockTypeSelect<T extends boolean = true> {
     | {
         type?: T;
         internal?: T;
-        url?: T;
+        relative?: T;
+        external?: T;
         label?: T;
         appearance?: T;
       };
@@ -2236,7 +2259,8 @@ export interface FeatureBlockTypeSelect<T extends boolean = true> {
     | {
         type?: T;
         internal?: T;
-        url?: T;
+        relative?: T;
+        external?: T;
         label?: T;
         appearance?: T;
       };
@@ -2350,7 +2374,6 @@ export interface InquiriesSelect<T extends boolean = true> {
  */
 export interface NewsletterSubscribersSelect<T extends boolean = true> {
   email?: T;
-  name?: T;
   status?: T;
   metadata?:
     | T
@@ -2368,7 +2391,6 @@ export interface NewsletterSubscribersSelect<T extends boolean = true> {
  */
 export interface ImagesSelect<T extends boolean = true> {
   alt?: T;
-  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -2822,6 +2844,18 @@ export interface FaqsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials_select".
+ */
+export interface TestimonialsSelect<T extends boolean = true> {
+  name?: T;
+  designation?: T;
+  quote?: T;
+  avatar?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-jobs_select".
  */
 export interface PayloadJobsSelect<T extends boolean = true> {
@@ -2917,7 +2951,7 @@ export interface Footer {
           links?:
             | {
                 link?: {
-                  type?: ('internal' | 'external') | null;
+                  type?: ('internal' | 'external' | 'relative') | null;
                   internal?:
                     | ({
                         relationTo: 'pages';
@@ -2931,10 +2965,8 @@ export interface Footer {
                         relationTo: 'industries';
                         value: number | Industry;
                       } | null);
-                  /**
-                   * External URL will be opened in a new tab.
-                   */
-                  url?: string | null;
+                  relative?: string | null;
+                  external?: string | null;
                   label?: string | null;
                 };
                 id?: string | null;
@@ -2967,7 +2999,7 @@ export interface Footer {
     links?:
       | {
           link?: {
-            type?: ('internal' | 'external') | null;
+            type?: ('internal' | 'external' | 'relative') | null;
             internal?:
               | ({
                   relationTo: 'pages';
@@ -2981,153 +3013,13 @@ export interface Footer {
                   relationTo: 'industries';
                   value: number | Industry;
                 } | null);
-            /**
-             * External URL will be opened in a new tab.
-             */
-            url?: string | null;
+            relative?: string | null;
+            external?: string | null;
             label?: string | null;
           };
           id?: string | null;
         }[]
       | null;
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * Configure website navigation
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "header".
- */
-export interface Header {
-  id: number;
-  /**
-   * Configure navigation menu items
-   */
-  items?:
-    | {
-        text: string;
-        link?: {
-          type?: ('internal' | 'external') | null;
-          internal?:
-            | ({
-                relationTo: 'pages';
-                value: number | Page;
-              } | null)
-            | ({
-                relationTo: 'products';
-                value: number | Product;
-              } | null)
-            | ({
-                relationTo: 'industries';
-                value: number | Industry;
-              } | null);
-          /**
-           * External URL will be opened in a new tab.
-           */
-          url?: string | null;
-          label?: string | null;
-          /**
-           * Choose how the link should be rendered.
-           */
-          appearance?: ('default' | 'outline') | null;
-        };
-        /**
-         * Add sections to create a dropdown or mega menu
-         */
-        sections?:
-          | {
-              type?: ('links' | 'banner') | null;
-              linksSection?: {
-                title?: string | null;
-                items?:
-                  | {
-                      title: string;
-                      desc?: string | null;
-                      link: {
-                        type?: ('internal' | 'external') | null;
-                        internal?:
-                          | ({
-                              relationTo: 'pages';
-                              value: number | Page;
-                            } | null)
-                          | ({
-                              relationTo: 'products';
-                              value: number | Product;
-                            } | null)
-                          | ({
-                              relationTo: 'industries';
-                              value: number | Industry;
-                            } | null);
-                        /**
-                         * External URL will be opened in a new tab.
-                         */
-                        url?: string | null;
-                        label: string;
-                        /**
-                         * Choose how the link should be rendered.
-                         */
-                        appearance?: ('default' | 'outline') | null;
-                      };
-                      id?: string | null;
-                    }[]
-                  | null;
-                isExtended?: boolean | null;
-              };
-              banner?: {
-                title: string;
-                desc?: string | null;
-                media?:
-                  | ({
-                      relationTo: 'images';
-                      value: number | Image;
-                    } | null)
-                  | ({
-                      relationTo: 'videos';
-                      value: number | Video;
-                    } | null);
-                link?: {
-                  type?: ('internal' | 'external') | null;
-                  internal?:
-                    | ({
-                        relationTo: 'pages';
-                        value: number | Page;
-                      } | null)
-                    | ({
-                        relationTo: 'products';
-                        value: number | Product;
-                      } | null)
-                    | ({
-                        relationTo: 'industries';
-                        value: number | Industry;
-                      } | null);
-                  /**
-                   * External URL will be opened in a new tab.
-                   */
-                  url?: string | null;
-                  label?: string | null;
-                  /**
-                   * Choose how the link should be rendered.
-                   */
-                  appearance?: ('default' | 'outline') | null;
-                };
-              };
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-      }[]
-    | null;
-  settings?: {
-    desktop?: {
-      alignment?: ('left' | 'center' | 'right') | null;
-    };
-    mobile?: {
-      hamburgerPosition?: ('left' | 'right') | null;
-      animation?: ('slide' | 'fade') | null;
-      showAuthButtons?: boolean | null;
-    };
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -3186,6 +3078,128 @@ export interface SocialLink {
   createdAt?: string | null;
 }
 /**
+ * Configure website navigation
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: number;
+  /**
+   * Configure navigation menu items
+   */
+  items?:
+    | {
+        text: string;
+        type: 'section' | 'link';
+        link?: {
+          type?: ('internal' | 'external' | 'relative') | null;
+          internal?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'products';
+                value: number | Product;
+              } | null)
+            | ({
+                relationTo: 'industries';
+                value: number | Industry;
+              } | null);
+          relative?: string | null;
+          external?: string | null;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        /**
+         * Add sections to create a dropdown or mega menu
+         */
+        sections?:
+          | {
+              type?: ('links' | 'banner') | null;
+              linksSection?: {
+                title?: string | null;
+                items?:
+                  | {
+                      icon?: string | null;
+                      title: string;
+                      desc?: string | null;
+                      link?: {
+                        type?: ('internal' | 'external' | 'relative') | null;
+                        internal?:
+                          | ({
+                              relationTo: 'pages';
+                              value: number | Page;
+                            } | null)
+                          | ({
+                              relationTo: 'products';
+                              value: number | Product;
+                            } | null)
+                          | ({
+                              relationTo: 'industries';
+                              value: number | Industry;
+                            } | null);
+                        relative?: string | null;
+                        external?: string | null;
+                        /**
+                         * Choose how the link should be rendered.
+                         */
+                        appearance?: ('default' | 'outline') | null;
+                      };
+                      id?: string | null;
+                    }[]
+                  | null;
+                isExtended?: boolean | null;
+              };
+              banner?: {
+                title: string;
+                desc?: string | null;
+                media?:
+                  | ({
+                      relationTo: 'images';
+                      value: number | Image;
+                    } | null)
+                  | ({
+                      relationTo: 'videos';
+                      value: number | Video;
+                    } | null);
+                link?: {
+                  type?: ('internal' | 'external' | 'relative') | null;
+                  internal?:
+                    | ({
+                        relationTo: 'pages';
+                        value: number | Page;
+                      } | null)
+                    | ({
+                        relationTo: 'products';
+                        value: number | Product;
+                      } | null)
+                    | ({
+                        relationTo: 'industries';
+                        value: number | Industry;
+                      } | null);
+                  relative?: string | null;
+                  external?: string | null;
+                  label?: string | null;
+                  /**
+                   * Choose how the link should be rendered.
+                   */
+                  appearance?: ('default' | 'outline') | null;
+                };
+              };
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "footer_select".
  */
@@ -3216,7 +3230,8 @@ export interface FooterSelect<T extends boolean = true> {
                       | {
                           type?: T;
                           internal?: T;
-                          url?: T;
+                          relative?: T;
+                          external?: T;
                           label?: T;
                         };
                     id?: T;
@@ -3242,94 +3257,11 @@ export interface FooterSelect<T extends boolean = true> {
                 | {
                     type?: T;
                     internal?: T;
-                    url?: T;
+                    relative?: T;
+                    external?: T;
                     label?: T;
                   };
               id?: T;
-            };
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "header_select".
- */
-export interface HeaderSelect<T extends boolean = true> {
-  items?:
-    | T
-    | {
-        text?: T;
-        link?:
-          | T
-          | {
-              type?: T;
-              internal?: T;
-              url?: T;
-              label?: T;
-              appearance?: T;
-            };
-        sections?:
-          | T
-          | {
-              type?: T;
-              linksSection?:
-                | T
-                | {
-                    title?: T;
-                    items?:
-                      | T
-                      | {
-                          title?: T;
-                          desc?: T;
-                          link?:
-                            | T
-                            | {
-                                type?: T;
-                                internal?: T;
-                                url?: T;
-                                label?: T;
-                                appearance?: T;
-                              };
-                          id?: T;
-                        };
-                    isExtended?: T;
-                  };
-              banner?:
-                | T
-                | {
-                    title?: T;
-                    desc?: T;
-                    media?: T;
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          internal?: T;
-                          url?: T;
-                          label?: T;
-                          appearance?: T;
-                        };
-                  };
-              id?: T;
-            };
-        id?: T;
-      };
-  settings?:
-    | T
-    | {
-        desktop?:
-          | T
-          | {
-              alignment?: T;
-            };
-        mobile?:
-          | T
-          | {
-              hamburgerPosition?: T;
-              animation?: T;
-              showAuthButtons?: T;
             };
       };
   updatedAt?: T;
@@ -3382,6 +3314,77 @@ export interface SocialLinksSelect<T extends boolean = true> {
     | {
         platform?: T;
         url?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  items?:
+    | T
+    | {
+        text?: T;
+        type?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              internal?: T;
+              relative?: T;
+              external?: T;
+              appearance?: T;
+            };
+        sections?:
+          | T
+          | {
+              type?: T;
+              linksSection?:
+                | T
+                | {
+                    title?: T;
+                    items?:
+                      | T
+                      | {
+                          icon?: T;
+                          title?: T;
+                          desc?: T;
+                          link?:
+                            | T
+                            | {
+                                type?: T;
+                                internal?: T;
+                                relative?: T;
+                                external?: T;
+                                appearance?: T;
+                              };
+                          id?: T;
+                        };
+                    isExtended?: T;
+                  };
+              banner?:
+                | T
+                | {
+                    title?: T;
+                    desc?: T;
+                    media?: T;
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          internal?: T;
+                          relative?: T;
+                          external?: T;
+                          label?: T;
+                          appearance?: T;
+                        };
+                  };
+              id?: T;
+            };
         id?: T;
       };
   updatedAt?: T;

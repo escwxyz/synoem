@@ -2,6 +2,7 @@ import type { Field, GlobalConfig } from "payload";
 import { link } from "../fields/link";
 import { createTitleField } from "../fields/title";
 import { createDescriptionField } from "../fields/description";
+import { createIconSelectField } from "../fields/icon-select";
 
 const menuItemFields: Field[] = [
   {
@@ -9,10 +10,32 @@ const menuItemFields: Field[] = [
     type: "text",
     required: true,
     label: "Menu Text",
+    localized: true,
   },
+
+  {
+    name: "type",
+    type: "select",
+    required: true,
+    options: [
+      {
+        label: "Section",
+        value: "section",
+      },
+      {
+        label: "Link",
+        value: "link",
+      },
+    ],
+  },
+
   link({
+    disableLabel: true,
     overrides: {
-      label: "Link (Optional)",
+      label: "Link",
+      admin: {
+        condition: (data, siblingData) => siblingData?.type === "link",
+      },
     },
   }),
   {
@@ -21,8 +44,9 @@ const menuItemFields: Field[] = [
     label: "Menu Sections",
     admin: {
       description: "Add sections to create a dropdown or mega menu",
+      condition: (data, siblingData) => siblingData?.type === "section",
       components: {
-        // RowLabel: "@/payload/components/header-row-label#MenuSectionLabel",
+        RowLabel: "@synoem/payload/components/row-labels#MenuSectionLabel",
       },
     },
     fields: [
@@ -52,15 +76,15 @@ const menuItemFields: Field[] = [
             type: "array",
             admin: {
               components: {
-                // RowLabel: "@/payload/components/header-row-label#LinkItemLabel",
+                RowLabel: "@synoem/payload/components/row-labels#LinkItemLabel",
               },
             },
             fields: [
-              // iconSelect,
-              // createIconField({
-              //   name: "iconGradient",
-              //   label: "Icon Gradient",
-              // }),
+              createIconSelectField({
+                name: "icon",
+                label: "Icon",
+                required: false,
+              }),
               createTitleField({
                 name: "title",
                 required: true,
@@ -70,6 +94,7 @@ const menuItemFields: Field[] = [
               }),
               link({
                 required: true,
+                disableLabel: true,
               }),
             ],
           },
@@ -115,7 +140,7 @@ const menuItemFields: Field[] = [
 export const Header: GlobalConfig = {
   slug: "header",
   admin: {
-    group: "Layout",
+    group: "Settings",
     description: "Configure website navigation",
   },
   fields: [
@@ -126,65 +151,10 @@ export const Header: GlobalConfig = {
       admin: {
         description: "Configure navigation menu items",
         components: {
-          //   RowLabel: "@/payload/components/header-row-label#MenuItemLabel",
+          RowLabel: "@synoem/payload/components/row-labels#MenuItemLabel",
         },
       },
       fields: menuItemFields,
     },
-    {
-      name: "settings",
-      type: "group",
-      fields: [
-        {
-          name: "desktop",
-          type: "group",
-          fields: [
-            {
-              name: "alignment",
-              type: "select",
-              defaultValue: "left",
-              options: [
-                { label: "Left", value: "left" },
-                { label: "Center", value: "center" },
-                { label: "Right", value: "right" },
-              ],
-            },
-          ],
-        },
-        {
-          name: "mobile",
-          type: "group",
-          fields: [
-            {
-              name: "hamburgerPosition",
-              type: "select",
-              defaultValue: "right",
-              options: [
-                { label: "Left", value: "left" },
-                { label: "Right", value: "right" },
-              ],
-            },
-            {
-              name: "animation",
-              type: "select",
-              defaultValue: "slide",
-              options: [
-                { label: "Slide", value: "slide" },
-                { label: "Fade", value: "fade" },
-              ],
-            },
-            {
-              name: "showAuthButtons",
-              type: "checkbox",
-              label: "Show Auth Buttons",
-              defaultValue: true,
-            },
-          ],
-        },
-      ],
-    },
   ],
-  hooks: {
-    // afterChange: [revalidateHeader], // getCachedGlobal("header")
-  },
 };

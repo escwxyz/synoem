@@ -175,7 +175,7 @@ export const SolarPanelWarrantyTab = ({ product, locale }: Props) => {
             <Card>
               <CardHeader>
                 <div className="flex gap-2 font-semibold items-center">
-                  <div className="rounded-full bg-muted p-2">
+                  <div className="rounded-full bg-accent p-2">
                     <ShieldCheck size={20} />
                   </div>
                   <div className="text-xl">
@@ -192,7 +192,7 @@ export const SolarPanelWarrantyTab = ({ product, locale }: Props) => {
             <Card>
               <CardHeader>
                 <div className="flex gap-2 font-semibold items-center">
-                  <div className="rounded-full bg-muted p-2">
+                  <div className="rounded-full bg-accent p-2">
                     <Zap size={20} />
                   </div>
                   <div className="text-xl">
@@ -309,45 +309,45 @@ export const SolarPanelWarrantyTab = ({ product, locale }: Props) => {
               </ChartContainer>
             </CardContent>
             <CardFooter className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-muted p-4 rounded-lg">
-                <h4 className="font-semibold text-gray-700 mb-2">
+              <div className="bg-muted dark:bg-background p-4 rounded-lg">
+                <h4 className="font-semibold text-muted-foreground mb-2">
                   {t("Component.SolarPanelWarrantyTab.initialYearGuarantee")}
                 </h4>
-                <p className="text-2xl font-bold text-emerald-600">
+                <p className="text-2xl font-bold text-primary">
                   <NumberTicker
                     value={powerDegradation.initialGuarantee}
                     startValue={90.0}
                     decimalPlaces={1}
-                    className="text-2xl font-bold text-emerald-600"
+                    className="text-2xl font-bold text-primary dark:text-primary"
                   />
                   %
                 </p>
               </div>
-              <div className="bg-muted p-4 rounded-lg">
-                <h4 className="font-semibold text-gray-700 mb-2">
+              <div className="bg-muted dark:bg-background p-4 rounded-lg">
+                <h4 className="font-semibold text-muted-foreground mb-2">
                   {t("Component.SolarPanelWarrantyTab.annualDegradation")}
                 </h4>
-                <p className="text-2xl font-bold text-emerald-600">
+                <p className="text-2xl font-bold text-primary">
                   <NumberTicker
                     value={powerDegradation.annual}
                     startValue={0.0}
                     decimalPlaces={1}
-                    className="text-2xl font-bold text-emerald-600"
+                    className="text-2xl font-bold text-primary dark:text-primary"
                   />
                   %
                 </p>
               </div>
-              <div className="bg-muted p-4 rounded-lg">
-                <h4 className="font-semibold text-gray-700 mb-2">
+              <div className="bg-muted dark:bg-background p-4 rounded-lg">
+                <h4 className="font-semibold text-muted-foreground mb-2">
                   {t("Component.SolarPanelWarrantyTab.endYearGuarantee")}
                 </h4>
 
-                <p className="text-2xl font-bold text-emerald-600">
+                <p className="text-2xl font-bold text-primary">
                   <NumberTicker
                     value={powerDegradation.endYearGuarantee}
                     startValue={80.0}
                     decimalPlaces={1}
-                    className="text-2xl font-bold text-emerald-600"
+                    className="text-2xl font-bold text-primary dark:text-primary"
                   />
                   %
                 </p>

@@ -4,7 +4,6 @@ import { createQuantityGroup } from "../fields/unit";
 import {
   COUNTRIES_REGIONS,
   CUSTOMER_TYPES,
-  PRODUCT_CATEGORIES,
   INQUIRY_SOURCES,
   getProductCategoryOptions,
 } from "@synoem/config";
@@ -38,7 +37,7 @@ export const Inquiries: CollectionConfig<"inquiries"> = {
     {
       name: "relatedProduct",
       type: "relationship",
-      relationTo: ["solar-panels", "pump-controllers"],
+      relationTo: ["products"],
       hasMany: false,
       admin: {
         condition: (data) => data.formType === "product",

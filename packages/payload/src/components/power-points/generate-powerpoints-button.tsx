@@ -10,12 +10,14 @@ export const GeneratePowerPointsButton = () => {
 
   const formData = reduceFieldsToValues(fields, true);
 
-  const min = formData?.powerRange?.min;
-  const max = formData?.powerRange?.max;
-  const step = formData?.powerRange?.step;
+  const data = formData?.solarPanel[0];
+
+  const min = data?.power?.min;
+  const max = data?.power?.max;
+  const step = data?.power?.step;
   const dimensions = formData?.dimensions;
 
-  const hasPrevData = formData?.powerRange?.points?.length > 0;
+  const hasPrevData = data?.power?.points?.length > 0;
 
   const generatePoints = async () => {
     if (!dimensions || !dimensions.unit || !dimensions.h || !dimensions.w) {
@@ -45,7 +47,7 @@ export const GeneratePowerPointsButton = () => {
       newPoints.map(async (point, index) => {
         dispatchFields({
           type: "ADD_ROW",
-          path: "powerRange.points",
+          path: "solarPanel.0.power.points",
           rowIndex: index,
           subFieldState: {
             pmax: {
@@ -64,21 +66,22 @@ export const GeneratePowerPointsButton = () => {
     }
   };
 
+  const disabled =
+    isGenerating ||
+    !min ||
+    !max ||
+    !step ||
+    !dimensions?.w ||
+    !dimensions?.h ||
+    !dimensions?.unit ||
+    hasPrevData;
+
   return (
     <div className="p-2">
       <Button
         onClick={generatePoints}
         buttonStyle="secondary"
-        disabled={
-          isGenerating ||
-          !min ||
-          !max ||
-          !step ||
-          !dimensions?.w ||
-          !dimensions?.h ||
-          !dimensions?.unit ||
-          hasPrevData
-        }
+        disabled={disabled}
       >
         {isGenerating ? "Generating..." : "Generate Power Points"}
       </Button>
