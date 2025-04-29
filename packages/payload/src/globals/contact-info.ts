@@ -3,7 +3,7 @@ import type { GlobalConfig } from "payload";
 export const ContactInfo: GlobalConfig = {
   slug: "contact-info",
   admin: {
-    group: "Setting",
+    group: "Settings",
   },
   fields: [
     {
@@ -20,8 +20,7 @@ export const ContactInfo: GlobalConfig = {
       name: "addresses",
       type: "array",
       admin: {
-        description:
-          "The first address will be used as the headquarters address.",
+        description: "The first address will be used as the headquarters address.",
       },
       required: true,
       localized: true,

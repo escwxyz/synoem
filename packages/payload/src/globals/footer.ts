@@ -1,13 +1,13 @@
 import type { GlobalConfig } from "payload";
 import { link } from "../fields/link";
-
+import { lexicalEditor } from "@payloadcms/richtext-lexical";
 export const Footer: GlobalConfig = {
   slug: "footer",
   access: {
     read: () => true,
   },
   admin: {
-    group: "Layout",
+    group: "Settings",
   },
   fields: [
     {
@@ -63,8 +63,7 @@ export const Footer: GlobalConfig = {
             },
           ],
           admin: {
-            condition: (siblingData) =>
-              siblingData.useCompanyDescription === "yes",
+            condition: (siblingData) => siblingData.useCompanyDescription === "yes",
           },
           defaultValue: "shortDescription",
         },
@@ -96,7 +95,7 @@ export const Footer: GlobalConfig = {
       admin: {
         description: "Add multiple columns to organize footer content",
         components: {
-          //   RowLabel: "@/payload/components/footer-row-label#FooterColumnLabel",
+          RowLabel: "@synoem/payload/components/row-labels#FooterColumnLabel",
         },
       },
       minRows: 1,
@@ -137,12 +136,11 @@ export const Footer: GlobalConfig = {
           },
         },
         {
-          name: "linkGroup",
+          name: "linkGroup", //TODO
           type: "group",
           label: "Link Group",
           admin: {
-            condition: (_data, siblingData) =>
-              siblingData.blockType === "linkGroup",
+            condition: (_data, siblingData) => siblingData.blockType === "linkGroup",
           },
           fields: [
             {
@@ -163,7 +161,7 @@ export const Footer: GlobalConfig = {
               ],
               admin: {
                 components: {
-                  //   RowLabel: "@/payload/components/footer-row-label#FooterLinkGroupLabel",
+                  RowLabel: "@synoem/payload/components/row-labels#FooterLinkGroupLabel",
                 },
               },
             },
@@ -174,8 +172,7 @@ export const Footer: GlobalConfig = {
           type: "group",
           label: "Custom Content",
           admin: {
-            condition: (_data, siblingData) =>
-              siblingData.blockType === "content",
+            condition: (_data, siblingData) => siblingData.blockType === "content",
           },
           fields: [
             {
@@ -187,6 +184,7 @@ export const Footer: GlobalConfig = {
             {
               name: "richText",
               type: "richText",
+              editor: lexicalEditor({}),
               label: "Content",
               localized: true,
             },
@@ -197,10 +195,9 @@ export const Footer: GlobalConfig = {
           type: "ui",
           label: "Contact Info",
           admin: {
-            condition: (_data, siblingData) =>
-              siblingData.blockType === "contactInfo",
+            condition: (_data, siblingData) => siblingData.blockType === "contactInfo",
             components: {
-              //   Field: "@/payload/components/contact-info#ContactInfoPreview",
+              // Field: "@/payload/components/contact-info#ContactInfoPreview",
             },
           },
         },
@@ -224,7 +221,7 @@ export const Footer: GlobalConfig = {
           admin: {
             initCollapsed: true,
             components: {
-              //   RowLabel: "@/payload/components/footer-row-label#FooterBottomLinkRowLabel",
+              RowLabel: "@synoem/payload/components/row-labels#FooterBottomLinkRowLabel",
             },
           },
           fields: [
@@ -237,7 +234,5 @@ export const Footer: GlobalConfig = {
       ],
     },
   ],
-  hooks: {
-    // afterChange: [revalidateFooter],
-  },
+  hooks: {},
 };

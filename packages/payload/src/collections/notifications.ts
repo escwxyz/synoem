@@ -10,7 +10,7 @@ export const Notifications: CollectionConfig<"notifications"> = {
       name: "link",
       type: "relationship",
       hasMany: false,
-      relationTo: ["pages"], // add posts and products
+      relationTo: ["pages", "products"], // add posts and products
     },
     {
       name: "state",

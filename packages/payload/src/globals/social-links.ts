@@ -4,7 +4,7 @@ import type { GlobalConfig } from "payload";
 export const SocialLinks: GlobalConfig = {
   slug: "social-links",
   admin: {
-    group: "Setting",
+    group: "Settings",
   },
   fields: [
     {
