@@ -5,25 +5,33 @@ import { Button } from "@synoem/ui/components/button";
 import { motion, AnimatePresence } from "motion/react";
 
 export const ThemeSwitch = () => {
-  const [theme, setThemeState] = React.useState<
-    "theme-light" | "dark" | "system"
-  >("theme-light");
+  const isDarkMode = React.useRef(
+    typeof document !== "undefined" &&
+      document.documentElement.classList.contains("dark"),
+  );
+
+  const [, forceUpdate] = React.useState({});
 
   React.useEffect(() => {
-    const isDarkMode = document.documentElement.classList.contains("dark");
-    setThemeState(isDarkMode ? "dark" : "theme-light");
+    isDarkMode.current = document.documentElement.classList.contains("dark");
+    forceUpdate({});
+
+    const observer = new MutationObserver(() => {
+      isDarkMode.current = document.documentElement.classList.contains("dark");
+      forceUpdate({});
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
   }, []);
 
-  React.useEffect(() => {
-    const isDark =
-      theme === "dark" ||
-      (theme === "system" &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches);
-    document.documentElement.classList[isDark ? "add" : "remove"]("dark");
-  }, [theme]);
-
   const toggleTheme = () => {
-    setThemeState(theme === "dark" ? "theme-light" : "dark");
+    const newIsDark = !isDarkMode.current;
+    document.documentElement.classList[newIsDark ? "add" : "remove"]("dark");
   };
 
   return (
@@ -35,7 +43,7 @@ export const ThemeSwitch = () => {
         className="relative overflow-hidden"
       >
         <AnimatePresence mode="wait" initial={false}>
-          {theme === "dark" ? (
+          {isDarkMode.current ? (
             <motion.div
               key="sun"
               initial={{ rotate: 90, opacity: 0 }}
@@ -60,7 +68,7 @@ export const ThemeSwitch = () => {
           )}
         </AnimatePresence>
         <div className="h-[1.2rem] w-[1.2rem] opacity-0">
-          {theme === "dark" ? <Sun /> : <Moon />}
+          {isDarkMode.current ? <Sun /> : <Moon />}
         </div>
       </Button>
     </motion.div>
