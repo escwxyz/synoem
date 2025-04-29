@@ -1,3 +1,5 @@
+"use client";
+
 import type { Locale } from "@synoem/config";
 import type { Product } from "@synoem/payload/payload-types";
 import {
@@ -62,7 +64,7 @@ export const SolarPanelSpecificationsTab = ({ product, locale }: Props) => {
   return (
     <section>
       <div className="grid grid-cols-1 gap-8">
-        <div className="bg-background rounded-xl p-6 shadow-sm grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="bg-background md:bg-card md:rounded-xl p-0 md:p-6 md:shadow-sm grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
             <h3 className="text-xl font-bold mb-4 text-emerald-700">
               {t(
@@ -199,7 +201,7 @@ export const SolarPanelSpecificationsTab = ({ product, locale }: Props) => {
           </div>
         </div>
         {hasPowerPoints && (
-          <div className="bg-background rounded-xl p-6 shadow-sm overflow-x-auto">
+          <div className="bg-background md:bg-card md:rounded-xl p-0 md:p-6 md:shadow-sm overflow-x-auto">
             <h3 className="text-xl font-bold mb-4 text-emerald-700">
               {t(
                 "Component.SolarPanelSpecificationsTab.electricalSpecifications",
