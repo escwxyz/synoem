@@ -204,8 +204,7 @@ export const Footer: GlobalConfig = {
       ],
     },
     {
-      name: "bottomBar",
-      type: "group",
+      type: "collapsible",
       label: "Bottom Bar",
       fields: [
         {
@@ -214,6 +213,7 @@ export const Footer: GlobalConfig = {
           label: "Copyright Text",
           localized: true,
         },
+
         {
           name: "links",
           type: "array",

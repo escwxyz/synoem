@@ -1,0 +1,167 @@
+---
+// TODO: footer Cumulative Layout Shift (CLS) is poor
+
+import { getPayloadClient } from "@synoem/payload/client";
+import { SocialLinks } from "~/components/astro";
+import { Newsletter, LanguageSwitch } from "~/components/react";
+import { getLocaleFromUrl, getLocalizedPathname } from "~/i18n/utils";
+
+export const prerender = true;
+
+const payload = await getPayloadClient();
+
+const locale = getLocaleFromUrl(Astro.url);
+
+const footerData = await payload.findGlobal({
+  slug: "footer",
+  locale,
+});
+
+const { copyright, links, companySection, columns } = footerData;
+
+const companyInfoData = await payload.findGlobal({
+  slug: "company-info",
+  locale,
+});
+
+const contactInfoData = await payload.findGlobal({
+  slug: "contact-info",
+  locale,
+});
+
+const companyDescription =
+  companySection?.useCompanyDescription &&
+  companySection.companyDescription === "shortDescription"
+    ? companyInfoData?.shortDescription
+    : companyInfoData?.longDescription;
+
+const showSocialLinks = companySection?.showSocialLinks ?? true;
+
+const socialLinks = await payload.findGlobal({
+  slug: "social-links",
+  locale,
+});
+
+const hasSocialLinks =
+  socialLinks && socialLinks?.links && socialLinks?.links?.length > 0;
+---
+
+<footer class="mt-auto border-t border-border z-50 relative">
+  <div class="relative z-10 w-full flex flex-col">
+    <div class="container flex flex-col justify-between p-12 gap-8 md:flex-row">
+      <div class="md:flex-1/4 flex flex-col gap-4">
+        <a href={getLocalizedPathname("/", locale)} class="text-2xl font-bold">
+          LOGO
+        </a>
+        <div class="prose max-w-xs text-sm">
+          {companyDescription}
+        </div>
+        {
+          showSocialLinks && hasSocialLinks && (
+            <div class="mt-6 flex space-x-4">
+              <SocialLinks socialLinks={socialLinks} />
+            </div>
+          )
+        }
+        <Newsletter client:visible locale={locale} />
+      </div>
+      {
+        columns && columns.length > 0 && (
+          <div class="border-t">
+            <div class="container grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {columns.map((column) => {
+                const colSizeClass =
+                  column.size === "small"
+                    ? "lg:col-span-1"
+                    : column.size === "large"
+                      ? "lg:col-span-2"
+                      : "lg:col-span-1";
+
+                return (
+                  <div class={colSizeClass}>
+                    {column.blockType === "linkGroup" && column.linkGroup && (
+                      <div class="footer-link-group">
+                        <h3 class="mb-4 text-lg font-semibold">
+                          {column.linkGroup.title}
+                        </h3>
+                        <ul class="space-y-2">
+                          {column.linkGroup.links?.map((item, i) => (
+                            <li>
+                              {/* <CMSLink
+                                        class="text-zinc-400 hover:text-white"
+                                        {...item.link}
+                                      /> */}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {column.blockType === "content" && column.content && (
+                      <div class="footer-content">
+                        {column.content.title && (
+                          <h3 class="mb-4 text-lg font-semibold">
+                            {column.content.title}
+                          </h3>
+                        )}
+                        {column.content.richText && (
+                          <div class="text-zinc-400">
+                            {/* <RichText data={column.content.richText} /> */}
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {column.blockType === "contactInfo" && (
+                      <div>
+                        <span class="text-lg font-semibold mb-4">
+                          Feel free to contact us
+                        </span>
+                        {/* <GeneralContactInfo contactInfo={contactInfo} /> */}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )
+      }
+    </div>
+
+    <div
+      class="flex items-center flex-col md:flex-row justify-between p-6 border-t border-border"
+    >
+      <div>
+        <div class="text-sm">
+          {
+            `© ${new Date().getFullYear()} ${companyInfoData?.name}. ${copyright}`
+          }
+        </div>
+      </div>
+      {
+        links && links.length > 0 && (
+          <div class="mt-4 flex space-x-6 md:mt-0">
+            {/* {bottomBar.links.map((item, i) => (
+                  <CMSLink
+                    key={`${item.id}-${i}`}
+                    class="text-sm"
+                    {...item.link}
+                  />
+                ))} */}
+          </div>
+        )
+      }
+      <div>
+        <LanguageSwitch
+          currentLocale={locale}
+          pathname={Astro.url.pathname}
+          client:visible
+        />
+      </div>
+    </div>
+  </div>
+  <div class="absolute inset-0 h-full w-full pointer-events-none">
+    <!-- <BackgroundBeams /> -->
+  </div>
+</footer>
