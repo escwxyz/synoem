@@ -1,0 +1,46 @@
+{
+  "name": "@synoem/payload",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    "./*": "./src/*.ts",
+    "./blocks/*": "./src/blocks/*",
+    "./components/*": "./src/components/*/index.ts",
+    "./collections/*": "./src/collections/*/index.ts",
+    "./globals/*": "./src/globals/*.ts",
+    "./payload-types": "./src/payload-types.ts",
+    "./payload-config": "./src/payload.config.ts",
+    "./types": "./src/types.ts"
+  },
+  "scripts": {
+    "generate:types": "dmno run -- payload generate:types"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@payloadcms/db-postgres": "catalog:",
+    "@payloadcms/email-resend": "catalog:",
+    "@payloadcms/plugin-nested-docs": "catalog:",
+    "@payloadcms/richtext-lexical": "catalog:",
+    "@payloadcms/storage-s3": "catalog:",
+    "@payloadcms/ui": "catalog:",
+    "@react-three/drei": "catalog:",
+    "@react-three/fiber": "catalog:",
+    "@synoem/config": "workspace:*",
+    "@synoem/transactional": "workspace:*",
+    "@synoem/typescript-config": "workspace:*",
+    "@synoem/ui": "workspace:*",
+    "dmno": "^0.0.39",
+    "lucide-react": "catalog:",
+    "nanoid": "^5.1.5",
+    "payload": "catalog:",
+    "react": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "typescript": "catalog:"
+  }
+}
