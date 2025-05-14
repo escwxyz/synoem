@@ -1,17 +1,9 @@
 import type { CollectionConfig } from "payload";
 import { updateNotificationState } from "../hooks/update-notification-state";
-import { generateId } from "../hooks";
 
 export const Notifications: CollectionConfig<"notifications"> = {
   slug: "notifications",
   fields: [
-    {
-      name: "id",
-      type: "text",
-      admin: {
-        hidden: true,
-      },
-    },
     {
       name: "title",
       type: "text",
@@ -32,7 +24,6 @@ export const Notifications: CollectionConfig<"notifications"> = {
     },
   ],
   hooks: {
-    beforeValidate: [generateId],
     afterChange: [updateNotificationState],
   },
 };

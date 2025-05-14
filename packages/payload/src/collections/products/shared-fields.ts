@@ -170,13 +170,6 @@ export const createVariantsTab = (productTypeId: ProductTypeId): Tab => {
         },
         fields: [
           {
-            name: "id",
-            type: "text",
-            admin: {
-              disabled: true,
-            },
-          },
-          {
             name: "sku",
             type: "text",
             label: "SKU",

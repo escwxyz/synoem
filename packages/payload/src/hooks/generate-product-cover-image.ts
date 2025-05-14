@@ -1,10 +1,9 @@
 import type { CollectionBeforeValidateHook } from "payload";
-import type { Product, Image } from "../payload-types";
+import type { SolarPanel, PumpController, Image } from "../payload-types";
 
-export const generateProductCoverImage: CollectionBeforeValidateHook<Product> = async ({
-  req,
-  data,
-}) => {
+export const generateProductCoverImage: CollectionBeforeValidateHook<
+  SolarPanel | PumpController
+> = async ({ req, data }) => {
   if (!data) {
     return;
   }

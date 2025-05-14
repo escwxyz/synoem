@@ -1,7 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { admin, adminOrSelf, anyone } from "../access";
 import { sendNewsletterConfirmation } from "../hooks/send-newsletter-confirmation";
-import { generateId } from "../hooks";
 
 export const NewsletterSubscribers: CollectionConfig<"newsletter-subscribers"> = {
   slug: "newsletter-subscribers",
@@ -16,13 +15,6 @@ export const NewsletterSubscribers: CollectionConfig<"newsletter-subscribers"> =
     update: adminOrSelf,
   },
   fields: [
-    {
-      name: "id",
-      type: "text",
-      admin: {
-        hidden: true,
-      },
-    },
     {
       name: "email",
       type: "email",
@@ -89,7 +81,6 @@ export const NewsletterSubscribers: CollectionConfig<"newsletter-subscribers"> =
     },
   ],
   hooks: {
-    beforeValidate: [generateId],
     afterOperation: [sendNewsletterConfirmation],
   },
 };

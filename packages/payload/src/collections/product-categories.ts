@@ -2,15 +2,6 @@ import type { CollectionConfig } from "payload";
 import { getProductCategoryOptions, PRODUCT_TYPES, type ProductTypeId } from "@synoem/config";
 import { slug } from "../fields";
 
-import {
-  MetaImageField,
-  PreviewField,
-  MetaDescriptionField,
-  MetaTitleField,
-  OverviewField,
-} from "@payloadcms/plugin-seo/fields";
-import { generateId } from "../hooks";
-
 export const createProductCategoryCollection = (productTypeId: ProductTypeId): CollectionConfig => {
   return {
     slug: `${productTypeId}-categories`,
@@ -24,13 +15,6 @@ export const createProductCategoryCollection = (productTypeId: ProductTypeId): C
       heroImage: true,
     },
     fields: [
-      {
-        name: "id",
-        type: "text",
-        admin: {
-          hidden: true,
-        },
-      },
       {
         name: "title",
         type: "select",
@@ -98,36 +82,8 @@ export const createProductCategoryCollection = (productTypeId: ProductTypeId): C
       //     ]
       //   }
       // },
-      {
-        name: "meta",
-        type: "group",
-        fields: [
-          OverviewField({
-            titlePath: "meta.title",
-            descriptionPath: "meta.description",
-            imagePath: "meta.coverImage",
-          }),
-          MetaTitleField({
-            hasGenerateFn: true,
-          }),
-          MetaImageField({
-            relationTo: "images",
-          }),
-          MetaDescriptionField({}),
-          PreviewField({
-            // if the `generateUrl` function is configured
-            hasGenerateFn: false,
-
-            // field paths to match the target field for data
-            titlePath: "meta.title",
-            descriptionPath: "meta.description",
-          }),
-        ],
-      },
     ],
-    hooks: {
-      beforeValidate: [generateId],
-    },
+    hooks: {},
   };
 };
 

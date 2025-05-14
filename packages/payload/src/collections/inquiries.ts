@@ -10,7 +10,6 @@ import {
   INQUIRY_SOURCES,
   INQUIRY_TIMELINES,
 } from "@synoem/config";
-import { generateId } from "../hooks";
 
 export const Inquiries: CollectionConfig<"inquiries"> = {
   slug: "inquiries",
@@ -22,13 +21,6 @@ export const Inquiries: CollectionConfig<"inquiries"> = {
     create: () => true,
   },
   fields: [
-    {
-      name: "id",
-      type: "text",
-      admin: {
-        hidden: true,
-      },
-    },
     {
       name: "formType",
       type: "select",
@@ -355,7 +347,6 @@ export const Inquiries: CollectionConfig<"inquiries"> = {
     },
   ],
   hooks: {
-    beforeValidate: [generateId],
     afterChange: [
       async ({ doc, operation, req }) => {
         // Sending email notification to admin when a new inquiry is created

@@ -36,6 +36,7 @@ export const link = ({
     admin: {
       hideGutter: true,
     },
+    interfaceName: "LinkType",
     fields: [
       {
         name: "type",

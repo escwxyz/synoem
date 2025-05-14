@@ -1,6 +1,5 @@
 import type { CollectionConfig } from "payload";
 import { slug } from "../fields";
-import { generateId } from "../hooks";
 
 export const Industries: CollectionConfig<"industries"> = {
   slug: "industries",
@@ -11,13 +10,6 @@ export const Industries: CollectionConfig<"industries"> = {
     read: () => true,
   },
   fields: [
-    {
-      name: "id",
-      type: "text",
-      admin: {
-        hidden: true,
-      },
-    },
     {
       name: "title",
       type: "text",
@@ -42,7 +34,4 @@ export const Industries: CollectionConfig<"industries"> = {
     },
     ...slug(),
   ],
-  hooks: {
-    beforeValidate: [generateId],
-  },
 };

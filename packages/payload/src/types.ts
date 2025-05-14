@@ -6,4 +6,9 @@ export type {
   DataFromCollectionSlug,
   CollectionSlug,
   TypedCollectionSelect,
+  TransformCollectionWithSelect,
+  GlobalSlug,
+  DataFromGlobalSlug,
+  BasePayload,
+  TransformDataWithSelect,
 } from "payload";

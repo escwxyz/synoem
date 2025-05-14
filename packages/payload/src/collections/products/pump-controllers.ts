@@ -9,7 +9,7 @@ import {
 
 import { getProductCategoryOptions } from "@synoem/config";
 import { validateRange } from "../../validation";
-import { generateId, generateProductCoverImage } from "../../hooks";
+import { generateProductCoverImage } from "../../hooks";
 
 export const PumpControllers: CollectionConfig = {
   slug: "pump-controllers",
@@ -185,7 +185,7 @@ export const PumpControllers: CollectionConfig = {
     },
   ],
   hooks: {
-    beforeValidate: [generateId, generateProductCoverImage],
+    beforeValidate: [generateProductCoverImage],
   },
   versions: {
     drafts: {
