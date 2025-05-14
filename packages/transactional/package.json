@@ -1,0 +1,28 @@
+{
+  "name": "@synoem/transactional",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    "./*": "./emails/*.tsx"
+  },
+  "scripts": {
+    "dev": "email dev -p 3002",
+    "export": "email export"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@synoem/typescript-config": "workspace:*",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "typescript": "catalog:",
+    "react-email": "4.0.13"
+  },
+  "dependencies": {
+    "@react-email/components": "0.0.41",
+    "@synoem/config": "workspace:*",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  }
+}
