@@ -18,6 +18,11 @@ export type ProductTypeToSlugMap = {
   "pump-controller": "pump-controllers";
 };
 
+export type ProductTypeToCategorySlugMap = {
+  "solar-panel": "solar-panel-categories";
+  "pump-controller": "pump-controller-categories";
+};
+
 export type ColorCode = string;
 
 export type LocalizedText = {
@@ -154,12 +159,14 @@ export const PRODUCT_TYPES: Record<ProductTypeId, ProductTypeConfig> = {
   },
 };
 
-export const isValidProductType = (productTypeId: ProductTypeId) => {
-  return Object.keys(PRODUCT_TYPES).includes(productTypeId);
+export const isValidProductType = (slug: string) => {
+  return Object.values(PRODUCT_TYPES).some((type) => type.id === slug);
 };
 
-export const isValidProductCategory = (productTypeId: ProductTypeId, category: string) => {
-  return PRODUCT_TYPES[productTypeId].categories.some((cat) => cat.value === category);
+export const isValidProductCategory = (category: string) => {
+  return Object.values(PRODUCT_TYPES).some((type) =>
+    type.categories.some((cat) => cat.value === category),
+  );
 };
 
 export const getProductTypeOptions = () => {
