@@ -1,3 +1,10 @@
 {
-  "extends": "@synoem/typescript-config/react-library.json"
+  "extends": "@synoem/typescript-config/react-library.json",
+  "compilerOptions": {
+    "paths": {
+      "@synoem/config": ["../../packages/config"]
+    },
+    "moduleResolution": "bundler",
+    "module": "esnext"
+  }
 }

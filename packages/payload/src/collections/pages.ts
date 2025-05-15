@@ -2,11 +2,6 @@ import type { CollectionConfig } from "payload";
 import { slug } from "../fields";
 import { HeroBlock } from "../blocks/hero";
 import { ContentBlock } from "../blocks/content";
-import { PreviewField } from "@payloadcms/plugin-seo/fields";
-import { MetaDescriptionField } from "@payloadcms/plugin-seo/fields";
-import { MetaImageField } from "@payloadcms/plugin-seo/fields";
-import { MetaTitleField } from "@payloadcms/plugin-seo/fields";
-import { OverviewField } from "@payloadcms/plugin-seo/fields";
 import { title } from "../fields/title";
 import { CallToActionBlock } from "../blocks/call-to-action";
 import { MediaBlock } from "../blocks/media";
@@ -41,30 +36,6 @@ export const Pages: CollectionConfig<"pages"> = {
             },
           ],
           label: "Content",
-        },
-        {
-          name: "meta",
-          label: "SEO",
-          fields: [
-            OverviewField({
-              titlePath: "meta.title",
-              descriptionPath: "meta.description",
-              imagePath: "meta.image",
-            }),
-            MetaTitleField({
-              hasGenerateFn: true,
-            }),
-            MetaImageField({
-              relationTo: "images",
-            }),
-
-            MetaDescriptionField({}),
-            PreviewField({
-              hasGenerateFn: true,
-              titlePath: "meta.title",
-              descriptionPath: "meta.description",
-            }),
-          ],
         },
       ],
     },

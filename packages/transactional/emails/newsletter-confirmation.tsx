@@ -13,7 +13,7 @@ import {
   // Img,
   // Tailwind, TODO: https://react.email/docs/components/tailwind
 } from "@react-email/components";
-import { type Locale, locales } from "@synoem/config";
+import type { Locale } from "@synoem/config";
 
 export interface Translations {
   preview: string;
@@ -99,7 +99,7 @@ export const formatDate = (date: string, language: Locale): string => {
 const getLocale = (language: Locale): string => {
   const localeMap: Record<Locale, string> = {
     en: "en-US",
-    fr: "fr-FR",
+    // fr: "fr-FR",
     de: "de-DE",
   };
 

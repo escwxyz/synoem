@@ -9,11 +9,6 @@ import {
   lexicalEditor,
 } from "@payloadcms/richtext-lexical";
 import { MediaBlock } from "../blocks/media";
-import { PreviewField } from "@payloadcms/plugin-seo/fields";
-import { MetaDescriptionField } from "@payloadcms/plugin-seo/fields";
-import { MetaImageField } from "@payloadcms/plugin-seo/fields";
-import { OverviewField } from "@payloadcms/plugin-seo/fields";
-import { MetaTitleField } from "@payloadcms/plugin-seo/fields";
 import { admin, editorOrAdmin, published } from "../access";
 
 export const Posts: CollectionConfig = {
@@ -104,33 +99,6 @@ export const Posts: CollectionConfig = {
                 },
               }),
             },
-          ],
-        },
-        {
-          name: "meta",
-          label: "SEO",
-          fields: [
-            OverviewField({
-              titlePath: "meta.title",
-              descriptionPath: "meta.description",
-              imagePath: "meta.image",
-            }),
-            MetaTitleField({
-              hasGenerateFn: true,
-            }),
-            MetaImageField({
-              relationTo: "images",
-            }),
-
-            MetaDescriptionField({}),
-            PreviewField({
-              // if the `generateUrl` function is configured
-              hasGenerateFn: true,
-
-              // field paths to match the target field for data
-              titlePath: "meta.title",
-              descriptionPath: "meta.description",
-            }),
           ],
         },
       ],

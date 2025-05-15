@@ -1,6 +1,7 @@
 import type { CollectionAfterOperationHook } from "payload";
-import SubscriptionConfirmation from "@synoem/transactional/SubscriptionConfirmation";
-import SubscriptionNotification from "@synoem/transactional/SubscriptionNotification";
+import NewsletterConfirmation, {
+  translations,
+} from "@synoem/transactional/newsletter-confirmation";
 import type { Locale } from "@synoem/config";
 import { render, pretty } from "@react-email/render";
 import React from "react";
@@ -12,23 +13,33 @@ export const sendNewsletterConfirmation: CollectionAfterOperationHook<
     const { payload, i18n } = req;
     const { email } = result;
     const locale = i18n.language as Locale;
+
+    const subject = translations[locale].preview;
+
     try {
       await payload.sendEmail({
         from: "info@updates.synoem.com",
         to: email,
-        subject: "Welcome to our newsletter",
-        html: await pretty(await render(React.createElement(SubscriptionConfirmation, { locale }))),
-      });
-
-      await payload.sendEmail({
-        from: "info@updates.synoem.com",
-        to: "info@system.com",
-        subject: "A new user has subscribed to your website",
-        html: await pretty(await render(React.createElement(SubscriptionNotification, { email }))),
+        subject,
+        html: await pretty(
+          await render(
+            React.createElement(NewsletterConfirmation, {
+              subscriptionDate: new Date().toISOString(),
+              unsubscribeUrl: "https://synoem.com/unsubscribe",
+              language: locale,
+            }),
+          ),
+        ),
       });
     } catch (error) {
-      console.error("Error sending newsletter confirmation email:", error);
+      console.warn("Error sending newsletter confirmation email:", error);
+
+      throw new Error(
+        `Error sending newsletter confirmation email: \n${JSON.stringify(error, null, 2)}`,
+      );
     }
+
+    // TODO
   }
 
   return result;

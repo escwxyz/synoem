@@ -5,7 +5,6 @@ packages:
 catalog:
   "@payloadcms/ui": ^3.37.0
   "@payloadcms/richtext-lexical": ^3.37.0
-  "@payloadcms/plugin-seo": ^3.37.0
   "@payloadcms/email-resend": ^3.37.0
   "@payloadcms/db-postgres": ^3.37.0
   "@payloadcms/db-sqlite": ^3.37.0
