@@ -7,6 +7,9 @@ import {
   getProductCategoryBySlug,
   getProductFilterMetadata,
   getFaq,
+  createSimpleInquiry,
+  createProductInquiry,
+  createNewsletter,
 } from "../procedures/collections";
 
 export const router = {
@@ -24,6 +27,9 @@ export const router = {
     getProductCategoryBySlug,
     getProductFilterMetadata,
     getFaq,
+    createSimpleInquiry,
+    createProductInquiry,
+    createNewsletter,
   },
 };
 
