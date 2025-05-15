@@ -2,7 +2,9 @@
   "extends": "@synoem/typescript-config/base.json",
   "compilerOptions": {
     "module": "esnext",
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "jsx": "preserve",
+    "outDir": "./dist"
   },
   "include": ["src/*.ts"],
   "exclude": ["node_modules", "dist"]

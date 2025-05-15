@@ -5,9 +5,7 @@
       "@synoem/config": ["../../packages/config"]
     },
     "moduleResolution": "bundler",
-    "module": "esnext",
-    "jsx": "react-jsx",
-    "strict": true
+    "module": "esnext"
   },
   "include": ["."],
   "exclude": ["dist", "build", "node_modules"]
