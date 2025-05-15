@@ -21,10 +21,11 @@
     "@orpc/server": "^1.2.0",
     "@synoem/config": "workspace:*",
     "@synoem/payload": "workspace:*",
+    "dmno": "^0.0.39",
     "zod": "catalog:"
   },
   "devDependencies": {
-    "typescript": "catalog:",
-    "@synoem/typescript-config": "workspace:*"
+    "@synoem/typescript-config": "workspace:*",
+    "typescript": "catalog:"
   }
 }
