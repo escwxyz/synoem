@@ -1,0 +1,51 @@
+{
+  "name": "@synoem/cms",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "cross-env NODE_OPTIONS=--no-deprecation dmno run -- next build",
+    "dev": "cross-env NODE_OPTIONS=--no-deprecation dmno run -w -- next dev",
+    "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation dmno run -- payload generate:importmap",
+    "lint": "cross-env NODE_OPTIONS=--no-deprecation dmno run -- next lint",
+    "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
+    "start": "cross-env NODE_OPTIONS=--no-deprecation dmno run -- next start",
+    "fresh": "cross-env NODE_OPTIONS=--no-deprecation dmno run -- payload migrate:fresh"
+  },
+  "dependencies": {
+    "@dmno/nextjs-integration": "^0.0.14",
+    "@orpc/server": "^1.2.0",
+    "@payloadcms/db-postgres": "catalog:",
+    "@payloadcms/email-resend": "catalog:",
+    "@payloadcms/next": "catalog:",
+    "@payloadcms/payload-cloud": "catalog:",
+    "@payloadcms/plugin-nested-docs": "catalog:",
+    "@payloadcms/richtext-lexical": "catalog:",
+    "@payloadcms/storage-s3": "catalog:",
+    "@payloadcms/ui": "catalog:",
+    "@react-three/drei": "catalog:",
+    "@react-three/fiber": "catalog:",
+    "@synoem/api": "workspace:*",
+    "@synoem/config": "workspace:*",
+    "@synoem/payload": "workspace:*",
+    "@synoem/transactional": "workspace:*",
+    "@synoem/ui": "workspace:*",
+    "cross-env": "^7.0.3",
+    "dmno": "^0.0.39",
+    "lucide-react": "catalog:",
+    "nanoid": "^5.1.5",
+    "next": "catalog:",
+    "payload": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@synoem/typescript-config": "workspace:*",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "typescript": "catalog:"
+  }
+}
