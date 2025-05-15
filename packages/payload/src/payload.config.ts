@@ -132,11 +132,11 @@ export default buildConfig({
   graphQL: {
     disable: true,
   },
-  email: resendAdapter({
-    defaultFromAddress: "info@updates.synoem.com",
-    defaultFromName: "SynOEM",
-    apiKey: DMNO_CONFIG.RESEND_API_KEY || "",
-  }),
+  // email: resendAdapter({
+  //   defaultFromAddress: "info@updates.synoem.com",
+  //   defaultFromName: "SynOEM",
+  //   apiKey: DMNO_CONFIG.RESEND_API_KEY || "",
+  // }),
   jobs: {
     tasks: [
       {
