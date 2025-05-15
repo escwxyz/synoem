@@ -16,11 +16,11 @@ import {
 import type { ProductVariants } from "../../payload-types";
 import { reduceFieldsToValues } from "payload/shared";
 
-interface BuildVariantsButtonProps {
+export const BuildVariantsButton = ({
+  productTypeId,
+}: {
   productTypeId: ProductTypeId;
-}
-
-export const BuildVariantsButton: React.FC<BuildVariantsButtonProps> = ({ productTypeId }) => {
+}) => {
   const locale = useLocale();
 
   if (!isValidLocale(locale.code)) {
