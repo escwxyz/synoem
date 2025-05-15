@@ -20,6 +20,7 @@
   "license": "MIT",
   "dependencies": {
     "@payloadcms/db-postgres": "catalog:",
+    "@payloadcms/db-sqlite": "catalog:",
     "@payloadcms/email-resend": "catalog:",
     "@payloadcms/plugin-nested-docs": "catalog:",
     "@payloadcms/richtext-lexical": "catalog:",
@@ -33,7 +34,6 @@
     "@synoem/ui": "workspace:*",
     "dmno": "^0.0.39",
     "lucide-react": "catalog:",
-    "nanoid": "^5.1.5",
     "payload": "catalog:",
     "react": "catalog:"
   },

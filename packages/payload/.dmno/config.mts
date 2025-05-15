@@ -4,6 +4,8 @@ export default defineDmnoService({
   name: "payload-config",
   schema: {
     APP_ENV: pick("root", "APP_ENV"),
+    TURSO_DATABASE_URI: pick("cms", "TURSO_DATABASE_URI"),
+    TURSO_DATABASE_TOKEN: pick("cms", "TURSO_DATABASE_TOKEN"),
     DATABASE_URI: pick("cms", "DATABASE_URI"),
     NEXT_PUBLIC_SERVER_URL: pick("cms", "NEXT_PUBLIC_SERVER_URL"),
     RESEND_API_KEY: pick("cms", "RESEND_API_KEY"),

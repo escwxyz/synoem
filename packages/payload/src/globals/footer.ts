@@ -69,15 +69,6 @@ export const Footer: GlobalConfig = {
           defaultValue: "shortDescription",
         },
         {
-          name: "showSocialLinks",
-          type: "checkbox",
-          label: "Show Social Links",
-          defaultValue: true,
-          admin: {
-            description: "Enable social links in the footer",
-          },
-        },
-        {
           name: "showNewsletter",
           type: "checkbox",
           label: "Show Newsletter",
