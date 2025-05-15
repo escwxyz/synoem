@@ -56,11 +56,13 @@ export default defineDmnoService({
     },
     R2_BUCKET_NAME: {
       required: true,
+      sensitive: true,
       extends: DmnoBaseTypes.string,
       exampleValue: "your-r2-bucket-name",
     },
     R2_ENDPOINT: {
       required: true,
+      sensitive: true,
       extends: DmnoBaseTypes.url,
       exampleValue: "https://your-r2-endpoint.r2.cloudflarestorage.com",
     },
