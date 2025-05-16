@@ -15,13 +15,6 @@ import { createInquiryJoinField } from "../../fields";
 export const createSharedFields = (productTypeId: ProductTypeId): Field[] => {
   return [
     {
-      name: "id",
-      type: "text",
-      admin: {
-        disabled: true,
-      },
-    },
-    {
       name: "title",
       type: "text",
       required: true,

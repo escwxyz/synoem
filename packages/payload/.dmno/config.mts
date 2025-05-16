@@ -1,12 +1,16 @@
-import { DmnoBaseTypes, defineDmnoService, pick } from "dmno";
+import { defineDmnoService, pick } from "dmno";
 
 export default defineDmnoService({
   name: "payload-config",
   schema: {
     APP_ENV: pick("root", "APP_ENV"),
-    TURSO_DATABASE_URI: pick("cms", "TURSO_DATABASE_URI"),
-    TURSO_DATABASE_TOKEN: pick("cms", "TURSO_DATABASE_TOKEN"),
-    NEXT_PUBLIC_SERVER_URL: pick("cms", "NEXT_PUBLIC_SERVER_URL"),
+    DATABASE_URI: pick("cms", "DATABASE_URI"),
+    RESEND_API_KEY: pick("cms", "RESEND_API_KEY"),
+    S3_BUCKET_NAME: pick("cms", "S3_BUCKET_NAME"),
+    S3_ENDPOINT: pick("cms", "S3_ENDPOINT"),
+    S3_ACCESS_KEY_ID: pick("cms", "S3_ACCESS_KEY_ID"),
+    S3_ACCESS_KEY_SECRET: pick("cms", "S3_ACCESS_KEY_SECRET"),
+    S3_REGION: pick("cms", "S3_REGION"),
     PAYLOAD_SECRET: pick("cms", "PAYLOAD_SECRET"),
   },
 });

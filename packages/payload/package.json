@@ -13,7 +13,8 @@
     "./types": "./src/types.ts"
   },
   "scripts": {
-    "generate:types": "dmno run -- payload generate:types"
+    "generate:types": "dmno run -- payload generate:types",
+    "migrate": "dmno run -- payload migrate"
   },
   "keywords": [],
   "author": "",

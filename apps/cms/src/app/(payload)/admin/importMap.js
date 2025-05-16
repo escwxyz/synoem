@@ -35,6 +35,7 @@ import { SocialLinkRowLabel as SocialLinkRowLabel_68e89eb917a18c9c02e4abc5b97bdb
 import { LinkItemLabel as LinkItemLabel_68e89eb917a18c9c02e4abc5b97bdb66 } from '@synoem/payload/components/row-labels'
 import { MenuSectionLabel as MenuSectionLabel_68e89eb917a18c9c02e4abc5b97bdb66 } from '@synoem/payload/components/row-labels'
 import { MenuItemLabel as MenuItemLabel_68e89eb917a18c9c02e4abc5b97bdb66 } from '@synoem/payload/components/row-labels'
+import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 
 export const importMap = {
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
@@ -73,5 +74,6 @@ export const importMap = {
   "@synoem/payload/components/row-labels#SocialLinkRowLabel": SocialLinkRowLabel_68e89eb917a18c9c02e4abc5b97bdb66,
   "@synoem/payload/components/row-labels#LinkItemLabel": LinkItemLabel_68e89eb917a18c9c02e4abc5b97bdb66,
   "@synoem/payload/components/row-labels#MenuSectionLabel": MenuSectionLabel_68e89eb917a18c9c02e4abc5b97bdb66,
-  "@synoem/payload/components/row-labels#MenuItemLabel": MenuItemLabel_68e89eb917a18c9c02e4abc5b97bdb66
+  "@synoem/payload/components/row-labels#MenuItemLabel": MenuItemLabel_68e89eb917a18c9c02e4abc5b97bdb66,
+  "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24
 }

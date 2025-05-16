@@ -7,8 +7,8 @@ import { mutableLocales, defaultLocale } from "@synoem/config";
 import { buildConfig } from "payload";
 import { defaultLexical } from "./fields/default-lexical";
 
-// import { postgresAdapter } from "@payloadcms/db-postgres";
-import { sqliteAdapter } from "@payloadcms/db-sqlite";
+import { postgresAdapter } from "@payloadcms/db-postgres";
+// import { sqliteAdapter } from "@payloadcms/db-sqlite";
 
 import { Footer, Header, CompanyInfo, ContactInfo, SocialLinks } from "./globals";
 // Media
@@ -60,18 +60,19 @@ export default buildConfig({
     },
   },
   editor: defaultLexical,
-  // db: postgresAdapter({
-  //   pool: {
-  //     connectionString: DMNO_CONFIG.DATABASE_URI,
-  //   },
-  // }),
-  db: sqliteAdapter({
+  db: postgresAdapter({
     idType: "uuid",
-    client: {
-      url: DMNO_CONFIG.TURSO_DATABASE_URI,
-      authToken: DMNO_CONFIG.TURSO_DATABASE_TOKEN,
+    pool: {
+      connectionString: DMNO_CONFIG.DATABASE_URI,
     },
   }),
+  // db: sqliteAdapter({
+  //   idType: "uuid",
+  //   client: {
+  //     url: DMNO_CONFIG.TURSO_DATABASE_URI,
+  //     authToken: DMNO_CONFIG.TURSO_DATABASE_TOKEN,
+  //   },
+  // }),
   collections: [
     Users,
     Pages,
@@ -132,11 +133,11 @@ export default buildConfig({
   graphQL: {
     disable: true,
   },
-  // email: resendAdapter({
-  //   defaultFromAddress: "info@updates.synoem.com",
-  //   defaultFromName: "SynOEM",
-  //   apiKey: DMNO_CONFIG.RESEND_API_KEY || "",
-  // }),
+  email: resendAdapter({
+    defaultFromAddress: "info@updates.synoem.com",
+    defaultFromName: "SynOEM",
+    apiKey: DMNO_CONFIG.RESEND_API_KEY || "",
+  }),
   jobs: {
     tasks: [
       {

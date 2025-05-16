@@ -427,6 +427,7 @@ export interface Industry {
 export interface Image {
   id: string;
   alt: string;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -2419,6 +2420,7 @@ export interface NewsletterSubscribersSelect<T extends boolean = true> {
  */
 export interface ImagesSelect<T extends boolean = true> {
   alt?: T;
+  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -2684,7 +2686,6 @@ export interface PostsSelect<T extends boolean = true> {
  * via the `definition` "solar-panels_select".
  */
 export interface SolarPanelsSelect<T extends boolean = true> {
-  id?: T;
   title?: T;
   slug?: T;
   slugLock?: T;
@@ -2851,7 +2852,6 @@ export interface ProductVariantsSelect<T extends boolean = true> {
  * via the `definition` "pump-controllers_select".
  */
 export interface PumpControllersSelect<T extends boolean = true> {
-  id?: T;
   title?: T;
   slug?: T;
   slugLock?: T;
