@@ -21,9 +21,16 @@ import {
   createSimpleInquiryHelper,
   createProductInquiryHelper,
   createNewsletterHelper,
+  getProductsHelper,
 } from "../helpers";
 
 // ------------- Procedures -------------
+
+export const getProducts = orpc
+  .input(productFilterMetadataSchema)
+  .handler(async ({ input, context }) => {
+    return getProductsHelper<ProductTypeId>(input, context.payload);
+  });
 
 export const getNotification = orpc
   .input(localeSchema)

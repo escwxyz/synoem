@@ -10,6 +10,7 @@ import {
   createSimpleInquiry,
   createProductInquiry,
   createNewsletter,
+  getProducts,
 } from "../procedures/collections";
 
 export const router = {
@@ -30,6 +31,7 @@ export const router = {
     createSimpleInquiry,
     createProductInquiry,
     createNewsletter,
+    getProducts,
   },
 };
 

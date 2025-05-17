@@ -6,3 +6,4 @@ export * from "./create-simple-inquiry";
 export * from "./create-product-inquiry";
 export * from "./get-notification";
 export * from "./create-newsletter";
+export * from "./get-products";

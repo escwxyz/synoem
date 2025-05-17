@@ -13,3 +13,5 @@ const databaseMiddleware = os.$context<{ payload?: BasePayload }>().middleware(a
 });
 
 export const orpc = os.use(databaseMiddleware);
+
+export type { RouterClient } from "@orpc/server";
