@@ -208,6 +208,7 @@ export default defineDmnoService({
       }),
     },
     ASTRO_PUBLIC_SITE_URL: {
+      required: true,
       extends: DmnoBaseTypes.url,
       summary: "The site URL for the frontend Astro website",
       value: switchBy("ASTRO_APP_ENV", {
