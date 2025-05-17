@@ -29,7 +29,7 @@ export const Images: CollectionConfig = {
         return "";
       }
 
-      if (DMNO_CONFIG.APP_ENV === "production") {
+      if (DMNO_CONFIG.APP_ENV === "production" || DMNO_CONFIG.APP_ENV === "preview") {
         return `${DMNO_CONFIG.S3_ENDPOINT}/object/public/${DMNO_CONFIG.S3_BUCKET_NAME}/images/${doc.filename}`;
       }
       return "thumbnail";
