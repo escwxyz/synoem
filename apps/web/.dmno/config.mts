@@ -1,4 +1,7 @@
 import { defineDmnoService, DmnoBaseTypes, pick } from "dmno";
+import { EncryptedVaultDmnoPlugin } from "@dmno/encrypted-vault-plugin";
+
+EncryptedVaultDmnoPlugin.injectInstance("vault/prod");
 
 export default defineDmnoService({
   name: "web",
