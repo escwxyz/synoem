@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "./styles/custom.css";
+import "../styles/custom.css";
 
 export const metadata: Metadata = {
   title: "SynOEM Dashboard",
