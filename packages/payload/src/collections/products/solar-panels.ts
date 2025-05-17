@@ -305,8 +305,8 @@ const performanceSpecs: CollapsibleField = {
           admin: {
             description: "Click the button to generate the power points",
             components: {
-              RowLabel: "@synoem/payload/components/row-labels#PowerPointLabel",
-              beforeInput: ["@synoem/payload/components/power-points#GeneratePowerPointsButton"],
+              RowLabel: "@synoem/cms/components/row-labels#PowerPointLabel",
+              beforeInput: ["@synoem/cms/components/power-points#GeneratePowerPointsButton"],
             },
           },
           interfaceName: "SolarPanelPowerPoints",

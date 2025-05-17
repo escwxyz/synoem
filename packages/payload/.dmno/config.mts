@@ -17,5 +17,6 @@ export default defineDmnoService({
     S3_ACCESS_KEY_SECRET: pick("root", "S3_ACCESS_KEY_SECRET"),
     S3_REGION: pick("root", "S3_REGION"),
     PAYLOAD_SECRET: pick("root", "PAYLOAD_SECRET"),
+    ASTRO_PUBLIC_SITE_URL: pick("root", "ASTRO_PUBLIC_SITE_URL"),
   },
 });

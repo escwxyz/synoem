@@ -13,7 +13,7 @@ import {
   getLocalizedString,
 } from "@synoem/config";
 
-import type { ProductVariants } from "../../payload-types";
+import type { ProductVariants } from "@synoem/payload/payload-types";
 import { reduceFieldsToValues } from "payload/shared";
 
 export const BuildVariantsButton = ({
@@ -142,7 +142,13 @@ export const BuildVariantsButton = ({
   const disableClear = status === "clearing" || !hasPrevData;
 
   return (
-    <div className="p-2 flex justify-between">
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "1rem",
+      }}
+    >
       <Button onClick={generateVariants} buttonStyle="primary" disabled={disableGenerate}>
         {status === "generating" ? "Generating..." : "Generate Variants"}
       </Button>
@@ -164,18 +170,13 @@ function generateVariantCombinations(
 ): ProductVariants {
   if (options.length === 0) return [];
 
-  // 初始化组合数组，从空数组开始
   let combinations: OptionCombination[][] = [[]];
 
-  // 对于每个选项...
   for (const option of options) {
-    // 创建新一轮的组合集合
     const newCombinations: OptionCombination[][] = [];
 
-    // 每个现有组合都要和当前选项的每个值组合
     for (const combo of combinations) {
       for (const value of option.values) {
-        // 创建新组合，包含之前的所有选项和新的选项值
         newCombinations.push([
           ...combo,
           { config: { label: option.label, type: option.type, name: option.name }, value },
@@ -183,7 +184,6 @@ function generateVariantCombinations(
       }
     }
 
-    // 用新的组合替换旧的组合集合
     combinations = newCombinations;
   }
 

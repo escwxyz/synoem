@@ -32,7 +32,7 @@ export const Images: CollectionConfig = {
       if (DMNO_CONFIG.APP_ENV === "production" || DMNO_CONFIG.APP_ENV === "preview") {
         return `${DMNO_CONFIG.S3_ENDPOINT}/object/public/${DMNO_CONFIG.S3_BUCKET_NAME}/images/${doc.filename}`;
       }
-      return "thumbnail";
+      return `/api/images/file/${doc.filename}`;
     },
     staticDir: path.resolve(dirname, "../../../../../apps/cms/public/media"),
     mimeTypes: ["image/*"],

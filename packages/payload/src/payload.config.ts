@@ -49,14 +49,22 @@ const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
 export default buildConfig({
+  routes: {
+    admin: "/dashboard",
+  },
   admin: {
     components: {
       views: {},
       graphics: {},
     },
     importMap: {
-      baseDir: path.resolve(dirname),
+      baseDir: path.resolve(dirname, "../../../apps/cms/src"),
+      importMapFile: path.resolve(
+        dirname,
+        "../../../apps/cms/src/app/(payload)/admin/importMap.js",
+      ),
     },
+    suppressHydrationWarning: DMNO_CONFIG.APP_ENV === "production",
   },
   editor: defaultLexical,
   db: postgresAdapter({
@@ -110,9 +118,7 @@ export default buildConfig({
     locales: mutableLocales,
     fallback: true,
   },
-  cors: {
-    origins: "*", // TODO: modify when in poroduction mode
-  },
+  cors: DMNO_CONFIG.APP_ENV === "production" ? [DMNO_PUBLIC_CONFIG.ASTRO_PUBLIC_SITE_URL] : "*",
   secret: DMNO_CONFIG.PAYLOAD_SECRET,
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),

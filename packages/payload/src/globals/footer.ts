@@ -68,15 +68,6 @@ export const Footer: GlobalConfig = {
           },
           defaultValue: "shortDescription",
         },
-        {
-          name: "showNewsletter",
-          type: "checkbox",
-          label: "Show Newsletter",
-          defaultValue: true,
-          admin: {
-            description: "Enable newsletter in the footer",
-          },
-        },
       ],
     },
 
@@ -87,7 +78,7 @@ export const Footer: GlobalConfig = {
       admin: {
         description: "Add multiple columns to organize footer content",
         components: {
-          RowLabel: "@synoem/payload/components/row-labels#FooterColumnLabel",
+          RowLabel: "@synoem/cms/components/row-labels#FooterColumnLabel",
         },
       },
       minRows: 1,
@@ -153,7 +144,7 @@ export const Footer: GlobalConfig = {
               ],
               admin: {
                 components: {
-                  RowLabel: "@synoem/payload/components/row-labels#FooterLinkGroupLabel",
+                  RowLabel: "@synoem/cms/components/row-labels#FooterLinkGroupLabel",
                 },
               },
             },
@@ -213,7 +204,7 @@ export const Footer: GlobalConfig = {
           admin: {
             initCollapsed: true,
             components: {
-              RowLabel: "@synoem/payload/components/row-labels#FooterBottomLinkRowLabel",
+              RowLabel: "@synoem/cms/components/row-labels#FooterBottomLinkRowLabel",
             },
           },
           fields: [

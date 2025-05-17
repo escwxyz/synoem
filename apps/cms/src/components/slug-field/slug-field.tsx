@@ -14,7 +14,7 @@ import {
   useLocale,
 } from "@payloadcms/ui";
 
-import { slugify } from "../../utils";
+import { slugify } from "@synoem/payload/utils";
 
 type SlugComponentProps = {
   fieldToUse: string;
@@ -75,19 +75,16 @@ export const SlugComponent: FC<SlugComponentProps> = ({
   return (
     <div className="field-type">
       <div
-        className="flex justify-between items-center"
         style={{
           height: 24,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
         }}
       >
         <FieldLabel htmlFor={`field-${path}`} label={label} />
 
-        <Button
-          disabled={locale.code !== "en"}
-          className="m-0 pb-1"
-          buttonStyle="none"
-          onClick={handleLock}
-        >
+        <Button disabled={locale.code !== "en"} buttonStyle="none" onClick={handleLock}>
           {checkboxValue ? "Unlock" : "Lock"}
         </Button>
       </div>

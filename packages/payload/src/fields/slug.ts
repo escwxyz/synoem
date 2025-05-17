@@ -40,7 +40,7 @@ export const slug: Slug = (fieldToUse = "title", overrides = {}) => {
       ...(slugOverrides?.admin || {}),
       components: {
         Field: {
-          path: "@synoem/payload/components/slug-field#SlugComponent",
+          path: "@synoem/cms/components/slug-field#SlugComponent",
           clientProps: {
             fieldToUse,
             checkboxFieldPath: checkBoxField.name,

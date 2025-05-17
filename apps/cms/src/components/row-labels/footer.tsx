@@ -1,6 +1,6 @@
 "use client";
 
-import type { Footer } from "../../payload-types";
+import type { Footer } from "@synoem/payload/payload-types";
 // biome-ignore lint/style/useImportType: <explanation>
 import React from "react";
 import { type RowLabelProps, useRowLabel } from "@payloadcms/ui";
@@ -26,8 +26,7 @@ export const FooterLinkGroupLabel: React.FC<RowLabelProps> = () => {
 };
 
 export const FooterColumnLabel: React.FC = () => {
-  const { data, rowNumber } =
-    useRowLabel<NonNullable<Footer["columns"]>[number]>();
+  const { data, rowNumber } = useRowLabel<NonNullable<Footer["columns"]>[number]>();
 
   let titleText = "";
   const columnNumber = rowNumber !== undefined ? rowNumber + 1 : "";

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Button, toast, useAllFormFields, useFormFields } from "@payloadcms/ui";
 import { reduceFieldsToValues } from "payload/shared";
-import type { SolarPanelPowerPoints } from "../../payload-types";
+import type { SolarPanelPowerPoints } from "@synoem/payload/payload-types";
 
 export const GeneratePowerPointsButton = () => {
   const [fields] = useAllFormFields();
@@ -127,7 +127,13 @@ export const GeneratePowerPointsButton = () => {
   const disableClear = status === "clearing" || disabled || !hasPrevData;
 
   return (
-    <div className="p-2 flex justify-between">
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "1rem",
+      }}
+    >
       <Button onClick={generatePoints} buttonStyle="primary" disabled={disableGenerate}>
         {status === "generating" ? "Generating..." : "Generate Power Points"}
       </Button>
