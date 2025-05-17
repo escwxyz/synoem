@@ -3051,10 +3051,6 @@ export interface Footer {
     logo?: ('withSlogan' | 'withoutSlogan') | null;
     useCompanyDescription?: ('yes' | 'no') | null;
     companyDescription?: ('shortDescription' | 'longDescription') | null;
-    /**
-     * Enable newsletter in the footer
-     */
-    showNewsletter?: boolean | null;
   };
   /**
    * Add multiple columns to organize footer content
@@ -3225,7 +3221,6 @@ export interface FooterSelect<T extends boolean = true> {
         logo?: T;
         useCompanyDescription?: T;
         companyDescription?: T;
-        showNewsletter?: T;
       };
   columns?:
     | T

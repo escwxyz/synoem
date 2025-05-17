@@ -46,7 +46,7 @@ const menuItemFields: Field[] = [
       description: "Add sections to create a dropdown or mega menu",
       condition: (data, siblingData) => siblingData?.type === "section",
       components: {
-        RowLabel: "@synoem/payload/components/row-labels#MenuSectionLabel",
+        RowLabel: "@synoem/cms/components/row-labels#MenuSectionLabel",
       },
     },
     fields: [
@@ -76,7 +76,7 @@ const menuItemFields: Field[] = [
             type: "array",
             admin: {
               components: {
-                RowLabel: "@synoem/payload/components/row-labels#LinkItemLabel",
+                RowLabel: "@synoem/cms/components/row-labels#LinkItemLabel",
               },
             },
             fields: [
@@ -151,7 +151,7 @@ export const Header: GlobalConfig = {
       admin: {
         description: "Configure navigation menu items",
         components: {
-          RowLabel: "@synoem/payload/components/row-labels#MenuItemLabel",
+          RowLabel: "@synoem/cms/components/row-labels#MenuItemLabel",
         },
       },
       fields: menuItemFields,

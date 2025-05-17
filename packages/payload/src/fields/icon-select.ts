@@ -17,7 +17,7 @@ export const createIconSelectField = ({
   required,
   admin: {
     components: {
-      Field: "@synoem/payload/components/icon-select-field#IconSelectField",
+      Field: "@synoem/cms/components/icon-select-field#IconSelectField",
     },
   },
 });

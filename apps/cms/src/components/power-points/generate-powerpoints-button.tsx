@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Button, toast, useAllFormFields, useFormFields } from "@payloadcms/ui";
 import { reduceFieldsToValues } from "payload/shared";
-import type { SolarPanelPowerPoints } from "../../payload-types";
+import type { SolarPanelPowerPoints } from "@synoem/payload/payload-types";
 
 export const GeneratePowerPointsButton = () => {
   const [fields] = useAllFormFields();

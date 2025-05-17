@@ -58,7 +58,11 @@ export default buildConfig({
       graphics: {},
     },
     importMap: {
-      baseDir: path.resolve(dirname),
+      baseDir: path.resolve(dirname, "../../../apps/cms/src"),
+      importMapFile: path.resolve(
+        dirname,
+        "../../../apps/cms/src/app/(payload)/admin/importMap.js",
+      ),
     },
     suppressHydrationWarning: DMNO_CONFIG.APP_ENV === "production",
   },

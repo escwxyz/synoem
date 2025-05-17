@@ -20,5 +20,6 @@ export default defineDmnoService({
     VERCEL_TOKEN: pick("root", "VERCEL_TOKEN"),
     VERCEL_ORG_ID: pick("root", "VERCEL_ORG_ID"),
     VERCEL_PROJECT_ID: pick("root", "VERCEL_PROJECT_ID"),
+    ASTRO_PUBLIC_SITE_URL: pick("root", "ASTRO_PUBLIC_SITE_URL"),
   },
 });

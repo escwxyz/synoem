@@ -12,7 +12,7 @@ export const SocialLinks: GlobalConfig = {
       type: "array",
       admin: {
         components: {
-          RowLabel: "@synoem/payload/components/row-labels#SocialLinkRowLabel",
+          RowLabel: "@synoem/cms/components/row-labels#SocialLinkRowLabel",
         },
       },
       fields: [

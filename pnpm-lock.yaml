@@ -9,9 +9,6 @@ catalogs:
     '@payloadcms/db-postgres':
       specifier: ^3.38.0
       version: 3.38.0
-    '@payloadcms/db-sqlite':
-      specifier: ^3.38.0
-      version: 3.38.0
     '@payloadcms/email-resend':
       specifier: ^3.38.0
       version: 3.38.0
@@ -406,9 +403,6 @@ importers:
       '@payloadcms/db-postgres':
         specifier: 'catalog:'
         version: 3.38.0(@cloudflare/workers-types@4.20250515.0)(@libsql/client@0.14.0)(@types/react@19.1.4)(payload@3.38.0(graphql@16.11.0)(typescript@5.8.3))(react@19.1.0)
-      '@payloadcms/db-sqlite':
-        specifier: 'catalog:'
-        version: 3.38.0(@cloudflare/workers-types@4.20250515.0)(@types/pg@8.10.2)(@types/react@19.1.4)(payload@3.38.0(graphql@16.11.0)(typescript@5.8.3))(pg@8.11.3)(react@19.1.0)
       '@payloadcms/email-resend':
         specifier: 'catalog:'
         version: 3.38.0(payload@3.38.0(graphql@16.11.0)(typescript@5.8.3))
@@ -421,15 +415,6 @@ importers:
       '@payloadcms/storage-s3':
         specifier: 'catalog:'
         version: 3.38.0(@types/react@19.1.4)(monaco-editor@0.52.2)(next@15.3.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.77.4))(payload@3.38.0(graphql@16.11.0)(typescript@5.8.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)
-      '@payloadcms/ui':
-        specifier: 'catalog:'
-        version: 3.38.0(@types/react@19.1.4)(monaco-editor@0.52.2)(next@15.3.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.77.4))(payload@3.38.0(graphql@16.11.0)(typescript@5.8.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)
-      '@react-three/drei':
-        specifier: 'catalog:'
-        version: 10.0.7(@react-three/fiber@9.1.2(@types/react@19.1.4)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(three@0.175.0))(@types/react@19.1.4)(@types/three@0.176.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(three@0.175.0)
-      '@react-three/fiber':
-        specifier: 'catalog:'
-        version: 9.1.2(@types/react@19.1.4)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(three@0.175.0)
       '@synoem/config':
         specifier: workspace:*
         version: link:../config
@@ -2615,11 +2600,6 @@ packages:
 
   '@payloadcms/db-postgres@3.38.0':
     resolution: {integrity: sha512-ItdUUxPhemlD2B3NXroixV6WAY1aB2+SOUkewHoBPg2bEcrERKocGiKeMndqNX5HPgtWRlUEMw2RraNPdTTLSg==}
-    peerDependencies:
-      payload: 3.38.0
-
-  '@payloadcms/db-sqlite@3.38.0':
-    resolution: {integrity: sha512-h9TQeNxG7F9hBZeQAxVmZahw3igAsanqCU2O/aLH+FofmkIOImKwEtRtBcigAF3Vd8u040Vs5BXItyUb7W+0PQ==}
     peerDependencies:
       payload: 3.38.0
 
@@ -11115,10 +11095,12 @@ snapshots:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
+    optional: true
 
   '@libsql/core@0.14.0':
     dependencies:
       js-base64: 3.7.7
+    optional: true
 
   '@libsql/darwin-arm64@0.4.7':
     optional: true
@@ -11135,8 +11117,10 @@ snapshots:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
+    optional: true
 
-  '@libsql/isomorphic-fetch@0.3.1': {}
+  '@libsql/isomorphic-fetch@0.3.1':
+    optional: true
 
   '@libsql/isomorphic-ws@0.1.5':
     dependencies:
@@ -11145,6 +11129,7 @@ snapshots:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
+    optional: true
 
   '@libsql/linux-arm64-gnu@0.4.7':
     optional: true
@@ -11220,7 +11205,8 @@ snapshots:
       nanostores: 1.0.1
       react: 19.1.0
 
-  '@neon-rs/load@0.0.4': {}
+  '@neon-rs/load@0.0.4':
+    optional: true
 
   '@netlify/binary-info@1.0.0': {}
 
@@ -11452,50 +11438,6 @@ snapshots:
       - sql.js
       - sqlite3
       - supports-color
-
-  '@payloadcms/db-sqlite@3.38.0(@cloudflare/workers-types@4.20250515.0)(@types/pg@8.10.2)(@types/react@19.1.4)(payload@3.38.0(graphql@16.11.0)(typescript@5.8.3))(pg@8.11.3)(react@19.1.0)':
-    dependencies:
-      '@libsql/client': 0.14.0
-      '@payloadcms/drizzle': 3.38.0(@cloudflare/workers-types@4.20250515.0)(@libsql/client@0.14.0)(@types/pg@8.10.2)(@types/react@19.1.4)(payload@3.38.0(graphql@16.11.0)(typescript@5.8.3))(pg@8.11.3)(react@19.1.0)
-      console-table-printer: 2.12.1
-      drizzle-kit: 0.28.0
-      drizzle-orm: 0.36.1(@cloudflare/workers-types@4.20250515.0)(@libsql/client@0.14.0)(@types/pg@8.10.2)(@types/react@19.1.4)(pg@8.11.3)(react@19.1.0)
-      payload: 3.38.0(graphql@16.11.0)(typescript@5.8.3)
-      prompts: 2.4.2
-      to-snake-case: 1.0.0
-      uuid: 9.0.0
-    transitivePeerDependencies:
-      - '@aws-sdk/client-rds-data'
-      - '@cloudflare/workers-types'
-      - '@electric-sql/pglite'
-      - '@libsql/client-wasm'
-      - '@neondatabase/serverless'
-      - '@op-engineering/op-sqlite'
-      - '@opentelemetry/api'
-      - '@planetscale/database'
-      - '@prisma/client'
-      - '@tidbcloud/serverless'
-      - '@types/better-sqlite3'
-      - '@types/pg'
-      - '@types/react'
-      - '@types/sql.js'
-      - '@vercel/postgres'
-      - '@xata.io/client'
-      - better-sqlite3
-      - bufferutil
-      - bun-types
-      - expo-sqlite
-      - knex
-      - kysely
-      - mysql2
-      - pg
-      - postgres
-      - prisma
-      - react
-      - sql.js
-      - sqlite3
-      - supports-color
-      - utf-8-validate
 
   '@payloadcms/drizzle@3.38.0(@cloudflare/workers-types@4.20250515.0)(@libsql/client@0.14.0)(@types/pg@8.10.2)(@types/react@19.1.4)(payload@3.38.0(graphql@16.11.0)(typescript@5.8.3))(pg@8.11.3)(react@19.1.0)':
     dependencies:
@@ -13354,6 +13296,7 @@ snapshots:
   '@types/ws@8.18.1':
     dependencies:
       '@types/node': 22.15.18
+    optional: true
 
   '@types/yauzl@2.10.3':
     dependencies:
@@ -14408,7 +14351,8 @@ snapshots:
     dependencies:
       webgl-constants: 1.1.1
 
-  detect-libc@2.0.2: {}
+  detect-libc@2.0.2:
+    optional: true
 
   detect-libc@2.0.4: {}
 
@@ -15695,7 +15639,8 @@ snapshots:
 
   jpeg-js@0.4.4: {}
 
-  js-base64@3.7.7: {}
+  js-base64@3.7.7:
+    optional: true
 
   js-cookie@2.2.1: {}
 
@@ -15794,6 +15739,7 @@ snapshots:
       '@libsql/linux-x64-gnu': 0.4.7
       '@libsql/linux-x64-musl': 0.4.7
       '@libsql/win32-x64-msvc': 0.4.7
+    optional: true
 
   lie@3.3.0:
     dependencies:
@@ -17099,7 +17045,8 @@ snapshots:
 
   process-warning@4.0.1: {}
 
-  promise-limit@2.7.0: {}
+  promise-limit@2.7.0:
+    optional: true
 
   promise-worker-transferable@1.0.4:
     dependencies:

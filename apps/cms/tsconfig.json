@@ -6,6 +6,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
+      "@synoem/cms/*": ["./src/*"],
       "@synoem/ui/*": ["../../packages/ui/src/*"],
       "@payload-config": ["./src/payload.config.ts"]
     },

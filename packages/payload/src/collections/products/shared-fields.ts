@@ -153,7 +153,7 @@ export const createVariantsTab = (productTypeId: ProductTypeId): Tab => {
           components: {
             beforeInput: [
               {
-                path: "@synoem/payload/components/build-variants-button#BuildVariantsButton",
+                path: "@synoem/cms/components/build-variants-button#BuildVariantsButton",
                 clientProps: {
                   productTypeId: productTypeId,
                 },
