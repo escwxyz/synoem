@@ -117,6 +117,18 @@
     "root!NEXT_PUBLIC_API_URL#production": {
       "encryptedValue": "TKzq8dlPhv01UHfz67jsGtY7fXaA5JW87Nq3xwAv9Cs7URBtGDYRlIDg3yW5ITG/oG/Po85xQQ==",
       "updatedAt": "2025-05-17T07:08:15.356Z"
+    },
+    "root!PAYLOAD_SECRET#preview": {
+      "encryptedValue": "JtIgoZg2QB10NmDMoMzy7AvrizhAoFlN/lGEKKM7FznesodYK5Csy/iO211j01yDzBDuVZKv",
+      "updatedAt": "2025-05-17T08:11:42.303Z"
+    },
+    "root!PAYLOAD_SECRET#production": {
+      "encryptedValue": "VwsvrQsqKl/HvV0HV89EXA4Dk3psn8DRwB34uRAd1JHjwbo60o3L7NkpBz2EQt+MUiIYFT4s",
+      "updatedAt": "2025-05-17T08:11:50.263Z"
+    },
+    "root!PREVIEW_SECRET#production": {
+      "encryptedValue": "MoHhF2Yts5rQUYTELqnBOjktUkpN7yB++HX+dQFn6o1w9RGVGUHagEG34CiiiFzBZEDHe8xP",
+      "updatedAt": "2025-05-17T08:11:57.440Z"
     }
   }
 }
