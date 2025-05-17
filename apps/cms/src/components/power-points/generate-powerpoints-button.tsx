@@ -127,7 +127,13 @@ export const GeneratePowerPointsButton = () => {
   const disableClear = status === "clearing" || disabled || !hasPrevData;
 
   return (
-    <div className="p-2 flex justify-between">
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "1rem",
+      }}
+    >
       <Button onClick={generatePoints} buttonStyle="primary" disabled={disableGenerate}>
         {status === "generating" ? "Generating..." : "Generate Power Points"}
       </Button>
