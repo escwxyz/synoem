@@ -1,0 +1,122 @@
+{
+  "version": "0.0.1",
+  "keyName": "default-2025-05-17",
+  "items": {
+    "root!DATABASE_URI#production": {
+      "encryptedValue": "tASizrth0stcSAg2XfYSAeg7r2F3TjLL2tuXaelzjh5BnVHCKTes6tBYDFAWiBLxuliBrDbX0NC5g+avdsaMNvtfQ7iL3fZyIEyi7CAHYMAJnD7GvGBggrYck3zvEgO0SJfQyxiuYoVyHzRbmmkl04riLvtveaJy8VrOeKAAiN6EcV9H5F/HeH6xYQ==",
+      "updatedAt": "2025-05-17T04:58:53.279Z"
+    },
+    "root!S3_BUCKET_NAME": {
+      "encryptedValue": "4G6wmlbUU5K9m1kwfR+oGHufaj9sVvHYZyUowLYBaNzhFKQn",
+      "updatedAt": "2025-05-17T05:07:30.273Z"
+    },
+    "root!S3_ENDPOINT": {
+      "encryptedValue": "AO4d+ZsQskI4JSLBkkARO7VZwcX4P7BxwBVELVWMxlo6fAg8QUXzo7K69Al0YclIZTfdtD6Yh0/2SUBSyXD/hISwRxJzjQvcCO71H4Bkxw9d",
+      "updatedAt": "2025-05-17T05:08:04.075Z"
+    },
+    "root!S3_ACCESS_KEY_ID": {
+      "encryptedValue": "xZFFy5UDkm/pq1dzfUX+/gLHNtIdVDZlgS8cdpw9HO9fAgP7GwNI8LQ9jpBb15pc2SRHS45+rA4hrxKiywI=",
+      "updatedAt": "2025-05-17T05:08:20.746Z"
+    },
+    "root!S3_ACCESS_KEY_SECRET": {
+      "encryptedValue": "cxjif4PCaRRWI5id9UIoO/5dxW+QiocpXURyk5/PbKX1tYhQDy+/wmiV2i3pVifJoSebzG3/dC6AldG864O8oIhAOLM6xWFHHUN1w/NcaOvxkpicgtNsueeugQwIFQ==",
+      "updatedAt": "2025-05-17T05:08:33.208Z"
+    },
+    "root!S3_REGION": {
+      "encryptedValue": "G/XEJTyiesOd4MdZ6vT9GUWVh8jtJVvbI5ifvsjZg3k80O+MyJGK",
+      "updatedAt": "2025-05-17T05:09:15.498Z"
+    },
+    "root!RESEND_FROM_NAME#production": {
+      "encryptedValue": "dPkyKoTi+iolCEWOXsptuTcdZu9JEXZdR5FlBcEU78EK8GKW",
+      "updatedAt": "2025-05-17T05:23:51.754Z"
+    },
+    "root!RESEND_API_KEY#production": {
+      "encryptedValue": "xCwfLTyC5hN5h5Nxv8kiD0gFdA9hOEwgQI33zcJfH+PHKkQBLPd4BKcB+8it3CrmMRpNZi8MLc/ZcJH4yqQ3wFHb",
+      "updatedAt": "2025-05-17T05:25:03.531Z"
+    },
+    "root!RESEND_FROM_EMAIL#production": {
+      "encryptedValue": "gPn3SF3+BlgDcmq14njl4K12mfA4IWf8G47C7ubEMb6cBc3dVIttIV2C/bxgWayq4EvbWJ8=",
+      "updatedAt": "2025-05-17T05:25:24.554Z"
+    },
+    "root!ASTRO_PUBLIC_SITE_URL#production": {
+      "encryptedValue": "kMlEHxHVPXiuHepLfBRtNSngTG/swgqUWwvo8z9GWzk70kdqoNQsaw==",
+      "updatedAt": "2025-05-17T07:00:22.001Z"
+    },
+    "root!VERCEL_TOKEN#preview": {
+      "encryptedValue": "wTSNodYjjR1dIVRnxVYQpyJYjt1+Dw7j00+mc2AhQShumvHs0yz6EqpOg3PZ0edWP9kJt7qm",
+      "updatedAt": "2025-05-17T07:02:48.941Z"
+    },
+    "root!VERCEL_TOKEN#production": {
+      "encryptedValue": "FNhRF3ubeYTTId6RxrWj/3hyxprj7tCVVliO8st4L6WyDPvSX/xpZ1ykQ3g4MUN1f2QuHtZZ",
+      "updatedAt": "2025-05-17T07:03:24.349Z"
+    },
+    "root!VERCEL_ORG_ID#preview": {
+      "encryptedValue": "EObv4dGTtl0jYlhG9rhDvuijpf6snFiKTf2Kb46NaOEBoHUOFZZN6zIMov0w+r/i2aQiB1wiuyVGSjI=",
+      "updatedAt": "2025-05-17T07:03:52.628Z"
+    },
+    "root!VERCEL_ORG_ID#production": {
+      "encryptedValue": "DwlLqXjMj6HdpVpRyIYww9mi/XXiPxfOOmf0IJ2MSpMKGB2enrcvEAfAd2ZUptYv8S/w05xfuPasYdI=",
+      "updatedAt": "2025-05-17T07:04:05.067Z"
+    },
+    "root!VERCEL_PROJECT_ID#preview": {
+      "encryptedValue": "WwoFs45PKHKFHv7tg0zxCMVVTXrR1cd22GMQXPIwR5UtEjTIlqRnqepT6MIcwwzOcWMTaWHIrT3XyDYH2Ts=",
+      "updatedAt": "2025-05-17T07:04:20.942Z"
+    },
+    "root!VERCEL_PROJECT_ID#production": {
+      "encryptedValue": "FHJdRkUJku9EXOwgvhwwEEZUUYz1dwi15fqZdoPoeScgMpS7bKV/uZHu2tTxk96EOKniQ5PfHDupHzfYw7Q=",
+      "updatedAt": "2025-05-17T07:04:26.203Z"
+    },
+    "root!DATABASE_URI#preview": {
+      "encryptedValue": "QNYNqXpLEISVGJ+AYifbeOL4PXiRIbvrmUKVzL6DLb9wCZmketGBJh7P21hz5XTx4KJfkhafBQC49f1l5yQAjNNVtpT5B7I9f/AqOSH3rLlb4CHco2cNZrsvJENQLaet8nFMSbpJlsYtWqbXEHV4mFQtOdwV5GXHBMzyGWbVjH54teLBqfY8bRjAqg==",
+      "updatedAt": "2025-05-17T07:04:58.318Z"
+    },
+    "root!S3_BUCKET_NAME#preview": {
+      "encryptedValue": "9vH+jF4mA3rBDw3sbPJhHB43X/vyJq/Y7E8h12/Dr89jtYxZ",
+      "updatedAt": "2025-05-17T07:05:11.121Z"
+    },
+    "root!S3_BUCKET_NAME#production": {
+      "encryptedValue": "leIy5NbKBkGBPe3/cnlPzVO3auA0/tXt+jneB3fGUSjfQxFn",
+      "updatedAt": "2025-05-17T07:05:25.419Z"
+    },
+    "root!S3_ENDPOINT#preview": {
+      "encryptedValue": "ThUhiUfSYleHIs0xgDowmHXqNd/hZj59iVm9No/wGH/QzMO1PQPTS1sWo1zU/ZQK2j+JISaSUO3zWjf61VJ0s/zV0MOHjZnuHnlJ1PhJA0JC",
+      "updatedAt": "2025-05-17T07:05:43.873Z"
+    },
+    "root!S3_ENDPOINT#production": {
+      "encryptedValue": "j/sjsvNa2Q6xEUwOJ5IVta0D8VedzpscC5fs2cXViaPwg1jzcCUNlZSGkLCcnwh1ng22CGll91h7uCl73AQwd/Gl5hrjEtnK40zECrQRNF8I",
+      "updatedAt": "2025-05-17T07:05:56.254Z"
+    },
+    "root!S3_ACCESS_KEY_ID#preview": {
+      "encryptedValue": "1ZP7/YHfgrU26dEKDpm+WtsRO2FNCLvDGmb8fV23PRIQuvAAF58QvwMju8YOYtNwo1A62XI4bfXwlKQPNXE=",
+      "updatedAt": "2025-05-17T07:06:10.133Z"
+    },
+    "root!S3_ACCESS_KEY_ID#production": {
+      "encryptedValue": "MLJx8PIGgtxBBi5keQvCXIAwaCOs/Val1mcRf/YQjjQw0JtOrP95nrbeWyKOKpVt9hpmx2lc4OSYM2q3gxA=",
+      "updatedAt": "2025-05-17T07:06:14.977Z"
+    },
+    "root!S3_ACCESS_KEY_SECRET#preview": {
+      "encryptedValue": "zaAmiX91dguZoyubmOwi6Xd29Q4ybCpd2witPhf7BBS7aSXPNE8rJpBI+MLQM6/9+7inW2qTPUhpS3xbnHrjvvOXKTQlv9go5GsLglzO6/hdi3Zhvthz2SFI8zNNmA==",
+      "updatedAt": "2025-05-17T07:06:26.374Z"
+    },
+    "root!S3_ACCESS_KEY_SECRET#production": {
+      "encryptedValue": "UuBRt6Bx2c5zr3BPFURHMNmDzeSifPXVrg/h+iQtMVKkUHlbGFWiP2FHtCz6YQy0G6aCnBSChTp9Nn8FLtq0YGiyqb9k3lXxA0bn7/yxoX10ENViLvwbawLKWSs2zA==",
+      "updatedAt": "2025-05-17T07:06:30.900Z"
+    },
+    "root!S3_REGION#preview": {
+      "encryptedValue": "UH0P9QNEvVwCSRgy+NpYX+7Ie0/Jwe7mfPmIukBJOWbgg4eAhXgv",
+      "updatedAt": "2025-05-17T07:06:48.299Z"
+    },
+    "root!S3_REGION#production": {
+      "encryptedValue": "du5dr+jPcf0wGKA64UVyB0BmyYHYtgovlbqhx6lEwwi2tIg7O2KH",
+      "updatedAt": "2025-05-17T07:06:54.068Z"
+    },
+    "root!NEXT_PUBLIC_SERVER_URL#production": {
+      "encryptedValue": "z7dC0VFekuTx83++3A3JuZyWeTIJwtKxB9l6DUdTYYiSiTiDWl3zcdPBBRDVoFFO+J1O",
+      "updatedAt": "2025-05-17T07:08:00.914Z"
+    },
+    "root!NEXT_PUBLIC_API_URL#production": {
+      "encryptedValue": "TKzq8dlPhv01UHfz67jsGtY7fXaA5JW87Nq3xwAv9Cs7URBtGDYRlIDg3yW5ITG/oG/Po85xQQ==",
+      "updatedAt": "2025-05-17T07:08:15.356Z"
+    }
+  }
+}

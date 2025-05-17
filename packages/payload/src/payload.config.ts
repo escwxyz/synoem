@@ -8,7 +8,6 @@ import { buildConfig } from "payload";
 import { defaultLexical } from "./fields/default-lexical";
 
 import { postgresAdapter } from "@payloadcms/db-postgres";
-// import { sqliteAdapter } from "@payloadcms/db-sqlite";
 
 import { Footer, Header, CompanyInfo, ContactInfo, SocialLinks } from "./globals";
 // Media
@@ -66,13 +65,6 @@ export default buildConfig({
       connectionString: DMNO_CONFIG.DATABASE_URI,
     },
   }),
-  // db: sqliteAdapter({
-  //   idType: "uuid",
-  //   client: {
-  //     url: DMNO_CONFIG.TURSO_DATABASE_URI,
-  //     authToken: DMNO_CONFIG.TURSO_DATABASE_TOKEN,
-  //   },
-  // }),
   collections: [
     Users,
     Pages,
@@ -106,11 +98,6 @@ export default buildConfig({
     Testimonials,
     // Posts
     Posts,
-    // Product Categories
-
-    // // Variant Options
-    // VariantOptions,
-    // // Products
     // Products,
     SolarPanels,
     PumpControllers,
@@ -134,9 +121,12 @@ export default buildConfig({
     disable: true,
   },
   email: resendAdapter({
-    defaultFromAddress: "info@updates.synoem.com",
-    defaultFromName: "SynOEM",
-    apiKey: DMNO_CONFIG.RESEND_API_KEY || "",
+    defaultFromAddress: DMNO_CONFIG.RESEND_FROM_EMAIL,
+    defaultFromName:
+      DMNO_CONFIG.APP_ENV === "development"
+        ? DMNO_PUBLIC_CONFIG.RESEND_FROM_NAME
+        : DMNO_CONFIG.RESEND_FROM_NAME,
+    apiKey: DMNO_CONFIG.RESEND_API_KEY,
   }),
   jobs: {
     tasks: [

@@ -427,7 +427,6 @@ export interface Industry {
 export interface Image {
   id: string;
   alt: string;
-  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -2420,7 +2419,6 @@ export interface NewsletterSubscribersSelect<T extends boolean = true> {
  */
 export interface ImagesSelect<T extends boolean = true> {
   alt?: T;
-  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;

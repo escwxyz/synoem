@@ -15,17 +15,24 @@ on:
       - "!apps/web/**"
 
 jobs:
-  build-and-deploy:
+  build-and-preview:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 10
+          run_install: false
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: 20
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install
@@ -34,11 +41,15 @@ jobs:
         uses: dmno/dmno-gh-action@v1
         with:
           service-name: "cms"
+        env:
+          DMNO_VAULT_KEY_PROD: ${{ secrets.DMNO_VAULT_KEY_PROD }}
 
       - name: Build CMS
-        run: pnpm --filter @synoem/cms run build
+        run: pmpm --filter @synoem/cms run build
 
       - name: Deploy to Vercel
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: pnpm --filter @synoem/cms run preview
+        env:
+          VERCEL_TOKEN: ${{env.VERCEL_TOKEN}}
+          VERCEL_PROJECT_ID: ${{env.VERCEL_PROJECT_ID}}
+          VERCEL_ORG_ID: ${{env.VERCEL_ORG_ID}}

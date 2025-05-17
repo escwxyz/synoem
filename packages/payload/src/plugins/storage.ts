@@ -1,6 +1,7 @@
 import { s3Storage } from "@payloadcms/storage-s3";
 
 export const storage = s3Storage({
+  enabled: DMNO_CONFIG.APP_ENV === "production" || DMNO_CONFIG.APP_ENV === "preview",
   collections: {
     images: {
       prefix: "images",
@@ -10,12 +11,12 @@ export const storage = s3Storage({
       },
     },
   },
-  bucket: DMNO_CONFIG.S3_BUCKET_NAME,
+  bucket: DMNO_CONFIG.S3_BUCKET_NAME ?? "",
   config: {
     endpoint: `${DMNO_CONFIG.S3_ENDPOINT}/s3`,
     credentials: {
-      accessKeyId: DMNO_CONFIG.S3_ACCESS_KEY_ID,
-      secretAccessKey: DMNO_CONFIG.S3_ACCESS_KEY_SECRET,
+      accessKeyId: DMNO_CONFIG.S3_ACCESS_KEY_ID ?? "",
+      secretAccessKey: DMNO_CONFIG.S3_ACCESS_KEY_SECRET ?? "",
     },
     region: DMNO_CONFIG.S3_REGION,
     forcePathStyle: true,

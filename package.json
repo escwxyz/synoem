@@ -8,7 +8,11 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check:biome": "biome check --write .",
-    "format:biome": "biome format --write ."
+    "format:biome": "biome format --write .",
+    "dmno": "pnpm exec dmno plugin",
+    "vault:prod": "pnpm exec dmno plugin -p vault/prod -- setup",
+    "vault:prod:add": "pnpm exec dmno plugin -p vault/prod -- add",
+    "vault:prod:upsert": "pnpm exec dmno plugin -p vault/prod -- upsert"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
@@ -23,6 +27,9 @@
     "node": ">=22"
   },
   "dependencies": {
+    "@dmno/encrypted-vault-plugin": "^0.0.10",
+    "@dmno/netlify-platform": "^0.0.5",
+    "@dmno/vercel-platform": "^0.0.3",
     "dmno": "^0.0.39"
   },
   "pnpm": {

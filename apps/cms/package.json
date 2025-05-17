@@ -11,7 +11,9 @@
     "lint": "cross-env NODE_OPTIONS=--no-deprecation dmno run -- next lint",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "start": "cross-env NODE_OPTIONS=--no-deprecation dmno run -- next start",
-    "fresh": "cross-env NODE_OPTIONS=--no-deprecation dmno run -- payload migrate:fresh"
+    "fresh": "cross-env NODE_OPTIONS=--no-deprecation dmno run -- payload migrate:fresh",
+    "preview": "npx vercel deploy --target=preview",
+    "deploy": "npx vercel deploy --prod"
   },
   "dependencies": {
     "@dmno/nextjs-integration": "^0.0.14",

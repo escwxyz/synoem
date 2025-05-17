@@ -1,9 +1,9 @@
-import { defineDmnoService, pick } from "dmno";
+import { defineDmnoService, DmnoBaseTypes, pick } from "dmno";
 
 export default defineDmnoService({
-  name: "payload-config",
+  name: "web",
   schema: {
-    APP_ENV: pick("root", "NEXT_APP_ENV"),
+    APP_ENV: pick("root", "ASTRO_APP_ENV"),
     DATABASE_URI: pick("root", "DATABASE_URI"),
     RESEND_API_KEY: pick("root", "RESEND_API_KEY"),
     RESEND_FROM_EMAIL: pick("root", "RESEND_FROM_EMAIL"),
@@ -14,5 +14,9 @@ export default defineDmnoService({
     S3_ACCESS_KEY_SECRET: pick("root", "S3_ACCESS_KEY_SECRET"),
     S3_REGION: pick("root", "S3_REGION"),
     PAYLOAD_SECRET: pick("root", "PAYLOAD_SECRET"),
+
+    NEXT_PUBLIC_SERVER_URL: pick("root", "NEXT_PUBLIC_SERVER_URL"),
+    NEXT_PUBLIC_API_URL: pick("root", "NEXT_PUBLIC_API_URL"),
+    ASTRO_PUBLIC_SITE_URL: pick("root", "ASTRO_PUBLIC_SITE_URL"),
   },
 });
