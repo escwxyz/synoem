@@ -1,5 +1,8 @@
 name: Build & Deploy CMS
 
+env:
+  DMNO_VAULT_KEY_PROD: ${{ secrets.DMNO_VAULT_KEY_PROD }}
+
 on:
   push:
     paths:
@@ -41,8 +44,6 @@ jobs:
         uses: dmno/dmno-gh-action@v1
         with:
           service-name: "cms"
-        env:
-          DMNO_VAULT_KEY_PROD: ${{ secrets.DMNO_VAULT_KEY_PROD }}
 
       - name: Build CMS
         run: pmpm --filter @synoem/cms run build
