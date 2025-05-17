@@ -12,7 +12,7 @@
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "start": "cross-env NODE_OPTIONS=--no-deprecation dmno run -- next start",
     "fresh": "cross-env NODE_OPTIONS=--no-deprecation dmno run -- payload migrate:fresh",
-    "preview": "npx vercel deploy --target=preview",
+    "preview": "dmno run -- npx vercel deploy --target=preview",
     "deploy": "npx vercel deploy --prod"
   },
   "dependencies": {

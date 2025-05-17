@@ -1,7 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
-  "globalPassThroughEnv": ["DMNO_PARENT_SERVER"],
+  "globalPassThroughEnv": ["DMNO_PARENT_SERVER", "DMNO_VAULT_KEY_PROD"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
