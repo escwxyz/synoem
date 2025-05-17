@@ -189,7 +189,7 @@ export default defineDmnoService({
         production: ProdVault.item(),
       }),
     },
-    NEXT_PUBLIC_SERVER_URL: {
+    NEXT_SERVER_URL: {
       required: true,
       summary: "The URL of the Payload CMS dashboard",
       sensitive: true,
@@ -199,7 +199,9 @@ export default defineDmnoService({
         production: ProdVault.item(),
       }),
     },
-    NEXT_PUBLIC_API_URL: {
+    NEXT_API_URL: {
+      required: true,
+      sensitive: true,
       extends: DmnoBaseTypes.url,
       summary: "The API URL exposed by the Next.js application",
       value: switchBy("NEXT_APP_ENV", {

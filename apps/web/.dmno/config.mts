@@ -18,8 +18,8 @@ export default defineDmnoService({
     S3_REGION: pick("root", "S3_REGION"),
     PAYLOAD_SECRET: pick("root", "PAYLOAD_SECRET"),
 
-    NEXT_PUBLIC_SERVER_URL: pick("root", "NEXT_PUBLIC_SERVER_URL"),
-    NEXT_PUBLIC_API_URL: pick("root", "NEXT_PUBLIC_API_URL"),
+    NEXT_SERVER_URL: pick("root", "NEXT_SERVER_URL"),
+    NEXT_API_URL: pick("root", "NEXT_API_URL"),
     ASTRO_PUBLIC_SITE_URL: pick("root", "ASTRO_PUBLIC_SITE_URL"),
   },
 });

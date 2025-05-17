@@ -6,26 +6,6 @@
       "encryptedValue": "tASizrth0stcSAg2XfYSAeg7r2F3TjLL2tuXaelzjh5BnVHCKTes6tBYDFAWiBLxuliBrDbX0NC5g+avdsaMNvtfQ7iL3fZyIEyi7CAHYMAJnD7GvGBggrYck3zvEgO0SJfQyxiuYoVyHzRbmmkl04riLvtveaJy8VrOeKAAiN6EcV9H5F/HeH6xYQ==",
       "updatedAt": "2025-05-17T04:58:53.279Z"
     },
-    "root!S3_BUCKET_NAME": {
-      "encryptedValue": "4G6wmlbUU5K9m1kwfR+oGHufaj9sVvHYZyUowLYBaNzhFKQn",
-      "updatedAt": "2025-05-17T05:07:30.273Z"
-    },
-    "root!S3_ENDPOINT": {
-      "encryptedValue": "AO4d+ZsQskI4JSLBkkARO7VZwcX4P7BxwBVELVWMxlo6fAg8QUXzo7K69Al0YclIZTfdtD6Yh0/2SUBSyXD/hISwRxJzjQvcCO71H4Bkxw9d",
-      "updatedAt": "2025-05-17T05:08:04.075Z"
-    },
-    "root!S3_ACCESS_KEY_ID": {
-      "encryptedValue": "xZFFy5UDkm/pq1dzfUX+/gLHNtIdVDZlgS8cdpw9HO9fAgP7GwNI8LQ9jpBb15pc2SRHS45+rA4hrxKiywI=",
-      "updatedAt": "2025-05-17T05:08:20.746Z"
-    },
-    "root!S3_ACCESS_KEY_SECRET": {
-      "encryptedValue": "cxjif4PCaRRWI5id9UIoO/5dxW+QiocpXURyk5/PbKX1tYhQDy+/wmiV2i3pVifJoSebzG3/dC6AldG864O8oIhAOLM6xWFHHUN1w/NcaOvxkpicgtNsueeugQwIFQ==",
-      "updatedAt": "2025-05-17T05:08:33.208Z"
-    },
-    "root!S3_REGION": {
-      "encryptedValue": "G/XEJTyiesOd4MdZ6vT9GUWVh8jtJVvbI5ifvsjZg3k80O+MyJGK",
-      "updatedAt": "2025-05-17T05:09:15.498Z"
-    },
     "root!RESEND_FROM_NAME#production": {
       "encryptedValue": "dPkyKoTi+iolCEWOXsptuTcdZu9JEXZdR5FlBcEU78EK8GKW",
       "updatedAt": "2025-05-17T05:23:51.754Z"
@@ -110,14 +90,6 @@
       "encryptedValue": "du5dr+jPcf0wGKA64UVyB0BmyYHYtgovlbqhx6lEwwi2tIg7O2KH",
       "updatedAt": "2025-05-17T07:06:54.068Z"
     },
-    "root!NEXT_PUBLIC_SERVER_URL#production": {
-      "encryptedValue": "z7dC0VFekuTx83++3A3JuZyWeTIJwtKxB9l6DUdTYYiSiTiDWl3zcdPBBRDVoFFO+J1O",
-      "updatedAt": "2025-05-17T07:08:00.914Z"
-    },
-    "root!NEXT_PUBLIC_API_URL#production": {
-      "encryptedValue": "TKzq8dlPhv01UHfz67jsGtY7fXaA5JW87Nq3xwAv9Cs7URBtGDYRlIDg3yW5ITG/oG/Po85xQQ==",
-      "updatedAt": "2025-05-17T07:08:15.356Z"
-    },
     "root!PAYLOAD_SECRET#preview": {
       "encryptedValue": "JtIgoZg2QB10NmDMoMzy7AvrizhAoFlN/lGEKKM7FznesodYK5Csy/iO211j01yDzBDuVZKv",
       "updatedAt": "2025-05-17T08:11:42.303Z"
@@ -129,6 +101,14 @@
     "root!PREVIEW_SECRET#production": {
       "encryptedValue": "MoHhF2Yts5rQUYTELqnBOjktUkpN7yB++HX+dQFn6o1w9RGVGUHagEG34CiiiFzBZEDHe8xP",
       "updatedAt": "2025-05-17T08:11:57.440Z"
+    },
+    "root!NEXT_API_URL#production": {
+      "encryptedValue": "mFohcPecTVAG1clhkyO9DaEshl+3eS1ojUomC9wEQmWpslJGnPCCKPJ0HiXASpvOwtaKqHlKxcp6yQ==",
+      "updatedAt": "2025-05-17T12:37:01.242Z"
+    },
+    "root!NEXT_SERVER_URL#production": {
+      "encryptedValue": "tUg8sPjLJKuJu+sclzxVdh8XCFj2/KDVGMaHJHoBazKzW3hEpuwcb+87dU3AEKhwSUhWsHuh",
+      "updatedAt": "2025-05-17T12:37:18.853Z"
     }
   }
 }

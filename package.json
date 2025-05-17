@@ -10,9 +10,10 @@
     "check:biome": "biome check --write .",
     "format:biome": "biome format --write .",
     "dmno": "pnpm exec dmno plugin",
-    "vault:prod": "pnpm exec dmno plugin -p vault/prod -- setup",
-    "vault:prod:add": "pnpm exec dmno plugin -p vault/prod -- add",
-    "vault:prod:upsert": "pnpm exec dmno plugin -p vault/prod -- upsert"
+    "vault": "pnpm exec dmno plugin -p vault/prod -- setup",
+    "vault:add": "pnpm exec dmno plugin -p vault/prod -- add",
+    "vault:delete": "pnpm exec dmno plugin -p vault/prod -- delete",
+    "vault:upsert": "pnpm exec dmno plugin -p vault/prod -- upsert"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
