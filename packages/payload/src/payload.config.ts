@@ -49,6 +49,9 @@ const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
 export default buildConfig({
+  routes: {
+    admin: "/dashboard",
+  },
   admin: {
     components: {
       views: {},
@@ -57,6 +60,7 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    suppressHydrationWarning: DMNO_CONFIG.APP_ENV === "production",
   },
   editor: defaultLexical,
   db: postgresAdapter({
