@@ -1,0 +1,46 @@
+---
+import { Button } from "~/components/starwind/button";
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "@synoem/ui/lib/utils";
+import { PanelLeft, type AstroComponent } from "@lucide/astro";
+
+interface Props extends HTMLAttributes<"button"> {
+  icon?: AstroComponent;
+  className?: string;
+  onClickEvent?: string;
+}
+
+const { icon, className, onClickEvent, ...props } = Astro.props;
+---
+
+<Button
+  data-sidebar="trigger"
+  data-slot="sidebar-trigger"
+  data-onclick-event={onClickEvent}
+  variant="ghost"
+  size="icon"
+  class={cn("size-7", className)}
+  {...props}
+>
+  {icon ? icon : <PanelLeft />}
+</Button>
+
+<script>
+  import { toggleDesktopSidebar, toggleMobileSidebar } from "~/atoms/sidebar";
+
+  const trigger = document.querySelector('[data-sidebar="trigger"]');
+
+  const onClickEvent = trigger?.getAttribute("data-onclick-event");
+
+  trigger?.addEventListener("click", () => {
+    if (window.innerWidth < 768) {
+      toggleMobileSidebar();
+    } else {
+      toggleDesktopSidebar();
+    }
+
+    if (onClickEvent) {
+      document.dispatchEvent(new CustomEvent(onClickEvent));
+    }
+  });
+</script>

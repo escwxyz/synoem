@@ -1,19 +1,16 @@
 ---
 // Full Astro Component Syntax:
 // https://docs.astro.build/basics/astro-components/
+
+import { Sidebar, SidebarTrigger } from "~/components/astro";
+import RootLayout from "~/layouts/root-layout.astro";
 import "~/styles/starwind.css";
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro + TailwindCSS</title>
-  </head>
-
-  <body>
-    <div class="grid place-items-center h-screen content-center">TODO</div>
-  </body>
-</html>
+<RootLayout>
+  <Sidebar slot="sidebar"> Some contents inside </Sidebar>
+  <div class="flex flex-col gap-4">
+    <SidebarTrigger />
+    <h1>Hello World</h1>
+  </div>
+</RootLayout>

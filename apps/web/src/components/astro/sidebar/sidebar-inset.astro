@@ -1,0 +1,44 @@
+---
+import { cn } from "@synoem/ui/lib/utils";
+import type { HTMLAttributes } from "astro/types";
+import { sidebarOpenAtom } from "~/atoms/sidebar";
+
+interface Props extends HTMLAttributes<"main"> {
+  className?: string;
+}
+
+const { className, ...props } = Astro.props;
+
+const initialState = sidebarOpenAtom.get() ? "expanded" : "collapsed";
+---
+
+<main
+  data-slot="sidebar-inset"
+  data-sidebar-state={initialState}
+  class={cn(
+    "bg-background relative flex w-full flex-1 flex-col",
+    "md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow-sm md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2",
+    className,
+  )}
+  {...props}
+>
+  <slot />
+</main>
+
+<script>
+  import { sidebarOpenAtom } from "~/atoms/sidebar";
+
+  const mainContent: HTMLElement | null = document.querySelector(
+    '[data-slot="sidebar-inset"]',
+  );
+
+  const updateState = (isOpen: boolean) => {
+    if (mainContent) {
+      mainContent.dataset.sidebarState = isOpen ? "expanded" : "collapsed";
+    }
+  };
+
+  updateState(sidebarOpenAtom.get());
+
+  sidebarOpenAtom.listen(updateState);
+</script>
