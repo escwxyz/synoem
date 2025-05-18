@@ -1,0 +1,53 @@
+---
+import { getPlatformIconSVG } from "@synoem/config";
+import { apiClient } from "~/lib/api";
+import type { Locale } from "@synoem/config";
+
+interface Props {
+  size?: number;
+  locale: Locale;
+}
+
+const { size = 24, locale }: Props = Astro.props;
+
+const socialLinksData = await apiClient.globals.getSocialLinks({
+  slug: "social-links",
+  locale,
+});
+---
+
+{
+  socialLinksData.status === "error" || !socialLinksData.data ? (
+    <div>
+      <p>Failed to load social links</p>
+    </div>
+  ) : (
+    <div>
+      {socialLinksData.data.links?.map((link) => {
+        const { platform, url } = link;
+
+        const icon = getPlatformIconSVG(platform);
+
+        const modifiedSvg = icon
+          .replace(/fill="[^"]*"/g, "")
+          .replace("<svg", `<svg fill="var(--foreground)"`);
+
+        return (
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Visit our ${platform} page`}
+          >
+            <span class="sr-only">{platform}</span>
+            <span
+              class="text-2xl inline-flex items-center justify-center"
+              style={{ width: size, height: size }}
+              set:html={modifiedSvg}
+            />
+          </a>
+        );
+      })}
+    </div>
+  )
+}

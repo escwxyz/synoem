@@ -1,0 +1,29 @@
+---
+import { ClientRouter } from "astro:transitions";
+import { SEO, type Props as SEOProps } from "astro-seo";
+
+type Props = SEOProps;
+
+const props: Props = Astro.props;
+---
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="generator" content={Astro.generator} />
+  <SEO {...props} />
+  <ClientRouter />
+</head>
+<script is:inline>
+  (function () {
+    const theme = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)",
+    ).matches;
+
+    if (theme === "dark" || (!theme && prefersDark)) {
+      document.documentElement.classList.add("dark");
+    }
+  })();
+</script>

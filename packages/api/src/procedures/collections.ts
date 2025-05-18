@@ -11,7 +11,7 @@ import {
   simpleInquirySchema,
   productInquirySchema,
   newsletterSchema,
-} from "../schemas";
+} from "@synoem/schema";
 import {
   getProductHelper,
   getProductCategoryHelper,

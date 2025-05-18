@@ -201,7 +201,6 @@ export default defineDmnoService({
     },
     NEXT_API_URL: {
       required: true,
-      sensitive: true,
       extends: DmnoBaseTypes.url,
       summary: "The API URL exposed by the Next.js application",
       value: switchBy("NEXT_APP_ENV", {

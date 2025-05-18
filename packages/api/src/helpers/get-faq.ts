@@ -2,7 +2,7 @@ import type { z } from "zod";
 import type { BasePayload } from "@synoem/payload/types";
 import type { Faq } from "@synoem/payload/payload-types";
 import type { APIResponse } from "../types/api-response";
-import type { faqSchema } from "../schemas";
+import type { faqSchema } from "@synoem/schema";
 
 export async function getFaqHelper(
   input: z.infer<typeof faqSchema>,
