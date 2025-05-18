@@ -41,7 +41,7 @@ jobs:
           service-name: "cms"
 
       - name: Build CMS
-        run: pmpm --filter @synoem/cms run build
+        run: pnpm --filter @synoem/cms run build
 
       - name: Deploy to Vercel
         run: pnpm --filter @synoem/cms run deploy
