@@ -45,8 +45,14 @@ jobs:
         with:
           service-name: "cms"
 
+      - name: Pre-generate importmap
+        run: touch "apps/cms/src/app/(payload)/admin/importMap.js"
+
+      - name: Generate importmap based on environment
+        run: pnpm --filter @synoem/cms run generate:importmap
+
       - name: Build CMS
-        run: pmpm --filter @synoem/cms run build
+        run: pnpm --filter @synoem/cms run build
 
       - name: Deploy to Vercel for preview
         run: pnpm --filter @synoem/cms run preview
