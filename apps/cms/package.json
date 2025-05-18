@@ -4,10 +4,11 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "cross-env NODE_OPTIONS=--no-deprecation dmno run -- next build",
+    "build": "dmno run -- pnpm generate:importmap && dmno run -- next build",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation dmno run -w -- next dev",
     "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
-    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation dmno run -- payload generate:importmap",
+    "pregenerate:importmap": "touch \"src/app/(payload)/admin/importMap.js\"",
+    "generate:importmap": "pnpm pregenerate:importmap && dmno run -- payload generate:importmap",
     "lint": "cross-env NODE_OPTIONS=--no-deprecation dmno run -- next lint",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "start": "cross-env NODE_OPTIONS=--no-deprecation dmno run -- next start",
