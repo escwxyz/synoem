@@ -32,7 +32,7 @@ export async function createNewsletterHelper(
 
     const result = await payload.create({
       collection: "newsletter-subscribers",
-      data: { email, ...rest },
+      data: { email, metadata: { ...rest } },
     });
 
     return {
