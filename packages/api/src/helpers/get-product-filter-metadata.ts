@@ -3,7 +3,7 @@ import type { APIResponse } from "../types/api-response";
 import { PRODUCT_FILTER_METADATA_SELECT_OBJECT } from "../types/product-filter-metadata";
 import { PRODUCT_TYPES, type ProductTypeToSlugMap, type ProductTypeId } from "@synoem/config";
 import type { BasePayload, DataFromCollectionSlug, PaginatedDocs } from "@synoem/payload/types";
-import type { productFilterMetadataSchema } from "../schemas";
+import type { productFilterMetadataSchema } from "@synoem/schema";
 
 export async function getProductFilterMetadataHelper<T extends ProductTypeId>(
   input: z.infer<typeof productFilterMetadataSchema>,

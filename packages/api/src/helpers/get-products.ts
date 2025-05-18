@@ -1,5 +1,5 @@
 import type { z } from "zod";
-import type { productFilterMetadataSchema } from "../schemas";
+import type { productFilterMetadataSchema } from "@synoem/schema";
 import type { BasePayload, DataFromCollectionSlug, PaginatedDocs } from "@synoem/payload/types";
 import type { APIResponse } from "../types/api-response";
 import { PRODUCT_TYPES, type ProductTypeId, type ProductTypeToSlugMap } from "@synoem/config";

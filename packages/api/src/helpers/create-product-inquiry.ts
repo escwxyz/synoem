@@ -1,7 +1,7 @@
 import type { z } from "zod";
 import type { BasePayload } from "@synoem/payload/types";
 import type { APIResponse } from "../types/api-response";
-import type { productInquirySchema } from "../schemas";
+import type { productInquirySchema } from "@synoem/schema";
 import { transformFileToBuffer } from "../utils";
 
 export async function createProductInquiryHelper(

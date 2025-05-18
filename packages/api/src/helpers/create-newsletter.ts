@@ -1,7 +1,7 @@
 import type { z } from "zod";
 import type { BasePayload } from "@synoem/payload/types";
 import type { APIResponse } from "../types/api-response";
-import type { newsletterSchema } from "../schemas";
+import type { newsletterSchema } from "@synoem/schema";
 
 export async function createNewsletterHelper(
   input: z.infer<typeof newsletterSchema>,

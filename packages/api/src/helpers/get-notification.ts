@@ -2,7 +2,7 @@ import type { BasePayload } from "@synoem/payload/types";
 import type { APIResponse } from "../types/api-response";
 import type { Notification } from "@synoem/payload/payload-types";
 import type { z } from "zod";
-import type { localeSchema } from "../schemas";
+import type { localeSchema } from "@synoem/schema";
 
 export async function getNotificationHelper(
   input: z.infer<typeof localeSchema>,

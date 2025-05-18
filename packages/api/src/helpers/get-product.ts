@@ -2,7 +2,7 @@ import type { z } from "zod";
 import type { APIResponse } from "../types/api-response";
 import { PRODUCT_TYPES, type ProductTypeToSlugMap, type ProductTypeId } from "@synoem/config";
 import type { BasePayload, DataFromCollectionSlug } from "@synoem/payload/types";
-import type { productSchema } from "../schemas";
+import type { productSchema } from "@synoem/schema";
 
 export async function getProductHelper<T extends ProductTypeId>(
   input: z.infer<typeof productSchema>,

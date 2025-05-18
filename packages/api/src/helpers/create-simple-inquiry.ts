@@ -1,7 +1,7 @@
 import type { BasePayload } from "@synoem/payload/types";
 import type { z } from "zod";
 import type { APIResponse } from "../types/api-response";
-import type { simpleInquirySchema } from "../schemas";
+import type { simpleInquirySchema } from "@synoem/schema";
 
 export async function createSimpleInquiryHelper(
   input: z.infer<typeof simpleInquirySchema>,
