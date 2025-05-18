@@ -1,0 +1,62 @@
+---
+// TODO: footer Cumulative Layout Shift (CLS) is poor
+
+import { SocialLinks, LanguageSwitcher } from "~/components/astro";
+import { NewsletterInput } from "~/components/react";
+import { getLocalizedPathname, useTranslations } from "~/i18n/utils";
+// import { apiClient } from "~/lib/api";
+import type { Locale } from "@synoem/config";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale }: Props = Astro.props;
+
+// const footerData = await apiClient.globals.getFooter({
+//   locale,
+//   slug: "footer",
+// });
+
+// const { copyright, links, companySection, columns } = footerData;
+
+// const companyDescription =
+//   companySection?.useCompanyDescription &&
+//   companySection.companyDescription === "shortDescription"
+//     ? companyInfoData?.shortDescription
+//     : companyInfoData?.longDescription;
+
+// const showSocialLinks = companySection?.showSocialLinks ?? true;
+
+// const hasSocialLinks =
+//   socialLinks && socialLinks?.links && socialLinks?.links?.length > 0;
+
+const { t } = useTranslations(locale);
+---
+
+<footer class="mt-auto border-t border-border z-50 relative">
+  <div class="relative w-full flex flex-col">
+    <div class="container flex flex-col justify-between p-12 gap-8 md:flex-row">
+      <div class="md:flex-1/4 flex flex-col gap-4">
+        <a href={getLocalizedPathname("/", locale)}>LOGO</a>
+        <div class="mt-6 flex space-x-4">
+          <SocialLinks locale={locale} />
+        </div>
+        <NewsletterInput locale={locale} client:visible />
+      </div>
+    </div>
+    <div
+      class="flex items-center flex-col md:flex-row justify-between p-6 border-t border-border"
+    >
+      <div>
+        <div class="text-sm">
+          {`© ${new Date().getFullYear()} SynOem. ${t("Footer.copyright")}`}
+        </div>
+      </div>
+
+      <div class="hidden md:block">
+        <LanguageSwitcher locale={locale} />
+      </div>
+    </div>
+  </div>
+</footer>

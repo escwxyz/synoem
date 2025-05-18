@@ -1,0 +1,89 @@
+---
+import { useTranslations } from "~/i18n/utils";
+
+import { locales, type Locale } from "@synoem/config";
+import { cn } from "@synoem/ui/lib/utils";
+
+interface Props {
+  locale: Locale; // current locale
+  onLocaleChangeEvent?: string; // optional event to dispatch when locale changes
+}
+
+const { locale: currentLocale, onLocaleChangeEvent } = Astro.props;
+
+const { t } = useTranslations(currentLocale);
+---
+
+<div
+  class="inline-flex items-center rounded-full border p-1 shadow-sm relative"
+  role="radiogroup"
+  aria-label="Select language"
+>
+  <div
+    class="relative flex h-8 min-w-[120px] rounded-full bg-secondary p-[3px] dark:bg-white/10"
+  >
+    {
+      locales.map((locale) => {
+        return (
+          <button
+            id={`language-switcher-${locale}`}
+            data-on-locale-change-event={onLocaleChangeEvent}
+            type="button"
+            class={cn(
+              "language-switcher-button",
+              "relative z-10 flex flex-1 items-center justify-center rounded-full px-3 text-sm font-medium text-muted-foreground transition-colors",
+              currentLocale === locale && "text-primary-foreground",
+            )}
+            aria-current={currentLocale === locale ? "true" : "false"}
+            disabled={currentLocale === locale}
+          >
+            {t(`LanguageSwitch.${locale}`)}
+          </button>
+        );
+      })
+    }
+    <div
+      id="language-indicator"
+      class="absolute left-[3px] top-[3px] bottom-[3px] rounded-full bg-primary transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
+      style={{
+        width: `calc((100% - 6px) / ${locales.length})`,
+        transform: `translateX(${locales.indexOf(currentLocale) * 100}%)`,
+      }}
+    >
+    </div>
+  </div>
+</div>
+
+<script>
+  import type { Locale } from "@synoem/config";
+  import { getLocalizedPathname } from "~/i18n/utils";
+
+  const pathname = window.location.pathname;
+
+  const languageSwitcherButtons: NodeListOf<HTMLButtonElement> =
+    document.querySelectorAll(".language-switcher-button");
+
+  languageSwitcherButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const locale = button.id.split("-")[2] as Locale;
+      document.cookie = `locale=${locale}; path=/; max-age=31536000`;
+
+      const targetUrl = getLocalizedPathname(pathname, locale);
+
+      const onLocaleChangeEvent = button.getAttribute(
+        "data-on-locale-change-event",
+      );
+
+      if (onLocaleChangeEvent) {
+        const event = new CustomEvent(onLocaleChangeEvent, {
+          detail: { locale },
+        });
+        document.dispatchEvent(event);
+      }
+
+      setTimeout(() => {
+        window.location.href = targetUrl;
+      }, 100);
+    });
+  });
+</script>
