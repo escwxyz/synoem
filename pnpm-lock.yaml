@@ -242,6 +242,9 @@ importers:
       '@nanostores/react':
         specifier: ^1.0.0
         version: 1.0.0(nanostores@1.0.1)(react@19.1.0)
+      '@netlify/functions':
+        specifier: ^3.1.8
+        version: 3.1.8(rollup@4.40.2)
       '@orpc/client':
         specifier: ^1.2.0
         version: 1.2.0
