@@ -13,7 +13,7 @@ import {
   getLocalizedString,
 } from "@synoem/config";
 
-import type { ProductVariants } from "@synoem/payload/payload-types";
+import type { ProductVariants } from "@synoem/types";
 import { reduceFieldsToValues } from "payload/shared";
 
 export const BuildVariantsButton = ({
