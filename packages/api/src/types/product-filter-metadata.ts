@@ -3,7 +3,7 @@ import type {
   PumpController,
   SolarPanelsSelect,
   PumpControllersSelect,
-} from "@synoem/payload/payload-types";
+} from "@synoem/types";
 import type { ProductTypeId } from "@synoem/config";
 
 export interface SolarPanelFilterMetadata {

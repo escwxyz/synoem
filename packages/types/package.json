@@ -1,6 +1,7 @@
 {
-  "name": "@synoem/api",
+  "name": "@synoem/types",
   "version": "1.0.0",
+  "description": "",
   "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
@@ -13,14 +14,8 @@
   },
   "keywords": [],
   "author": "",
-  "license": "MIT",
-  "dependencies": {
-    "@orpc/server": "^1.2.0",
-    "@synoem/config": "workspace:*",
-    "@synoem/payload": "workspace:*",
-    "@synoem/schema": "workspace:*",
-    "@synoem/types": "workspace:*"
-  },
+  "license": "ISC",
+  "packageManager": "pnpm@10.4.1",
   "devDependencies": {
     "@synoem/typescript-config": "workspace:*",
     "typescript": "catalog:"

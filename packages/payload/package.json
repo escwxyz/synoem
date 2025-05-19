@@ -7,7 +7,6 @@
     "./blocks/*": "./src/blocks/*",
     "./collections/*": "./src/collections/*/index.ts",
     "./globals/*": "./src/globals/*.ts",
-    "./payload-types": "./src/payload-types.ts",
     "./payload-config": "./src/payload.config.ts",
     "./types": "./src/types.ts",
     "./utils": "./src/utils/index.ts"
