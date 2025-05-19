@@ -1,6 +1,6 @@
 "use client";
 
-import type { Footer } from "@synoem/payload/payload-types";
+import type { Footer } from "@synoem/types";
 // biome-ignore lint/style/useImportType: <explanation>
 import React from "react";
 import { type RowLabelProps, useRowLabel } from "@payloadcms/ui";

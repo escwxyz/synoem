@@ -3,7 +3,7 @@ import { type Locale, locales } from "@synoem/config";
 import { orpc } from "../orpc";
 import type { APIResponse } from "../types/api-response";
 import type { GlobalSlug, DataFromGlobalSlug, BasePayload } from "@synoem/payload/types";
-import type { Footer, Header, SocialLink } from "@synoem/payload/payload-types";
+import type { Footer, Header, SocialLink } from "@synoem/types";
 
 function createGlobalSchema<T extends GlobalSlug>(slug: T) {
   return z.object({

@@ -1,0 +1,23 @@
+---
+import { cn } from "@synoem/ui/lib/utils";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div"> {
+  className?: string;
+}
+const { style, className, ...props } = Astro.props;
+const SIDEBAR_WIDTH = "16rem";
+const SIDEBAR_WIDTH_ICON = "3rem";
+---
+
+<div
+  data-slot="sidebar-wrapper"
+  style={`--sidebar-width: ${SIDEBAR_WIDTH}; --sidebar-width-icon: ${SIDEBAR_WIDTH_ICON}; --spacing(4): 1rem;`}
+  class={cn(
+    "group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full",
+    className,
+  )}
+  {...props}
+>
+  <slot />
+</div>

@@ -13,7 +13,7 @@ const props: Props = Astro.props;
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="generator" content={Astro.generator} />
   <SEO {...props} />
-  <ClientRouter />
+  {DMNO_CONFIG.APP_ENV === "production" && <ClientRouter />}
 </head>
 <script is:inline>
   (function () {
@@ -22,7 +22,9 @@ const props: Props = Astro.props;
       "(prefers-color-scheme: dark)",
     ).matches;
 
-    if (theme === "dark" || (!theme && prefersDark)) {
+    if (theme === "system" || !theme) {
+      document.documentElement.classList.toggle("dark", prefersDark);
+    } else if (theme === "dark") {
       document.documentElement.classList.add("dark");
     }
   })();

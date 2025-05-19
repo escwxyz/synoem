@@ -1,1 +1,1 @@
-export * from "@synoem/payload/payload-types";
+export * from "@synoem/types";

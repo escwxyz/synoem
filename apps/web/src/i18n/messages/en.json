@@ -155,5 +155,8 @@
   "LanguageSwitch": {
     "en": "English",
     "de": "German"
+  },
+  "Footer": {
+    "copyright": "All Rights Reserved"
   }
 }

@@ -154,5 +154,8 @@
   "LanguageSwitch": {
     "en": "Englisch",
     "de": "Deutsch"
+  },
+  "Footer": {
+    "copyright": "Alle Rechte vorbehalten"
   }
 }

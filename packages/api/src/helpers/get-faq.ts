@@ -1,6 +1,6 @@
 import type { z } from "zod";
 import type { BasePayload } from "@synoem/payload/types";
-import type { Faq } from "@synoem/payload/payload-types";
+import type { Faq } from "@synoem/types";
 import type { APIResponse } from "../types/api-response";
 import type { faqSchema } from "@synoem/schema";
 

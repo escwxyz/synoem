@@ -1,0 +1,10 @@
+{
+  "extends": "@synoem/typescript-config/base.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "moduleResolution": "bundler",
+    "module": "ESNext"
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules", "dist"]
+}

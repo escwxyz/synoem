@@ -33,6 +33,7 @@
     "@synoem/config": "workspace:*",
     "@synoem/payload": "workspace:*",
     "@synoem/transactional": "workspace:*",
+    "@synoem/types": "workspace:*",
     "@synoem/ui": "workspace:*",
     "cross-env": "^7.0.3",
     "dmno": "^0.0.39",

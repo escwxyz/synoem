@@ -1,6 +1,6 @@
 import { orpc } from "../orpc";
 import type { APIResponse } from "../types/api-response";
-import type { Notification } from "@synoem/payload/payload-types";
+import type { Notification } from "@synoem/types";
 import type { ProductTypeId } from "@synoem/config";
 import type { BasePayload } from "@synoem/payload/types";
 import {

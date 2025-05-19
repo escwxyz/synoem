@@ -4,7 +4,7 @@ import type {
   PumpController,
   SolarPanelsSelect,
   PumpControllersSelect,
-} from "@synoem/payload/payload-types";
+} from "@synoem/types";
 
 export const PRODUCT_BASE_FIELDS = [] as const satisfies readonly (
   | keyof SolarPanel

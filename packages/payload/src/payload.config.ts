@@ -121,7 +121,7 @@ export default buildConfig({
   cors: DMNO_CONFIG.APP_ENV === "production" ? [DMNO_PUBLIC_CONFIG.ASTRO_PUBLIC_SITE_URL] : "*",
   secret: DMNO_CONFIG.PAYLOAD_SECRET,
   typescript: {
-    outputFile: path.resolve(dirname, "payload-types.ts"),
+    outputFile: path.resolve(dirname, "../../types/src/index.ts"),
   },
   graphQL: {
     disable: true,
