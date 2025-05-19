@@ -2,7 +2,7 @@
 import "@synoem/ui/web.css";
 import "~/styles/starwind.css";
 import { getLocaleFromUrl } from "~/i18n/utils";
-import { Footer, Head } from "~/layouts";
+import { Footer, Head, Header } from "~/layouts";
 import { type Props as SEOProps } from "astro-seo";
 import { SidebarWrapper, SidebarInset } from "~/components/astro";
 import { CookieConsent } from "~/components/react";
@@ -20,7 +20,7 @@ const props: Props = Astro.props;
   <body
     class="flex min-h-screen flex-col antialiased [--header-height:calc(theme(spacing.14))]"
   >
-    <!-- <Header locale={locale} /> -->
+    <Header locale={locale} />
     <SidebarWrapper class="flex flex-col">
       <slot name="sidebar" />
       <SidebarInset
@@ -42,48 +42,33 @@ const props: Props = Astro.props;
     height: 100%;
   }
 </style>
-<script is:inline>
-  function setDarkMode(document) {
-    const getThemePreference = () => {
-      if (
-        typeof localStorage !== "undefined" &&
-        localStorage.getItem("theme")
-      ) {
-        return localStorage.getItem("theme");
-      }
-      return window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light";
-    };
-    const isDark = getThemePreference() === "dark";
-    document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+<script>
+  import { themeAtom } from "~/atoms";
 
-    if (document === window.document && typeof localStorage !== "undefined") {
-      if (window._themeObserver) {
-        window._themeObserver.disconnect();
-      }
+  const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
-      const observer = new MutationObserver(() => {
-        const isDark = document.documentElement.classList.contains("dark");
-        localStorage.setItem("theme", isDark ? "dark" : "light");
-      });
-
-      observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ["class"],
-      });
-
-      window._themeObserver = observer;
+  const handleSystemThemeChange = (e: MediaQueryListEvent) => {
+    if (themeAtom.get() === "system") {
+      document.documentElement.classList.toggle("dark", e.matches);
     }
-  }
+  };
 
-  if (!window._themeObserver) {
-    setDarkMode(document);
-  }
-
-  document.addEventListener("astro:before-swap", (ev) => {
-    setDarkMode(ev.newDocument);
+  themeAtom.listen((theme) => {
+    switch (theme) {
+      case "dark":
+        document.documentElement.classList.add("dark");
+        break;
+      case "light":
+        document.documentElement.classList.remove("dark");
+        break;
+      case "system":
+        const isDark = mediaQuery.matches;
+        document.documentElement.classList.toggle("dark", isDark);
+        break;
+    }
   });
+
+  mediaQuery.addEventListener("change", handleSystemThemeChange);
 </script>
 <script>
   import { sidebarOpenAtom } from "~/atoms/sidebar";

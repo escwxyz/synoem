@@ -1,0 +1,94 @@
+---
+// import {
+//   Navigation,
+//   InquiryButton,
+//   NotificationBar,
+//   ThemeSwitch,
+// } from "~/components/react";
+// import { apiClient } from "~/lib/api";
+import type { Locale } from "@synoem/config";
+
+interface Props {
+  locale: Locale;
+}
+
+// const headerData = await apiClient.globals.getHeader({
+//   slug: "header",
+//   locale,
+// });
+
+// const header = headerData.data;
+
+// const items = header?.items;
+
+// const headerData = await payload.findGlobal({
+//   slug: "header",
+//   locale,
+// });
+
+// const { items } = headerData;
+
+// const notificationData = await payload.find({
+//   collection: "notifications",
+//   where: {
+//     state: {
+//       equals: "active",
+//     },
+//   },
+//   limit: 1,
+//   locale,
+// });
+
+// const hasNotification =
+//   notificationData.docs.length > 0 &&
+//   notificationData.docs[0].state === "active";
+
+// const hasNavigation = items && items.length > 0;
+
+const { locale } = Astro.props;
+---
+
+<header
+  id="site-header"
+  class="sticky top-0 z-50 flex w-full flex-col border-b border-border bg-background/50 backdrop-blur-xl max-h-[68px] transition-all duration-500"
+>
+  <!-- {
+    headerData.status === "error" && (
+      <div class="flex justify-between items-center p-4">
+        <p>Error loading header</p>
+      </div>
+    )
+  } -->
+
+  <!-- {
+  headerData.status === "success" && header && (
+    
+  )
+} -->
+  <!-- {
+    hasNotification && (
+      <NotificationBar notification={notificationData.docs[0]} client:load />
+    )
+  } -->
+  <div class="flex justify-between items-center p-4">
+    <div class="flex w-full md:flex-1/2 justify-between gap-4 items-center">
+      <a href={`/${locale}`}> LOGO </a>
+      <!-- {
+        hasNavigation && (
+          <Navigation
+            locale={locale}
+            items={items}
+            pathname={pathname}
+            client:only="react"
+          />
+        )
+      } -->
+    </div>
+
+    {/** Only show on desktop */}
+    <div class="hidden md:flex flex-1/2 justify-end items-center gap-4">
+      <!-- <ThemeSwitch client:only="react" />
+      <InquiryButton locale={locale} client:load /> -->
+    </div>
+  </div>
+</header>
