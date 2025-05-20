@@ -24,9 +24,9 @@ export default defineDmnoService({
       // CLOUDFLARE_API_TOKEN: { value: ProdVault.item() },
     }),
     WEB_APP_ENV: {
-      extends: DmnoBaseTypes.enum(["development", "preview", "production"]),
+      extends: DmnoBaseTypes.enum(["development", "production"]),
       summary: "The environment of the Next.js web application",
-      value: "development",
+      value: () => process.env.WEB_APP_ENV || process.env.NODE_ENV || "development",
     },
     // Vercel
     ...pickFromSchemaObject(VercelEnvSchema, "VERCEL_ENV"),
@@ -228,10 +228,8 @@ export default defineDmnoService({
       extends: DmnoBaseTypes.string,
       summary:
         "The secret for Payload CMS's revalidate function to invalidate the cache between cms and frontend",
-
       value: switchBy("WEB_APP_ENV", {
         development: "00cee747d1a4e2cf3bacc045",
-        preview: "00cee747d1a4e2cf3bacc045",
         production: ProdVault.item(),
       }),
     },
