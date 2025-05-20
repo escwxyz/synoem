@@ -114,6 +114,7 @@ export const productDetailsTab: Tab = {
       type: "array",
       minRows: 2,
       maxRows: 6,
+      interfaceName: "ProductFeatures",
       fields: [
         {
           name: "title",

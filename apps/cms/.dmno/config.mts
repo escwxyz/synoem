@@ -6,7 +6,7 @@ EncryptedVaultDmnoPlugin.injectInstance("vault/prod");
 export default defineDmnoService({
   name: "cms",
   schema: {
-    APP_ENV: pick("root", "NEXT_APP_ENV"),
+    APP_ENV: pick("root", "CMS_APP_ENV"),
     DATABASE_URI: pick("root", "DATABASE_URI"),
     RESEND_API_KEY: pick("root", "RESEND_API_KEY"),
     RESEND_FROM_EMAIL: pick("root", "RESEND_FROM_EMAIL"),
@@ -20,6 +20,7 @@ export default defineDmnoService({
     VERCEL_TOKEN: pick("root", "VERCEL_TOKEN"),
     VERCEL_ORG_ID: pick("root", "VERCEL_ORG_ID"),
     VERCEL_PROJECT_ID: pick("root", "VERCEL_PROJECT_ID"),
-    ASTRO_PUBLIC_SITE_URL: pick("root", "ASTRO_PUBLIC_SITE_URL"),
+    WEB_SITE_URL: pick("root", "WEB_SITE_URL"),
+    WEB_SITE_REVALIDATE_SECRET: pick("root", "WEB_SITE_REVALIDATE_SECRET"),
   },
 });

@@ -6,7 +6,7 @@ EncryptedVaultDmnoPlugin.injectInstance("vault/prod");
 export default defineDmnoService({
   name: "payload-config",
   schema: {
-    APP_ENV: pick("root", "NEXT_APP_ENV"),
+    APP_ENV: pick("root", "CMS_APP_ENV"),
     DATABASE_URI: pick("root", "DATABASE_URI"),
     RESEND_API_KEY: pick("root", "RESEND_API_KEY"),
     RESEND_FROM_EMAIL: pick("root", "RESEND_FROM_EMAIL"),
@@ -17,6 +17,7 @@ export default defineDmnoService({
     S3_ACCESS_KEY_SECRET: pick("root", "S3_ACCESS_KEY_SECRET"),
     S3_REGION: pick("root", "S3_REGION"),
     PAYLOAD_SECRET: pick("root", "PAYLOAD_SECRET"),
-    ASTRO_PUBLIC_SITE_URL: pick("root", "ASTRO_PUBLIC_SITE_URL"),
+    WEB_SITE_URL: pick("root", "WEB_SITE_URL"),
+    WEB_SITE_REVALIDATE_SECRET: pick("root", "WEB_SITE_REVALIDATE_SECRET"),
   },
 });

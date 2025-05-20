@@ -4,13 +4,13 @@ env:
   DMNO_VAULT_KEY_PROD: ${{ secrets.DMNO_VAULT_KEY_PROD }}
 
 on:
-  pull_request:
+  push:
+    branches:
+      - "main"
     paths:
       - "apps/cms/**"
       - "packages/**"
       - "!apps/web/**"
-    branches:
-      - "main"
 
 jobs:
   build-and-deploy:
@@ -23,7 +23,6 @@ jobs:
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
-          version: 10
           run_install: false
 
       - name: Setup Node.js
@@ -35,17 +34,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Inject DMNO env for CMS
-        uses: dmno/dmno-gh-action@v1
-        with:
-          service-name: "cms"
+      - name: Lint
+        run:
+          pnpm lint
 
-      - name: Build CMS
-        run: pnpm --filter @synoem/cms run build
-
-      - name: Deploy to Vercel
-        run: pnpm --filter @synoem/cms run deploy
-        env:
-          VERCEL_TOKEN: ${{env.VERCEL_TOKEN}}
-          VERCEL_PROJECT_ID: ${{env.VERCEL_PROJECT_ID}}
-          VERCEL_ORG_ID: ${{env.VERCEL_ORG_ID}}
+          # TODO: add test

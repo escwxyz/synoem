@@ -19,7 +19,6 @@ export async function createProductInquiryHelper(
     userAgent,
     attachments,
     relatedProductId,
-
     ...rest
   } = input;
 

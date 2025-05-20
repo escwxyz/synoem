@@ -1,0 +1,191 @@
+{
+  "RequestQuoteButton": {
+    "requestQuote": "Anfragen",
+    "description": "Bitte füllen Sie das Formular unten aus, um eine Anfrage für das Produkt zu stellen."
+  },
+  "RelatedProducts": {
+    "title": "Vielleicht gefällt Ihnen auch diese",
+    "viewDetails": "Details anzeigen"
+  },
+  "ProductCard": {
+    "wideAmplitudeVoltage": "Breite Amplitudenspannung",
+    "maxCurrent": "Maximaler Strom",
+    "viewDetails": "Details anzeigen"
+  },
+  "CookieConsent": {
+    "title": "Wir verwenden Cookies",
+    "description": "Wir verwenden Cookies, um Ihnen die beste Erfahrung auf unserer Website zu gewährleisten. Für weitere Informationen darüber, wie wir Cookies verwenden, bitte sehen Sie unsere",
+    "privacyPolicy": "Datenschutzerklärung",
+    "accept": "Akzeptieren",
+    "decline": "Ablehnen"
+  },
+  "ProductOverview": {
+    "productDescription": "Produktbeschreibung",
+    "technicalDrawing": "Technische Zeichnung"
+  },
+  "SolarPanelSpecificationsTab": {
+    "physicalSpecifications": "Physikalische Spezifikationen",
+    "dimensions": "Abmessungen",
+    "weight": "Gewicht",
+    "cellType": "Zelltyp",
+    "cellNumber": "Zellanzahl",
+    "glass": "Glas",
+    "bifaciality": "Bifacialität",
+    "frame": "Rahmen",
+    "junctionBox": "Junction Box",
+    "connector": "Connector",
+    "environmentalConditions": "Umgebungsbedingungen",
+    "operatingTemperature": "Betriebstemperatur",
+    "snowLoad": "Schneelast",
+    "windLoad": "Windlast",
+    "electricalSpecifications": "Elektrische Spezifikationen (STC*)",
+    "standardTestConditions": "*Standard Testbedingungen: 1000 W/m², AM 1.5, 25°C",
+    "model": "Modell",
+    "maxPower": "Max Leistung",
+    "openCircuitVoltage": "Leerlaufspannung",
+    "maximumPowerPointVoltage": "Maximaler Leistungspunktspannung",
+    "shortCircuitCurrent": "Kurzschlussstrom",
+    "maximumPowerPointCurrent": "Maximaler Leistungspunktstrom",
+    "moduleEfficiency": "Modulwirkungsgrad",
+    "powerTolerance": "Leistungstoleranz",
+    "shortCircuitCurrentTemperatureCoefficient": "Kurzschlussstrom Temperaturkoeffizient",
+    "openCircuitVoltageTemperatureCoefficient": "Leerlaufspannung Temperaturkoeffizient",
+    "maximumPowerTemperatureCoefficient": "Maximalleistung Temperaturkoeffizient",
+    "noct": "NOCT",
+    "maximumSystemVoltage": "Maximale Systemspannung",
+    "maximumSeriesFuseRating": "Maximaler Serienfuses",
+    "fireRating": "Feuerwiderstand"
+  },
+  "SolarPanelWarrantyTab": {
+    "warrantyInformation": "Garantieinformationen",
+    "productWarranty": "Produktgarantie",
+    "powerWarranty": "Leistungsgarantie",
+    "outputPowerDegradation": "Ausgangsleistungsschwund",
+    "powerDegradationComparison": "Leistungsschwundvergleich",
+    "powerDegradationPrognosis": "Leistungsschwundprognose",
+    "powerDegradationDetails": "1% Schwundrate für das erste Jahr",
+    "initialYearGuarantee": "Initial Jahresgarantie",
+    "annualDegradation": "Jährliche Degradation",
+    "endYearGuarantee": "Endjahresgarantie",
+    "chart": {
+      "powerGuarantee": "Leistungsgarantie",
+      "industryStandard": "Industriestandard",
+      "xAxis": "Zeit / Jahre",
+      "yAxis": "Schwundrate [%]",
+      "year": "Jahr"
+    }
+  },
+  "ProductGallery": {
+    "back": "Zurück",
+    "backToPhotos": "Zurück zu den Fotos",
+    "3DView": "3D Ansicht",
+    "view3DModel": "3D Modell anzeigen"
+  },
+  "ProductTabs": {
+    "overview": "Übersicht",
+    "gallery": "Galerie",
+    "specifications": "Spezifikationen",
+    "warranty": "Garantie",
+    "documents": "Dokumente"
+  },
+  "SolarPanelTabs": {
+    "overview": "Übersicht",
+    "gallery": "Galerie",
+    "specifications": "Spezifikationen",
+    "warranty": "Garantie",
+    "documents": "Dokumente"
+  },
+  "PumpControllerTabs": {
+    "overview": "Übersicht",
+    "gallery": "Galerie",
+    "specifications": "Spezifikationen",
+    "documents": "Dokumente"
+  },
+  "DownloadDatasheetButton": {
+    "download": "Datenblatt herunterladen"
+  },
+  "ProductFilters": {
+    "cellType": "Zelltyp",
+    "powerRange": "Leistungsbereich",
+    "efficiencyRange": "Wirkungsgradbereich",
+    "type": "Typ",
+    "voltageRange": "Spannungsbereich"
+  },
+  "ProductFiltersBar": {
+    "filters": "Filter",
+    "description": "Filter Produkte nach Spezifikationen und mehr.",
+    "reset": "Zurücksetzen"
+  },
+  "ModelLoadingIndicator": {
+    "loading": "3D Modell wird geladen..."
+  },
+  "ProductInquiryForm": {
+    "attachments": {
+      "label": "Anhänge (Optional, max 3 Dateien)",
+      "description": "Hochladen Sie relevante Dokumente (PDF, Word, Excel) oder Bilder",
+      "uploader": {
+        "label": "Drag & drop Dateien hier oder",
+        "description": "Dateien durchsuchen",
+        "supportedFileTypes": "PDF, Word, Excel, JPG, PNG (max 3 Dateien, 10MB insgesamt)"
+      }
+    }
+  },
+  "NewsletterInput": {
+    "title": "Abonniere unseren Newsletter",
+    "subscribe": "Abonnieren",
+    "subscribed": "Abonniert",
+    "subscribing": "Abonnieren...",
+    "failed": "Fehlgeschlagen",
+    "emailPlaceholder": "example@email.com",
+    "email": {
+      "invalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein"
+    },
+    "action": {
+      "newsletter": {
+        "alreadySubscribed": "Sie sind bereits abonniert.",
+        "error": "Ein Fehler ist aufgetreten, während das Abonnieren des Newsletters."
+      }
+    }
+  },
+  "LanguageSwitcher": {
+    "currentLanguage": "Aktuelle Sprache ist {language}",
+    "en": "Englisch",
+    "de": "Deutsch"
+  },
+  "Testimonials": {
+    "title": "Was unsere Kunden sagen",
+    "description": "Hören Sie von Organisationen und Einzelpersonen, die ihre Energieverwendung mit unseren Solarlösungen revolutioniert haben."
+  },
+  "InquiryButton": {
+    "label": "Anfragen"
+  },
+  "FileUploader": {
+    "uploadedFiles": "Hochgeladene Dateien ({count}/{max})"
+  },
+  "ProductPagination": {
+    "prev": "Vor",
+    "next": "Nächste"
+  },
+  "ProductCategoryHero": {
+    "solar-panel": {
+      "title": "Solarmodule",
+      "description": "Solarmodule sind ein Typ von Photovoltaik-Modulen, die Sonnenlicht in elektrische Energie umwandeln. Sie bestehen aus Photovoltaik-Zellen, die aus Silizium und anderen Materialien hergestellt werden."
+    },
+    "pump-controller": {
+      "title": "Pumpensteuerung",
+      "description": "Pumpensteuerungen sind Geräte, die die Betriebspumpen steuern. Sie werden verwendet, um den Fluss von Wasser oder anderen Medien in einem System zu regulieren."
+    }
+  },
+  "ProductGallerySwitch": {
+    "back": "Zurück",
+    "backToPhotos": "Zurück zu den Fotos",
+    "3DView": "3D Ansicht",
+    "view3DModel": "3D Modell anzeigen"
+  },
+  "ProductBreadcrumb": {
+    "home": "Startseite",
+    "products": "Produkte",
+    "solar-panel": "Solarmodul",
+    "pump-controller": "Pumpensteuerung"
+  }
+}

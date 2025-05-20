@@ -74,6 +74,7 @@ const menuItemFields: Field[] = [
           {
             name: "items",
             type: "array",
+            interfaceName: "LinkItems",
             admin: {
               components: {
                 RowLabel: "@synoem/cms/components/row-labels#LinkItemLabel",
@@ -148,6 +149,7 @@ export const Header: GlobalConfig = {
       name: "items",
       type: "array",
       label: "Menu Items",
+      interfaceName: "MenuItems",
       admin: {
         description: "Configure navigation menu items",
         components: {

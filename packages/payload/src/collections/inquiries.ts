@@ -138,7 +138,6 @@ export const Inquiries: CollectionConfig<"inquiries"> = {
       type: "collapsible",
       label: "Company Information",
       admin: {
-        description: "Company information",
         readOnly: true,
         initCollapsed: true,
       },
@@ -187,15 +186,18 @@ export const Inquiries: CollectionConfig<"inquiries"> = {
       },
       fields: [
         {
-          name: "productCategory",
+          name: "productType",
           type: "select",
-          label: "Product Category",
+          label: "Product Type",
           options: getProductTypeOptions(),
+          admin: {
+            readOnly: true,
+          },
         },
         {
           name: "productName",
           type: "text",
-          label: "Product Name",
+          label: "Product Model Name",
           admin: {
             readOnly: true,
           },
