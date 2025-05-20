@@ -178,9 +178,6 @@ importers:
       '@synoem/ui':
         specifier: workspace:*
         version: link:../../packages/ui
-      cross-env:
-        specifier: ^7.0.3
-        version: 7.0.3
       dmno:
         specifier: ^0.0.39
         version: 0.0.39(@types/node@22.15.18)(lightningcss@1.30.1)(sass@1.77.4)(terser@5.16.9)
