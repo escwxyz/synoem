@@ -36,7 +36,7 @@ jobs:
         run: pnpm install
 
       - name: Inject DMNO env for CMS
-        uses: dmno/dmno-gh-action@v1
+        uses: dmno-dev/dmno-gh-action@v1.0.0
         with:
           service-name: "cms"
 
