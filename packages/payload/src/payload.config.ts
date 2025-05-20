@@ -118,7 +118,7 @@ export default buildConfig({
     locales: mutableLocales,
     fallback: true,
   },
-  cors: DMNO_CONFIG.APP_ENV === "production" ? [DMNO_PUBLIC_CONFIG.ASTRO_PUBLIC_SITE_URL] : "*",
+  cors: DMNO_CONFIG.APP_ENV === "production" ? [DMNO_PUBLIC_CONFIG.WEB_SITE_URL] : "*",
   secret: DMNO_CONFIG.PAYLOAD_SECRET,
   typescript: {
     outputFile: path.resolve(dirname, "../../types/src/index.ts"),

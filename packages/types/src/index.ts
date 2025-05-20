@@ -8,6 +8,18 @@
 
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductFeatures".
+ */
+export type ProductFeatures =
+  | {
+      title: string;
+      description: string;
+      iconName?: string | null;
+      id?: string | null;
+    }[]
+  | null;
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ProductVariants".
  */
 export type ProductVariants = {
@@ -37,6 +49,61 @@ export type SolarPanelPowerPoints =
       imp: number;
       voc: number;
       isc: number;
+      id?: string | null;
+    }[]
+  | null;
+/**
+ * Configure navigation menu items
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MenuItems".
+ */
+export type MenuItems =
+  | {
+      text: string;
+      type: 'section' | 'link';
+      link?: LinkType;
+      /**
+       * Add sections to create a dropdown or mega menu
+       */
+      sections?:
+        | {
+            type?: ('links' | 'banner') | null;
+            linksSection?: {
+              title?: string | null;
+              items?: LinkItems;
+              isExtended?: boolean | null;
+            };
+            banner?: {
+              title: string;
+              desc?: string | null;
+              media?:
+                | ({
+                    relationTo: 'images';
+                    value: string | Image;
+                  } | null)
+                | ({
+                    relationTo: 'videos';
+                    value: string | Video;
+                  } | null);
+              link?: LinkType;
+            };
+            id?: string | null;
+          }[]
+        | null;
+      id?: string | null;
+    }[]
+  | null;
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LinkItems".
+ */
+export type LinkItems =
+  | {
+      icon?: string | null;
+      title: string;
+      desc?: string | null;
+      link?: LinkType;
       id?: string | null;
     }[]
   | null;
@@ -494,14 +561,7 @@ export interface SolarPanel {
     };
     [k: string]: unknown;
   };
-  features?:
-    | {
-        title: string;
-        description: string;
-        iconName?: string | null;
-        id?: string | null;
-      }[]
-    | null;
+  features?: ProductFeatures;
   /**
    * Upload images for the product
    */
@@ -929,7 +989,7 @@ export interface Inquiry {
     | null;
   website?: string | null;
   employees?: ('1-10' | '11-50' | '51-200' | '201-500' | '501-1000' | '1000+') | null;
-  productCategory?: ('solar-panel' | 'pump-controller') | null;
+  productType?: ('solar-panel' | 'pump-controller') | null;
   productName?: string | null;
   sku?: string | null;
   qty?: {
@@ -1262,14 +1322,7 @@ export interface PumpController {
     };
     [k: string]: unknown;
   };
-  features?:
-    | {
-        title: string;
-        description: string;
-        iconName?: string | null;
-        id?: string | null;
-      }[]
-    | null;
+  features?: ProductFeatures;
   /**
    * Upload images for the product
    */
@@ -2368,7 +2421,7 @@ export interface InquiriesSelect<T extends boolean = true> {
   country?: T;
   website?: T;
   employees?: T;
-  productCategory?: T;
+  productType?: T;
   productName?: T;
   sku?: T;
   qty?:
@@ -2702,14 +2755,7 @@ export interface SolarPanelsSelect<T extends boolean = true> {
       };
   modelName?: T;
   description?: T;
-  features?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        iconName?: T;
-        id?: T;
-      };
+  features?: T | ProductFeaturesSelect<T>;
   gallery?: T;
   dimensions?:
     | T
@@ -2817,6 +2863,16 @@ export interface SolarPanelsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductFeatures_select".
+ */
+export interface ProductFeaturesSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  iconName?: T;
+  id?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "SolarPanelPowerPoints_select".
  */
 export interface SolarPanelPowerPointsSelect<T extends boolean = true> {
@@ -2869,14 +2925,7 @@ export interface PumpControllersSelect<T extends boolean = true> {
   category?: T;
   modelName?: T;
   description?: T;
-  features?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        iconName?: T;
-        id?: T;
-      };
+  features?: T | ProductFeaturesSelect<T>;
   gallery?: T;
   wideAmplitudeVoltage?:
     | T
@@ -3160,53 +3209,7 @@ export interface SocialLink {
  */
 export interface Header {
   id: string;
-  /**
-   * Configure navigation menu items
-   */
-  items?:
-    | {
-        text: string;
-        type: 'section' | 'link';
-        link?: LinkType;
-        /**
-         * Add sections to create a dropdown or mega menu
-         */
-        sections?:
-          | {
-              type?: ('links' | 'banner') | null;
-              linksSection?: {
-                title?: string | null;
-                items?:
-                  | {
-                      icon?: string | null;
-                      title: string;
-                      desc?: string | null;
-                      link?: LinkType;
-                      id?: string | null;
-                    }[]
-                  | null;
-                isExtended?: boolean | null;
-              };
-              banner?: {
-                title: string;
-                desc?: string | null;
-                media?:
-                  | ({
-                      relationTo: 'images';
-                      value: string | Image;
-                    } | null)
-                  | ({
-                      relationTo: 'videos';
-                      value: string | Video;
-                    } | null);
-                link?: LinkType;
-              };
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-      }[]
-    | null;
+  items?: MenuItems;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -3314,46 +3317,52 @@ export interface SocialLinksSelect<T extends boolean = true> {
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
-  items?:
-    | T
-    | {
-        text?: T;
-        type?: T;
-        link?: T | LinkTypeSelect<T>;
-        sections?:
-          | T
-          | {
-              type?: T;
-              linksSection?:
-                | T
-                | {
-                    title?: T;
-                    items?:
-                      | T
-                      | {
-                          icon?: T;
-                          title?: T;
-                          desc?: T;
-                          link?: T | LinkTypeSelect<T>;
-                          id?: T;
-                        };
-                    isExtended?: T;
-                  };
-              banner?:
-                | T
-                | {
-                    title?: T;
-                    desc?: T;
-                    media?: T;
-                    link?: T | LinkTypeSelect<T>;
-                  };
-              id?: T;
-            };
-        id?: T;
-      };
+  items?: T | MenuItemsSelect<T>;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MenuItems_select".
+ */
+export interface MenuItemsSelect<T extends boolean = true> {
+  text?: T;
+  type?: T;
+  link?: T | LinkTypeSelect<T>;
+  sections?:
+    | T
+    | {
+        type?: T;
+        linksSection?:
+          | T
+          | {
+              title?: T;
+              items?: T | LinkItemsSelect<T>;
+              isExtended?: T;
+            };
+        banner?:
+          | T
+          | {
+              title?: T;
+              desc?: T;
+              media?: T;
+              link?: T | LinkTypeSelect<T>;
+            };
+        id?: T;
+      };
+  id?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LinkItems_select".
+ */
+export interface LinkItemsSelect<T extends boolean = true> {
+  icon?: T;
+  title?: T;
+  desc?: T;
+  link?: T | LinkTypeSelect<T>;
+  id?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
