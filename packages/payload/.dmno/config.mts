@@ -6,7 +6,7 @@ EncryptedVaultDmnoPlugin.injectInstance("vault/prod");
 export default defineDmnoService({
   name: "payload-config",
   schema: {
-    APP_ENV: pick("root", "CMS_APP_ENV"),
+    CMS_APP_ENV: pick("root", "CMS_APP_ENV"),
     DATABASE_URI: pick("root", "DATABASE_URI"),
     RESEND_API_KEY: pick("root", "RESEND_API_KEY"),
     RESEND_FROM_EMAIL: pick("root", "RESEND_FROM_EMAIL"),

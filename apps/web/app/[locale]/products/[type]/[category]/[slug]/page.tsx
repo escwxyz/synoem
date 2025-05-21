@@ -10,6 +10,7 @@ export const revalidate = 259200; // 3 days
 export const dynamicParams = true;
 
 export const generateStaticParams = async () => {
+  console.log("Fetching product params from:", DMNO_PUBLIC_CONFIG.CMS_API_URL);
   const paths = await apiClient.paths.generateProductParams();
 
   return paths.map((p) => ({

@@ -32,6 +32,7 @@ export default defineDmnoService({
     ...pickFromSchemaObject(VercelEnvSchema, "VERCEL_ENV"),
     CMS_APP_ENV: {
       summary: "The environment of the Next.js cms application",
+      extends: DmnoBaseTypes.enum(["development", "production", "preview"]),
       value: () => {
         if (DMNO_CONFIG.VERCEL_ENV === "production") return "production";
         if (DMNO_CONFIG.VERCEL_ENV === "preview") return "preview";
@@ -202,6 +203,7 @@ export default defineDmnoService({
       extends: DmnoBaseTypes.url,
       value: switchBy("CMS_APP_ENV", {
         development: "http://localhost:3000",
+        preview: ProdVault.item(),
         production: ProdVault.item(),
       }),
     },
@@ -211,6 +213,7 @@ export default defineDmnoService({
       summary: "The API URL exposed by the Next.js application",
       value: switchBy("CMS_APP_ENV", {
         development: "http://localhost:3000/rpc",
+        preview: ProdVault.item(),
         production: ProdVault.item(),
       }),
     },

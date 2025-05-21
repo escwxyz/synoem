@@ -1,7 +1,7 @@
 import { s3Storage } from "@payloadcms/storage-s3";
 
 export const storage = s3Storage({
-  enabled: DMNO_CONFIG.APP_ENV === "production" || DMNO_CONFIG.APP_ENV === "preview",
+  enabled: DMNO_CONFIG.CMS_APP_ENV === "production" || DMNO_CONFIG.CMS_APP_ENV === "preview",
   collections: {
     images: {
       prefix: "images",

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "dmno run -w -- next dev --port 3001",
-    "build": "dmno run -- next build",
+    "build": "dmno run -- opennextjs-cloudflare build",
     "start": "dmno run -- next start",
     "lint": "dmno run -- next lint",
     "deploy": "dmno run -- opennextjs-cloudflare build && dmno run -- opennextjs-cloudflare deploy",
