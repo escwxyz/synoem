@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@synoem/ui/components/button";
 import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
-import { Image } from "@unpic/react/nextjs";
+import Image from "next/image";
 
 import { getUrl } from "~/utils/get-url";
 import { useTranslations } from "next-intl";
@@ -82,7 +82,7 @@ export const MobileTestimonials = ({
                         width={500}
                         height={500}
                         alt={testimonial.name}
-                        className="h-full w-full rounded-3xl object-cover object-center"
+                        className="h-full w-full object-cover rounded-3xl object-center"
                       />
                     ) : (
                       <ImagePlaceholder

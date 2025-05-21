@@ -20,7 +20,7 @@ export const Footer = ({ locale }: { locale: Locale }) => {
 };
 
 export const FooterInner = async ({ locale }: { locale: Locale }) => {
-  const footerResponse = await apiClient.globals.getFooter({ locale, slug: "footer" });
+  const footerResponse = await getFooterCached(locale)();
 
   if (footerResponse.status === "error" || !footerResponse.data) {
     return <div>No footer data</div>;
@@ -54,5 +54,17 @@ export const FooterInner = async ({ locale }: { locale: Locale }) => {
         </div>
       </div>
     </div>
+  );
+};
+
+const getFooterCached = (locale: Locale) => {
+  return unstable_cache(
+    async () => {
+      return await apiClient.globals.getFooter({ locale, slug: "footer" });
+    },
+    ["footer"],
+    {
+      tags: ["footer"],
+    },
   );
 };

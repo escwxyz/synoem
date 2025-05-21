@@ -5,20 +5,48 @@ import type { NextConfig } from "next";
 
 const withNextIntl = createNextIntlPlugin();
 
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+});
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   // redirects,
-  transpilePackages: ["three"],
+  // transpilePackages: ["three"],
+  // TODO: https://nextjs.org/docs/app/api-reference/config/next-config-js/serverExternalPackages
+  serverExternalPackages: ["@prisma/client", "mongodb", "mongoose"],
   experimental: {
     serverActions: {
       bodySizeLimit: "10mb",
     },
+    optimizePackageImports: ["three", "recharts"],
+    serverComponentsHmrCache: true,
+
     // viewTransition: true,
     // dynamicIO: true,
   },
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
+  images: {
+    minimumCacheTTL: 2678400,
+    formats: ["image/webp"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+      {
+        protocol: "http",
+        hostname: "localhost",
+      },
+    ],
+  },
 };
 
-export default dmnoNextConfigPlugin()(withNextIntl(nextConfig));
+export default dmnoNextConfigPlugin()(withNextIntl(withBundleAnalyzer(nextConfig)));
 
 // added by create cloudflare to enable calling `getCloudflareContext()` in `next dev`
 import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";

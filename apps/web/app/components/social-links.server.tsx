@@ -17,10 +17,7 @@ export const SocialLinks = async ({ size = 24, locale }: Props) => {
 };
 
 const SocialLinksInner = async ({ size = 24, locale }: Props) => {
-  const socialLinksData = await apiClient.globals.getSocialLinks({
-    locale,
-    slug: "social-links",
-  });
+  const socialLinksData = await getSocialLinksCached(locale)();
 
   if (socialLinksData.status === "error" || !socialLinksData.data) {
     return (
@@ -72,5 +69,17 @@ const SocialLinksSkeleton = () => {
     <div>
       <p>Loading social links</p>
     </div>
+  );
+};
+
+const getSocialLinksCached = (locale: Locale) => {
+  return unstable_cache(
+    async () => {
+      return await apiClient.globals.getSocialLinks({ locale, slug: "social-links" });
+    },
+    ["social-links"],
+    {
+      tags: ["social-links"],
+    },
   );
 };

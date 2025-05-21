@@ -3,14 +3,6 @@
 import type { SolarPanel } from "@synoem/types";
 import { ShieldCheck, Zap } from "lucide-react";
 import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  type ChartConfig,
-} from "@synoem/ui/components/chart";
-import { AreaChart, CartesianGrid, XAxis, Area, YAxis, type Tooltip } from "recharts";
-import {
   Card,
   CardContent,
   CardDescription,
@@ -20,7 +12,19 @@ import {
 } from "@synoem/ui/components/card";
 import { RichText } from "~/components/rich-text.client";
 import { NumberTicker } from "@synoem/ui/components/number-ticker";
+
 import { useTranslations } from "next-intl";
+
+import dynamic from "next/dynamic";
+
+const SolarPanelPowerChart = dynamic(
+  () =>
+    import("~/components/solar-panel-power-chart.client").then((mod) => mod.SolarPanelPowerChart),
+  {
+    ssr: false,
+    loading: () => <div>Loading...</div>,
+  },
+);
 
 interface Props {
   solarPanel: NonNullable<Pick<SolarPanel, "warranty">>;
@@ -114,20 +118,6 @@ export const SolarPanelWarrantyTab = ({ solarPanel }: Props) => {
 
   const t = useTranslations("SolarPanelWarrantyTab");
 
-  const chartConfig: ChartConfig = {
-    productValue: {
-      label: t("chart.powerGuarantee"),
-      color: "var(--chart-1)",
-    },
-  };
-
-  if (hasIndustryComparison) {
-    chartConfig.industryValue = {
-      label: t("chart.industryStandard"),
-      color: "var(--chart-2)",
-    };
-  }
-
   return (
     <section className="flex gap-8 w-full flex-col">
       <div>
@@ -179,66 +169,10 @@ export const SolarPanelWarrantyTab = ({ solarPanel }: Props) => {
               <CardDescription>{t("powerDegradationDetails")}</CardDescription>
             </CardHeader>
             <CardContent className="w-full">
-              <ChartContainer config={chartConfig} className="h-[450px] !aspect-auto">
-                <AreaChart
-                  accessibilityLayer
-                  data={chartData}
-                  margin={{ top: 10, right: 30, left: 0, bottom: 10 }}
-                >
-                  <CartesianGrid vertical={false} strokeDasharray="3 3" />
-                  <XAxis
-                    dataKey="year"
-                    tickLine={true}
-                    axisLine={false}
-                    tickMargin={8}
-                    ticks={[1, ...Array.from({ length: Math.ceil(30 / 5) }, (_, i) => (i + 1) * 5)]}
-                    label={{
-                      value: t("chart.xAxis"),
-                      position: "insideBottom",
-                      offset: -10,
-                    }}
-                  />
-                  <YAxis
-                    label={{
-                      value: t("chart.yAxis"),
-                      angle: -90,
-                      position: "insideLeft",
-                    }}
-                    domain={[50, 100]}
-                    ticks={[50, 60, 70, 80, 90, 100]}
-                  />
-                  <ChartTooltip cursor={false} content={<CustomTooltip />} />
-                  <ChartLegend
-                    verticalAlign="top"
-                    align="right"
-                    wrapperStyle={{
-                      paddingTop: "10px",
-                    }}
-                    content={
-                      <ChartLegendContent nameKey={hasIndustryComparison ? undefined : "product"} />
-                    }
-                  />
-
-                  <Area
-                    name={t("chart.powerGuarantee")}
-                    dataKey="productValue"
-                    type="monotone"
-                    fill="var(--chart-1)"
-                    fillOpacity={0.4}
-                    stroke="var(--chart-1)"
-                  />
-                  {hasIndustryComparison && (
-                    <Area
-                      name={t("chart.industryStandard")}
-                      dataKey="industryValue"
-                      type="monotone"
-                      fill="var(--chart-2)"
-                      fillOpacity={0.4}
-                      stroke="var(--chart-2)"
-                    />
-                  )}
-                </AreaChart>
-              </ChartContainer>
+              <SolarPanelPowerChart
+                chartData={chartData}
+                hasIndustryComparison={hasIndustryComparison}
+              />
             </CardContent>
             <CardFooter className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-muted dark:bg-background p-4 rounded-lg">
@@ -289,34 +223,5 @@ export const SolarPanelWarrantyTab = ({ solarPanel }: Props) => {
         </div>
       )}
     </section>
-  );
-};
-
-const CustomTooltip = ({
-  active,
-  payload,
-  label,
-}: Pick<React.ComponentProps<typeof Tooltip>, "active" | "payload" | "label">) => {
-  if (!active || !payload?.length) return null;
-
-  const t = useTranslations("SolarPanelWarrantyTab");
-
-  return (
-    <div className="border-border/50 bg-background grid min-w-[8rem] rounded-lg border p-2.5 shadow-xl">
-      <div className="font-medium">
-        {t("chart.year")}: {label}
-      </div>
-      <div className="grid gap-1.5 mt-1">
-        {payload.map((item) => (
-          <div key={item.name} className="flex items-center gap-2">
-            <div className="w-1 h-2.5 rounded-[2px]" style={{ backgroundColor: item.color }} />
-            <div className="flex flex-1 justify-between items-center">
-              <span className="text-muted-foreground text-xs mr-1">{item.name}</span>
-              <span className="text-foreground font-mono font-medium text-xs">{item.value}%</span>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
   );
 };

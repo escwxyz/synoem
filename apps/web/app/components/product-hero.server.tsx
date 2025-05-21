@@ -4,16 +4,24 @@ import type {
   SolarPanelCategory,
   PumpControllerCategory,
 } from "@synoem/types";
-import { Image } from "@unpic/react";
+import Image from "next/image";
 import { getUrl } from "~/utils/get-url";
 
 import { SocialShareButtons } from "./social-share-buttons.client";
 import { ImagePlaceholder } from "@synoem/ui/components/image-placeholder";
 import { ProductBreadcrumbs } from "./product-breadcrumbs.server";
 import { ProductFeatures } from "./product-features.server";
-import { ProductHeroModel } from "./product-hero-model.client";
 import type { Locale, ProductTypeId } from "@synoem/config";
-import { RequestQuoteButton } from "./request-quote-button.client";
+
+import dynamic from "next/dynamic";
+
+const ProductHeroModel = dynamic(() =>
+  import("./product-hero-model.client").then((mod) => mod.ProductHeroModel),
+);
+
+const RequestQuoteButton = dynamic(() =>
+  import("./request-quote-button.client").then((mod) => mod.RequestQuoteButton),
+);
 
 interface ProductHeroProps {
   productCategory:
@@ -41,8 +49,10 @@ export const ProductHero = ({
           height={600}
           src={getUrl(heroImage?.url ?? "")}
           alt="Product cover image"
-          className="w-full h-full object-cover absolute inset-0"
-          layout="fullWidth"
+          className="w-full h-full absolute inset-0 object-cover"
+          priority={true}
+          loading="eager"
+          width={heroImage.width || 1200}
         />
       ) : (
         <ImagePlaceholder

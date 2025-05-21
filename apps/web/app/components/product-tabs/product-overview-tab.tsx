@@ -15,9 +15,17 @@ import { ProductVariantSwatch } from "./product-variant-swatch.client";
 import { ProductVariantInfo } from "./product-variant-info";
 import { useTranslations } from "next-intl";
 import { getUrl } from "~/utils/get-url";
-import { ProductModelViewer } from "~/components/product-model-viewer.client";
 import { RichText } from "~/components/rich-text.client";
 import ImageCarousel_Basic from "~/components/image-carousel.client";
+
+import dynamic from "next/dynamic";
+
+const ProductModelViewer = dynamic(
+  () => import("~/components/product-model-viewer.client").then((mod) => mod.ProductModelViewer),
+  {
+    ssr: false,
+  },
+);
 
 interface Props {
   product: SolarPanel | PumpController;
@@ -41,19 +49,30 @@ export const ProductOverviewTab = ({ product }: Props) => {
         ? gallery.filter((image): image is ImageType => typeof image === "object" && !!image.url)
         : [];
 
-    // If no variant is selected or variant has no gallery, return base gallery
-    if (!selectedVariant || !variants) return baseImages;
+    if (!selectedVariant) {
+      const variantFirstImages =
+        variants
+          .map((variant) => {
+            if (variant.gallery && variant.gallery.length > 0) {
+              const firstImage = variant.gallery.find(
+                (image): image is ImageType => typeof image === "object" && !!image.url,
+              );
+              return firstImage;
+            }
+            return null;
+          })
+          .filter(Boolean) ?? [];
 
-    // Find the selected variant
+      return [...baseImages, ...(variantFirstImages as ImageType[])];
+    }
+
     const variant = variants.find((v) => v.sku === selectedVariant.sku);
     if (!variant || !variant.gallery) return baseImages;
 
-    // Get variant images
     const variantImages = variant.gallery.filter(
       (image): image is ImageType => typeof image === "object" && !!image.url,
     );
 
-    // Combine images, prioritizing variant images
     return [...baseImages, ...variantImages];
   }, [gallery, variants, selectedVariant]);
 

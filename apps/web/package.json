@@ -7,7 +7,7 @@
     "build": "dmno run -- next build",
     "start": "dmno run -- next start",
     "lint": "dmno run -- next lint",
-    "build:worker": "opennextjs-cloudflare build",
+    "build:worker": "opennextjs-cloudflare build & npx wrangler versions upload",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings ./cloudflare-env.d.ts"
@@ -16,10 +16,9 @@
     "@dmno/nextjs-integration": "^0.0.14",
     "@hookform/resolvers": "^5.0.1",
     "@next-safe-action/adapter-react-hook-form": "^1.0.14",
-    "@opennextjs/cloudflare": "^1.0.3",
+    "@opennextjs/cloudflare": "^1.0.4",
     "@orpc/client": "^1.2.0",
     "@orpc/react-query": "^1.2.0",
-    "@react-pdf/renderer": "^4.3.0",
     "@react-three/drei": "catalog:",
     "@react-three/fiber": "catalog:",
     "@synoem/api": "workspace:*",
@@ -29,7 +28,6 @@
     "@synoem/types": "workspace:*",
     "@synoem/ui": "workspace:*",
     "@tanstack/react-query": "^5.76.1",
-    "@unpic/react": "^1.0.1",
     "canvas-confetti": "1.9.3",
     "client-only": "^0.0.1",
     "dmno": "^0.0.39",
@@ -54,7 +52,8 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@lingual/i18n-check": "^0.8.3",
+    "@lingual/i18n-check": "^0.8.4",
+    "@next/bundle-analyzer": "^15.3.2",
     "@synoem/typescript-config": "workspace:*",
     "@tailwindcss/postcss": "catalog:",
     "@types/node": "catalog:",

@@ -1,10 +1,9 @@
 "use client";
 
-import { Image } from "@unpic/react/nextjs";
+import Image from "next/image";
 import { PlugZap, Sun, Zap } from "lucide-react";
 import { Button } from "@synoem/ui/components/button";
 import { useTranslations } from "next-intl";
-import { RequestQuoteButton } from "./request-quote-button.client";
 import { Link } from "@/i18n/navigation";
 import { getEfficiencyRange, getUrl, getProductLink } from "~/utils";
 import { useSidebar } from "~/hooks/useSidebar";
@@ -16,6 +15,15 @@ import { ImagePlaceholder } from "@synoem/ui/components/image-placeholder";
 import type { ProductTypeId, Locale } from "@synoem/config";
 import type { ProductWithSelectFields } from "@synoem/api";
 import type { PumpController, SolarPanel } from "@synoem/types";
+
+import dynamic from "next/dynamic";
+
+const RequestQuoteButton = dynamic(
+  () => import("./request-quote-button.client").then((mod) => mod.RequestQuoteButton),
+  {
+    ssr: false,
+  },
+);
 
 export const ProductCard = <T extends ProductTypeId>({
   productTypeId,
@@ -189,10 +197,9 @@ export const ProductCard = <T extends ProductTypeId>({
                   src={getUrl(coverImage.url || "")}
                   alt={title}
                   height={300}
-                  layout="fullWidth"
-                  // background={blurhashstring}
-                  // TODO: add placeholder image using https://unpic.pics/placeholder/#blurhash after we add support in payload cms
-                  className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105 dark:brightness-60"
+                  fill
+                  // https://nextjs.org/docs/app/api-reference/components/image#blurdataurl
+                  className="w-full h-full obect-cover transition-all duration-500 group-hover:scale-105 dark:brightness-60"
                 />
               ) : (
                 <ImagePlaceholder height={300} className="w-full h-fullr" />

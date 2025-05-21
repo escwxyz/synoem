@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import type { SolarPanel, PumpController } from "@synoem/types";
 import { Button } from "@synoem/ui/components/button";
 import {
@@ -10,8 +11,8 @@ import {
 } from "@synoem/ui/components/carousel";
 import { ProductGallerySwitch } from "./product-gallery-switch.client";
 import { useEffect, useState } from "react";
-import { ProductModelViewer } from "./product-model-viewer.client";
-import { Image } from "@unpic/react";
+
+import Image from "next/image";
 import { cn } from "@synoem/ui/lib/utils";
 import { getUrl } from "~/utils/get-url";
 import type { Image as ImageType } from "@synoem/types";
@@ -20,6 +21,14 @@ import { AnimatePresence } from "motion/react";
 import { useAtom } from "jotai";
 
 import { galleryIndexAtom, selectedImageAtom, productModelViewAtom } from "~/atoms";
+
+const ProductModelViewer = dynamic(
+  () => import("./product-model-viewer.client").then((mod) => mod.ProductModelViewer),
+  {
+    ssr: false,
+    loading: () => <div>Loading...</div>,
+  },
+);
 
 interface Props {
   images: ImageType[];
@@ -76,7 +85,7 @@ export const ProductGalleryMobile = ({ images, three }: Props) => {
                   <Image
                     src={getUrl(image.url ?? "")}
                     alt={image.alt}
-                    layout="fullWidth"
+                    fill
                     className="w-full h-full object-cover"
                   />
                 </CarouselItem>

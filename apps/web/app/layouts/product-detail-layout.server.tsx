@@ -19,13 +19,11 @@ export const ProductDetailPage = async ({
   locale,
   productTypeId,
 }: ProductDetailPageProps) => {
-  const productResponse = await (
-    await getProductCached({
-      locale,
-      slug,
-      productTypeId,
-    })
-  )();
+  const productResponse = await getProductCached({
+    locale,
+    slug,
+    productTypeId,
+  })();
 
   if (productResponse.error) {
     // TODO: handle error
@@ -58,7 +56,7 @@ export const ProductDetailPage = async ({
   );
 };
 
-const getProductCached = async (input: z.infer<typeof productSchema>) => {
+const getProductCached = (input: z.infer<typeof productSchema>) => {
   return unstable_cache(
     async () => {
       return await apiClient.collections.getProductBySlug(input);
