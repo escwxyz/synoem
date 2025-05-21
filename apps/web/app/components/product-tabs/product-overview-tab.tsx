@@ -49,7 +49,7 @@ export const ProductOverviewTab = ({ product }: Props) => {
         ? gallery.filter((image): image is ImageType => typeof image === "object" && !!image.url)
         : [];
 
-    if (!selectedVariant || !variants) {
+    if (!selectedVariant) {
       const variantFirstImages =
         variants
           .map((variant) => {

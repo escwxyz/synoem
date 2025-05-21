@@ -12,7 +12,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   // redirects,
-  transpilePackages: ["three"],
+  // transpilePackages: ["three"],
   // TODO: https://nextjs.org/docs/app/api-reference/config/next-config-js/serverExternalPackages
   serverExternalPackages: ["@prisma/client", "mongodb", "mongoose"],
   experimental: {
