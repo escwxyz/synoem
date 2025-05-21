@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "dmno run -w -- next dev --port 3001",
-    "build": "dmno run -- opennextjs-cloudflare build",
+    "build": "dmno run -- next build",
     "start": "dmno run -- next start",
     "lint": "dmno run -- next lint",
-    "deploy": "dmno run -- opennextjs-cloudflare build && dmno run -- opennextjs-cloudflare deploy",
-    "preview": "dmno run -- opennextjs-cloudflare build && dmno run -- opennextjs-cloudflare preview",
+    "build:worker": "opennextjs-cloudflare build",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings ./cloudflare-env.d.ts"
   },
   "dependencies": {
