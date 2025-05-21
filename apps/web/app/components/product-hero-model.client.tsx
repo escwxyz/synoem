@@ -3,8 +3,16 @@
 import type { SolarPanel, PumpController } from "@synoem/types";
 import { useAtomValue } from "jotai";
 import { useEffect } from "react";
-import { ProductModelViewer } from "./product-model-viewer.client";
 import { productModelViewAtom } from "~/atoms";
+
+import dynamic from "next/dynamic";
+
+const ProductModelViewer = dynamic(
+  () => import("./product-model-viewer.client").then((mod) => mod.ProductModelViewer),
+  {
+    ssr: false,
+  },
+);
 
 export const ProductHeroModel = ({
   three,

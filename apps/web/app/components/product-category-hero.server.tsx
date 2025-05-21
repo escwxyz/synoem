@@ -1,4 +1,4 @@
-import { Image } from "@unpic/react/nextjs";
+import Image from "next/image";
 import { getUrl } from "~/utils/get-url";
 import type { SolarPanelCategory, PumpControllerCategory } from "@synoem/types";
 import type { ProductTypeId } from "@synoem/config";
@@ -47,7 +47,9 @@ export const ProductCategoryHero = async ({
           height={600}
           src={productCategory ? getUrl(imageUrl) : imageUrl}
           alt={title}
-          layout="fullWidth"
+          fill
+          priority={true}
+          loading="eager"
           className="w-full h-full object-cover absolute inset-0"
         />
       )}

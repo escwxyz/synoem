@@ -8,7 +8,13 @@ import { ORPCContext } from "./orpc-context.client";
 import { apiClient } from "~/libs/api-client";
 
 export function QueryContextProvider({ children }: { children: React.ReactNode }) {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 60 * 60 * 24,
+      },
+    },
+  });
   const [orpc] = useState(() => createORPCReactQueryUtils(apiClient));
 
   return (

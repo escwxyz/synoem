@@ -8,6 +8,7 @@ import { ThemeProvider } from "~/components/theme-provider.client";
 import { SidebarInset, SidebarProvider } from "~/components/sidebar.client";
 import { Header } from "~/layouts/header-layout.server";
 import { Footer } from "~/layouts/footer-layout.server";
+import { WebVitals } from "~/components/web-vitals.client";
 
 import { isValidLocale } from "~/utils/is-valid-locale";
 
@@ -40,6 +41,7 @@ export default async function RootLayout({
         className="flex min-h-screen flex-col antialiased [--header-height:calc(theme(spacing.14))]"
         // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <WebVitals />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

@@ -6,3 +6,4 @@
 - Downloads / Warranty / Certs
 - FAQ
 - React Email template
+- Generate Blurhash in CMS / images
