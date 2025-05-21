@@ -1,3 +1,3 @@
-export * from "./send-simple-inquiry";
+// export * from "./send-simple-inquiry";
 export * from "./subscribe-newsletter";
-export * from "./send-product-inquiry";
+// export * from "./send-product-inquiry";

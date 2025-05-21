@@ -20,7 +20,6 @@ export default defineDmnoService({
     PAYLOAD_SECRET: pick("root", "PAYLOAD_SECRET"),
 
     CMS_SERVER_URL: pick("root", "CMS_SERVER_URL"),
-    CMS_API_URL: pick("root", "CMS_API_URL"),
     WEB_SITE_URL: pick("root", "WEB_SITE_URL"),
     WEB_SITE_REVALIDATE_SECRET: pick("root", "WEB_SITE_REVALIDATE_SECRET"),
   },

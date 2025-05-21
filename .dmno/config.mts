@@ -207,16 +207,16 @@ export default defineDmnoService({
         production: ProdVault.item(),
       }),
     },
-    CMS_API_URL: {
-      required: true,
-      extends: DmnoBaseTypes.url,
-      summary: "The API URL exposed by the Next.js application",
-      value: switchBy("CMS_APP_ENV", {
-        development: "http://localhost:3000/rpc",
-        preview: ProdVault.item(),
-        production: ProdVault.item(),
-      }),
-    },
+    // CMS_API_URL: {
+    //   required: true,
+    //   extends: DmnoBaseTypes.url,
+    //   summary: "The API URL exposed by the Next.js application",
+    //   value: switchBy("CMS_APP_ENV", {
+    //     development: "http://localhost:3000/rpc",
+    //     preview: ProdVault.item(),
+    //     production: ProdVault.item(),
+    //   }),
+    // },
     WEB_SITE_URL: {
       required: true,
       extends: DmnoBaseTypes.url,

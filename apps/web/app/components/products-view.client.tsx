@@ -3,50 +3,48 @@
 import { useAtomValue } from "jotai";
 import { productsViewModeAtom } from "~/atoms/products-view-mode";
 import { ProductCard } from "./product-card.client";
-import { useSuspenseQuery } from "@tanstack/react-query";
 import type { Locale, ProductTypeId } from "@synoem/config";
 import { ProductPagination } from "./product-pagination.client";
 import { useFilteredProducts } from "~/hooks/useFilteredProducts";
 import { Button } from "@synoem/ui/components/button";
-import { useMemo } from "react";
+import { use, useMemo } from "react";
 import { ProductsViewSkeleton } from "./products-view-skeleton.client";
 import { buildProductFilterMetadata } from "~/utils/build-filter-metadata";
-import { useORPC } from "./orpc-context.client";
+import type { APIResponse } from "~/types/api-response";
+import type { PaginatedDocs } from "@synoem/payload/types";
+import type { DataFromCollectionSlug } from "@synoem/payload/types";
+import type { ProductTypeToSlugMap } from "@synoem/config";
 
-interface Props {
+interface Props<T extends ProductTypeId> {
   locale: Locale;
-  productTypeId: ProductTypeId;
+  productTypeId: T;
   categorySlug?: string;
+  filterMetadataPromise: Promise<
+    APIResponse<PaginatedDocs<DataFromCollectionSlug<ProductTypeToSlugMap[T]>>>
+  >;
+  allProductsPromise: Promise<
+    APIResponse<PaginatedDocs<DataFromCollectionSlug<ProductTypeToSlugMap[T]>>>
+  >;
 }
 
-export const ProductsView = ({ locale, productTypeId, categorySlug }: Props) => {
-  const orpc = useORPC();
+export const ProductsView = <T extends ProductTypeId>({
+  locale,
+  productTypeId,
+  categorySlug,
+  filterMetadataPromise,
+  allProductsPromise,
+}: Props<T>) => {
+  const filterMetadataResponse = use(filterMetadataPromise);
 
-  const { data: filterMetadataResponse, status: filterMetadataStatus } = useSuspenseQuery(
-    orpc.collections.getProductFilterMetadata.queryOptions({
-      input: {
-        locale,
-        productTypeId,
-      },
-    }),
-  );
-
-  const filterMetadata = buildProductFilterMetadata(
+  const filterMetadata = buildProductFilterMetadata<T>(
     filterMetadataResponse.data?.docs || [],
     productTypeId,
   );
 
-  const { data: allProductsDataResponse, status: allProductsStatus } = useSuspenseQuery(
-    orpc.collections.getProducts.queryOptions({
-      input: {
-        locale,
-        productTypeId,
-      },
-    }),
-  );
+  const allProductsResponse = use(allProductsPromise);
 
   const allProducts = useMemo(() => {
-    const products = allProductsDataResponse.data?.docs || [];
+    const products = allProductsResponse.data?.docs || [];
 
     if (categorySlug) {
       return products.filter((product) => {
@@ -58,12 +56,13 @@ export const ProductsView = ({ locale, productTypeId, categorySlug }: Props) => 
     }
 
     return products;
-  }, [allProductsDataResponse?.data?.docs, categorySlug]);
+  }, [allProductsResponse?.data?.docs, categorySlug]);
 
   const { filteredProducts, totalFilteredDocs, isPending, handleResetFilters } =
     useFilteredProducts({
       allProducts,
       productTypeId,
+      // @ts-expect-error
       filterMetadata,
     });
 
@@ -71,7 +70,7 @@ export const ProductsView = ({ locale, productTypeId, categorySlug }: Props) => 
 
   const isList = productsViewMode === "list";
 
-  if (filterMetadataStatus === "error" || allProductsStatus === "error") {
+  if (filterMetadataResponse.status === "error" || allProductsResponse.status === "error") {
     return (
       <div className="text-center py-8">
         <h3 className="text-lg font-medium">Error loading products</h3>
@@ -105,6 +104,7 @@ export const ProductsView = ({ locale, productTypeId, categorySlug }: Props) => 
                     {filteredProducts.map((product) => (
                       <ProductCard
                         key={product.id}
+                        // @ts-expect-error
                         product={product}
                         productTypeId={productTypeId}
                         locale={locale}
@@ -116,6 +116,7 @@ export const ProductsView = ({ locale, productTypeId, categorySlug }: Props) => 
                     {filteredProducts.map((product) => (
                       <ProductCard
                         key={product.id}
+                        // @ts-expect-error
                         product={product}
                         productTypeId={productTypeId}
                         locale={locale}

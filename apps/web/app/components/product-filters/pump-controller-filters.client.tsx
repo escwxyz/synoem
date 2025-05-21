@@ -3,7 +3,7 @@
 // import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useProductFilters } from "@/app/hooks/use-product-filters";
-import type { PumpControllerFilterMetadata } from "@synoem/api";
+import type { PumpControllerFilterMetadata } from "~/types/product-filter-metadata";
 import { Label } from "@synoem/ui/components/label";
 import { Switch } from "@synoem/ui/components/switch";
 import { Slider } from "@synoem/ui/components/slider";

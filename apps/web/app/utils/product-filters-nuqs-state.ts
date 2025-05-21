@@ -6,7 +6,10 @@ import {
   type UseQueryStatesKeysMap,
 } from "nuqs";
 
-import type { PumpControllerFilterMetadata, SolarPanelFilterMetadata } from "@synoem/api";
+import type {
+  PumpControllerFilterMetadata,
+  SolarPanelFilterMetadata,
+} from "~/types/product-filter-metadata";
 
 export type SolarPanelFilterValues = {
   types: string[];

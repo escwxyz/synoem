@@ -18,37 +18,22 @@
   },
   "dependencies": {
     "@dmno/nextjs-integration": "^0.0.14",
-    "@orpc/server": "^1.2.0",
-    "@payloadcms/db-postgres": "catalog:",
-    "@payloadcms/email-resend": "catalog:",
     "@payloadcms/next": "catalog:",
-    "@payloadcms/payload-cloud": "catalog:",
-    "@payloadcms/plugin-nested-docs": "catalog:",
     "@payloadcms/richtext-lexical": "catalog:",
-    "@payloadcms/storage-s3": "catalog:",
     "@payloadcms/ui": "catalog:",
-    "@react-three/drei": "catalog:",
-    "@react-three/fiber": "catalog:",
-    "@synoem/api": "workspace:*",
     "@synoem/config": "workspace:*",
     "@synoem/payload": "workspace:*",
-    "@synoem/transactional": "workspace:*",
     "@synoem/types": "workspace:*",
     "@synoem/ui": "workspace:*",
     "dmno": "^0.0.39",
     "lucide-react": "catalog:",
-    "nanoid": "^5.1.5",
     "next": "catalog:",
     "payload": "catalog:",
     "react": "catalog:",
-    "react-dom": "catalog:",
-    "zod": "catalog:"
+    "react-dom": "catalog:"
   },
   "devDependencies": {
     "@synoem/typescript-config": "workspace:*",
-    "@types/node": "catalog:",
-    "@types/react": "catalog:",
-    "@types/react-dom": "catalog:",
-    "typescript": "catalog:"
+    "@types/react": "catalog:"
   }
 }

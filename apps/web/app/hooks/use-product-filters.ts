@@ -6,7 +6,10 @@ import {
   type PumpControllerFilterValues,
   type SolarPanelFilterValues,
 } from "~/utils";
-import type { PumpControllerFilterMetadata, SolarPanelFilterMetadata } from "@synoem/api";
+import type {
+  PumpControllerFilterMetadata,
+  SolarPanelFilterMetadata,
+} from "~/types/product-filter-metadata";
 import { useQueryStates } from "nuqs";
 import { useSidebar } from "~/hooks/useSidebar";
 import type { ProductTypeId } from "@synoem/config";

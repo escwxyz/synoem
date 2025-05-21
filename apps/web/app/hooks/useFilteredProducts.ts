@@ -4,7 +4,10 @@ import type { DataFromCollectionSlug } from "@synoem/payload/types";
 import { useProductPagination } from "./use-product-pagination";
 import { useProductFilters } from "./use-product-filters";
 import { filterProducts } from "~/utils";
-import type { SolarPanelFilterMetadata, PumpControllerFilterMetadata } from "@synoem/api";
+import type {
+  SolarPanelFilterMetadata,
+  PumpControllerFilterMetadata,
+} from "~/types/product-filter-metadata";
 
 interface UseFilteredProductsProps<T extends ProductTypeId> {
   allProducts: DataFromCollectionSlug<ProductTypeToSlugMap[T]>[];

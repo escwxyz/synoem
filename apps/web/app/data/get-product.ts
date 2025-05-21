@@ -1,14 +1,18 @@
+import "server-only";
+
 import type { z } from "zod";
-import type { APIResponse } from "../types/api-response";
+import type { APIResponse } from "~/types/api-response";
 import { PRODUCT_TYPES, type ProductTypeToSlugMap, type ProductTypeId } from "@synoem/config";
-import type { BasePayload, DataFromCollectionSlug } from "@synoem/payload/types";
+import type { DataFromCollectionSlug } from "@synoem/payload/types";
 import type { productSchema } from "@synoem/schema";
+import { getPayloadClient } from "@synoem/payload/client";
 
 export async function getProductHelper<T extends ProductTypeId>(
   input: z.infer<typeof productSchema>,
-  payload: BasePayload,
 ): Promise<APIResponse<DataFromCollectionSlug<ProductTypeToSlugMap[T]> | null>> {
   const { locale, slug, productTypeId } = input;
+
+  const payload = await getPayloadClient();
 
   try {
     const product = await payload.find({

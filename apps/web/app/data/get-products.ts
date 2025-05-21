@@ -1,21 +1,24 @@
-import type { z } from "zod";
-import type { APIResponse } from "../types/api-response";
-import { PRODUCT_FILTER_METADATA_SELECT_OBJECT } from "../types/product-filter-metadata";
-import { PRODUCT_TYPES, type ProductTypeToSlugMap, type ProductTypeId } from "@synoem/config";
-import type { BasePayload, DataFromCollectionSlug, PaginatedDocs } from "@synoem/payload/types";
-import type { productFilterMetadataSchema } from "@synoem/schema";
+import "server-only";
 
-export async function getProductFilterMetadataHelper<T extends ProductTypeId>(
+import type { z } from "zod";
+import type { productFilterMetadataSchema } from "@synoem/schema";
+import type { DataFromCollectionSlug, PaginatedDocs } from "@synoem/payload/types";
+import type { APIResponse } from "~/types/api-response";
+import { PRODUCT_TYPES, type ProductTypeId, type ProductTypeToSlugMap } from "@synoem/config";
+import { PRODUCT_SELECT_OBJECT } from "~/types/product-select-fields";
+import { getPayloadClient } from "@synoem/payload/client";
+
+export async function getProducts<T extends ProductTypeId>(
   input: z.infer<typeof productFilterMetadataSchema>,
-  payload: BasePayload,
 ): Promise<APIResponse<PaginatedDocs<DataFromCollectionSlug<ProductTypeToSlugMap[T]>>>> {
   const { productTypeId, locale } = input;
 
-  const collection = PRODUCT_TYPES[productTypeId].slug;
-
-  const selectFields = PRODUCT_FILTER_METADATA_SELECT_OBJECT[productTypeId];
+  const payload = await getPayloadClient();
 
   try {
+    const collection = PRODUCT_TYPES[productTypeId].slug;
+    const selectFields = PRODUCT_SELECT_OBJECT[productTypeId];
+
     const response = await payload.find({
       collection,
       locale,
@@ -28,9 +31,9 @@ export async function getProductFilterMetadataHelper<T extends ProductTypeId>(
         },
       },
       select: selectFields,
-      limit: 0, // fetch all products
-      depth: 1,
-      pagination: true, // to get total docs
+      limit: 0,
+      pagination: true,
+      depth: 1, // To populate the productCategory / coverImage etc.
     });
 
     return {
@@ -38,9 +41,10 @@ export async function getProductFilterMetadataHelper<T extends ProductTypeId>(
       data: response as PaginatedDocs<DataFromCollectionSlug<ProductTypeToSlugMap[T]>>,
     };
   } catch (error) {
+    console.warn(error);
     return {
       status: "error",
-      messageKey: "api.getProductFilterMetadata.error",
+      messageKey: "api.getProducts.error",
       error: {
         code: "INTERNAL_SERVER_ERROR",
         details: error,

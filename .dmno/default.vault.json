@@ -110,10 +110,6 @@
       "encryptedValue": "/6HUwwZP1vxacwhjqozA567Fdnjw8nvBsL17f/q8QsyQ+7ZYfYagB4hK5AlLYyJJU/KWW4OY",
       "updatedAt": "2025-05-21T04:53:05.595Z"
     },
-    "root!CMS_API_URL#production": {
-      "encryptedValue": "ZVzNckIGQSfbQHApf7BVvXtZfAVWz3lmJcEzPRBuQDBpQUP7ctUMdBhOYfQJlhZZOWoxM9Rzjz0P1A==",
-      "updatedAt": "2025-05-21T04:36:00.226Z"
-    },
     "root!CLOUDFLARE_ACCOUNT_ID": {
       "encryptedValue": "jxD8Ok28FjySJnVtMH9W2y9DVUwNWgkjqfMuISuuaD5eWN72gLq9VulYm2o1SnOByzUWMrg96k/LRbMcTdY=",
       "updatedAt": "2025-05-20T08:18:43.122Z"
@@ -121,10 +117,6 @@
     "root!CMS_SERVER_URL#preview": {
       "encryptedValue": "Iz6Z2Akza2vgXoZ92UVTVDjtKXDQu6sHN7P2vjgn+ZSwgrSp3cJBT00CP3IW2q4j9k4mC4qP",
       "updatedAt": "2025-05-21T04:44:01.384Z"
-    },
-    "root!CMS_API_URL#preview": {
-      "encryptedValue": "DE1zJb5/uK3Zs8PvIPN4n38YwP6AhfkREGSvQW6satTbrRR0RhtHcGGyInlaaYD43aiumOFTOD3RvA==",
-      "updatedAt": "2025-05-21T04:44:16.017Z"
     }
   }
 }

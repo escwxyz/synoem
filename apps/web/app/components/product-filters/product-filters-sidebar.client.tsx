@@ -2,20 +2,23 @@
 
 // TODO: polish & i18n
 
-import type { Locale, ProductTypeId } from "@synoem/config";
+import type { Locale, ProductTypeId, ProductTypeToSlugMap } from "@synoem/config";
 import { Button } from "@synoem/ui/components/button";
 
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from "~/components/sidebar.client";
 import { cn } from "@synoem/ui/lib/utils";
 import { useProductFilters } from "@/app/hooks/use-product-filters";
-import type { SolarPanelFilterMetadata, PumpControllerFilterMetadata } from "@synoem/api";
+import type {
+  SolarPanelFilterMetadata,
+  PumpControllerFilterMetadata,
+} from "~/types/product-filter-metadata";
 import dynamic from "next/dynamic";
 import { Skeleton } from "@synoem/ui/components/skeleton";
-import { Suspense } from "react";
+import { Suspense, use } from "react";
 import { useSearchParams } from "next/navigation";
-import { useSuspenseQuery } from "@tanstack/react-query";
 import { buildProductFilterMetadata } from "~/utils/build-filter-metadata";
-import { useORPC } from "../orpc-context.client";
+import type { APIResponse } from "~/types/api-response";
+import type { DataFromCollectionSlug, PaginatedDocs } from "@synoem/payload/types";
 
 const SolarPanelFilters = dynamic(
   () => import("./solar-panel-filters.client").then((mod) => mod.SolarPanelFilters),
@@ -27,39 +30,33 @@ const PumpControllerFilters = dynamic(
   { ssr: false, loading: () => <FiltersSkeleton /> },
 );
 
-type Props = {
-  productTypeId: ProductTypeId;
+type Props<T extends ProductTypeId> = {
+  productTypeId: T;
   locale: Locale;
-  // filterMetadata?: SolarPanelFilterMetadata | PumpControllerFilterMetadata;
+  filterMetadataPromise: Promise<
+    APIResponse<PaginatedDocs<DataFromCollectionSlug<ProductTypeToSlugMap[T]>>>
+  >;
 } & React.ComponentProps<typeof Sidebar>;
 
-export const ProductFiltersSidebar = ({
+export const ProductFiltersSidebar = <T extends ProductTypeId>({
   productTypeId,
   locale,
   className,
-  // filterMetadata,
+  filterMetadataPromise,
   ...props
-}: Props) => {
-  const orpc = useORPC();
+}: Props<T>) => {
+  const filterMetadataResponse = use(filterMetadataPromise);
 
-  const { data: filterMetadataResponse, status } = useSuspenseQuery(
-    orpc.collections.getProductFilterMetadata.queryOptions({
-      input: {
-        locale,
-        productTypeId,
-      },
-    }),
-  );
-
-  if (status === "error") {
+  if (filterMetadataResponse.status === "error") {
     return <div>Something went wrong fetching filter metadata</div>;
   }
 
-  const filterMetadata = buildProductFilterMetadata(
+  const filterMetadata = buildProductFilterMetadata<T>(
     filterMetadataResponse.data?.docs || [],
     productTypeId,
   );
 
+  // @ts-expect-error
   const { isPending, handleResetFilters } = useProductFilters(filterMetadata, productTypeId);
 
   const isDirty = useSearchParams().size > 0;

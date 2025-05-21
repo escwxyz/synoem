@@ -6,8 +6,10 @@ import { ProductCategoryHero } from "~/components/product-category-hero.server";
 import { ProductsView } from "~/components/products-view.client";
 import { Suspense } from "react";
 import { ProductsViewSkeleton } from "~/components/products-view-skeleton.client";
-import { apiClient } from "~/libs/api-client";
 import { unstable_cache } from "next/cache";
+import { getProductCategory } from "~/data/get-product-category";
+import { getProducts } from "~/data/get-products";
+import { getProductFilterMetadata } from "~/data/get-product-filter-metadata";
 
 interface ProductCategoryPageProps {
   categorySlug?: string;
@@ -21,25 +23,37 @@ export const ProductCategoryPage = async ({
   locale,
 }: ProductCategoryPageProps) => {
   let categoryData = undefined;
+
   if (categorySlug) {
-    const productCategoryResponse = await apiClient.collections.getProductCategoryBySlug({
+    const productCategoryResponse = await getProductCategoryCached<ProductTypeId>(
       locale,
-      slug: categorySlug,
       productTypeId,
-    });
+      categorySlug,
+    )();
 
     if (productCategoryResponse?.data) {
       categoryData = productCategoryResponse.data;
     }
   }
+
+  const productFilterMetadataPromiseResponse = getProductFilterMetadataCached<ProductTypeId>(
+    locale,
+    productTypeId,
+  )();
+
+  const allProductsPromiseResponse = getProductsCached<ProductTypeId>(locale, productTypeId)();
+
   return (
     <div className="flex flex-1">
-      <ProductFiltersSidebar
-        variant="inset"
-        className="z-60"
-        locale={locale}
-        productTypeId={productTypeId}
-      />
+      <Suspense fallback={<div>Loading</div>}>
+        <ProductFiltersSidebar
+          variant="inset"
+          className="z-60"
+          locale={locale}
+          productTypeId={productTypeId}
+          filterMetadataPromise={productFilterMetadataPromiseResponse}
+        />
+      </Suspense>
       <div className="flex flex-1 flex-col">
         <ProductCategoryHero productCategory={categoryData} productTypeId={productTypeId} />
 
@@ -49,9 +63,61 @@ export const ProductCategoryPage = async ({
         </div>
 
         <Suspense fallback={<ProductsViewSkeleton />}>
-          <ProductsView productTypeId={productTypeId} categorySlug={categorySlug} locale={locale} />
+          <ProductsView
+            productTypeId={productTypeId}
+            categorySlug={categorySlug}
+            locale={locale}
+            filterMetadataPromise={productFilterMetadataPromiseResponse}
+            allProductsPromise={allProductsPromiseResponse}
+          />
         </Suspense>
       </div>
     </div>
+  );
+};
+
+const getProductCategoryCached = <T extends ProductTypeId>(
+  locale: Locale,
+  productTypeId: T,
+  slug: string,
+) => {
+  return unstable_cache(
+    async () => {
+      return await getProductCategory<T>({ locale, productTypeId, slug });
+    },
+    ["product-category"],
+    {
+      tags: ["product-category"],
+      revalidate: 60 * 60 * 24 * 1000,
+    },
+  );
+};
+
+const getProductFilterMetadataCached = <T extends ProductTypeId>(
+  locale: Locale,
+  productTypeId: T,
+) => {
+  return unstable_cache(
+    async () => {
+      return await getProductFilterMetadata<T>({ locale, productTypeId });
+    },
+    ["product-filter-metadata"],
+    {
+      tags: ["product-filter-metadata"],
+      revalidate: 60 * 60 * 24 * 1000,
+    },
+  );
+};
+
+const getProductsCached = <T extends ProductTypeId>(locale: Locale, productTypeId: T) => {
+  return unstable_cache(
+    async () => {
+      return await getProducts<T>({ locale, productTypeId });
+    },
+    ["products"],
+    {
+      tags: ["products"],
+      revalidate: 60 * 60 * 24 * 1000,
+    },
   );
 };
