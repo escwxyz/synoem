@@ -64,7 +64,7 @@ export default buildConfig({
         "../../../apps/cms/src/app/(payload)/admin/importMap.js",
       ),
     },
-    suppressHydrationWarning: DMNO_CONFIG.APP_ENV === "production",
+    suppressHydrationWarning: DMNO_CONFIG.CMS_APP_ENV === "production",
   },
   editor: defaultLexical,
   db: postgresAdapter({
@@ -118,7 +118,7 @@ export default buildConfig({
     locales: mutableLocales,
     fallback: true,
   },
-  cors: DMNO_CONFIG.APP_ENV === "production" ? [DMNO_PUBLIC_CONFIG.WEB_SITE_URL] : "*",
+  cors: DMNO_CONFIG.CMS_APP_ENV === "production" ? [DMNO_PUBLIC_CONFIG.WEB_SITE_URL] : "*",
   secret: DMNO_CONFIG.PAYLOAD_SECRET,
   typescript: {
     outputFile: path.resolve(dirname, "../../types/src/index.ts"),
@@ -129,7 +129,7 @@ export default buildConfig({
   email: resendAdapter({
     defaultFromAddress: DMNO_CONFIG.RESEND_FROM_EMAIL,
     defaultFromName:
-      DMNO_CONFIG.APP_ENV === "development"
+      DMNO_CONFIG.CMS_APP_ENV === "development"
         ? DMNO_PUBLIC_CONFIG.RESEND_FROM_NAME
         : DMNO_CONFIG.RESEND_FROM_NAME,
     apiKey: DMNO_CONFIG.RESEND_API_KEY,

@@ -24,14 +24,15 @@ export default defineDmnoService({
       // CLOUDFLARE_API_TOKEN: { value: ProdVault.item() },
     }),
     WEB_APP_ENV: {
-      extends: DmnoBaseTypes.enum(["development", "preview", "production"]),
+      extends: DmnoBaseTypes.enum(["development", "production"]),
       summary: "The environment of the Next.js web application",
-      value: "development",
+      value: () => process.env.WEB_APP_ENV || process.env.NODE_ENV || "development",
     },
     // Vercel
     ...pickFromSchemaObject(VercelEnvSchema, "VERCEL_ENV"),
     CMS_APP_ENV: {
       summary: "The environment of the Next.js cms application",
+      extends: DmnoBaseTypes.enum(["development", "production", "preview"]),
       value: () => {
         if (DMNO_CONFIG.VERCEL_ENV === "production") return "production";
         if (DMNO_CONFIG.VERCEL_ENV === "preview") return "preview";
@@ -202,6 +203,7 @@ export default defineDmnoService({
       extends: DmnoBaseTypes.url,
       value: switchBy("CMS_APP_ENV", {
         development: "http://localhost:3000",
+        preview: ProdVault.item(),
         production: ProdVault.item(),
       }),
     },
@@ -211,6 +213,7 @@ export default defineDmnoService({
       summary: "The API URL exposed by the Next.js application",
       value: switchBy("CMS_APP_ENV", {
         development: "http://localhost:3000/rpc",
+        preview: ProdVault.item(),
         production: ProdVault.item(),
       }),
     },
@@ -228,10 +231,8 @@ export default defineDmnoService({
       extends: DmnoBaseTypes.string,
       summary:
         "The secret for Payload CMS's revalidate function to invalidate the cache between cms and frontend",
-
       value: switchBy("WEB_APP_ENV", {
         development: "00cee747d1a4e2cf3bacc045",
-        preview: "00cee747d1a4e2cf3bacc045",
         production: ProdVault.item(),
       }),
     },
