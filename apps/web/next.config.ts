@@ -3,6 +3,8 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 import type { NextConfig } from "next";
 
+console.log("ENV DUMP", process.env);
+
 const withNextIntl = createNextIntlPlugin();
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
@@ -48,6 +50,5 @@ const nextConfig: NextConfig = {
 
 export default dmnoNextConfigPlugin()(withNextIntl(withBundleAnalyzer(nextConfig)));
 
-// added by create cloudflare to enable calling `getCloudflareContext()` in `next dev`
 import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 initOpenNextCloudflareForDev();
