@@ -1,10 +1,9 @@
 import { NavigationMobile } from "./navigation-mobile.client";
 import { NavigationDesktop } from "./navigation-desktop.client";
 import { unstable_cache } from "next/cache";
-import { apiClient } from "~/libs/api-client";
-import { locales, type Locale } from "@synoem/config";
+import { getHeader } from "~/data/get-globals";
+import type { Locale } from "@synoem/config";
 import { Suspense } from "react";
-import { z } from "zod";
 
 export const Navigation = async ({ locale }: { locale: Locale }) => {
   return (
@@ -47,11 +46,12 @@ const NavigationSkeleton = () => {
 const getNavigationCached = (locale: Locale) => {
   return unstable_cache(
     async () => {
-      return await apiClient.globals.getHeader({ locale, slug: "header" });
+      return await getHeader({ locale, slug: "header" });
     },
     ["navigation"],
     {
       tags: ["navigation"],
+      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? 60 * 60 * 24 * 7 : 30,
     },
   );
 };

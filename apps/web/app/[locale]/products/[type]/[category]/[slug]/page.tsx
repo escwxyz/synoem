@@ -1,8 +1,15 @@
-import { defaultLocale, type ProductTypeId, type Locale, isValidProductType } from "@synoem/config";
+import {
+  defaultLocale,
+  type ProductTypeId,
+  type Locale,
+  isValidProductType,
+  PRODUCT_TYPES,
+  locales,
+} from "@synoem/config";
 import { isValidLocale } from "~/utils/is-valid-locale";
 import { ProductDetailPage } from "~/layouts/product-detail-layout.server";
 import { notFound } from "next/navigation";
-import { apiClient } from "~/libs/api-client";
+import { getPayloadClient } from "@synoem/payload/client";
 
 // TODO: https://github.com/vercel/next.js/issues/72365
 export const revalidate = 259200; // 3 days
@@ -12,14 +19,60 @@ export const dynamicParams = true;
 export const dynamic = "force-static";
 
 export const generateStaticParams = async () => {
-  const paths = await apiClient.paths.generateProductParams();
+  const params = [];
 
-  return paths.map((p) => ({
-    locale: p.locale,
-    type: p.type,
-    category: p.category,
-    slug: p.slug,
-  }));
+  const payload = await getPayloadClient();
+
+  for (const productType of Object.values(PRODUCT_TYPES)) {
+    const products = await payload.find({
+      collection: productType.slug,
+      where: {
+        _status: {
+          equals: "published",
+        },
+        visible: {
+          equals: true,
+        },
+      },
+      select: {
+        slug: true,
+        productCategory: true,
+      },
+      depth: 1,
+      pagination: false,
+      limit: 0,
+    });
+
+    for (const product of products.docs) {
+      for (const locale of locales) {
+        if (typeof product.productCategory === "object") {
+          params.push({
+            type: productType.id,
+            locale,
+            slug: product.slug,
+            category: product.productCategory.slug,
+          });
+        } else {
+          const category = await payload.findByID({
+            collection: `${productType.id}-categories`,
+            id: product.productCategory,
+            select: {
+              slug: true,
+            },
+          });
+
+          params.push({
+            type: productType.id,
+            locale,
+            slug: product.slug,
+            category: category.slug,
+          });
+        }
+      }
+    }
+  }
+
+  return params;
 };
 
 export default async function Page({

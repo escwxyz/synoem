@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useProductFilters } from "@/app/hooks/use-product-filters";
-import type { SolarPanelFilterMetadata } from "@synoem/api";
+import type { SolarPanelFilterMetadata } from "~/types/product-filter-metadata";
 import { Label } from "@synoem/ui/components/label";
 import { Switch } from "@synoem/ui/components/switch";
 import { Slider } from "@synoem/ui/components/slider";
@@ -11,7 +11,7 @@ import { Slider } from "@synoem/ui/components/slider";
 export const SolarPanelFilters = (filterMetadata: SolarPanelFilterMetadata) => {
   const { urlFilters, handleChangeFilters } = useProductFilters(filterMetadata, "solar-panel");
 
-  const t = useTranslations("Component");
+  const t = useTranslations("ProductFilters");
 
   const params = useParams();
 
@@ -24,7 +24,7 @@ export const SolarPanelFilters = (filterMetadata: SolarPanelFilterMetadata) => {
       {!isSubCategory && (
         <div className="space-y-3">
           <div className="flex justify-between items-center">
-            <h3 className="text-sm font-medium">{t("ProductFilters.cellType")}</h3>
+            <h3 className="text-sm font-medium">{t("cellType")}</h3>
           </div>
           <div className="space-y-2">
             {Array.isArray(urlFilters.types) && (
@@ -52,7 +52,7 @@ export const SolarPanelFilters = (filterMetadata: SolarPanelFilterMetadata) => {
 
       <div className="space-y-3">
         <div className="flex justify-between items-center">
-          <h3 className="text-sm font-medium">{t("ProductFilters.powerRange")}</h3>
+          <h3 className="text-sm font-medium">{t("powerRange")}</h3>
           <span className="text-xs text-muted-foreground">
             {`${urlFilters.powerMin}W ~ ${urlFilters.powerMax}W`}
           </span>
@@ -71,7 +71,7 @@ export const SolarPanelFilters = (filterMetadata: SolarPanelFilterMetadata) => {
 
       <div className="space-y-3">
         <div className="">
-          <h3 className="text-sm font-medium">{t("ProductFilters.efficiencyRange")}</h3>
+          <h3 className="text-sm font-medium">{t("efficiencyRange")}</h3>
           <span className="text-xs text-muted-foreground">
             {`${urlFilters.efficiencyMin.toFixed(1)}% ~ ${urlFilters.efficiencyMax.toFixed(1)}%`}
           </span>

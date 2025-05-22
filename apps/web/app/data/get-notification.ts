@@ -1,14 +1,19 @@
-import type { BasePayload } from "@synoem/payload/types";
-import type { APIResponse } from "../types/api-response";
+import "server-only";
+
+import type { APIResponse } from "~/types/api-response";
 import type { Notification } from "@synoem/types";
 import type { z } from "zod";
 import type { localeSchema } from "@synoem/schema";
+import { getPayloadClient } from "@synoem/payload/client";
+import type { BasePayload } from "@synoem/payload/types";
 
-export async function getNotificationHelper(
+export async function getNotification(
   input: z.infer<typeof localeSchema>,
-  payload: BasePayload,
+  payloadPromise: Promise<BasePayload> = getPayloadClient(),
 ): Promise<APIResponse<Notification | null>> {
   const { locale } = input;
+
+  const payload = await payloadPromise;
 
   try {
     const response = await payload.find({

@@ -3,8 +3,8 @@
 import { actionClient } from "~/libs/safe-action";
 import { newsletterFormSchema } from "@synoem/schema";
 import { getMetadata } from "~/utils/get-metadata";
-import { apiClient } from "~/libs/api-client";
-import type { APIResponse } from "@synoem/api";
+import type { APIResponse } from "~/types/api-response";
+import { getPayloadClient } from "@synoem/payload/client";
 
 export const subscribeNewsletter = actionClient
   .schema(newsletterFormSchema)
@@ -13,22 +13,53 @@ export const subscribeNewsletter = actionClient
 
     const metadata = await getMetadata();
 
+    const payload = await getPayloadClient();
+
     try {
-      const result = await apiClient.collections.createNewsletter({
-        email,
-        page: metadata.referer,
-        ipAddress: metadata.ipAddress,
-        userAgent: metadata.userAgent,
+      const existingSubscriber = await payload.find({
+        collection: "newsletter-subscribers",
+        where: {
+          email: {
+            equals: email,
+          },
+        },
       });
 
-      return result;
+      if (existingSubscriber.docs.length > 0) {
+        return {
+          status: "error",
+          messageKey: "api.createNewsletter.error",
+          error: {
+            code: "BAD_REQUEST",
+            details: "Email already subscribed",
+          },
+        };
+      }
+
+      const result = await payload.create({
+        collection: "newsletter-subscribers",
+        data: {
+          email,
+          metadata: {
+            page: metadata.referer,
+            ipAddress: metadata.ipAddress,
+            userAgent: metadata.userAgent,
+          },
+        },
+      });
+
+      return {
+        status: "success",
+        data: result.id,
+      };
     } catch (error) {
-      console.error(error);
+      console.warn(error);
       return {
         status: "error",
-        messageKey: "api.action.error",
+        messageKey: "api.createNewsletter.error",
         error: {
           code: "INTERNAL_SERVER_ERROR",
+          details: error,
         },
       };
     }

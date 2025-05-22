@@ -45,9 +45,13 @@ export const ProductCategoryHero = async ({
       {imageUrl && (
         <Image
           height={600}
+          width={
+            typeof productCategory?.heroImage === "object"
+              ? productCategory?.heroImage?.width || 1920
+              : 1920
+          }
           src={productCategory ? getUrl(imageUrl) : imageUrl}
           alt={title}
-          fill
           priority={true}
           loading="eager"
           className="w-full h-full object-cover absolute inset-0"

@@ -1,7 +1,7 @@
 import { getPlatformIconSVG, type Locale } from "@synoem/config";
 import { Suspense } from "react";
 import { unstable_cache } from "next/cache";
-import { apiClient } from "~/libs/api-client";
+import { getSocialLinks } from "~/data/get-globals";
 
 interface Props {
   size?: number;
@@ -75,11 +75,12 @@ const SocialLinksSkeleton = () => {
 const getSocialLinksCached = (locale: Locale) => {
   return unstable_cache(
     async () => {
-      return await apiClient.globals.getSocialLinks({ locale, slug: "social-links" });
+      return await getSocialLinks({ locale, slug: "social-links" });
     },
     ["social-links"],
     {
       tags: ["social-links"],
+      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? 60 * 60 * 24 * 30 : 30,
     },
   );
 };

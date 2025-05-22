@@ -4,7 +4,7 @@ import type { SolarPanelCategory, PumpControllerCategory } from "@synoem/types";
 import { ProductHero } from "~/components/product-hero.server";
 import { ProductTabs } from "~/components/product-tabs";
 import { unstable_cache } from "next/cache";
-import { apiClient } from "~/libs/api-client";
+import { getProduct } from "~/data/get-product";
 import type { productSchema } from "@synoem/schema";
 import type { z } from "zod";
 
@@ -59,11 +59,12 @@ export const ProductDetailPage = async ({
 const getProductCached = (input: z.infer<typeof productSchema>) => {
   return unstable_cache(
     async () => {
-      return await apiClient.collections.getProductBySlug(input);
+      return await getProduct(input);
     },
     ["product"],
     {
       tags: ["product"],
+      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? 60 * 60 * 24 * 7 : 30,
     },
   );
 };

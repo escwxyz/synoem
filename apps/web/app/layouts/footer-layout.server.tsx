@@ -4,7 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { NewsletterInput } from "~/components/newsletter-input.client";
 import { LanguageSwitcher } from "~/components/language-switcher.client";
 import { SocialLinks } from "~/components/social-links.server";
-import { apiClient } from "~/libs/api-client";
+import { getFooter } from "~/data/get-globals";
 import { unstable_cache } from "next/cache";
 
 import { Suspense } from "react";
@@ -60,11 +60,12 @@ export const FooterInner = async ({ locale }: { locale: Locale }) => {
 const getFooterCached = (locale: Locale) => {
   return unstable_cache(
     async () => {
-      return await apiClient.globals.getFooter({ locale, slug: "footer" });
+      return await getFooter({ locale, slug: "footer" });
     },
     ["footer"],
     {
       tags: ["footer"],
+      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? 60 * 60 * 24 * 7 : 30,
     },
   );
 };

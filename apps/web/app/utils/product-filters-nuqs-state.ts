@@ -6,7 +6,10 @@ import {
   type UseQueryStatesKeysMap,
 } from "nuqs";
 
-import type { PumpControllerFilterMetadata, SolarPanelFilterMetadata } from "@synoem/api";
+import type {
+  PumpControllerFilterMetadata,
+  SolarPanelFilterMetadata,
+} from "~/types/product-filter-metadata";
 
 export type SolarPanelFilterValues = {
   types: string[];
@@ -46,7 +49,7 @@ export type PumpControllerNuqsFilterValues = UseQueryStatesKeysMap<PumpControlle
 export const createFilterSchema = <T extends ProductTypeId>(
   initialMetadata: SolarPanelFilterMetadata | PumpControllerFilterMetadata,
   productTypeId: T,
-  disableTypes = false,
+  // disableTypes = false,
 ): SolarPanelNuqsFilterValues | PumpControllerNuqsFilterValues => {
   if (productTypeId === "solar-panel") {
     const values = convertMetadataToValues(
@@ -103,9 +106,7 @@ export const createFilterSchema = <T extends ProductTypeId>(
 };
 
 export function convertMetadataToValues<T extends ProductTypeId>(
-  initialMetadata: T extends "solar-panel"
-    ? SolarPanelFilterMetadata
-    : PumpControllerFilterMetadata,
+  initialMetadata: SolarPanelFilterMetadata | PumpControllerFilterMetadata,
   productTypeId: T,
 ): T extends "solar-panel" ? SolarPanelFilterValues : PumpControllerFilterValues {
   if (productTypeId === "solar-panel") {

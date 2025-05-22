@@ -19,9 +19,9 @@ const ProductHeroModel = dynamic(() =>
   import("./product-hero-model.client").then((mod) => mod.ProductHeroModel),
 );
 
-const RequestQuoteButton = dynamic(() =>
-  import("./request-quote-button.client").then((mod) => mod.RequestQuoteButton),
-);
+// const RequestQuoteButton = dynamic(() =>
+//   import("./request-quote-button.client").then((mod) => mod.RequestQuoteButton),
+// );
 
 interface ProductHeroProps {
   productCategory:
@@ -82,11 +82,11 @@ export const ProductHero = ({
 
                 <div className="w-full flex flex-col md:flex-row justify-between items-center">
                   <div className="w-full flex flex-col md:flex-row gap-2">
-                    <RequestQuoteButton
+                    {/* <RequestQuoteButton
                       product={product}
                       productTypeId={productTypeId}
                       locale={locale}
-                    />
+                    /> */}
                   </div>
                 </div>
               </div>

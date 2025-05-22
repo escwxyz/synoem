@@ -3,7 +3,7 @@
 // TODO: i18n & polish
 
 import type { z } from "zod";
-import type { productInquirySchema } from "@synoem/schema";
+import type { productInquiryFormSchema } from "@synoem/schema";
 import {
   FormControl,
   FormMessage,
@@ -22,7 +22,7 @@ import { Checkbox } from "@synoem/ui/components/checkbox";
 import { QuantityInput } from "./quantity-input.client";
 
 export const ProductInquiryForm: React.FC<{
-  form: UseFormReturn<z.infer<typeof productInquirySchema>>;
+  form: UseFormReturn<z.infer<typeof productInquiryFormSchema>>;
 }> = ({ form }) => {
   const t = useTranslations("ProductInquiryForm");
 

@@ -13,17 +13,17 @@ import { useAtomValue } from "jotai";
 import { motion, type Variants } from "motion/react";
 import { ImagePlaceholder } from "@synoem/ui/components/image-placeholder";
 import type { ProductTypeId, Locale } from "@synoem/config";
-import type { ProductWithSelectFields } from "@synoem/api";
+import type { ProductWithSelectFields } from "~/types/product-select-fields";
 import type { PumpController, SolarPanel } from "@synoem/types";
 
 import dynamic from "next/dynamic";
 
-const RequestQuoteButton = dynamic(
-  () => import("./request-quote-button.client").then((mod) => mod.RequestQuoteButton),
-  {
-    ssr: false,
-  },
-);
+// const RequestQuoteButton = dynamic(
+//   () => import("./request-quote-button.client").then((mod) => mod.RequestQuoteButton),
+//   {
+//     ssr: false,
+//   },
+// );
 
 export const ProductCard = <T extends ProductTypeId>({
   productTypeId,
@@ -197,9 +197,9 @@ export const ProductCard = <T extends ProductTypeId>({
                   src={getUrl(coverImage.url || "")}
                   alt={title}
                   height={300}
-                  fill
+                  width={coverImage.width || 300}
                   // https://nextjs.org/docs/app/api-reference/components/image#blurdataurl
-                  className="w-full h-full obect-cover transition-all duration-500 group-hover:scale-105 dark:brightness-60"
+                  className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105 dark:brightness-60"
                 />
               ) : (
                 <ImagePlaceholder height={300} className="w-full h-fullr" />
@@ -330,7 +330,7 @@ export const ProductCard = <T extends ProductTypeId>({
             variants={buttonContainerVariants}
             layoutId={`buttons-${product.id}`}
           >
-            <RequestQuoteButton
+            {/* <RequestQuoteButton
               product={product}
               productTypeId={productTypeId}
               locale={locale}
@@ -341,7 +341,7 @@ export const ProductCard = <T extends ProductTypeId>({
                     ? "w-auto"
                     : "w-full",
               )}
-            />
+            /> */}
             <Button
               asChild
               variant="outline"
@@ -353,7 +353,7 @@ export const ProductCard = <T extends ProductTypeId>({
                     : "w-full",
               )}
             >
-              <Link href={productLink || "#"}>{t("ProductCard.viewDetails")}</Link>
+              <Link href={productLink || "#"}>{t("viewDetails")}</Link>
             </Button>
           </motion.div>
         </motion.div>

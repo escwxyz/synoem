@@ -1,5 +1,3 @@
-import { SimpleInquiryForm } from "~/components/simple-inquiry-form.client";
-
 export default function HomePage() {
   return (
     <>
@@ -18,9 +16,7 @@ export default function HomePage() {
             a custom solution for your specific needs.
           </p>
         </div>
-        <div className="flex justify-center">
-          <SimpleInquiryForm />
-        </div>
+        <div className="flex justify-center">{/* <SimpleInquiryForm /> */}</div>
       </section>
     </>
   );

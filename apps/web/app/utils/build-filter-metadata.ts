@@ -1,6 +1,9 @@
 import type { DataFromCollectionSlug } from "@synoem/payload/types";
 
-import type { SolarPanelFilterMetadata, PumpControllerFilterMetadata } from "@synoem/api";
+import type {
+  SolarPanelFilterMetadata,
+  PumpControllerFilterMetadata,
+} from "~/types/product-filter-metadata";
 
 import type { ProductTypeId, ProductTypePluralSlug, ProductTypeToSlugMap } from "@synoem/config";
 import {
@@ -9,10 +12,10 @@ import {
   extractSolarPanelPowerValues,
 } from "./product-data-processing";
 
-function buildTypeSpecificMetadata<T extends ProductTypeId>(
+export function buildProductFilterMetadata<T extends ProductTypeId>(
   products: DataFromCollectionSlug<ProductTypeToSlugMap[T]>[],
-  productTypeId: T,
-): T extends "solar-panels" ? SolarPanelFilterMetadata : PumpControllerFilterMetadata {
+  productTypeId: ProductTypeId,
+): SolarPanelFilterMetadata | PumpControllerFilterMetadata {
   switch (productTypeId) {
     case "solar-panel":
       // biome-ignore lint/suspicious/noExplicitAny: <explanation>
@@ -25,14 +28,6 @@ function buildTypeSpecificMetadata<T extends ProductTypeId>(
     default:
       throw new Error(`Unsupported product type: ${productTypeId}`);
   }
-}
-
-export function buildProductFilterMetadata<T extends ProductTypeId>(
-  products: DataFromCollectionSlug<ProductTypeToSlugMap[T]>[],
-  productTypeId: ProductTypeId,
-): SolarPanelFilterMetadata | PumpControllerFilterMetadata {
-  const typeSpecificMetadata = buildTypeSpecificMetadata(products, productTypeId);
-  return typeSpecificMetadata;
 }
 
 function buildSolarPanelMetadata<T extends "solar-panels">(
