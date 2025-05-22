@@ -4,12 +4,13 @@ import type { z } from "zod";
 import type { APIResponse } from "~/types/api-response";
 import { PRODUCT_FILTER_METADATA_SELECT_OBJECT } from "~/types/product-filter-metadata";
 import { PRODUCT_TYPES, type ProductTypeToSlugMap, type ProductTypeId } from "@synoem/config";
-import type { DataFromCollectionSlug, PaginatedDocs } from "@synoem/payload/types";
+import type { BasePayload, DataFromCollectionSlug, PaginatedDocs } from "@synoem/payload/types";
 import type { productFilterMetadataSchema } from "@synoem/schema";
 import { getPayloadClient } from "@synoem/payload/client";
 
 export async function getProductFilterMetadata<T extends ProductTypeId>(
   input: z.infer<typeof productFilterMetadataSchema>,
+  payloadPromise: Promise<BasePayload> = getPayloadClient(),
 ): Promise<APIResponse<PaginatedDocs<DataFromCollectionSlug<ProductTypeToSlugMap[T]>>>> {
   const { productTypeId, locale } = input;
 
@@ -17,7 +18,7 @@ export async function getProductFilterMetadata<T extends ProductTypeId>(
 
   const selectFields = PRODUCT_FILTER_METADATA_SELECT_OBJECT[productTypeId];
 
-  const payload = await getPayloadClient();
+  const payload = await payloadPromise;
 
   try {
     const response = await payload.find({

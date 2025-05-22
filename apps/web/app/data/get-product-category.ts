@@ -3,12 +3,13 @@ import "server-only";
 import type { z } from "zod";
 import type { APIResponse } from "~/types/api-response";
 import type { ProductTypeId, ProductTypeToCategorySlugMap } from "@synoem/config";
-import type { DataFromCollectionSlug } from "@synoem/payload/types";
+import type { BasePayload, DataFromCollectionSlug } from "@synoem/payload/types";
 import type { productSchema } from "@synoem/schema";
 import { getPayloadClient } from "@synoem/payload/client";
 
 export async function getProductCategory<T extends ProductTypeId>(
   input: z.infer<typeof productSchema>,
+  payloadPromise: Promise<BasePayload> = getPayloadClient(),
 ): Promise<
   APIResponse<Pick<
     DataFromCollectionSlug<ProductTypeToCategorySlugMap[T]>,
@@ -20,7 +21,8 @@ export async function getProductCategory<T extends ProductTypeId>(
   const collectionSlug =
     productTypeId === "solar-panel" ? "solar-panel-categories" : "pump-controller-categories";
 
-  const payload = await getPayloadClient();
+  const payload = await payloadPromise;
+
   try {
     const category = await payload.find({
       collection: collectionSlug,

@@ -4,7 +4,7 @@ import type { SolarPanelCategory, PumpControllerCategory } from "@synoem/types";
 import { ProductHero } from "~/components/product-hero.server";
 import { ProductTabs } from "~/components/product-tabs";
 import { unstable_cache } from "next/cache";
-import { getProductHelper } from "~/data/get-product";
+import { getProduct } from "~/data/get-product";
 import type { productSchema } from "@synoem/schema";
 import type { z } from "zod";
 
@@ -59,7 +59,7 @@ export const ProductDetailPage = async ({
 const getProductCached = (input: z.infer<typeof productSchema>) => {
   return unstable_cache(
     async () => {
-      return await getProductHelper(input);
+      return await getProduct(input);
     },
     ["product"],
     {
