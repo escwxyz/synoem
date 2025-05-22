@@ -1,7 +1,7 @@
 import { DmnoBaseTypes, configPath, defineDmnoService, switchBy, pickFromSchemaObject } from "dmno";
 import { EncryptedVaultDmnoPlugin, EncryptedVaultTypes } from "@dmno/encrypted-vault-plugin";
 import { VercelEnvSchema } from "@dmno/vercel-platform";
-import { CloudflareWranglerEnvSchema } from "@dmno/cloudflare-platform";
+import { DmnoWranglerEnvSchema } from "@dmno/cloudflare-platform"; // Ensure this is imported
 
 const ProdVault = new EncryptedVaultDmnoPlugin("vault/prod", {
   key: configPath("..", "DMNO_VAULT_KEY_PROD"),
@@ -18,26 +18,39 @@ export default defineDmnoService({
     DMNO_VAULT_KEY_PROD: {
       extends: EncryptedVaultTypes.encryptionKey,
     },
-    // Cloudflare
-    ...pickFromSchemaObject(CloudflareWranglerEnvSchema, {
-      CLOUDFLARE_ACCOUNT_ID: { value: ProdVault.item() },
-      // CLOUDFLARE_API_TOKEN: { value: ProdVault.item() },
+
+    ...pickFromSchemaObject(DmnoWranglerEnvSchema, {
+      WRANGLER_INJECT_MODE: { value: "secrets" },
     }),
+
+    DMNO_ENV: {
+      extends: DmnoBaseTypes.enum(["development", "preview", "production"]),
+      required: true,
+      summary: "The environment of the DMNO service",
+      value: process.env.DMNO_ENV || "development",
+    },
+
     WEB_APP_ENV: {
-      extends: DmnoBaseTypes.enum(["development", "production"]),
+      extends: DmnoBaseTypes.enum(["development", "preview", "production"]),
       summary: "The environment of the Next.js web application",
-      value: () => process.env.WEB_APP_ENV || process.env.NODE_ENV || "development",
+      value: switchBy("DMNO_ENV", {
+        development: "development",
+        preview: "preview",
+        production: "production",
+        _default: "development",
+      }),
     },
     // Vercel
     ...pickFromSchemaObject(VercelEnvSchema, "VERCEL_ENV"),
     CMS_APP_ENV: {
       summary: "The environment of the Next.js cms application",
       extends: DmnoBaseTypes.enum(["development", "production", "preview"]),
-      value: () => {
-        if (DMNO_CONFIG.VERCEL_ENV === "production") return "production";
-        if (DMNO_CONFIG.VERCEL_ENV === "preview") return "preview";
-        return "development";
-      },
+      value: switchBy("VERCEL_ENV", {
+        production: "production",
+        preview: "preview",
+        development: "development",
+        _default: "development",
+      }),
     },
     VERCEL_TOKEN: {
       sensitive: true,
@@ -223,6 +236,7 @@ export default defineDmnoService({
       summary: "The site URL for the frontend web application",
       value: switchBy("WEB_APP_ENV", {
         development: "http://localhost:3001",
+        preview: "http://web.synoem.workers.dev",
         production: ProdVault.item(),
       }),
     },
@@ -233,6 +247,7 @@ export default defineDmnoService({
         "The secret for Payload CMS's revalidate function to invalidate the cache between cms and frontend",
       value: switchBy("WEB_APP_ENV", {
         development: "00cee747d1a4e2cf3bacc045",
+        preview: "00cee747d1a4e2cf3bacc045",
         production: ProdVault.item(),
       }),
     },

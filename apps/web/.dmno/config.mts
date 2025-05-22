@@ -1,4 +1,4 @@
-import { defineDmnoService, pick } from "dmno";
+import { defineDmnoService, pick, pickFromSchemaObject } from "dmno";
 import { EncryptedVaultDmnoPlugin } from "@dmno/encrypted-vault-plugin";
 
 EncryptedVaultDmnoPlugin.injectInstance("vault/prod");
