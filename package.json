@@ -27,8 +27,8 @@
     "node": ">=22"
   },
   "dependencies": {
-    "@dmno/cloudflare-platform": "^0.0.4",
     "@dmno/encrypted-vault-plugin": "^0.0.10",
+    "@dmno/netlify-platform": "^0.0.5",
     "@dmno/vercel-platform": "^0.0.3",
     "dmno": "^0.0.39"
   },
