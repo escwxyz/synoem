@@ -6,17 +6,12 @@
     "dev": "dmno run -w -- next dev --port 3001",
     "build": "dmno run -- next build",
     "start": "dmno run -- next start",
-    "lint": "dmno run -- next lint",
-    "build:worker": "opennextjs-cloudflare build & npx wrangler versions upload",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "cf-typegen": "wrangler types --env-interface CloudflareBindings ./cloudflare-env.d.ts"
+    "lint": "dmno run -- next lint"
   },
   "dependencies": {
     "@dmno/nextjs-integration": "^0.0.14",
     "@hookform/resolvers": "^5.0.1",
     "@next-safe-action/adapter-react-hook-form": "^1.0.14",
-    "@opennextjs/cloudflare": "^1.0.4",
     "@react-three/drei": "catalog:",
     "@react-three/fiber": "catalog:",
     "@synoem/config": "workspace:*",
@@ -56,7 +51,6 @@
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "tailwindcss": "catalog:",
-    "typescript": "catalog:",
-    "wrangler": "^4.15.2"
+    "typescript": "catalog:"
   }
 }

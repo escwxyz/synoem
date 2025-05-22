@@ -1,7 +1,7 @@
 import { DmnoBaseTypes, configPath, defineDmnoService, switchBy, pickFromSchemaObject } from "dmno";
 import { EncryptedVaultDmnoPlugin, EncryptedVaultTypes } from "@dmno/encrypted-vault-plugin";
 import { VercelEnvSchema } from "@dmno/vercel-platform";
-import { CloudflareWranglerEnvSchema } from "@dmno/cloudflare-platform";
+import { NetlifyEnvSchema } from "@dmno/netlify-platform/types";
 
 const ProdVault = new EncryptedVaultDmnoPlugin("vault/prod", {
   key: configPath("..", "DMNO_VAULT_KEY_PROD"),
@@ -18,15 +18,17 @@ export default defineDmnoService({
     DMNO_VAULT_KEY_PROD: {
       extends: EncryptedVaultTypes.encryptionKey,
     },
-    // Cloudflare
-    ...pickFromSchemaObject(CloudflareWranglerEnvSchema, {
-      CLOUDFLARE_ACCOUNT_ID: { value: ProdVault.item() },
-      // CLOUDFLARE_API_TOKEN: { value: ProdVault.item() },
-    }),
+    // Netlify
+    ...pickFromSchemaObject(NetlifyEnvSchema, "CONTEXT", "BUILD_ID"),
     WEB_APP_ENV: {
-      extends: DmnoBaseTypes.enum(["development", "production"]),
+      extends: DmnoBaseTypes.enum(["development", "preview", "production"]),
       summary: "The environment of the Next.js web application",
-      value: () => process.env.WEB_APP_ENV || process.env.NODE_ENV || "development",
+      value: switchBy("CONTEXT", {
+        _default: "development",
+        "deploy-preview": "preview",
+        "branch-deploy": "preview",
+        production: "production",
+      }),
     },
     // Vercel
     ...pickFromSchemaObject(VercelEnvSchema, "VERCEL_ENV"),
