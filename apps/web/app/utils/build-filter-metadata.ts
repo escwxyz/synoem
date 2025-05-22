@@ -15,7 +15,7 @@ import {
 export function buildProductFilterMetadata<T extends ProductTypeId>(
   products: DataFromCollectionSlug<ProductTypeToSlugMap[T]>[],
   productTypeId: ProductTypeId,
-): T extends "solar-panels" ? SolarPanelFilterMetadata : PumpControllerFilterMetadata {
+): SolarPanelFilterMetadata | PumpControllerFilterMetadata {
   switch (productTypeId) {
     case "solar-panel":
       // biome-ignore lint/suspicious/noExplicitAny: <explanation>

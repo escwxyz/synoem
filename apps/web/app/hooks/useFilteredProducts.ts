@@ -3,7 +3,11 @@ import { PRODUCTS_PER_PAGE, type ProductTypeId, type ProductTypeToSlugMap } from
 import type { DataFromCollectionSlug } from "@synoem/payload/types";
 import { useProductPagination } from "./use-product-pagination";
 import { useProductFilters } from "./use-product-filters";
-import { filterProducts } from "~/utils";
+import {
+  filterProducts,
+  type PumpControllerFilterValues,
+  type SolarPanelFilterValues,
+} from "~/utils";
 import type {
   SolarPanelFilterMetadata,
   PumpControllerFilterMetadata,
@@ -12,7 +16,7 @@ import type {
 interface UseFilteredProductsProps<T extends ProductTypeId> {
   allProducts: DataFromCollectionSlug<ProductTypeToSlugMap[T]>[];
   productTypeId: T;
-  filterMetadata: T extends "solar-panel" ? SolarPanelFilterMetadata : PumpControllerFilterMetadata;
+  filterMetadata: SolarPanelFilterMetadata | PumpControllerFilterMetadata | undefined;
 }
 
 export function useFilteredProducts<T extends ProductTypeId>({
@@ -20,6 +24,19 @@ export function useFilteredProducts<T extends ProductTypeId>({
   productTypeId,
   filterMetadata,
 }: UseFilteredProductsProps<T>) {
+  if (!filterMetadata) {
+    return {
+      filteredProducts: [],
+      totalFilteredDocs: 0,
+      totalPages: 0,
+      isPending: false,
+      urlFilters: {} as T extends "solar-panel"
+        ? SolarPanelFilterValues
+        : PumpControllerFilterValues,
+      handleResetFilters: () => {},
+    };
+  }
+
   const { currentPage } = useProductPagination();
 
   const { urlFilters, isPending, handleResetFilters } = useProductFilters(
@@ -50,11 +67,9 @@ export function useFilteredProducts<T extends ProductTypeId>({
     filteredProducts: filteredData.docs,
     totalFilteredDocs: filteredData.totalDocs,
     totalPages: filteredData.totalPages,
-
     isPending,
     urlFilters,
     handleResetFilters,
-
     currentPage,
   };
 }

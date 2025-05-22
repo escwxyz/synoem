@@ -15,9 +15,7 @@ import { useSidebar } from "~/hooks/useSidebar";
 import type { ProductTypeId } from "@synoem/config";
 
 export const useProductFilters = <T extends ProductTypeId>(
-  initialMetadata: T extends "solar-panel"
-    ? SolarPanelFilterMetadata
-    : PumpControllerFilterMetadata,
+  initialMetadata: SolarPanelFilterMetadata | PumpControllerFilterMetadata | undefined,
   productTypeId: T,
   autoCloseSidebar = true,
 ): {
@@ -28,6 +26,17 @@ export const useProductFilters = <T extends ProductTypeId>(
 } => {
   const [isPending, startTransition] = useTransition();
   const { setCurrentPage } = useProductPagination();
+
+  if (!initialMetadata) {
+    return {
+      isPending: false,
+      urlFilters: {} as T extends "solar-panel"
+        ? SolarPanelFilterValues
+        : PumpControllerFilterValues,
+      handleResetFilters: () => {},
+      handleChangeFilters: () => {},
+    };
+  }
 
   const filterSchema = createFilterSchema(initialMetadata, productTypeId);
 

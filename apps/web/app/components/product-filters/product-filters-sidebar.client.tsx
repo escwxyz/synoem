@@ -51,12 +51,11 @@ export const ProductFiltersSidebar = <T extends ProductTypeId>({
     return <div>Something went wrong fetching filter metadata</div>;
   }
 
-  const filterMetadata = buildProductFilterMetadata<T>(
+  const filterMetadata = buildProductFilterMetadata(
     filterMetadataResponse.data?.docs || [],
     productTypeId,
   );
 
-  // @ts-expect-error
   const { isPending, handleResetFilters } = useProductFilters(filterMetadata, productTypeId);
 
   const isDirty = useSearchParams().size > 0;
