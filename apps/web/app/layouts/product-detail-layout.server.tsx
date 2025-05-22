@@ -64,6 +64,7 @@ const getProductCached = (input: z.infer<typeof productSchema>) => {
     ["product"],
     {
       tags: ["product"],
+      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? 60 * 60 * 24 * 7 : 30,
     },
   );
 };

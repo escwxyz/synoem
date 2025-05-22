@@ -80,6 +80,7 @@ const getSocialLinksCached = (locale: Locale) => {
     ["social-links"],
     {
       tags: ["social-links"],
+      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? 60 * 60 * 24 * 30 : 30,
     },
   );
 };

@@ -49,6 +49,9 @@ const getNotificationCached = (locale: Locale) => {
       return await getNotification({ locale });
     },
     ["notification-bar"],
-    {},
+    {
+      tags: ["notification-bar"],
+      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? 60 * 60 * 24 * 3 : 30,
+    },
   );
 };

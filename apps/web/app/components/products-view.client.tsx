@@ -36,11 +36,6 @@ export const ProductsView = <T extends ProductTypeId>({
 }: Props<T>) => {
   const filterMetadataResponse = use(filterMetadataPromise);
 
-  const filterMetadata = buildProductFilterMetadata<T>(
-    filterMetadataResponse.data?.docs || [],
-    productTypeId,
-  );
-
   const allProductsResponse = use(allProductsPromise);
 
   const allProducts = useMemo(() => {
@@ -58,11 +53,15 @@ export const ProductsView = <T extends ProductTypeId>({
     return products;
   }, [allProductsResponse?.data?.docs, categorySlug]);
 
+  const filterMetadata =
+    filterMetadataResponse.status === "success"
+      ? buildProductFilterMetadata<T>(filterMetadataResponse.data?.docs || [], productTypeId)
+      : undefined;
+
   const { filteredProducts, totalFilteredDocs, isPending, handleResetFilters } =
     useFilteredProducts({
       allProducts,
       productTypeId,
-      // @ts-expect-error
       filterMetadata,
     });
 
