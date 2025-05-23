@@ -1,7 +1,6 @@
 import { DmnoBaseTypes, configPath, defineDmnoService, switchBy, pickFromSchemaObject } from "dmno";
 import { EncryptedVaultDmnoPlugin, EncryptedVaultTypes } from "@dmno/encrypted-vault-plugin";
 import { VercelEnvSchema } from "@dmno/vercel-platform";
-import { NetlifyEnvSchema } from "@dmno/netlify-platform/types";
 
 const ProdVault = new EncryptedVaultDmnoPlugin("vault/prod", {
   key: configPath("..", "DMNO_VAULT_KEY_PROD"),
@@ -18,16 +17,21 @@ export default defineDmnoService({
     DMNO_VAULT_KEY_PROD: {
       extends: EncryptedVaultTypes.encryptionKey,
     },
-    // Netlify
-    ...pickFromSchemaObject(NetlifyEnvSchema, "CONTEXT", "BUILD_ID"),
+    DMNO_ENV: {
+      extends: DmnoBaseTypes.enum(["development", "preview", "production"]),
+      required: true,
+      summary: "The environment of the DMNO service",
+      value: process.env.DMNO_ENV || "development",
+    },
+
     WEB_APP_ENV: {
       extends: DmnoBaseTypes.enum(["development", "preview", "production"]),
       summary: "The environment of the Next.js web application",
-      value: switchBy("CONTEXT", {
-        _default: "development",
-        "deploy-preview": "preview",
-        "branch-deploy": "preview",
+      value: switchBy("DMNO_ENV", {
+        development: "development",
+        preview: "preview",
         production: "production",
+        _default: "development",
       }),
     },
     // Vercel
@@ -36,8 +40,17 @@ export default defineDmnoService({
       summary: "The environment of the Next.js cms application",
       extends: DmnoBaseTypes.enum(["development", "production", "preview"]),
       value: () => {
-        if (DMNO_CONFIG.VERCEL_ENV === "production") return "production";
-        if (DMNO_CONFIG.VERCEL_ENV === "preview") return "preview";
+        const dmnoEnv = process.env.DMNO_ENV;
+        if (dmnoEnv === "production") return "production";
+        if (dmnoEnv === "preview") return "preview";
+        if (dmnoEnv === "development") return "development";
+
+        const vercelEnv = process.env.VERCEL_ENV;
+
+        if (vercelEnv === "production") return "production";
+        if (vercelEnv === "preview") return "preview";
+        if (vercelEnv === "development") return "development";
+
         return "development";
       },
     },
@@ -225,6 +238,7 @@ export default defineDmnoService({
       summary: "The site URL for the frontend web application",
       value: switchBy("WEB_APP_ENV", {
         development: "http://localhost:3001",
+        preview: "http://web.synoem.workers.dev",
         production: ProdVault.item(),
       }),
     },
@@ -235,6 +249,7 @@ export default defineDmnoService({
         "The secret for Payload CMS's revalidate function to invalidate the cache between cms and frontend",
       value: switchBy("WEB_APP_ENV", {
         development: "00cee747d1a4e2cf3bacc045",
+        preview: "00cee747d1a4e2cf3bacc045",
         production: ProdVault.item(),
       }),
     },
