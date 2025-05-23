@@ -23,7 +23,6 @@
     "@dmno/nextjs-integration": "^0.0.14",
     "@hookform/resolvers": "^5.0.1",
     "@next-safe-action/adapter-react-hook-form": "^1.0.14",
-    "@opennextjs/cloudflare": "^1.0.4",
     "@react-three/drei": "catalog:",
     "@react-three/fiber": "catalog:",
     "@synoem/config": "workspace:*",

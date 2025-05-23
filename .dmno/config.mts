@@ -17,7 +17,6 @@ export default defineDmnoService({
     DMNO_VAULT_KEY_PROD: {
       extends: EncryptedVaultTypes.encryptionKey,
     },
-
     DMNO_ENV: {
       extends: DmnoBaseTypes.enum(["development", "preview", "production"]),
       required: true,
