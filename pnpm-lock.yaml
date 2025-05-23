@@ -6,27 +6,6 @@ settings:
 
 catalogs:
   default:
-    '@payloadcms/db-postgres':
-      specifier: ^3.39.1
-      version: 3.39.1
-    '@payloadcms/email-resend':
-      specifier: ^3.39.1
-      version: 3.39.1
-    '@payloadcms/next':
-      specifier: ^3.39.1
-      version: 3.39.1
-    '@payloadcms/plugin-nested-docs':
-      specifier: ^3.39.1
-      version: 3.39.1
-    '@payloadcms/richtext-lexical':
-      specifier: ^3.39.1
-      version: 3.39.1
-    '@payloadcms/storage-s3':
-      specifier: ^3.39.1
-      version: 3.39.1
-    '@payloadcms/ui':
-      specifier: ^3.39.1
-      version: 3.39.1
     '@react-three/drei':
       specifier: ^10.0.6
       version: 10.0.8
@@ -51,9 +30,6 @@ catalogs:
     next:
       specifier: ^15.3.2
       version: 15.3.2
-    payload:
-      specifier: ^3.39.1
-      version: 3.39.1
     react:
       specifier: ^19.1.0
       version: 19.1.0
@@ -329,9 +305,15 @@ importers:
       '@synoem/config':
         specifier: workspace:*
         version: link:../config
+      '@synoem/schema':
+        specifier: workspace:*
+        version: link:../schema
       '@synoem/transactional':
         specifier: workspace:*
         version: link:../transactional
+      '@synoem/types':
+        specifier: workspace:*
+        version: link:../types
       '@synoem/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -350,6 +332,9 @@ importers:
       react:
         specifier: 'catalog:'
         version: 19.1.0
+      zod:
+        specifier: 'catalog:'
+        version: 3.25.23
     devDependencies:
       '@types/node':
         specifier: 'catalog:'
