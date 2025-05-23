@@ -4,25 +4,19 @@
   "private": true,
   "scripts": {
     "dev": "DMNO_ENV=development dmno run -w -- next dev --port 3001",
-
     "build:local": "DMNO_ENV=development dmno run -- next build",
-    "build:opennext": "opennextjs-cloudflare build",
-
-    "_upload-secrets": "dmno run -- bash ./scripts/upload-secrets.sh",
-
-    "deploy:preview": "DMNO_ENV=preview pnpm run _deploy-cf-opennext",
-    "preview": "echo \"Use 'pnpm deploy:preview'. This 'preview' script is for the old opennextjs-cloudflare preview command.\" && DMNO_ENV=preview pnpm run _deploy-cf-opennext-with-live-preview",
-    "deploy:prod": "DMNO_ENV=production pnpm run _deploy-cf-opennext",
-
-    "_deploy-cf-opennext": "pnpm run build:opennext && pnpm run _upload-secrets && opennextjs-cloudflare deploy",
-    "_deploy-cf-opennext-with-live-preview": "pnpm run build:opennext && pnpm run _upload-secrets && opennextjs-cloudflare preview",
-
+    "build": "next build",
+    "build:preview": "DMNO_ENV=preview dmno run -- opennextjs-cloudflare build",
+    "build:prod": "DMNO_ENV=production dmno run -- opennextjs-cloudflare build",
+    "deploy:preview": "pnpm run build:preview && opennextjs-cloudflare preview",
+    "deploy:prod": "pnpm run build:prod && opennextjs-cloudflare deploy",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings ./cloudflare-env.d.ts"
   },
   "dependencies": {
     "@dmno/nextjs-integration": "^0.0.14",
     "@hookform/resolvers": "^5.0.1",
     "@next-safe-action/adapter-react-hook-form": "^1.0.14",
+    "@opennextjs/cloudflare": "^1.0.4",
     "@react-three/drei": "catalog:",
     "@react-three/fiber": "catalog:",
     "@synoem/config": "workspace:*",
