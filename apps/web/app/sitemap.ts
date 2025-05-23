@@ -1,5 +1,5 @@
 // TODO: sitemap is only generated in the build time,
-// TODO: so we need to run a payload job to periodically update the sitemap
+// TODO: so we need to run a payload job to periodically trigger rebuild?
 
 import fs from "node:fs";
 import path from "node:path";
@@ -116,7 +116,7 @@ async function getDynamicProductRoutes(
         collection: productType.slug,
         where: { _status: { equals: "published" }, visible: { equals: true } },
         select: { slug: true, productCategory: true, updatedAt: true },
-        depth: 1,
+        depth: 1, // default populated fields on the product category
         pagination: false,
         limit: 0,
       });
@@ -131,21 +131,10 @@ async function getDynamicProductRoutes(
           "slug" in product.productCategory
         ) {
           categorySlug = (product.productCategory as PopulatedCategory).slug;
-        } else if (typeof product.productCategory === "string") {
-          try {
-            const category = await payload.findByID({
-              collection: `${productType.id}-categories`,
-              id: product.productCategory,
-              select: { slug: true },
-            });
-            categorySlug = (category as PopulatedCategory).slug;
-          } catch (catError) {
-            console.warn(
-              `Could not fetch category for product ${product.slug} (type: ${productType.id}, catId: ${product.productCategory})`,
-              catError,
-            );
-            continue;
-          }
+        } else {
+          throw new Error(
+            "Product category is not populated properly. Check the `defaultPopulate` field in Payload",
+          );
         }
 
         if (!categorySlug) {

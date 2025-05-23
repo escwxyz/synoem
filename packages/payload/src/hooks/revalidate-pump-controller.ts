@@ -38,6 +38,8 @@ export const revalidatePumpController: CollectionAfterChangeHook<PumpController>
         docSlug: doc.slug,
         locale: locale,
       });
+
+      throw error;
     }
   }
 };

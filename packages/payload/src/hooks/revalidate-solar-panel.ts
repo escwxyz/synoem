@@ -38,6 +38,8 @@ export const revalidateSolarPanel: CollectionAfterChangeHook<SolarPanel> = async
         docSlug: doc.slug,
         locale: locale,
       });
+
+      throw error;
     }
   }
 };
