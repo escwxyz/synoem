@@ -76,6 +76,8 @@ export const ProductCategoryPage = async ({
   );
 };
 
+// TODO: we need to revalidate the product category when the product category is updated
+
 const getProductCategoryCached = <T extends ProductTypeId>(
   locale: Locale,
   productTypeId: T,

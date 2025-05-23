@@ -1,5 +1,6 @@
 import { SOCIAL_PLATFORMS, getPlatformLabel, type SocialPlatform } from "@synoem/config";
 import type { GlobalConfig } from "payload";
+import { revalidateGlobals } from "../hooks";
 
 export const SocialLinks: GlobalConfig = {
   slug: "social-links",
@@ -33,4 +34,7 @@ export const SocialLinks: GlobalConfig = {
       ],
     },
   ],
+  hooks: {
+    afterChange: [revalidateGlobals],
+  },
 };

@@ -62,10 +62,10 @@ const getFooterCached = (locale: Locale) => {
     async () => {
       return await getFooter({ locale, slug: "footer" });
     },
-    ["footer"],
+    [`global-footer-${locale}`],
     {
-      tags: ["footer"],
-      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? 60 * 60 * 24 * 7 : 30,
+      tags: [`global-footer-${locale}`],
+      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? false : 30,
     },
   );
 };
