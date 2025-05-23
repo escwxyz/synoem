@@ -68,14 +68,12 @@ const filterSolarPanelProducts = (
       });
     }
 
-    // 玻璃类型过滤
     if (filters.glassTypes && filters.glassTypes.length > 0) {
       if (!product.glassType || !filters.glassTypes.includes(product.glassType)) {
         return false;
       }
     }
 
-    // Dimensions
     if (filters.dimensionsMin && filters.dimensionsMax) {
       const { dimensions } = product;
 
@@ -169,19 +167,13 @@ const filterPumpControllerProducts = (
   });
 };
 
-/**
- * 通用产品过滤函数
- */
 export function filterProducts<T extends ProductTypeId>(
   products: DataFromCollectionSlug<ProductTypeToSlugMap[T]>[],
   filters: T extends "solar-panel" ? SolarPanelFilterValues : PumpControllerFilterValues,
   productTypeId: T,
   page = 1,
 ): PaginatedDocs<DataFromCollectionSlug<ProductTypeToSlugMap[T]>> {
-  // 根据产品类型进行过滤
   let filteredProducts: DataFromCollectionSlug<ProductTypeToSlugMap[T]>[] = [];
-
-  console.log("filtering products with filters", filters);
 
   if (productTypeId === "solar-panel") {
     filteredProducts = filterSolarPanelProducts(

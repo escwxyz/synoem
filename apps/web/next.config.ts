@@ -3,8 +3,6 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 import type { NextConfig } from "next";
 
-console.log("ENV DUMP", process.env);
-
 const withNextIntl = createNextIntlPlugin();
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({

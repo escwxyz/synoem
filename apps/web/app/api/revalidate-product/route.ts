@@ -26,18 +26,19 @@ export async function POST(req: NextRequest) {
     slug: string;
   };
 
-  const tag = `product-${productTypeId}-${locale}-${slug}`;
-
-  // We will decide later if we want to use this or not
-  //   const path = `/${locale}/products/${productTypeId}`; // TODO: this is not needed if we use client side revalidation
-
   try {
-    revalidateTag(tag);
-    // TODO: we also need to revalidate the sitemap
-    // console.log("revalidating path", path);
-    // revalidatePath(path); //
+    const productTag = `product-${productTypeId}-${locale}-${slug}`;
+    const productsListTag = `products-${productTypeId}-${locale}`;
 
-    return new Response(JSON.stringify({ revalidated: true, tag }), { status: 200 });
+    await Promise.all([revalidateTag(productTag), revalidateTag(productsListTag)]);
+
+    return new Response(
+      JSON.stringify({
+        revalidated: true,
+        tags: [productTag, productsListTag],
+      }),
+      { status: 200 },
+    );
   } catch (error) {
     return new Response(JSON.stringify({ message: "Error revalidating" }), { status: 500 });
   }
