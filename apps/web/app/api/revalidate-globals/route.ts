@@ -1,4 +1,5 @@
 import type { NextRequest } from "next/server";
+import { revalidateTag } from "next/cache";
 
 export async function POST(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -9,20 +10,21 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json();
 
-  if (!body || typeof body !== "object" || !("path" in body)) {
+  if (!body || typeof body !== "object" || !("slug" in body) || !("locale" in body)) {
     return new Response(JSON.stringify({ message: "Invalid body" }), { status: 400 });
   }
 
-  const path = body.path;
-  if (!path || typeof path !== "string") {
-    return new Response(JSON.stringify({ message: "Invalid path" }), { status: 400 });
-  }
+  const { locale, slug } = body as {
+    locale: string | undefined;
+    slug: string;
+  };
+
+  const tag = locale ? `global-${slug}-${locale}` : `global-${slug}`;
 
   try {
-    // @ts-ignore
-    await globalThis.revalidatePath?.(path);
+    revalidateTag(tag);
 
-    return new Response(JSON.stringify({ revalidated: true, path }), { status: 200 });
+    return new Response(JSON.stringify({ revalidated: true, tag }), { status: 200 });
   } catch (error) {
     return new Response(JSON.stringify({ message: "Error revalidating" }), { status: 500 });
   }

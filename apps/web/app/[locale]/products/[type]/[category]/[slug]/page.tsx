@@ -10,69 +10,20 @@ import { isValidLocale } from "~/utils/is-valid-locale";
 import { ProductDetailPage } from "~/layouts/product-detail-layout.server";
 import { notFound } from "next/navigation";
 import { getPayloadClient } from "@synoem/payload/client";
+import type { productSchema } from "@synoem/schema";
+import { unstable_cache } from "next/cache";
+import { getProduct } from "~/data/get-product";
+import type { z } from "zod";
+import { generateProductPath } from "~/data/generate-product-path";
 
 // TODO: https://github.com/vercel/next.js/issues/72365
-export const revalidate = 259200; // 3 days
 
 export const dynamicParams = true;
 
 export const dynamic = "force-static";
 
 export const generateStaticParams = async () => {
-  const params = [];
-
-  const payload = await getPayloadClient();
-
-  for (const productType of Object.values(PRODUCT_TYPES)) {
-    const products = await payload.find({
-      collection: productType.slug,
-      where: {
-        _status: {
-          equals: "published",
-        },
-        visible: {
-          equals: true,
-        },
-      },
-      select: {
-        slug: true,
-        productCategory: true,
-      },
-      depth: 1,
-      pagination: false,
-      limit: 0,
-    });
-
-    for (const product of products.docs) {
-      for (const locale of locales) {
-        if (typeof product.productCategory === "object") {
-          params.push({
-            type: productType.id,
-            locale,
-            slug: product.slug,
-            category: product.productCategory.slug,
-          });
-        } else {
-          const category = await payload.findByID({
-            collection: `${productType.id}-categories`,
-            id: product.productCategory,
-            select: {
-              slug: true,
-            },
-          });
-
-          params.push({
-            type: productType.id,
-            locale,
-            slug: product.slug,
-            category: category.slug,
-          });
-        }
-      }
-    }
-  }
-
-  return params;
+  return await generateProductPath();
 };
 
 export default async function Page({
@@ -93,7 +44,45 @@ export default async function Page({
 
   const effectiveLocale = isValidLocale(locale) ? (locale as Locale) : defaultLocale;
 
-  return (
-    <ProductDetailPage slug={slug} locale={effectiveLocale} productTypeId={type as ProductTypeId} />
-  );
+  const productResponse = await getProductCached({
+    locale: effectiveLocale,
+    slug,
+    productTypeId: type,
+  })();
+
+  if (productResponse.error) {
+    // TODO: handle error
+    return <div>Error</div>;
+  }
+
+  if (!productResponse.data) {
+    return notFound();
+  }
+
+  const product = productResponse.data;
+
+  const productCategory = product.productCategory;
+
+  if (typeof productCategory !== "object") {
+    console.warn("Product Category is not populated properly");
+  }
+
+  return <ProductDetailPage product={product} productTypeId={type} locale={effectiveLocale} />;
 }
+
+const getProductCached = (input: z.infer<typeof productSchema>) => {
+  const { locale, slug, productTypeId } = input;
+
+  const tag = `product-${productTypeId}-${locale}-${slug}`;
+
+  return unstable_cache(
+    async () => {
+      return await getProduct(input);
+    },
+    [tag],
+    {
+      tags: [tag],
+      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? false : 30,
+    },
+  );
+};

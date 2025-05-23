@@ -81,14 +81,16 @@ const getProductCategoryCached = <T extends ProductTypeId>(
   productTypeId: T,
   slug: string,
 ) => {
+  const tag = `product-category-${productTypeId}-${locale}-${slug}`;
+
   return unstable_cache(
     async () => {
       return await getProductCategory<T>({ locale, productTypeId, slug });
     },
-    ["product-category", locale, productTypeId, slug],
+    [tag],
     {
-      tags: ["product-category", locale, productTypeId, slug],
-      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? 60 * 60 * 24 * 3 : 30,
+      tags: [tag],
+      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? false : 30,
     },
   );
 };
@@ -97,27 +99,31 @@ const getProductFilterMetadataCached = <T extends ProductTypeId>(
   locale: Locale,
   productTypeId: T,
 ) => {
+  const tag = `product-filter-metadata-${productTypeId}-${locale}`;
+
   return unstable_cache(
     async () => {
       return await getProductFilterMetadata<T>({ locale, productTypeId });
     },
-    ["product-filter-metadata", locale, productTypeId],
+    [tag],
     {
-      tags: ["product-filter-metadata", locale, productTypeId],
+      tags: [tag],
       revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? 60 * 60 * 24 * 3 : 30,
     },
   );
 };
 
 const getProductsCached = <T extends ProductTypeId>(locale: Locale, productTypeId: T) => {
+  const tag = `products-${productTypeId}-${locale}`;
+
   return unstable_cache(
     async () => {
       return await getProducts<T>({ locale, productTypeId });
     },
-    ["products", locale, productTypeId],
+    [tag],
     {
-      tags: ["products", locale, productTypeId],
-      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? 60 * 60 * 24 * 3 : 30,
+      tags: [tag],
+      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? false : 30,
     },
   );
 };

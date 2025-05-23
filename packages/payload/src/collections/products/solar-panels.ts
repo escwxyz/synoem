@@ -8,7 +8,7 @@ import {
 } from "./shared-fields";
 import { createDimensionsGroup, createWeightGroup } from "../../fields";
 import { validatePowerRange, validateRange } from "../../validation";
-import { generateProductCoverImage } from "../../hooks";
+import { generateProductCoverImage, revalidateSolarPanel } from "../../hooks";
 
 const physicalSpecs: CollapsibleField = {
   label: "Physical Specs",
@@ -460,6 +460,7 @@ export const SolarPanels: CollectionConfig = {
   ],
   hooks: {
     beforeValidate: [generateProductCoverImage],
+    afterChange: [revalidateSolarPanel],
   },
   versions: {
     drafts: {
