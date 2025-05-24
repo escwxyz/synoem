@@ -11,7 +11,6 @@ import {
   Button,
   Hr,
   // Img,
-  // Tailwind, TODO: https://react.email/docs/components/tailwind
 } from "@react-email/components";
 import type { Locale } from "@synoem/config";
 
@@ -99,7 +98,6 @@ export const formatDate = (date: string, language: Locale): string => {
 const getLocale = (language: Locale): string => {
   const localeMap: Record<Locale, string> = {
     en: "en-US",
-    // fr: "fr-FR",
     de: "de-DE",
   };
 
@@ -131,6 +129,9 @@ const NewsletterConfirmation = ({
         <Container style={container}>
           <Section style={logoContainer}>
             <Text>Logo</Text>
+            {/**
+             * TODO: get logo image url from company info global using payload local api
+             */}
             {/* <Img
               src={`${baseUrl}/placeholder.svg?height=48&width=180`}
               width="180"

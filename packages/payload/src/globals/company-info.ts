@@ -14,6 +14,28 @@ export const CompanyInfo: GlobalConfig = {
       required: true,
     },
     {
+      name: "logo",
+      label: "Logo",
+      type: "upload",
+      relationTo: "images",
+      hasMany: false,
+      required: true,
+      admin: {
+        description: "The logo of the company",
+      },
+    },
+    {
+      name: "logoDark",
+      label: "Logo Dark",
+      type: "upload",
+      relationTo: "images",
+      hasMany: false,
+      required: false,
+      admin: {
+        description: "The logo of the company in dark mode",
+      },
+    },
+    {
       name: "shortDescription",
       label: "Short Description",
       type: "text",
