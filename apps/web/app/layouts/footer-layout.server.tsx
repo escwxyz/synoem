@@ -4,8 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { NewsletterInput } from "~/components/newsletter-input.client";
 import { LanguageSwitcher } from "~/components/language-switcher.client";
 import { SocialLinks } from "~/components/social-links.server";
-import { getFooter } from "~/data/get-globals";
-import { unstable_cache } from "next/cache";
+import { getFooterCached } from "~/data/get-globals";
 
 import { Suspense } from "react";
 
@@ -36,7 +35,7 @@ export const FooterInner = async ({ locale }: { locale: Locale }) => {
         <div className="md:flex-1/4 flex flex-col gap-4">
           <Link href="/">LOGO</Link>
           <div className="mt-6 flex space-x-4">
-            <SocialLinks locale={locale} />
+            <SocialLinks />
           </div>
 
           <NewsletterInput />
@@ -54,18 +53,5 @@ export const FooterInner = async ({ locale }: { locale: Locale }) => {
         </div>
       </div>
     </div>
-  );
-};
-
-const getFooterCached = (locale: Locale) => {
-  return unstable_cache(
-    async () => {
-      return await getFooter({ locale, slug: "footer" });
-    },
-    [`global-footer-${locale}`],
-    {
-      tags: [`global-footer-${locale}`],
-      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? false : 30,
-    },
   );
 };

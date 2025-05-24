@@ -1,7 +1,8 @@
+// TODO: get data in RSC, render in client
+
 import { NavigationMobile } from "./navigation-mobile.client";
 import { NavigationDesktop } from "./navigation-desktop.client";
-import { unstable_cache } from "next/cache";
-import { getHeader } from "~/data/get-globals";
+import { getHeaderCached } from "~/data/get-globals";
 import type { Locale } from "@synoem/config";
 import { Suspense } from "react";
 
@@ -14,7 +15,7 @@ export const Navigation = async ({ locale }: { locale: Locale }) => {
 };
 
 const NavigationInner = async ({ locale }: { locale: Locale }) => {
-  const headerResponse = await getNavigationCached(locale)();
+  const headerResponse = await getHeaderCached(locale)();
 
   const hasNavigation =
     headerResponse.status === "success" &&
@@ -41,17 +42,4 @@ const NavigationInner = async ({ locale }: { locale: Locale }) => {
 
 const NavigationSkeleton = () => {
   return <div>TODO</div>;
-};
-
-const getNavigationCached = (locale: Locale) => {
-  return unstable_cache(
-    async () => {
-      return await getHeader({ locale, slug: "header" });
-    },
-    ["navigation"],
-    {
-      tags: ["navigation"],
-      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? 60 * 60 * 24 * 7 : 30,
-    },
-  );
 };

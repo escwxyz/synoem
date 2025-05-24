@@ -1,22 +1,12 @@
-import {
-  defaultLocale,
-  type ProductTypeId,
-  type Locale,
-  isValidProductType,
-  PRODUCT_TYPES,
-  locales,
-} from "@synoem/config";
+import { defaultLocale, type ProductTypeId, type Locale, isValidProductType } from "@synoem/config";
 import { isValidLocale } from "~/utils/is-valid-locale";
 import { ProductDetailPage } from "~/layouts/product-detail-layout.server";
 import { notFound } from "next/navigation";
-import { getPayloadClient } from "@synoem/payload/client";
 import type { productSchema } from "@synoem/schema";
 import { unstable_cache } from "next/cache";
 import { getProduct } from "~/data/get-product";
 import type { z } from "zod";
 import { generateProductPath } from "~/data/generate-product-path";
-
-// TODO: https://github.com/vercel/next.js/issues/72365
 
 export const dynamicParams = true;
 

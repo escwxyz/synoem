@@ -6,10 +6,9 @@ import { ProductCategoryHero } from "~/components/product-category-hero.server";
 import { ProductsView } from "~/components/products-view.client";
 import { Suspense } from "react";
 import { ProductsViewSkeleton } from "~/components/products-view-skeleton.client";
-import { unstable_cache } from "next/cache";
-import { getProductCategory } from "~/data/get-product-category";
-import { getProducts } from "~/data/get-products";
-import { getProductFilterMetadata } from "~/data/get-product-filter-metadata";
+import { getProductCategoryCached } from "~/data/get-product-category";
+import { getProductsCached } from "~/data/get-products";
+import { getProductFilterMetadataCached } from "~/data/get-product-filter-metadata";
 
 interface ProductCategoryPageProps {
   categorySlug?: string;
@@ -73,57 +72,5 @@ export const ProductCategoryPage = async ({
         </Suspense>
       </div>
     </div>
-  );
-};
-
-const getProductCategoryCached = <T extends ProductTypeId>(
-  locale: Locale,
-  productTypeId: T,
-  slug: string,
-) => {
-  const tag = `product-category-${productTypeId}-${locale}-${slug}`;
-
-  return unstable_cache(
-    async () => {
-      return await getProductCategory<T>({ locale, productTypeId, slug });
-    },
-    [tag],
-    {
-      tags: [tag],
-      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? false : 30,
-    },
-  );
-};
-
-const getProductFilterMetadataCached = <T extends ProductTypeId>(
-  locale: Locale,
-  productTypeId: T,
-) => {
-  const tag = `product-filter-metadata-${productTypeId}-${locale}`;
-
-  return unstable_cache(
-    async () => {
-      return await getProductFilterMetadata<T>({ locale, productTypeId });
-    },
-    [tag],
-    {
-      tags: [tag],
-      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? 60 * 60 * 24 * 3 : 30,
-    },
-  );
-};
-
-const getProductsCached = <T extends ProductTypeId>(locale: Locale, productTypeId: T) => {
-  const tag = `products-${productTypeId}-${locale}`;
-
-  return unstable_cache(
-    async () => {
-      return await getProducts<T>({ locale, productTypeId });
-    },
-    [tag],
-    {
-      tags: [tag],
-      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? false : 30,
-    },
   );
 };

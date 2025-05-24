@@ -4,11 +4,17 @@ import type { z } from "zod";
 import type { productFilterMetadataSchema } from "@synoem/schema";
 import type { BasePayload, DataFromCollectionSlug, PaginatedDocs } from "@synoem/payload/types";
 import type { APIResponse } from "~/types/api-response";
-import { PRODUCT_TYPES, type ProductTypeId, type ProductTypeToSlugMap } from "@synoem/config";
+import {
+  type Locale,
+  PRODUCT_TYPES,
+  type ProductTypeId,
+  type ProductTypeToSlugMap,
+} from "@synoem/config";
 import { PRODUCT_SELECT_OBJECT } from "~/types/product-select-fields";
 import { getPayloadClient } from "@synoem/payload/client";
+import { unstable_cache } from "next/cache";
 
-export async function getProducts<T extends ProductTypeId>(
+async function getProducts<T extends ProductTypeId>(
   input: z.infer<typeof productFilterMetadataSchema>,
   payloadPromise: Promise<BasePayload> = getPayloadClient(),
 ): Promise<APIResponse<PaginatedDocs<DataFromCollectionSlug<ProductTypeToSlugMap[T]>>>> {
@@ -53,3 +59,18 @@ export async function getProducts<T extends ProductTypeId>(
     };
   }
 }
+
+export const getProductsCached = <T extends ProductTypeId>(locale: Locale, productTypeId: T) => {
+  const tag = `products-${productTypeId}-${locale}`;
+
+  return unstable_cache(
+    async () => {
+      return await getProducts<T>({ locale, productTypeId });
+    },
+    [tag],
+    {
+      tags: [tag],
+      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? false : 30,
+    },
+  );
+};

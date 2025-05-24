@@ -1,11 +1,14 @@
+import "server-only";
+
 import type { Locale } from "@synoem/config";
 import type { APIResponse } from "~/types/api-response";
 import type { GlobalSlug, DataFromGlobalSlug, BasePayload } from "@synoem/payload/types";
 import { getPayloadClient } from "@synoem/payload/client";
+import { unstable_cache } from "next/cache";
 
 async function getGlobalHelper<T extends GlobalSlug>(
   input: {
-    locale: Locale;
+    locale?: Locale;
     slug: T;
   },
   payloadPromise: Promise<BasePayload> = getPayloadClient(),
@@ -41,6 +44,62 @@ async function getGlobalHelper<T extends GlobalSlug>(
   }
 }
 
-export const getHeader = getGlobalHelper<"header">;
-export const getFooter = getGlobalHelper<"footer">;
-export const getSocialLinks = getGlobalHelper<"social-links">;
+export const getHeaderCached = (locale: Locale) => {
+  const tag = `global-header-${locale}`;
+
+  return unstable_cache(
+    async () => {
+      return await getGlobalHelper({ locale, slug: "header" });
+    },
+    [tag],
+    {
+      tags: [tag],
+      revalidate: DMNO_PUBLIC_CONFIG.CMS_APP_ENV === "production" ? false : 30,
+    },
+  );
+};
+
+export const getFooterCached = (locale: Locale) => {
+  const tag = `global-footer-${locale}`;
+
+  return unstable_cache(
+    async () => {
+      return await getGlobalHelper({ locale, slug: "footer" });
+    },
+    [tag],
+    {
+      tags: [tag],
+      revalidate: DMNO_PUBLIC_CONFIG.CMS_APP_ENV === "production" ? false : 30,
+    },
+  );
+};
+
+export const getSocialLinksCached = () => {
+  const tag = "global-social-links";
+
+  return unstable_cache(
+    async () => {
+      return await getGlobalHelper({ slug: "social-links" });
+    },
+    [tag],
+    {
+      tags: [tag],
+      revalidate: DMNO_PUBLIC_CONFIG.CMS_APP_ENV === "production" ? false : 30,
+    },
+  );
+};
+
+export const getCompanyInfoCached = (locale: Locale) => {
+  const tag = `global-company-info-${locale}`;
+
+  return unstable_cache(
+    async () => {
+      return await getGlobalHelper({ locale, slug: "company-info" });
+    },
+    [tag],
+    {
+      tags: [tag],
+      revalidate: DMNO_PUBLIC_CONFIG.CMS_APP_ENV === "production" ? false : 30,
+    },
+  );
+};
