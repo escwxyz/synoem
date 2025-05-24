@@ -15,21 +15,27 @@ export async function POST(req: NextRequest) {
     return new Response(JSON.stringify({ message: "Invalid JSON" }), { status: 400 });
   }
 
-  if (!body || typeof body !== "object" || !("slug" in body) || !("locale" in body)) {
+  if (!body || typeof body !== "object" || !("locale" in body) || !("slug" in body)) {
     return new Response(JSON.stringify({ message: "Invalid body" }), { status: 400 });
   }
 
   const { locale, slug } = body as {
-    locale: string | undefined;
+    locale: string;
     slug: string;
   };
 
-  const tag = locale ? `global-${slug}-${locale}` : `global-${slug}`;
-
   try {
-    revalidateTag(tag);
+    const pageTag = `page-${slug}-${locale}`;
 
-    return new Response(JSON.stringify({ revalidated: true, tag }), { status: 200 });
+    revalidateTag(pageTag);
+
+    return new Response(
+      JSON.stringify({
+        revalidated: true,
+        tags: [pageTag],
+      }),
+      { status: 200 },
+    );
   } catch (error) {
     return new Response(JSON.stringify({ message: "Error revalidating" }), { status: 500 });
   }

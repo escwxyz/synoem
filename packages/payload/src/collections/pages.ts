@@ -6,6 +6,9 @@ import { title } from "../fields/title";
 import { CallToActionBlock } from "../blocks/call-to-action";
 import { MediaBlock } from "../blocks/media";
 import { FeatureBlock } from "../blocks/feature";
+import { TimelineBlock } from "../blocks/timeline";
+import { admin, authenticatedOrPublished } from "../access";
+import { revalidatePage } from "../hooks";
 
 export const Pages: CollectionConfig<"pages"> = {
   slug: "pages",
@@ -18,6 +21,11 @@ export const Pages: CollectionConfig<"pages"> = {
     useAsTitle: "title",
     group: "Content",
   },
+  access: {
+    read: authenticatedOrPublished,
+    create: admin,
+    update: admin,
+  },
   fields: [
     title,
     {
@@ -28,7 +36,14 @@ export const Pages: CollectionConfig<"pages"> = {
             {
               name: "layout",
               type: "blocks",
-              blocks: [HeroBlock, ContentBlock, CallToActionBlock, MediaBlock, FeatureBlock],
+              blocks: [
+                HeroBlock,
+                ContentBlock,
+                CallToActionBlock,
+                MediaBlock,
+                FeatureBlock,
+                TimelineBlock,
+              ],
               required: true,
               admin: {
                 initCollapsed: true,
@@ -65,5 +80,8 @@ export const Pages: CollectionConfig<"pages"> = {
       schedulePublish: true,
     },
     maxPerDoc: 5,
+  },
+  hooks: {
+    afterChange: [revalidatePage],
   },
 };

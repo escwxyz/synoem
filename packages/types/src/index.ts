@@ -312,7 +312,14 @@ export interface User {
 export interface Page {
   id: string;
   title: string;
-  layout: (HeroBlockType | ContentBlockType | CallToActionBlockType | MediaBlockType | FeatureBlockType)[];
+  layout: (
+    | HeroBlockType
+    | ContentBlockType
+    | CallToActionBlockType
+    | MediaBlockType
+    | FeatureBlockType
+    | TimelineBlockType
+  )[];
   publishedAt?: string | null;
   /**
    * Whether to prerender the page
@@ -1818,6 +1825,38 @@ export interface FeatureBlockType {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TimelineBlockType".
+ */
+export interface TimelineBlockType {
+  items?:
+    | {
+        title: string;
+        icon?: string | null;
+        date: string;
+        content: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'timelineBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "notifications".
  */
 export interface Notification {
@@ -2208,6 +2247,7 @@ export interface PagesSelect<T extends boolean = true> {
         callToActionBlock?: T | CallToActionBlockTypeSelect<T>;
         mediaBlock?: T | MediaBlockTypeSelect<T>;
         featureBlock?: T | FeatureBlockTypeSelect<T>;
+        timelineBlock?: T | TimelineBlockTypeSelect<T>;
       };
   publishedAt?: T;
   prerender?: T;
@@ -2374,6 +2414,23 @@ export interface FeatureBlockTypeSelect<T extends boolean = true> {
       };
   textPlacement?: T;
   textAlignment?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TimelineBlockType_select".
+ */
+export interface TimelineBlockTypeSelect<T extends boolean = true> {
+  items?:
+    | T
+    | {
+        title?: T;
+        icon?: T;
+        date?: T;
+        content?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -3155,6 +3212,14 @@ export interface Footer {
 export interface CompanyInfo {
   id: string;
   name: string;
+  /**
+   * The logo of the company
+   */
+  logo: string | Image;
+  /**
+   * The logo of the company in dark mode
+   */
+  logoDark?: (string | null) | Image;
   shortDescription: string;
   longDescription: string;
   vat?: string | null;
@@ -3266,6 +3331,8 @@ export interface FooterSelect<T extends boolean = true> {
  */
 export interface CompanyInfoSelect<T extends boolean = true> {
   name?: T;
+  logo?: T;
+  logoDark?: T;
   shortDescription?: T;
   longDescription?: T;
   vat?: T;

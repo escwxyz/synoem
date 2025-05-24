@@ -29,9 +29,7 @@
     "@synoem/transactional": "workspace:*",
     "@synoem/types": "workspace:*",
     "@synoem/typescript-config": "workspace:*",
-    "@synoem/ui": "workspace:*",
     "dmno": "^0.0.39",
-    "lucide-react": "catalog:",
     "payload": "catalog:",
     "react": "catalog:",
     "zod": "catalog:"
@@ -39,7 +37,6 @@
   "devDependencies": {
     "@types/node": "catalog:",
     "@types/react": "catalog:",
-    "@types/react-dom": "catalog:",
     "typescript": "catalog:"
   }
 }

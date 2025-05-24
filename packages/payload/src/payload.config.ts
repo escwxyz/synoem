@@ -65,6 +65,37 @@ export default buildConfig({
       ),
     },
     suppressHydrationWarning: DMNO_CONFIG.CMS_APP_ENV === "production",
+    livePreview: {
+      url: ({ collectionConfig, locale, data }) => {
+        if (collectionConfig?.slug === "pages") {
+          const slug = data.slug === "home" ? "" : `/${data.slug}`;
+          return `${DMNO_PUBLIC_CONFIG.WEB_SITE_URL}/${locale.code}${slug}`;
+        }
+
+        return DMNO_PUBLIC_CONFIG.WEB_SITE_URL;
+      },
+      collections: ["pages"],
+      breakpoints: [
+        {
+          label: "Mobile",
+          name: "mobile",
+          width: 375,
+          height: 667,
+        },
+        {
+          label: "Tablet",
+          name: "tablet",
+          width: 768,
+          height: 1024,
+        },
+        {
+          label: "Desktop",
+          name: "desktop",
+          width: 1440,
+          height: 900,
+        },
+      ],
+    },
   },
   editor: defaultLexical,
   db: postgresAdapter({

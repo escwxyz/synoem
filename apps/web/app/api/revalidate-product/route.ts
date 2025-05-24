@@ -8,7 +8,12 @@ export async function POST(req: NextRequest) {
     return new Response(JSON.stringify({ message: "Invalid secret" }), { status: 401 });
   }
 
-  const body = await req.json();
+  let body: unknown;
+  try {
+    body = await req.json();
+  } catch {
+    return new Response(JSON.stringify({ message: "Invalid JSON" }), { status: 400 });
+  }
 
   if (
     !body ||
