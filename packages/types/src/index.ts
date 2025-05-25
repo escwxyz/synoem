@@ -185,7 +185,6 @@ export interface Config {
     'packaging-configs': PackagingConfig;
     datasheets: Datasheet;
     drawings: Drawing;
-    faqs: Faq;
     testimonials: Testimonial;
     posts: Post;
     'solar-panels': SolarPanel;
@@ -223,7 +222,6 @@ export interface Config {
     'packaging-configs': PackagingConfigsSelect<false> | PackagingConfigsSelect<true>;
     datasheets: DatasheetsSelect<false> | DatasheetsSelect<true>;
     drawings: DrawingsSelect<false> | DrawingsSelect<true>;
-    faqs: FaqsSelect<false> | FaqsSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     'solar-panels': SolarPanelsSelect<false> | SolarPanelsSelect<true>;
@@ -244,6 +242,7 @@ export interface Config {
     'contact-info': ContactInfo;
     'social-links': SocialLink;
     header: Header;
+    faq: Faq;
   };
   globalsSelect: {
     footer: FooterSelect<false> | FooterSelect<true>;
@@ -251,6 +250,7 @@ export interface Config {
     'contact-info': ContactInfoSelect<false> | ContactInfoSelect<true>;
     'social-links': SocialLinksSelect<false> | SocialLinksSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
+    faq: FaqSelect<false> | FaqSelect<true>;
   };
   locale: 'en' | 'de';
   user: User & {
@@ -1908,25 +1908,6 @@ export interface NewsletterSubscriber {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "faqs".
- */
-export interface Faq {
-  id: string;
-  title: string;
-  description?: string | null;
-  type?: ('general' | 'solar-panel' | 'pump-controller') | null;
-  content?:
-    | {
-        question: string;
-        answer: string;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testimonials".
  */
 export interface Testimonial {
@@ -2141,10 +2122,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'drawings';
         value: string | Drawing;
-      } | null)
-    | ({
-        relationTo: 'faqs';
-        value: string | Faq;
       } | null)
     | ({
         relationTo: 'testimonials';
@@ -2745,24 +2722,6 @@ export interface DrawingsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "faqs_select".
- */
-export interface FaqsSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
-  type?: T;
-  content?:
-    | T
-    | {
-        question?: T;
-        answer?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testimonials_select".
  */
 export interface TestimonialsSelect<T extends boolean = true> {
@@ -3220,6 +3179,10 @@ export interface CompanyInfo {
    * The logo of the company in dark mode
    */
   logoDark?: (string | null) | Image;
+  /**
+   * The image used for the open graph image (preferably 1200x630)
+   */
+  openGraphImage?: (string | null) | Image;
   shortDescription: string;
   longDescription: string;
   vat?: string | null;
@@ -3280,6 +3243,42 @@ export interface Header {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq".
+ */
+export interface Faq {
+  id: string;
+  general?: {
+    content?:
+      | {
+          question: string;
+          answer: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  'solar-panel'?: {
+    content?:
+      | {
+          question: string;
+          answer: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  'pump-controller'?: {
+    content?:
+      | {
+          question: string;
+          answer: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
@@ -3333,6 +3332,7 @@ export interface CompanyInfoSelect<T extends boolean = true> {
   name?: T;
   logo?: T;
   logoDark?: T;
+  openGraphImage?: T;
   shortDescription?: T;
   longDescription?: T;
   vat?: T;
@@ -3430,6 +3430,48 @@ export interface LinkItemsSelect<T extends boolean = true> {
   desc?: T;
   link?: T | LinkTypeSelect<T>;
   id?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq_select".
+ */
+export interface FaqSelect<T extends boolean = true> {
+  general?:
+    | T
+    | {
+        content?:
+          | T
+          | {
+              question?: T;
+              answer?: T;
+              id?: T;
+            };
+      };
+  'solar-panel'?:
+    | T
+    | {
+        content?:
+          | T
+          | {
+              question?: T;
+              answer?: T;
+              id?: T;
+            };
+      };
+  'pump-controller'?:
+    | T
+    | {
+        content?:
+          | T
+          | {
+              question?: T;
+              answer?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

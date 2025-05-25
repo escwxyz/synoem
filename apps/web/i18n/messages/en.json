@@ -190,5 +190,12 @@
     "products": "Products",
     "solar-panel": "Solar Panel",
     "pump-controller": "Pump Controller"
+  },
+  "FaqSection": {
+    "title": "Frequently Asked Questions",
+    "description": "Common questions about our products and services",
+    "stillHaveQuestions": "Still have questions?",
+    "weAreHereToHelp": "We're here to help you",
+    "contactSupport": "Contact Support"
   }
 }

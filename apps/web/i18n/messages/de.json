@@ -187,5 +187,12 @@
     "products": "Produkte",
     "solar-panel": "Solarmodul",
     "pump-controller": "Pumpensteuerung"
+  },
+  "FaqSection": {
+    "title": "Häufig gestellte Fragen",
+    "description": "Häufig gestellte Fragen zu unseren Produkten und Dienstleistungen",
+    "stillHaveQuestions": "Noch Fragen?",
+    "weAreHereToHelp": "Wir sind hier, um Ihnen zu helfen",
+    "contactSupport": "Kontaktiere Support"
   }
 }

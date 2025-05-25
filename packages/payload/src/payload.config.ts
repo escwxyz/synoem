@@ -9,7 +9,7 @@ import { defaultLexical } from "./fields/default-lexical";
 
 import { postgresAdapter } from "@payloadcms/db-postgres";
 
-import { Footer, Header, CompanyInfo, ContactInfo, SocialLinks } from "./globals";
+import { Footer, Header, CompanyInfo, ContactInfo, SocialLinks, FAQ } from "./globals";
 // Media
 import { Videos } from "./collections/media/videos";
 import { Images } from "./collections/media/images";
@@ -42,7 +42,6 @@ import { Notifications } from "./collections/notifications";
 // TODO: re-export all collections from index.ts
 import { SolarPanels, PumpControllers, productCategoryCollections } from "./collections";
 
-import { FAQs } from "./collections/faqs";
 import { resendAdapter } from "@payloadcms/email-resend";
 
 const filename = fileURLToPath(import.meta.url);
@@ -132,7 +131,6 @@ export default buildConfig({
     Datasheets,
     // Drawings
     Drawings,
-    FAQs,
     // Testimonials
     Testimonials,
     // Posts
@@ -142,7 +140,7 @@ export default buildConfig({
     PumpControllers,
     ...productCategoryCollections,
   ],
-  globals: [Footer, CompanyInfo, ContactInfo, SocialLinks, Header],
+  globals: [Footer, CompanyInfo, ContactInfo, SocialLinks, Header, FAQ],
   plugins: plugins(),
   localization: {
     defaultLocale,
