@@ -7,6 +7,7 @@ export default defineDmnoService({
   name: "payload-config",
   schema: {
     CMS_APP_ENV: pick("root", "CMS_APP_ENV"),
+    CMS_SERVER_URL: pick("root", "CMS_SERVER_URL"),
     DATABASE_URI: pick("root", "DATABASE_URI"),
     RESEND_API_KEY: pick("root", "RESEND_API_KEY"),
     RESEND_FROM_EMAIL: pick("root", "RESEND_FROM_EMAIL"),

@@ -1,10 +1,13 @@
 import { getCertificationLogosCached } from "~/data/get-certification-logos";
 import { LogoCloud } from "./logo-cloud.server";
 import { Suspense } from "react";
-import { getUrl } from "../utils";
+import { getUrl } from "~/utils";
+import { getTranslations } from "next-intl/server";
 
 const CertificationLogosInner = async () => {
   const certificationLogosResponse = await getCertificationLogosCached()();
+
+  const t = await getTranslations("CertificationLogos");
 
   const hasCertificationLogos =
     certificationLogosResponse.status === "success" &&
@@ -20,7 +23,7 @@ const CertificationLogosInner = async () => {
 
   return (
     <LogoCloud
-      title="Certified by the major brands"
+      title={t("title")}
       // biome-ignore lint/style/noNonNullAssertion: <explanation>
       logos={certificationLogosResponse.data!.map((certification) => ({
         url: getUrl((certification.logo as { url: string }).url),
