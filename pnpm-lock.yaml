@@ -533,7 +533,7 @@ importers:
         specifier: 'catalog:'
         version: 0.488.0(react@19.1.0)
       motion:
-        specifier: ^12.7.3
+        specifier: ^12.12.1
         version: 12.12.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       next-themes:
         specifier: ^0.4.4
@@ -547,6 +547,9 @@ importers:
       react-hook-form:
         specifier: 'catalog:'
         version: 7.56.4(react@19.1.0)
+      react-use-measure:
+        specifier: ^2.1.7
+        version: 2.1.7(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       recharts:
         specifier: ^2.15.3
         version: 2.15.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)

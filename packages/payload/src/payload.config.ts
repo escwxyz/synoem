@@ -23,7 +23,6 @@ import { NewsletterSubscribers } from "./collections/newsletter";
 import { Testimonials } from "./collections/testimonials";
 // Product Related
 import { Instructions } from "./collections/instructions";
-import { Certifications } from "./collections/certifications";
 import { PackagingConfigs } from "./collections/packaging-configs";
 import { Datasheets } from "./collections/datasheets";
 import { Warranties } from "./collections/warranties";
@@ -36,11 +35,15 @@ import { Industries } from "./collections/industries";
 import { Pages } from "./collections/pages";
 // Posts
 import { Posts } from "./collections/posts";
-// Notifications
-import { Notifications } from "./collections/notifications";
 
 // TODO: re-export all collections from index.ts
-import { SolarPanels, PumpControllers, productCategoryCollections } from "./collections";
+import {
+  SolarPanels,
+  PumpControllers,
+  productCategoryCollections,
+  Notifications,
+  Certifications,
+} from "./collections";
 
 import { resendAdapter } from "@payloadcms/email-resend";
 

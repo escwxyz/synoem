@@ -20,6 +20,17 @@ export const Certifications: CollectionConfig = {
       localized: true,
     },
     {
+      name: "logo",
+      type: "upload",
+      label: "Logo",
+      relationTo: "images",
+      hasMany: false,
+      admin: {
+        description: "The logo of the certification",
+      },
+      required: true,
+    },
+    {
       name: "file",
       type: "upload",
       relationTo: "documents",

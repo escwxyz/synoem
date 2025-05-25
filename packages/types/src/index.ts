@@ -355,7 +355,7 @@ export interface HeroBlockType {
   ctaPrimary?: LinkType;
   ctaSecondary?: LinkType;
   /**
-   * Select an image, video, or model to display in the hero section.
+   * Select an image or video to display in the hero section.
    */
   media:
     | {
@@ -365,67 +365,7 @@ export interface HeroBlockType {
     | {
         relationTo: 'videos';
         value: string | Video;
-      }
-    | {
-        relationTo: 'models';
-        value: string | Model;
       };
-  posX?: number | null;
-  posY?: number | null;
-  posZ?: number | null;
-  rotX?: number | null;
-  rotY?: number | null;
-  rotZ?: number | null;
-  scale?: number | null;
-  animations?:
-    | {
-        type: 'position' | 'rotation' | 'scale';
-        trigger: 'scroll' | 'view' | 'time';
-        easing?: ('linear' | 'easeIn' | 'easeOut' | 'easeInOut' | 'spring') | null;
-        /**
-         * Duration in seconds
-         */
-        duration?: number | null;
-        /**
-         * Delay in seconds
-         */
-        delay?: number | null;
-        posValues?: {
-          from?: {
-            x?: number | null;
-            y?: number | null;
-            z?: number | null;
-          };
-          to?: {
-            x?: number | null;
-            y?: number | null;
-            z?: number | null;
-          };
-        };
-        rotValues?: {
-          from?: {
-            x?: number | null;
-            y?: number | null;
-            z?: number | null;
-          };
-          to?: {
-            x?: number | null;
-            y?: number | null;
-            z?: number | null;
-          };
-        };
-        scaleValues?: {
-          from?: number | null;
-          to?: number | null;
-        };
-        scrollSettings?: {
-          start?: string | null;
-          end?: string | null;
-          scrub?: boolean | null;
-        };
-        id?: string | null;
-      }[]
-    | null;
   /**
    * Select if text is on the left or the right.
    */
@@ -1570,6 +1510,10 @@ export interface Certification {
   id: string;
   name: string;
   desc?: string | null;
+  /**
+   * The logo of the certification
+   */
+  logo: string | Image;
   file?: (string | null) | Document;
   updatedAt: string;
   createdAt: string;
@@ -2246,72 +2190,6 @@ export interface HeroBlockTypeSelect<T extends boolean = true> {
   ctaPrimary?: T | LinkTypeSelect<T>;
   ctaSecondary?: T | LinkTypeSelect<T>;
   media?: T;
-  posX?: T;
-  posY?: T;
-  posZ?: T;
-  rotX?: T;
-  rotY?: T;
-  rotZ?: T;
-  scale?: T;
-  animations?:
-    | T
-    | {
-        type?: T;
-        trigger?: T;
-        easing?: T;
-        duration?: T;
-        delay?: T;
-        posValues?:
-          | T
-          | {
-              from?:
-                | T
-                | {
-                    x?: T;
-                    y?: T;
-                    z?: T;
-                  };
-              to?:
-                | T
-                | {
-                    x?: T;
-                    y?: T;
-                    z?: T;
-                  };
-            };
-        rotValues?:
-          | T
-          | {
-              from?:
-                | T
-                | {
-                    x?: T;
-                    y?: T;
-                    z?: T;
-                  };
-              to?:
-                | T
-                | {
-                    x?: T;
-                    y?: T;
-                    z?: T;
-                  };
-            };
-        scaleValues?:
-          | T
-          | {
-              from?: T;
-              to?: T;
-            };
-        scrollSettings?:
-          | T
-          | {
-              start?: T;
-              end?: T;
-              scrub?: T;
-            };
-        id?: T;
-      };
   textPlacement?: T;
   textAlignment?: T;
   id?: T;
@@ -2645,6 +2523,7 @@ export interface InstructionsSelect<T extends boolean = true> {
 export interface CertificationsSelect<T extends boolean = true> {
   name?: T;
   desc?: T;
+  logo?: T;
   file?: T;
   updatedAt?: T;
   createdAt?: T;
