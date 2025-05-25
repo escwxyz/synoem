@@ -168,9 +168,20 @@ export const FaqSection = <T extends "general" | ProductTypeId>({
             transition={{ duration: 0.5, delay: 0.3 }}
             className={cn("mx-auto mt-12 max-w-md rounded-lg p-6 text-center")}
           >
-            <div className="mb-4 inline-flex items-center justify-center rounded-full bg-primary/10 p-2 text-primary">
-              <Mail className="h-4 w-4" />
-            </div>
+            <motion.div
+              animate={{
+                scale: [1, 1.2, 1],
+                transition: {
+                  duration: 1,
+                  ease: "easeInOut",
+                  repeat: Number.POSITIVE_INFINITY,
+                  repeatType: "loop",
+                },
+              }}
+              className="mb-4 inline-flex items-center justify-center rounded-full bg-primary/10 p-2 text-primary"
+            >
+              <Mail className="h-4 w-4 " />
+            </motion.div>
             <p className="mb-1 text-sm font-medium text-foreground">{t("stillHaveQuestions")}</p>
             <p className="mb-4 text-xs text-muted-foreground">{t("weAreHereToHelp")}</p>
             <Button
