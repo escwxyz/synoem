@@ -15,6 +15,7 @@ import { getCompanyInfoCached } from "~/data/get-globals";
 import { defaultLocale, type Locale, locales } from "@synoem/config";
 
 import "@synoem/ui/web.css";
+import { getUrl } from "../utils/get-url";
 
 const inter = Inter({
   preload: true,
@@ -24,8 +25,8 @@ const inter = Inter({
 export const generateMetadata = async ({
   params,
 }: { params: Promise<{ locale: string }> }): Promise<Metadata> => {
-  const effectiveLocale = isValidLocale((await params).locale)
-    ? (await params).locale
+  const effectiveLocale: Locale = isValidLocale((await params).locale)
+    ? ((await params).locale as Locale)
     : defaultLocale;
 
   const languages = locales.reduce(
@@ -36,22 +37,41 @@ export const generateMetadata = async ({
     {} as Record<Locale, string>,
   );
 
-  const companyInfo = await getCompanyInfoCached(effectiveLocale as Locale)();
+  const companyInfo = await getCompanyInfoCached(effectiveLocale)();
+
+  const keywords =
+    effectiveLocale === "de"
+      ? ["Solarmodule", "Erneubare Energie", "Photovoltaik", "Photovoltaik Anlage"]
+      : ["Solar Panel", "Renewable Energy", "Photovoltaic"];
+
+  const openGraphImageSrc =
+    companyInfo.data?.openGraphImage && typeof companyInfo.data.openGraphImage === "object"
+      ? companyInfo.data.openGraphImage.url
+      : null;
+
+  const openGraph: NonNullable<Metadata["openGraph"]> = {
+    title: companyInfo.data?.name,
+    description: companyInfo.data?.longDescription,
+    url: DMNO_PUBLIC_CONFIG.WEB_SITE_URL,
+    siteName: companyInfo.data?.name,
+    locale: effectiveLocale,
+    type: "website",
+    ...(openGraphImageSrc && {
+      images: [
+        {
+          url: getUrl(openGraphImageSrc),
+          alt: companyInfo.data?.name,
+        },
+      ],
+    }),
+  };
 
   return {
     metadataBase: new URL(DMNO_PUBLIC_CONFIG.WEB_SITE_URL),
     title: companyInfo.data?.name,
     description: companyInfo.data?.longDescription,
-    // keywords:
-    openGraph: {
-      title: companyInfo.data?.name,
-      description: companyInfo.data?.longDescription,
-      url: DMNO_PUBLIC_CONFIG.WEB_SITE_URL,
-      siteName: companyInfo.data?.name,
-      locale: effectiveLocale,
-      type: "website",
-      // images: [companyInfo.data?.logo],
-    },
+    keywords,
+    openGraph,
     twitter: {
       title: companyInfo.data?.name,
       description: companyInfo.data?.longDescription,

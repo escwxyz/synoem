@@ -36,6 +36,17 @@ export const CompanyInfo: GlobalConfig = {
       },
     },
     {
+      name: "openGraphImage",
+      label: "Open Graph Image",
+      type: "upload",
+      relationTo: "images",
+      hasMany: false,
+      required: false,
+      admin: {
+        description: "The image used for the open graph image (preferably 1200x630)",
+      },
+    },
+    {
       name: "shortDescription",
       label: "Short Description",
       type: "text",
