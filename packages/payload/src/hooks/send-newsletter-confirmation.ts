@@ -17,6 +17,22 @@ export const sendNewsletterConfirmation: CollectionAfterOperationHook<
     const subject = translations[locale].preview;
 
     try {
+      const response = await payload.findGlobal({
+        slug: "company-info",
+        depth: 0,
+        select: {
+          logo: true,
+        },
+      });
+
+      if (typeof response.logo !== "object" || !response.logo.url) {
+        throw new Error("No logo found for company info global");
+      }
+
+      const url = response.logo.url;
+
+      const logoUrl = url.startsWith("http") ? url : `${DMNO_PUBLIC_CONFIG.CMS_SERVER_URL}${url}`;
+
       await payload.sendEmail({
         from: "info@updates.synoem.com",
         to: email,
@@ -25,8 +41,9 @@ export const sendNewsletterConfirmation: CollectionAfterOperationHook<
           await render(
             React.createElement(NewsletterConfirmation, {
               subscriptionDate: new Date().toISOString(),
-              unsubscribeUrl: "https://synoem.com/unsubscribe",
+              // unsubscribeUrl: "https://synoem.com/unsubscribe",
               language: locale,
+              logoUrl,
             }),
           ),
         ),

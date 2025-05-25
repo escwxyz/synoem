@@ -10,7 +10,7 @@ import {
   Preview,
   Button,
   Hr,
-  // Img,
+  Img,
 } from "@react-email/components";
 import type { Locale } from "@synoem/config";
 
@@ -106,14 +106,16 @@ const getLocale = (language: Locale): string => {
 
 interface NewsletterConfirmationEmailProps {
   subscriptionDate: string;
-  unsubscribeUrl?: string;
+  // unsubscribeUrl?: string;
   language?: Locale;
+  logoUrl: string;
 }
 
 const NewsletterConfirmation = ({
   subscriptionDate,
-  unsubscribeUrl,
+  // unsubscribeUrl,
   language = "en",
+  logoUrl,
 }: NewsletterConfirmationEmailProps) => {
   const baseUrl = `https://synoem.com/${language}`;
   const utmSource = "newsletter";
@@ -128,17 +130,7 @@ const NewsletterConfirmation = ({
       <Body style={main}>
         <Container style={container}>
           <Section style={logoContainer}>
-            <Text>Logo</Text>
-            {/**
-             * TODO: get logo image url from company info global using payload local api
-             */}
-            {/* <Img
-              src={`${baseUrl}/placeholder.svg?height=48&width=180`}
-              width="180"
-              height="48"
-              alt="Company Logo"
-              style={logo}
-            /> */}
+            <Img src={logoUrl} width="80" height="80" alt="Logo" style={logo} />
           </Section>
 
           <Section style={section}>
@@ -180,9 +172,9 @@ const NewsletterConfirmation = ({
                 {t.privacyPolicy}
               </Link>{" "}
               •{" "}
-              <Link href={`${unsubscribeUrl}?utm_source=${utmSource}`} style={link}>
+              {/* <Link href={`${unsubscribeUrl}?utm_source=${utmSource}`} style={link}>
                 {t.unsubscribe}
-              </Link>
+              </Link> */}
             </Text>
           </Section>
         </Container>
@@ -193,8 +185,9 @@ const NewsletterConfirmation = ({
 
 NewsletterConfirmation.PreviewProps = {
   subscriptionDate: "2025-01-01",
-  unsubscribeUrl: "https://synoem.com/unsubscribe",
+  // unsubscribeUrl: "https://synoem.com/unsubscribe",
   language: "de",
+  logoUrl: "https://synoem.com/placeholder.svg?height=48&width=180",
 };
 
 export default NewsletterConfirmation;
