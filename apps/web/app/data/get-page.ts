@@ -1,26 +1,19 @@
 import "server-only";
 
-import { z } from "zod";
+import type { z } from "zod";
 import type { APIResponse } from "~/types/api-response";
-import { locales, type Locale } from "@synoem/config";
-import type { BasePayload } from "@synoem/payload/types";
+import type { Locale } from "@synoem/config";
+import type { BasePayload, RevalidateCollectionTagName } from "@synoem/payload/types";
 import { getPayloadClient } from "@synoem/payload/client";
 import { unstable_cache } from "next/cache";
-import { draftMode } from "next/headers";
 import type { Page } from "@synoem/types";
-
-const schema = z.object({
-  locale: z.enum(locales),
-  slug: z.string(),
-});
+import type { pageSchema } from "@synoem/schema";
 
 async function getPage(
-  input: z.infer<typeof schema>,
+  input: z.infer<typeof pageSchema>,
   payloadPromise: Promise<BasePayload> = getPayloadClient(),
 ): Promise<APIResponse<Page | null>> {
   const { locale, slug } = input;
-
-  const { isEnabled: draft } = await draftMode();
 
   const payload = await payloadPromise;
 
@@ -34,8 +27,6 @@ async function getPage(
       },
       limit: 1,
       pagination: false,
-      draft,
-      overrideAccess: draft,
       locale,
     });
 
@@ -56,7 +47,8 @@ async function getPage(
 }
 
 export const getPageCached = (locale: Locale, slug: string) => {
-  const tag = `page-${slug}-${locale}`;
+  const tag: RevalidateCollectionTagName<string, typeof locale> =
+    `collection-pages-${locale}-${slug}`;
 
   return unstable_cache(
     async () => {

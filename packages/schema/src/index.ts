@@ -116,4 +116,8 @@ export const unsubscribeNewsletterFormSchema = z.object({
 
 export const newsletterSchema = newsletterFormSchema.merge(metadataSchema);
 
-export const fileSchema = z.instanceof(File);
+export const pageSchema = z
+  .object({
+    slug: z.string(),
+  })
+  .merge(localeSchema);

@@ -5,9 +5,11 @@ import type { Notification } from "@synoem/types";
 import type { z } from "zod";
 import type { localeSchema } from "@synoem/schema";
 import { getPayloadClient } from "@synoem/payload/client";
-import type { BasePayload } from "@synoem/payload/types";
+import type { BasePayload, RevalidateCollectionListTagName } from "@synoem/payload/types";
+import { unstable_cache } from "next/cache";
+import type { Locale } from "@synoem/config";
 
-export async function getNotification(
+async function getNotification(
   input: z.infer<typeof localeSchema>,
   payloadPromise: Promise<BasePayload> = getPayloadClient(),
 ): Promise<APIResponse<Notification | null>> {
@@ -44,3 +46,18 @@ export async function getNotification(
     };
   }
 }
+
+export const getNotificationCached = (locale: Locale) => {
+  const tag: RevalidateCollectionListTagName<typeof locale> = `collections-notifications-${locale}`;
+
+  return unstable_cache(
+    async () => {
+      return await getNotification({ locale });
+    },
+    [tag],
+    {
+      tags: [tag],
+      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? false : 30,
+    },
+  );
+};

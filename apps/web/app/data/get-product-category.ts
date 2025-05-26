@@ -3,7 +3,11 @@ import "server-only";
 import type { z } from "zod";
 import type { APIResponse } from "~/types/api-response";
 import type { Locale, ProductTypeId, ProductTypeToCategorySlugMap } from "@synoem/config";
-import type { BasePayload, DataFromCollectionSlug } from "@synoem/payload/types";
+import type {
+  BasePayload,
+  DataFromCollectionSlug,
+  RevalidateCollectionTagName,
+} from "@synoem/payload/types";
 import type { productSchema } from "@synoem/schema";
 import { getPayloadClient } from "@synoem/payload/client";
 import { unstable_cache } from "next/cache";
@@ -65,7 +69,8 @@ export const getProductCategoryCached = <T extends ProductTypeId>(
   productTypeId: T,
   slug: string,
 ) => {
-  const tag = `product-category-${productTypeId}-${locale}-${slug}`;
+  const tag: RevalidateCollectionTagName<string, typeof locale> =
+    `collection-${productTypeId}-categories-${locale}-${slug}`;
 
   return unstable_cache(
     async () => {
@@ -74,7 +79,7 @@ export const getProductCategoryCached = <T extends ProductTypeId>(
     [tag],
     {
       tags: [tag],
-      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? false : 30,
+      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? false : 30, // We don't need to revalidate because we have to change the config file for this to work
     },
   );
 };

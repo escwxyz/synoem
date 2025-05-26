@@ -1,5 +1,5 @@
 import { getPayloadClient } from "@synoem/payload/client";
-import type { BasePayload } from "@synoem/payload/types";
+import type { BasePayload, RevalidateCollectionListTagName } from "@synoem/payload/types";
 import type { APIResponse } from "../types/api-response";
 import type { Certification } from "@synoem/types";
 import { unstable_cache } from "next/cache";
@@ -38,16 +38,16 @@ async function getCertificationLogos(
 }
 
 export const getCertificationLogosCached = () => {
-  const tags = ["certifications"];
+  const tags: RevalidateCollectionListTagName<undefined> = "collections-certifications";
 
   return unstable_cache(
     async () => {
       return await getCertificationLogos();
     },
-    tags,
+    [tags],
     {
       revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? false : 30,
-      tags,
+      tags: [tags],
     },
   );
 };

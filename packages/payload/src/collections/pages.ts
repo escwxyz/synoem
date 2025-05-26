@@ -8,7 +8,7 @@ import { MediaBlock } from "../blocks/media";
 import { FeatureBlock } from "../blocks/feature";
 import { TimelineBlock } from "../blocks/timeline";
 import { admin, authenticatedOrPublished } from "../access";
-import { revalidatePage } from "../hooks";
+import { revalidateCollection } from "../hooks";
 
 export const Pages: CollectionConfig<"pages"> = {
   slug: "pages",
@@ -82,6 +82,6 @@ export const Pages: CollectionConfig<"pages"> = {
     maxPerDoc: 5,
   },
   hooks: {
-    afterChange: [revalidatePage],
+    afterChange: [revalidateCollection],
   },
 };

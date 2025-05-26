@@ -1,8 +1,7 @@
-import { getPageCached } from "@/app/data/get-page";
-import { isValidLocale } from "@/app/utils/is-valid-locale";
+import { getPageCached } from "~/data/get-page";
+import { isValidLocale } from "~/utils/is-valid-locale";
 import type { Locale } from "@synoem/config";
 import { getPayloadClient } from "@synoem/payload/client";
-import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 import { LivePreviewListener } from "~/components/live-preview-listener.client";
 import { RenderBlocks } from "~/components/blocks/render-blocks.server";
@@ -36,8 +35,6 @@ export default async function Page({
 }: { params: Promise<{ slug: string; locale: string }> }) {
   const { slug, locale } = await params;
 
-  const { isEnabled: draft } = await draftMode();
-
   if (!isValidLocale(locale)) {
     return notFound();
   }
@@ -51,7 +48,7 @@ export default async function Page({
   return (
     <div>
       <h1>{pageResponse.data.title}</h1>
-      {draft && <LivePreviewListener />}
+      <LivePreviewListener />
       <RenderBlocks blocks={pageResponse.data.layout} />
     </div>
   );

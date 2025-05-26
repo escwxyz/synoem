@@ -2,7 +2,12 @@ import "server-only";
 
 import type { z } from "zod";
 import type { productFilterMetadataSchema } from "@synoem/schema";
-import type { BasePayload, DataFromCollectionSlug, PaginatedDocs } from "@synoem/payload/types";
+import type {
+  BasePayload,
+  DataFromCollectionSlug,
+  PaginatedDocs,
+  RevalidateCollectionListTagName,
+} from "@synoem/payload/types";
 import type { APIResponse } from "~/types/api-response";
 import {
   type Locale,
@@ -61,7 +66,8 @@ async function getProducts<T extends ProductTypeId>(
 }
 
 export const getProductsCached = <T extends ProductTypeId>(locale: Locale, productTypeId: T) => {
-  const tag = `products-${productTypeId}-${locale}`;
+  const tag: RevalidateCollectionListTagName<typeof locale> =
+    `collections-${PRODUCT_TYPES[productTypeId].slug}-${locale}`;
 
   return unstable_cache(
     async () => {

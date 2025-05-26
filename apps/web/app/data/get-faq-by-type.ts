@@ -1,18 +1,14 @@
-import { locales, PRODUCT_TYPES, type Locale, type ProductTypeId } from "@synoem/config";
+import type { Locale, ProductTypeId } from "@synoem/config";
 import { getPayloadClient } from "@synoem/payload/client";
-import type { BasePayload } from "@synoem/payload/types";
+import type { BasePayload, RevalidateGlobalTagName } from "@synoem/payload/types";
 import type { Faq } from "@synoem/types";
 import { unstable_cache } from "next/cache";
-import { z } from "zod";
 import type { APIResponse } from "~/types/api-response";
-
-const schema = z.object({
-  type: z.enum(["general", ...Object.entries(PRODUCT_TYPES).map(([, value]) => value.id)]),
-  locale: z.enum(locales),
-});
+import type { faqSchema } from "@synoem/schema";
+import type { z } from "zod";
 
 async function getFaqByType<T extends "general" | ProductTypeId>(
-  input: z.infer<typeof schema>,
+  input: z.infer<typeof faqSchema>,
   payloadPromise: Promise<BasePayload> = getPayloadClient(),
 ): Promise<APIResponse<Pick<Faq, T>>> {
   const { type, locale } = input;
@@ -47,7 +43,7 @@ export const getFaqByTypeCached = <T extends "general" | ProductTypeId>(
   locale: Locale,
   type: T,
 ) => {
-  const tag = `global-faq-${locale}`;
+  const tag: RevalidateGlobalTagName<typeof locale> = `global-faq-${locale}`;
 
   return unstable_cache(
     async () => {

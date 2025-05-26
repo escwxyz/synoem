@@ -1,5 +1,5 @@
 import type { GlobalConfig } from "payload";
-import { revalidateGlobals } from "../hooks";
+import { revalidateGlobal } from "../hooks";
 
 export const ContactInfo: GlobalConfig = {
   slug: "contact-info",
@@ -57,6 +57,6 @@ export const ContactInfo: GlobalConfig = {
     },
   ],
   hooks: {
-    afterChange: [revalidateGlobals],
+    afterChange: [revalidateGlobal],
   },
 };

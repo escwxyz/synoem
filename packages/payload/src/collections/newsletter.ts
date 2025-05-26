@@ -1,6 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { admin, adminOrSelf, anyone } from "../access";
-import { sendNewsletterConfirmation } from "../hooks/send-newsletter-confirmation";
+import { generateNewsletterToken, sendNewsletterConfirmation } from "../hooks";
 
 export const NewsletterSubscribers: CollectionConfig<"newsletter-subscribers"> = {
   slug: "newsletter-subscribers",
@@ -12,7 +12,8 @@ export const NewsletterSubscribers: CollectionConfig<"newsletter-subscribers"> =
   access: {
     read: admin,
     create: anyone,
-    update: adminOrSelf,
+    // TODO: current newsletter subscribers are related to the user collection,
+    // update: adminOrSelf,
   },
   fields: [
     {
@@ -39,6 +40,17 @@ export const NewsletterSubscribers: CollectionConfig<"newsletter-subscribers"> =
         position: "sidebar",
         description: "Subscription status",
         readOnly: true,
+      },
+    },
+    {
+      name: "token",
+      type: "text",
+      label: "Token",
+      unique: true,
+      admin: {
+        readOnly: true,
+        description: "Token for unsubscribing",
+        position: "sidebar",
       },
     },
     {
@@ -81,6 +93,7 @@ export const NewsletterSubscribers: CollectionConfig<"newsletter-subscribers"> =
     },
   ],
   hooks: {
+    beforeChange: [generateNewsletterToken],
     afterOperation: [sendNewsletterConfirmation],
   },
 };

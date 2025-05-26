@@ -73,7 +73,7 @@ export const getProductFilterMetadataCached = <T extends ProductTypeId>(
     [tag],
     {
       tags: [tag],
-      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? 60 * 60 * 24 * 3 : 30,
+      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? 60 * 60 * 24 * 7 : 30, // Weekly update, instead of manual revalidation
     },
   );
 };

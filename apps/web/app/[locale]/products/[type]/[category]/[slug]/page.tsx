@@ -2,10 +2,7 @@ import { defaultLocale, type ProductTypeId, type Locale, isValidProductType } fr
 import { isValidLocale } from "~/utils/is-valid-locale";
 import { ProductDetailPage } from "~/layouts/product-detail-layout.server";
 import { notFound } from "next/navigation";
-import type { productSchema } from "@synoem/schema";
-import { unstable_cache } from "next/cache";
-import { getProduct } from "~/data/get-product";
-import type { z } from "zod";
+import { getProductCached } from "~/data/get-product";
 import { generateProductPath } from "~/data/generate-product-path";
 
 export const dynamicParams = true;
@@ -59,20 +56,3 @@ export default async function Page({
 
   return <ProductDetailPage product={product} productTypeId={type} locale={effectiveLocale} />;
 }
-
-const getProductCached = (input: z.infer<typeof productSchema>) => {
-  const { locale, slug, productTypeId } = input;
-
-  const tag = `product-${productTypeId}-${locale}-${slug}`;
-
-  return unstable_cache(
-    async () => {
-      return await getProduct(input);
-    },
-    [tag],
-    {
-      tags: [tag],
-      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? false : 30,
-    },
-  );
-};

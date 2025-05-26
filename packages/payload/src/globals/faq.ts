@@ -1,6 +1,6 @@
 import { PRODUCT_TYPES } from "@synoem/config";
 import type { Field, GlobalConfig } from "payload";
-import { revalidateGlobals } from "../hooks";
+import { revalidateGlobal } from "../hooks";
 
 const sanitizeString = (str: string) => str.replace(/\s+/g, " ").trim();
 
@@ -63,6 +63,6 @@ export const FAQ: GlobalConfig = {
     },
   ],
   hooks: {
-    afterChange: [revalidateGlobals],
+    afterChange: [revalidateGlobal],
   },
 };

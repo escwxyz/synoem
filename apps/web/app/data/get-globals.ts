@@ -2,7 +2,12 @@ import "server-only";
 
 import type { Locale } from "@synoem/config";
 import type { APIResponse } from "~/types/api-response";
-import type { GlobalSlug, DataFromGlobalSlug, BasePayload } from "@synoem/payload/types";
+import type {
+  GlobalSlug,
+  DataFromGlobalSlug,
+  BasePayload,
+  RevalidateGlobalTagName,
+} from "@synoem/payload/types";
 import { getPayloadClient } from "@synoem/payload/client";
 import { unstable_cache } from "next/cache";
 
@@ -45,7 +50,7 @@ async function getGlobalHelper<T extends GlobalSlug>(
 }
 
 export const getHeaderCached = (locale: Locale) => {
-  const tag = `global-header-${locale}`;
+  const tag: RevalidateGlobalTagName<typeof locale> = `global-header-${locale}`;
 
   return unstable_cache(
     async () => {
@@ -60,7 +65,7 @@ export const getHeaderCached = (locale: Locale) => {
 };
 
 export const getFooterCached = (locale: Locale) => {
-  const tag = `global-footer-${locale}`;
+  const tag: RevalidateGlobalTagName<typeof locale> = `global-footer-${locale}`;
 
   return unstable_cache(
     async () => {
@@ -75,7 +80,7 @@ export const getFooterCached = (locale: Locale) => {
 };
 
 export const getSocialLinksCached = () => {
-  const tag = "global-social-links";
+  const tag: RevalidateGlobalTagName<undefined> = "global-social-links";
 
   return unstable_cache(
     async () => {
@@ -90,7 +95,7 @@ export const getSocialLinksCached = () => {
 };
 
 export const getCompanyInfoCached = (locale: Locale) => {
-  const tag = `global-company-info-${locale}`;
+  const tag: RevalidateGlobalTagName<typeof locale> = `global-company-info-${locale}`;
 
   return unstable_cache(
     async () => {
