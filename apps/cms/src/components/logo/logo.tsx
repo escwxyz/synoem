@@ -14,7 +14,10 @@ export const Logo = () => {
     checkDarkMode();
 
     const observer = new MutationObserver(checkDarkMode);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
 
     return () => observer.disconnect();
   }, []);
