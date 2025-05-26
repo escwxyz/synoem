@@ -3,49 +3,35 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { plugins } from "./plugins";
 import { mutableLocales, defaultLocale } from "@synoem/config";
-
 import { buildConfig } from "payload";
 import { defaultLexical } from "./fields/default-lexical";
-
 import { postgresAdapter } from "@payloadcms/db-postgres";
-
+import { resendAdapter } from "@payloadcms/email-resend";
 import { Footer, Header, CompanyInfo, ContactInfo, SocialLinks, FAQ } from "./globals";
-// Media
-import { Videos } from "./collections/media/videos";
-import { Images } from "./collections/media/images";
-import { Models } from "./collections/media/models";
-import { Documents } from "./collections/media/documents";
-import { Attachments } from "./collections/media/attachments";
-// Forms
-import { Inquiries } from "./collections/inquiries";
-import { NewsletterSubscribers } from "./collections/newsletter";
-// Testimonials
-import { Testimonials } from "./collections/testimonials";
-// Product Related
-import { Instructions } from "./collections/instructions";
-import { PackagingConfigs } from "./collections/packaging-configs";
-import { Datasheets } from "./collections/datasheets";
-import { Warranties } from "./collections/warranties";
-import { Drawings } from "./collections/drawings";
-// Users
-import { Users } from "./collections/users";
-// Industries
-import { Industries } from "./collections/industries";
-// Pages
-import { Pages } from "./collections/pages";
-// Posts
-import { Posts } from "./collections/posts";
-
-// TODO: re-export all collections from index.ts
 import {
   SolarPanels,
   PumpControllers,
   productCategoryCollections,
   Notifications,
+  Pages,
+  NewsletterSubscribers,
+  Inquiries,
+  Images,
+  Videos,
+  Models,
+  Documents,
+  Attachments,
+  PackagingConfigs,
+  Datasheets,
+  Warranties,
+  Drawings,
+  Instructions,
   Certifications,
+  Testimonials,
+  Users,
+  Posts,
+  Industries,
 } from "./collections";
-
-import { resendAdapter } from "@payloadcms/email-resend";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { LOGO_PATHS } from "@synoem/config";
 
 export const Logo = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -24,8 +25,8 @@ export const Logo = () => {
 
   return (
     <Image
-      src={isDarkMode ? "/logos/dark-transparent.png" : "/logos/light-transparent.png"}
-      alt="Logo"
+      src={isDarkMode ? LOGO_PATHS.dark : LOGO_PATHS.light}
+      alt="Company Logo"
       width={160}
       height={160}
       priority={true}
