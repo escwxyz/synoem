@@ -57,7 +57,14 @@ export default buildConfig({
   admin: {
     components: {
       views: {},
-      graphics: {},
+      graphics: {
+        Logo: {
+          path: "/components/logo#Logo",
+        },
+        Icon: {
+          path: "/components/nav-icon#NavIcon",
+        },
+      },
     },
     importMap: {
       baseDir: path.resolve(dirname, "../../../apps/cms/src"),
