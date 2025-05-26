@@ -8,6 +8,7 @@ import { usePathname, useRouter } from "@/i18n/navigation";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { isValidLocale } from "~/utils/is-valid-locale";
+import { useIsMobile } from "@synoem/ui/hooks/use-mobile";
 
 interface LanguageSwitcherProps {
   onLocaleChange?: (locale: Locale) => void;
@@ -44,16 +45,18 @@ export const LanguageSwitcher = ({ onLocaleChange }: LanguageSwitcherProps) => {
 
   const t = useTranslations("LanguageSwitcher");
 
+  const isMobile = useIsMobile();
+
   return (
     <div
       className="inline-flex items-center rounded-full border p-1 shadow-sm relative"
       role="radiogroup"
       aria-label="Select language"
     >
-      {locales.map((locale, index) => (
+      {locales.map((locale) => (
         <LanguageOption
           key={locale}
-          label={t(`${locale}`)}
+          label={isMobile ? locale.toUpperCase() : t(`${locale}`)}
           isActive={language === locale}
           onClick={() => handleLanguageChange(locale)}
         />
