@@ -1,7 +1,7 @@
 "use server";
 
 import { actionClient } from "~/libs/safe-action";
-import { newsletterFormSchema } from "@synoem/schema";
+import { newsletterFormSchema, unsubscribeNewsletterFormSchema } from "@synoem/schema";
 import { getMetadata } from "~/utils/get-metadata";
 import type { APIResponse } from "~/types/api-response";
 import { getPayloadClient } from "@synoem/payload/client";
@@ -28,7 +28,7 @@ export const subscribeNewsletter = actionClient
       if (existingSubscriber.docs.length > 0) {
         return {
           status: "error",
-          messageKey: "api.createNewsletter.error",
+          messageKey: "api.createNewsletter.emailAlreadySubscribed",
           error: {
             code: "BAD_REQUEST",
             details: "Email already subscribed",
@@ -57,6 +57,82 @@ export const subscribeNewsletter = actionClient
       return {
         status: "error",
         messageKey: "api.createNewsletter.error",
+        error: {
+          code: "INTERNAL_SERVER_ERROR",
+          details: error,
+        },
+      };
+    }
+  });
+
+export const unsubscribeNewsletter = actionClient
+  .schema(unsubscribeNewsletterFormSchema)
+  .action(async ({ parsedInput }): Promise<APIResponse<true>> => {
+    const { email, token } = parsedInput;
+
+    const payload = await getPayloadClient();
+
+    try {
+      const subscriber = await payload.find({
+        collection: "newsletter-subscribers",
+        where: {
+          email: {
+            equals: email,
+          },
+          token: {
+            equals: token,
+          },
+        },
+        limit: 1,
+        pagination: false,
+      });
+
+      if (subscriber.docs.length === 0) {
+        return {
+          status: "error",
+          messageKey: "api.unsubscribeNewsletter.invalidToken",
+          error: {
+            code: "BAD_REQUEST",
+            details: "Invalid token",
+          },
+        };
+      }
+
+      if (subscriber.docs.length > 0 && subscriber.docs[0]?.status === "unsubscribed") {
+        return {
+          status: "error",
+          messageKey: "api.unsubscribeNewsletter.alreadyUnsubscribed",
+          error: {
+            code: "BAD_REQUEST",
+            details: "Email already unsubscribed",
+          },
+        };
+      }
+
+      await payload.update({
+        collection: "newsletter-subscribers",
+        where: {
+          email: {
+            equals: email,
+          },
+          token: {
+            equals: token,
+          },
+        },
+        data: {
+          status: "unsubscribed",
+        },
+      });
+
+      return {
+        status: "success",
+        data: true,
+      };
+    } catch (error) {
+      console.warn(error);
+      return {
+        status: "error",
+        messageKey: "api.unsubscribeNewsletter.error",
         error: {
           code: "INTERNAL_SERVER_ERROR",
           details: error,

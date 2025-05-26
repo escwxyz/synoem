@@ -109,6 +109,11 @@ export const newsletterFormSchema = z.object({
   email: z.string().email(),
 });
 
+export const unsubscribeNewsletterFormSchema = z.object({
+  email: z.string().email(),
+  token: z.string(),
+});
+
 export const newsletterSchema = newsletterFormSchema.merge(metadataSchema);
 
 export const fileSchema = z.instanceof(File);

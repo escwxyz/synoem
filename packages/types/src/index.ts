@@ -1839,6 +1839,10 @@ export interface NewsletterSubscriber {
    * Subscription status
    */
   status?: ('subscribed' | 'unsubscribed') | null;
+  /**
+   * Token for unsubscribing
+   */
+  token?: string | null;
   metadata?: {
     /**
      * The page the subscriber subscribed from
@@ -2368,6 +2372,7 @@ export interface InquiriesSelect<T extends boolean = true> {
 export interface NewsletterSubscribersSelect<T extends boolean = true> {
   email?: T;
   status?: T;
+  token?: T;
   metadata?:
     | T
     | {

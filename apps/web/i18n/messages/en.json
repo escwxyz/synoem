@@ -141,10 +141,30 @@
     "email": {
       "invalid": "Please enter a valid email address"
     },
-    "action": {
-      "newsletter": {
-        "alreadySubscribed": "You are already subscribed to our newsletter.",
+    "api": {
+      "subscribeNewsletter": {
+        "emailAlreadySubscribed": "You are already subscribed to our newsletter.",
         "error": "An error occurred while subscribing to the newsletter."
+      },
+      "unsubscribeNewsletter": {
+        "invalidToken": "Invalid token",
+        "alreadyUnsubscribed": "You are already unsubscribed from our newsletter.",
+        "error": "An error occurred while unsubscribing from the newsletter."
+      }
+    }
+  },
+  "UnsubscribePage": {
+    "title": "Unsubscribe from our newsletter",
+    "description": "Please click the button below to unsubscribe from our newsletter.",
+    "unsubscribe": "Unsubscribe",
+    "unsubscribed": "Unsubscribed",
+    "unsubscribing": "Unsubscribing...",
+    "failed": "Failed",
+    "api": {
+      "unsubscribeNewsletter": {
+        "invalidToken": "Invalid token",
+        "alreadyUnsubscribed": "You are already unsubscribed from our newsletter.",
+        "error": "An error occurred while unsubscribing from the newsletter."
       }
     }
   },

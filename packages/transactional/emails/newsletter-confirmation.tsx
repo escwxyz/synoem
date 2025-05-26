@@ -106,18 +106,20 @@ const getLocale = (language: Locale): string => {
 
 interface NewsletterConfirmationEmailProps {
   subscriptionDate: string;
-  // unsubscribeUrl?: string;
+  unsubscribeUrl: string;
   language?: Locale;
   logoUrl: string;
+  baseUrl: string;
 }
 
 const NewsletterConfirmation = ({
   subscriptionDate,
-  // unsubscribeUrl,
+  unsubscribeUrl,
   language = "en",
   logoUrl,
+  baseUrl,
 }: NewsletterConfirmationEmailProps) => {
-  const baseUrl = `https://synoem.com/${language}`;
+  const url = `${baseUrl}/${language}`;
   const utmSource = "newsletter";
   const t = (translations[language] || translations.en) as Translations;
 
@@ -151,7 +153,7 @@ const NewsletterConfirmation = ({
               <li style={listItem}>{t.tipsAndPractices}</li>
             </ul>
 
-            <Button style={button} href={`${baseUrl}?utm_source=${utmSource}`}>
+            <Button style={button} href={`${url}?utm_source=${utmSource}`}>
               {t.visitWebsite}
             </Button>
 
@@ -164,7 +166,7 @@ const NewsletterConfirmation = ({
             <Text style={footerText}>{t.copyright}</Text>
             <Text style={footerText}>{t.address}</Text>
             <Text style={footerLinks}>
-              <Link href={`${baseUrl}?utm_source=${utmSource}`} style={link}>
+              <Link href={`${url}?utm_source=${utmSource}`} style={link}>
                 {t.website}
               </Link>{" "}
               •{" "}
@@ -172,9 +174,9 @@ const NewsletterConfirmation = ({
                 {t.privacyPolicy}
               </Link>{" "}
               •{" "}
-              {/* <Link href={`${unsubscribeUrl}?utm_source=${utmSource}`} style={link}>
+              <Link href={`${unsubscribeUrl}&utm_source=${utmSource}`} style={link}>
                 {t.unsubscribe}
-              </Link> */}
+              </Link>
             </Text>
           </Section>
         </Container>
@@ -185,9 +187,9 @@ const NewsletterConfirmation = ({
 
 NewsletterConfirmation.PreviewProps = {
   subscriptionDate: "2025-01-01",
-  // unsubscribeUrl: "https://synoem.com/unsubscribe",
+  unsubscribeUrl: "https://example.com/unsubscribe",
   language: "de",
-  logoUrl: "https://synoem.com/placeholder.svg?height=48&width=180",
+  logoUrl: "https://example.com/placeholder.svg?height=48&width=180",
 };
 
 export default NewsletterConfirmation;

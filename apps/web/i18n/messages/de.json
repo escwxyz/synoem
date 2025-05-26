@@ -140,10 +140,25 @@
     "email": {
       "invalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein"
     },
-    "action": {
-      "newsletter": {
-        "alreadySubscribed": "Sie sind bereits abonniert.",
+    "api": {
+      "subscribeNewsletter": {
+        "emailAlreadySubscribed": "Sie sind bereits abonniert.",
         "error": "Ein Fehler ist aufgetreten, während das Abonnieren des Newsletters."
+      }
+    }
+  },
+  "UnsubscribePage": {
+    "title": "Abbestellen des Newsletters",
+    "description": "Bitte klicken Sie auf den Button unten, um sich vom Newsletter abzumelden.",
+    "unsubscribe": "Abbestellen",
+    "unsubscribed": "Abbestellt",
+    "unsubscribing": "Abbestellen...",
+    "failed": "Fehlgeschlagen",
+    "api": {
+      "unsubscribeNewsletter": {
+        "invalidToken": "Ungültiges Token",
+        "alreadyUnsubscribed": "Sie sind bereits abbestellt.",
+        "error": "Ein Fehler ist aufgetreten, während das Abbestellen des Newsletters."
       }
     }
   },
