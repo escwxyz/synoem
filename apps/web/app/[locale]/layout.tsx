@@ -24,8 +24,8 @@ const inter = Inter({
 
 export const generateMetadata = async ({
   params,
-}: { params: { locale: string } }): Promise<Metadata> => {
-  const { locale } = params;
+}: { params: Promise<{ locale: string }> }): Promise<Metadata> => {
+  const { locale } = await params;
 
   const effectiveLocale: Locale = isValidLocale(locale) ? (locale as Locale) : defaultLocale;
 
