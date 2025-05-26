@@ -1,23 +1,21 @@
 import { getPlatformIconSVG, type Locale } from "@synoem/config";
 import { Suspense } from "react";
-import { unstable_cache } from "next/cache";
-import { getSocialLinks } from "~/data/get-globals";
+import { getSocialLinksCached } from "~/data/get-globals";
 
 interface Props {
   size?: number;
-  locale: Locale;
 }
 
-export const SocialLinks = async ({ size = 24, locale }: Props) => {
+export const SocialLinks = ({ size = 24 }: Props) => {
   return (
     <Suspense fallback={<SocialLinksSkeleton />}>
-      <SocialLinksInner size={size} locale={locale} />
+      <SocialLinksInner size={size} />
     </Suspense>
   );
 };
 
-const SocialLinksInner = async ({ size = 24, locale }: Props) => {
-  const socialLinksData = await getSocialLinksCached(locale)();
+const SocialLinksInner = async ({ size = 24 }: Props) => {
+  const socialLinksData = await getSocialLinksCached()();
 
   if (socialLinksData.status === "error" || !socialLinksData.data) {
     return (
@@ -69,18 +67,5 @@ const SocialLinksSkeleton = () => {
     <div>
       <p>Loading social links</p>
     </div>
-  );
-};
-
-const getSocialLinksCached = (locale: Locale) => {
-  return unstable_cache(
-    async () => {
-      return await getSocialLinks({ locale, slug: "social-links" });
-    },
-    ["social-links"],
-    {
-      tags: ["social-links"],
-      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? 60 * 60 * 24 * 30 : 30,
-    },
   );
 };

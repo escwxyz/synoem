@@ -14,15 +14,17 @@ interface PopulatedCategory {
   slug: string;
 }
 // TODO: improve this function to be more efficient and not to scan the whole app directory
-function getStaticPageRoutes(currentLocales: readonly string[]): MetadataRoute.Sitemap {
+async function getStaticPageRoutes(
+  currentLocales: readonly string[],
+): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = [];
   const appDirPath = path.join(process.cwd(), "apps", "web", "app");
 
-  function scanDir(directory: string, currentRouteBase: string, currentLocale: string) {
-    const items = fs.readdirSync(directory);
+  async function scanDir(directory: string, currentRouteBase: string, currentLocale: string) {
+    const items = await fs.promises.readdir(directory);
     for (const item of items) {
       const itemPath = path.join(directory, item);
-      const stat = fs.statSync(itemPath);
+      const stat = await fs.promises.stat(itemPath);
 
       if (
         // exclude all files and folders that are not pages
@@ -54,7 +56,7 @@ function getStaticPageRoutes(currentLocales: readonly string[]): MetadataRoute.S
       }
 
       if (stat.isDirectory()) {
-        scanDir(itemPath, `${currentRouteBase}/${item}`, currentLocale);
+        await scanDir(itemPath, `${currentRouteBase}/${item}`, currentLocale);
       } else if (item.match(/^(page)\.(tsx|jsx|js|ts)$/)) {
         const routePath = currentRouteBase === "" ? "/" : currentRouteBase;
 
@@ -77,10 +79,21 @@ function getStaticPageRoutes(currentLocales: readonly string[]): MetadataRoute.S
   // This part is not needed for now, but we keep it here for future reference
   for (const locale of currentLocales) {
     const localeAppPagesDir = path.join(appDirPath, locale);
-    if (fs.existsSync(localeAppPagesDir)) {
+    if (
+      await fs.promises
+        .access(localeAppPagesDir)
+        .then(() => true)
+        .catch(() => false)
+    ) {
       if (
-        fs.existsSync(path.join(localeAppPagesDir, "page.tsx")) ||
-        fs.existsSync(path.join(localeAppPagesDir, "page.jsx"))
+        (await fs.promises
+          .access(path.join(localeAppPagesDir, "page.tsx"))
+          .then(() => true)
+          .catch(() => false)) ||
+        (await fs.promises
+          .access(path.join(localeAppPagesDir, "page.jsx"))
+          .then(() => true)
+          .catch(() => false))
       ) {
         const alternatesLanguages: Record<string, string> = {};
         for (const lang of currentLocales) {
@@ -95,7 +108,7 @@ function getStaticPageRoutes(currentLocales: readonly string[]): MetadataRoute.S
         });
       }
 
-      scanDir(localeAppPagesDir, "", locale);
+      await scanDir(localeAppPagesDir, "", locale);
     }
   }
 
@@ -176,7 +189,7 @@ async function getDynamicProductRoutes(
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let allEntries: MetadataRoute.Sitemap = [];
 
-  const staticEntries = getStaticPageRoutes(locales);
+  const staticEntries = await getStaticPageRoutes(locales);
   allEntries = allEntries.concat(staticEntries);
 
   try {
@@ -187,6 +200,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   const uniqueEntries = Array.from(new Map(allEntries.map((e) => [e.url, e])).values());
+
+  console.log("uniqueEntries", JSON.stringify(uniqueEntries, null, 2));
 
   return uniqueEntries;
 }

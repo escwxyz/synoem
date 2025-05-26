@@ -3,7 +3,7 @@ import { link } from "../fields/link";
 import { createTitleField } from "../fields/title";
 import { createDescriptionField } from "../fields/description";
 import { createIconSelectField } from "../fields/icon-select";
-import { revalidateGlobals } from "../hooks";
+import { revalidateGlobal } from "../hooks";
 
 const menuItemFields: Field[] = [
   {
@@ -161,6 +161,6 @@ export const Header: GlobalConfig = {
     },
   ],
   hooks: {
-    afterChange: [revalidateGlobals],
+    afterChange: [revalidateGlobal],
   },
 };

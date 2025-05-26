@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   // redirects,
   // transpilePackages: ["three"],
+  productionBrowserSourceMaps: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "development",
   // TODO: https://nextjs.org/docs/app/api-reference/config/next-config-js/serverExternalPackages
   serverExternalPackages: ["@prisma/client", "mongodb", "mongoose"],
   experimental: {
@@ -21,6 +22,8 @@ const nextConfig: NextConfig = {
     },
     optimizePackageImports: ["three", "recharts"],
     serverComponentsHmrCache: true,
+
+    // ppr: "incremental", // https://github.com/opennextjs/opennextjs-cloudflare/tree/main/examples/next-partial-prerendering
 
     // viewTransition: true,
     // dynamicIO: true,
@@ -50,3 +53,6 @@ export default dmnoNextConfigPlugin()(withNextIntl(withBundleAnalyzer(nextConfig
 
 import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 initOpenNextCloudflareForDev();
+
+// Just for debugging
+console.log("ENV DUMP", process.env);

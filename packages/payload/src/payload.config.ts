@@ -3,47 +3,35 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { plugins } from "./plugins";
 import { mutableLocales, defaultLocale } from "@synoem/config";
-
 import { buildConfig } from "payload";
 import { defaultLexical } from "./fields/default-lexical";
-
 import { postgresAdapter } from "@payloadcms/db-postgres";
-
-import { Footer, Header, CompanyInfo, ContactInfo, SocialLinks } from "./globals";
-// Media
-import { Videos } from "./collections/media/videos";
-import { Images } from "./collections/media/images";
-import { Models } from "./collections/media/models";
-import { Documents } from "./collections/media/documents";
-import { Attachments } from "./collections/media/attachments";
-// Forms
-import { Inquiries } from "./collections/inquiries";
-import { NewsletterSubscribers } from "./collections/newsletter";
-// Testimonials
-import { Testimonials } from "./collections/testimonials";
-// Product Related
-import { Instructions } from "./collections/instructions";
-import { Certifications } from "./collections/certifications";
-import { PackagingConfigs } from "./collections/packaging-configs";
-import { Datasheets } from "./collections/datasheets";
-import { Warranties } from "./collections/warranties";
-import { Drawings } from "./collections/drawings";
-// Users
-import { Users } from "./collections/users";
-// Industries
-import { Industries } from "./collections/industries";
-// Pages
-import { Pages } from "./collections/pages";
-// Posts
-import { Posts } from "./collections/posts";
-// Notifications
-import { Notifications } from "./collections/notifications";
-
-// TODO: re-export all collections from index.ts
-import { SolarPanels, PumpControllers, productCategoryCollections } from "./collections";
-
-import { FAQs } from "./collections/faqs";
 import { resendAdapter } from "@payloadcms/email-resend";
+import { Footer, Header, CompanyInfo, ContactInfo, SocialLinks, FAQ } from "./globals";
+import {
+  SolarPanels,
+  PumpControllers,
+  productCategoryCollections,
+  Notifications,
+  Pages,
+  NewsletterSubscribers,
+  Inquiries,
+  Images,
+  Videos,
+  Models,
+  Documents,
+  Attachments,
+  PackagingConfigs,
+  Datasheets,
+  Warranties,
+  Drawings,
+  Instructions,
+  Certifications,
+  Testimonials,
+  Users,
+  Posts,
+  Industries,
+} from "./collections";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -55,7 +43,14 @@ export default buildConfig({
   admin: {
     components: {
       views: {},
-      graphics: {},
+      graphics: {
+        Logo: {
+          path: "/components/logo#Logo",
+        },
+        Icon: {
+          path: "/components/nav-icon#NavIcon",
+        },
+      },
     },
     importMap: {
       baseDir: path.resolve(dirname, "../../../apps/cms/src"),
@@ -65,6 +60,37 @@ export default buildConfig({
       ),
     },
     suppressHydrationWarning: DMNO_CONFIG.CMS_APP_ENV === "production",
+    livePreview: {
+      url: ({ collectionConfig, locale, data }) => {
+        if (collectionConfig?.slug === "pages") {
+          const slug = data.slug === "home" ? "" : `/${data.slug}`;
+          return `${DMNO_PUBLIC_CONFIG.WEB_SITE_URL}/${locale.code}${slug}`;
+        }
+
+        return DMNO_PUBLIC_CONFIG.WEB_SITE_URL;
+      },
+      collections: ["pages"],
+      breakpoints: [
+        {
+          label: "Mobile",
+          name: "mobile",
+          width: 375,
+          height: 667,
+        },
+        {
+          label: "Tablet",
+          name: "tablet",
+          width: 768,
+          height: 1024,
+        },
+        {
+          label: "Desktop",
+          name: "desktop",
+          width: 1440,
+          height: 900,
+        },
+      ],
+    },
   },
   editor: defaultLexical,
   db: postgresAdapter({
@@ -101,7 +127,6 @@ export default buildConfig({
     Datasheets,
     // Drawings
     Drawings,
-    FAQs,
     // Testimonials
     Testimonials,
     // Posts
@@ -111,7 +136,7 @@ export default buildConfig({
     PumpControllers,
     ...productCategoryCollections,
   ],
-  globals: [Footer, CompanyInfo, ContactInfo, SocialLinks, Header],
+  globals: [Footer, CompanyInfo, ContactInfo, SocialLinks, Header, FAQ],
   plugins: plugins(),
   localization: {
     defaultLocale,

@@ -185,7 +185,6 @@ export interface Config {
     'packaging-configs': PackagingConfig;
     datasheets: Datasheet;
     drawings: Drawing;
-    faqs: Faq;
     testimonials: Testimonial;
     posts: Post;
     'solar-panels': SolarPanel;
@@ -223,7 +222,6 @@ export interface Config {
     'packaging-configs': PackagingConfigsSelect<false> | PackagingConfigsSelect<true>;
     datasheets: DatasheetsSelect<false> | DatasheetsSelect<true>;
     drawings: DrawingsSelect<false> | DrawingsSelect<true>;
-    faqs: FaqsSelect<false> | FaqsSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     'solar-panels': SolarPanelsSelect<false> | SolarPanelsSelect<true>;
@@ -244,6 +242,7 @@ export interface Config {
     'contact-info': ContactInfo;
     'social-links': SocialLink;
     header: Header;
+    faq: Faq;
   };
   globalsSelect: {
     footer: FooterSelect<false> | FooterSelect<true>;
@@ -251,6 +250,7 @@ export interface Config {
     'contact-info': ContactInfoSelect<false> | ContactInfoSelect<true>;
     'social-links': SocialLinksSelect<false> | SocialLinksSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
+    faq: FaqSelect<false> | FaqSelect<true>;
   };
   locale: 'en' | 'de';
   user: User & {
@@ -312,7 +312,14 @@ export interface User {
 export interface Page {
   id: string;
   title: string;
-  layout: (HeroBlockType | ContentBlockType | CallToActionBlockType | MediaBlockType | FeatureBlockType)[];
+  layout: (
+    | HeroBlockType
+    | ContentBlockType
+    | CallToActionBlockType
+    | MediaBlockType
+    | FeatureBlockType
+    | TimelineBlockType
+  )[];
   publishedAt?: string | null;
   /**
    * Whether to prerender the page
@@ -348,7 +355,7 @@ export interface HeroBlockType {
   ctaPrimary?: LinkType;
   ctaSecondary?: LinkType;
   /**
-   * Select an image, video, or model to display in the hero section.
+   * Select an image or video to display in the hero section.
    */
   media:
     | {
@@ -358,67 +365,7 @@ export interface HeroBlockType {
     | {
         relationTo: 'videos';
         value: string | Video;
-      }
-    | {
-        relationTo: 'models';
-        value: string | Model;
       };
-  posX?: number | null;
-  posY?: number | null;
-  posZ?: number | null;
-  rotX?: number | null;
-  rotY?: number | null;
-  rotZ?: number | null;
-  scale?: number | null;
-  animations?:
-    | {
-        type: 'position' | 'rotation' | 'scale';
-        trigger: 'scroll' | 'view' | 'time';
-        easing?: ('linear' | 'easeIn' | 'easeOut' | 'easeInOut' | 'spring') | null;
-        /**
-         * Duration in seconds
-         */
-        duration?: number | null;
-        /**
-         * Delay in seconds
-         */
-        delay?: number | null;
-        posValues?: {
-          from?: {
-            x?: number | null;
-            y?: number | null;
-            z?: number | null;
-          };
-          to?: {
-            x?: number | null;
-            y?: number | null;
-            z?: number | null;
-          };
-        };
-        rotValues?: {
-          from?: {
-            x?: number | null;
-            y?: number | null;
-            z?: number | null;
-          };
-          to?: {
-            x?: number | null;
-            y?: number | null;
-            z?: number | null;
-          };
-        };
-        scaleValues?: {
-          from?: number | null;
-          to?: number | null;
-        };
-        scrollSettings?: {
-          start?: string | null;
-          end?: string | null;
-          scrub?: boolean | null;
-        };
-        id?: string | null;
-      }[]
-    | null;
   /**
    * Select if text is on the left or the right.
    */
@@ -1563,6 +1510,10 @@ export interface Certification {
   id: string;
   name: string;
   desc?: string | null;
+  /**
+   * The logo of the certification
+   */
+  logo: string | Image;
   file?: (string | null) | Document;
   updatedAt: string;
   createdAt: string;
@@ -1818,6 +1769,38 @@ export interface FeatureBlockType {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TimelineBlockType".
+ */
+export interface TimelineBlockType {
+  items?:
+    | {
+        title: string;
+        icon?: string | null;
+        date: string;
+        content: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'timelineBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "notifications".
  */
 export interface Notification {
@@ -1856,6 +1839,10 @@ export interface NewsletterSubscriber {
    * Subscription status
    */
   status?: ('subscribed' | 'unsubscribed') | null;
+  /**
+   * Token for unsubscribing
+   */
+  token?: string | null;
   metadata?: {
     /**
      * The page the subscriber subscribed from
@@ -1864,25 +1851,6 @@ export interface NewsletterSubscriber {
     ipAddress?: string | null;
     userAgent?: string | null;
   };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "faqs".
- */
-export interface Faq {
-  id: string;
-  title: string;
-  description?: string | null;
-  type?: ('general' | 'solar-panel' | 'pump-controller') | null;
-  content?:
-    | {
-        question: string;
-        answer: string;
-        id?: string | null;
-      }[]
-    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -2104,10 +2072,6 @@ export interface PayloadLockedDocument {
         value: string | Drawing;
       } | null)
     | ({
-        relationTo: 'faqs';
-        value: string | Faq;
-      } | null)
-    | ({
         relationTo: 'testimonials';
         value: string | Testimonial;
       } | null)
@@ -2208,6 +2172,7 @@ export interface PagesSelect<T extends boolean = true> {
         callToActionBlock?: T | CallToActionBlockTypeSelect<T>;
         mediaBlock?: T | MediaBlockTypeSelect<T>;
         featureBlock?: T | FeatureBlockTypeSelect<T>;
+        timelineBlock?: T | TimelineBlockTypeSelect<T>;
       };
   publishedAt?: T;
   prerender?: T;
@@ -2229,72 +2194,6 @@ export interface HeroBlockTypeSelect<T extends boolean = true> {
   ctaPrimary?: T | LinkTypeSelect<T>;
   ctaSecondary?: T | LinkTypeSelect<T>;
   media?: T;
-  posX?: T;
-  posY?: T;
-  posZ?: T;
-  rotX?: T;
-  rotY?: T;
-  rotZ?: T;
-  scale?: T;
-  animations?:
-    | T
-    | {
-        type?: T;
-        trigger?: T;
-        easing?: T;
-        duration?: T;
-        delay?: T;
-        posValues?:
-          | T
-          | {
-              from?:
-                | T
-                | {
-                    x?: T;
-                    y?: T;
-                    z?: T;
-                  };
-              to?:
-                | T
-                | {
-                    x?: T;
-                    y?: T;
-                    z?: T;
-                  };
-            };
-        rotValues?:
-          | T
-          | {
-              from?:
-                | T
-                | {
-                    x?: T;
-                    y?: T;
-                    z?: T;
-                  };
-              to?:
-                | T
-                | {
-                    x?: T;
-                    y?: T;
-                    z?: T;
-                  };
-            };
-        scaleValues?:
-          | T
-          | {
-              from?: T;
-              to?: T;
-            };
-        scrollSettings?:
-          | T
-          | {
-              start?: T;
-              end?: T;
-              scrub?: T;
-            };
-        id?: T;
-      };
   textPlacement?: T;
   textAlignment?: T;
   id?: T;
@@ -2379,6 +2278,23 @@ export interface FeatureBlockTypeSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TimelineBlockType_select".
+ */
+export interface TimelineBlockTypeSelect<T extends boolean = true> {
+  items?:
+    | T
+    | {
+        title?: T;
+        icon?: T;
+        date?: T;
+        content?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "industries_select".
  */
 export interface IndustriesSelect<T extends boolean = true> {
@@ -2456,6 +2372,7 @@ export interface InquiriesSelect<T extends boolean = true> {
 export interface NewsletterSubscribersSelect<T extends boolean = true> {
   email?: T;
   status?: T;
+  token?: T;
   metadata?:
     | T
     | {
@@ -2611,6 +2528,7 @@ export interface InstructionsSelect<T extends boolean = true> {
 export interface CertificationsSelect<T extends boolean = true> {
   name?: T;
   desc?: T;
+  logo?: T;
   file?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -2683,24 +2601,6 @@ export interface DrawingsSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   file?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "faqs_select".
- */
-export interface FaqsSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
-  type?: T;
-  content?:
-    | T
-    | {
-        question?: T;
-        answer?: T;
-        id?: T;
-      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -3155,6 +3055,18 @@ export interface Footer {
 export interface CompanyInfo {
   id: string;
   name: string;
+  /**
+   * The logo of the company
+   */
+  logo: string | Image;
+  /**
+   * The logo of the company in dark mode
+   */
+  logoDark?: (string | null) | Image;
+  /**
+   * The image used for the open graph image (preferably 1200x630)
+   */
+  openGraphImage?: (string | null) | Image;
   shortDescription: string;
   longDescription: string;
   vat?: string | null;
@@ -3215,6 +3127,42 @@ export interface Header {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq".
+ */
+export interface Faq {
+  id: string;
+  general?: {
+    content?:
+      | {
+          question: string;
+          answer: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  'solar-panel'?: {
+    content?:
+      | {
+          question: string;
+          answer: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  'pump-controller'?: {
+    content?:
+      | {
+          question: string;
+          answer: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
@@ -3266,6 +3214,9 @@ export interface FooterSelect<T extends boolean = true> {
  */
 export interface CompanyInfoSelect<T extends boolean = true> {
   name?: T;
+  logo?: T;
+  logoDark?: T;
+  openGraphImage?: T;
   shortDescription?: T;
   longDescription?: T;
   vat?: T;
@@ -3363,6 +3314,48 @@ export interface LinkItemsSelect<T extends boolean = true> {
   desc?: T;
   link?: T | LinkTypeSelect<T>;
   id?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq_select".
+ */
+export interface FaqSelect<T extends boolean = true> {
+  general?:
+    | T
+    | {
+        content?:
+          | T
+          | {
+              question?: T;
+              answer?: T;
+              id?: T;
+            };
+      };
+  'solar-panel'?:
+    | T
+    | {
+        content?:
+          | T
+          | {
+              question?: T;
+              answer?: T;
+              id?: T;
+            };
+      };
+  'pump-controller'?:
+    | T
+    | {
+        content?:
+          | T
+          | {
+              question?: T;
+              answer?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

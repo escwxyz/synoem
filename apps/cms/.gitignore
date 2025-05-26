@@ -40,6 +40,6 @@ next-env.d.ts
 
 .env
 
-/public
+/public/media
 
 /src/app/(payload)/admin/importMap.js

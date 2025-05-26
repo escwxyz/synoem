@@ -1,5 +1,5 @@
 import type { GlobalConfig } from "payload";
-import { revalidateGlobals } from "../hooks";
+import { revalidateGlobal } from "../hooks";
 
 export const CompanyInfo: GlobalConfig = {
   slug: "company-info",
@@ -12,6 +12,39 @@ export const CompanyInfo: GlobalConfig = {
       label: "Company Name",
       type: "text",
       required: true,
+    },
+    {
+      name: "logo",
+      label: "Logo",
+      type: "upload",
+      relationTo: "images",
+      hasMany: false,
+      required: true,
+      admin: {
+        description: "The logo of the company",
+      },
+    },
+    {
+      name: "logoDark",
+      label: "Logo Dark",
+      type: "upload",
+      relationTo: "images",
+      hasMany: false,
+      required: false,
+      admin: {
+        description: "The logo of the company in dark mode",
+      },
+    },
+    {
+      name: "openGraphImage",
+      label: "Open Graph Image",
+      type: "upload",
+      relationTo: "images",
+      hasMany: false,
+      required: false,
+      admin: {
+        description: "The image used for the open graph image (preferably 1200x630)",
+      },
     },
     {
       name: "shortDescription",
@@ -39,6 +72,6 @@ export const CompanyInfo: GlobalConfig = {
     },
   ],
   hooks: {
-    afterChange: [revalidateGlobals],
+    afterChange: [revalidateGlobal],
   },
 };

@@ -125,7 +125,7 @@ export const NewsletterInput = () => {
                           }
                         : undefined
                     }
-                    className={`text-foreground relative rounded-xl ${status === "submitting" ? "pl-8" : ""}`}
+                    className={`relative rounded-xl ${status === "submitting" ? "pl-8" : ""}`}
                     variant={
                       status === "success"
                         ? "secondary"

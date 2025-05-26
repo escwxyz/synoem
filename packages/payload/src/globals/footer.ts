@@ -1,7 +1,7 @@
 import type { GlobalConfig } from "payload";
 import { link } from "../fields/link";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
-import { revalidateGlobals } from "../hooks";
+import { revalidateGlobal } from "../hooks";
 
 export const Footer: GlobalConfig = {
   slug: "footer",
@@ -219,6 +219,6 @@ export const Footer: GlobalConfig = {
     },
   ],
   hooks: {
-    afterChange: [revalidateGlobals],
+    afterChange: [revalidateGlobal],
   },
 };

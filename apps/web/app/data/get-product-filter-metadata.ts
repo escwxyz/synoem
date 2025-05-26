@@ -3,12 +3,18 @@ import "server-only";
 import type { z } from "zod";
 import type { APIResponse } from "~/types/api-response";
 import { PRODUCT_FILTER_METADATA_SELECT_OBJECT } from "~/types/product-filter-metadata";
-import { PRODUCT_TYPES, type ProductTypeToSlugMap, type ProductTypeId } from "@synoem/config";
+import {
+  PRODUCT_TYPES,
+  type ProductTypeToSlugMap,
+  type ProductTypeId,
+  type Locale,
+} from "@synoem/config";
 import type { BasePayload, DataFromCollectionSlug, PaginatedDocs } from "@synoem/payload/types";
 import type { productFilterMetadataSchema } from "@synoem/schema";
 import { getPayloadClient } from "@synoem/payload/client";
+import { unstable_cache } from "next/cache";
 
-export async function getProductFilterMetadata<T extends ProductTypeId>(
+async function getProductFilterMetadata<T extends ProductTypeId>(
   input: z.infer<typeof productFilterMetadataSchema>,
   payloadPromise: Promise<BasePayload> = getPayloadClient(),
 ): Promise<APIResponse<PaginatedDocs<DataFromCollectionSlug<ProductTypeToSlugMap[T]>>>> {
@@ -53,3 +59,21 @@ export async function getProductFilterMetadata<T extends ProductTypeId>(
     };
   }
 }
+
+export const getProductFilterMetadataCached = <T extends ProductTypeId>(
+  locale: Locale,
+  productTypeId: T,
+) => {
+  const tag = `product-filter-metadata-${productTypeId}-${locale}`;
+
+  return unstable_cache(
+    async () => {
+      return await getProductFilterMetadata<T>({ locale, productTypeId });
+    },
+    [tag],
+    {
+      tags: [tag],
+      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? 60 * 60 * 24 * 7 : 30, // Weekly update, instead of manual revalidation
+    },
+  );
+};

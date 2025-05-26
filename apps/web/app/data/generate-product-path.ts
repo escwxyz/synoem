@@ -23,7 +23,7 @@ export const generateProductPath = async () => {
         slug: true,
         productCategory: true,
       },
-      depth: 1,
+      depth: 1, // we've already set the default populated fields on the product category
       pagination: false,
       limit: 0,
     });
@@ -38,20 +38,9 @@ export const generateProductPath = async () => {
             category: product.productCategory.slug,
           });
         } else {
-          const category = await payload.findByID({
-            collection: `${productType.id}-categories`,
-            id: product.productCategory,
-            select: {
-              slug: true,
-            },
-          });
-
-          params.push({
-            type: productType.id,
-            locale,
-            slug: product.slug,
-            category: category.slug,
-          });
+          throw new Error(
+            "Product category is not populated properly. Check the `defaultPopulate` field in Payload",
+          );
         }
       }
     }

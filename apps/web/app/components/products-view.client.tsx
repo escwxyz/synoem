@@ -5,7 +5,7 @@ import { productsViewModeAtom } from "~/atoms/products-view-mode";
 import { ProductCard } from "./product-card.client";
 import type { Locale, ProductTypeId } from "@synoem/config";
 import { ProductPagination } from "./product-pagination.client";
-import { useFilteredProducts } from "~/hooks/useFilteredProducts";
+import { useFilteredProducts } from "~/hooks";
 import { Button } from "@synoem/ui/components/button";
 import { use, useMemo } from "react";
 import { ProductsViewSkeleton } from "./products-view-skeleton.client";
