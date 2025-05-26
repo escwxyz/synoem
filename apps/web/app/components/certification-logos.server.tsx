@@ -9,23 +9,21 @@ const CertificationLogosInner = async () => {
 
   const t = await getTranslations("CertificationLogos");
 
-  const hasCertificationLogos =
-    certificationLogosResponse.status === "success" &&
-    certificationLogosResponse.data &&
-    certificationLogosResponse.data.length > 0 &&
-    certificationLogosResponse.data.every(
+  if (
+    certificationLogosResponse.status !== "success" ||
+    !certificationLogosResponse.data ||
+    certificationLogosResponse.data.length === 0 ||
+    !certificationLogosResponse.data.every(
       (certification) => typeof certification.logo === "object" && certification.logo.url,
-    );
-
-  if (!hasCertificationLogos) {
+    )
+  ) {
     return null;
   }
 
   return (
     <LogoCloud
       title={t("title")}
-      // biome-ignore lint/style/noNonNullAssertion: <explanation>
-      logos={certificationLogosResponse.data!.map((certification) => ({
+      logos={certificationLogosResponse.data.map((certification) => ({
         url: getUrl((certification.logo as { url: string }).url),
         alt: certification.name,
       }))}
@@ -49,8 +47,8 @@ const CertificationLogosFallback = () => {
               // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
               <div key={idx} className="h-12 w-12 bg-muted rounded-full" aria-hidden="true" />
             ))}
-            <div className="bg-linear-to-r from-background absolute inset-y-0 left-0 w-20" />
-            <div className="bg-linear-to-l from-background absolute inset-y-0 right-0 w-20" />
+            <div className="bg-gradient-to-r from-background absolute inset-y-0 left-0 w-20" />
+            <div className="bg-gradient-to-l from-background absolute inset-y-0 right-0 w-20" />
           </div>
         </div>
       </div>
