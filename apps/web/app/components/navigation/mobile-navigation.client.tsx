@@ -1,27 +1,109 @@
 "use client";
 
 import type { MegaMenuItems, MenuItems } from "@synoem/types";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, type Variants } from "motion/react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { getMenuLinkConfig } from "../utils/get-menu-link-config";
+import Image from "next/image";
+import { useLenis } from "lenis/react";
+
+import { LanguageSwitcher } from "~/components/language-switcher.client";
+import { InquiryButton } from "~/components/inquiry-button.client";
+import type { LinksSectionProps, MenuItemProps, MenuLinkProps, NavigationProps } from "./types";
 import { ChevronDown, ExternalLinkIcon } from "lucide-react";
 import { cn } from "@synoem/ui/lib/utils";
-import { getIconComponent, getUrl } from "../utils";
-import Image from "next/image";
 import { Link } from "@/i18n/navigation";
-import { useLenis } from "lenis/react";
-import { isImageType, isVideoType } from "../utils/check-media-type";
-import { LanguageSwitcher } from "./language-switcher.client";
-import { InquiryButton } from "./inquiry-button.client";
+import { getIconComponent, getMenuLinkConfig, getUrl, isImageType, isVideoType } from "@/app/utils";
+import { useIsMobile } from "@synoem/ui/hooks/use-mobile";
 
-interface Props {
+export const MobileNavigation = ({ items }: NavigationProps) => {
+  const isMobile = useIsMobile();
+
+  if (!isMobile) {
+    return null;
+  }
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => setIsOpen(!isOpen);
+
+  const menuVariants: Variants = {
+    open: {
+      opacity: 1,
+      visibility: "visible",
+      transition: {
+        duration: 0.3,
+        ease: "easeInOut",
+      },
+    },
+    closed: {
+      opacity: 0,
+      visibility: "hidden",
+      transition: {
+        duration: 0.3,
+        ease: "easeInOut",
+      },
+    },
+  };
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={toggle}
+        className="relative w-4 h-4 flex flex-col items-center justify-between"
+      >
+        <motion.span
+          animate={!isOpen ? "open" : "closed"}
+          variants={menuVariants}
+          className="block h-px w-full rounded-full bg-current"
+        />
+        <motion.span
+          animate={!isOpen ? "open" : "closed"}
+          variants={menuVariants}
+          className="block h-px w-full rounded-full bg-current"
+        />
+        <motion.span
+          animate={!isOpen ? "open" : "closed"}
+          variants={menuVariants}
+          className="block h-px w-full rounded-full bg-current"
+        />
+
+        <motion.span
+          animate={{
+            visibility: isOpen ? "visible" : "hidden",
+            rotate: isOpen ? 45 : 0,
+            opacity: isOpen ? 1 : 0,
+            transition: {
+              duration: 0.2,
+              ease: "easeInOut",
+            },
+          }}
+          className="absolute left-[-1px] top-2 h-px w-[18px] rounded-full bg-current"
+        />
+        <motion.span
+          animate={{
+            visibility: isOpen ? "visible" : "hidden",
+            rotate: isOpen ? -45 : 0,
+            opacity: isOpen ? 1 : 0,
+            transition: {
+              duration: 0.2,
+              ease: "easeInOut",
+            },
+          }}
+          className="absolute left-[-1px] top-2 h-px w-[18px] rounded-full bg-current"
+        />
+      </button>
+      <MobileMenu items={items} isOpen={isOpen} />
+    </>
+  );
+};
+
+const MobileMenu = (props: {
   items: NonNullable<MenuItems>;
   isOpen: boolean;
   onToggle?: () => void;
-}
-
-export const MobileMenu = (props: Props) => {
+}) => {
   const [isMounted, setIsMounted] = useState(false);
   const { items, isOpen, onToggle } = props;
 
@@ -55,6 +137,7 @@ export const MobileMenu = (props: Props) => {
 
   const menuContent = isOpen ? (
     <motion.div
+      // TODO: need to add notification bar height if there is notification
       className="fixed inset-x-0 top-[var(--header-height)] bottom-0 z-40 bg-muted/50 backdrop-blur-2xl shadow-xl overflow-auto p-4"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -76,14 +159,7 @@ export const MobileMenu = (props: Props) => {
   return createPortal(<AnimatePresence>{menuContent}</AnimatePresence>, document.body);
 };
 
-type MenuLinkProps = {
-  href: string;
-  openInNewTab?: boolean;
-  children: React.ReactNode;
-  className?: string;
-};
-
-export function MenuLink({ href, openInNewTab, children, className }: MenuLinkProps) {
+function MenuLink({ href, openInNewTab, children, className }: MenuLinkProps) {
   const isExternal = href.startsWith("http");
   if (isExternal || openInNewTab) {
     return (
@@ -111,7 +187,7 @@ type MenuExpandableProps = {
   children: React.ReactNode;
 };
 
-export function MenuExpandable({ title, icon, children }: MenuExpandableProps) {
+function MenuExpandable({ title, icon, children }: MenuExpandableProps) {
   const [expanded, setExpanded] = useState(false);
   return (
     <>
@@ -122,15 +198,7 @@ export function MenuExpandable({ title, icon, children }: MenuExpandableProps) {
         aria-expanded={expanded}
       >
         {icon}
-        <h3
-          className={cn(
-            "text-left text-base font-medium transition-colors duration-200",
-            "text-foreground/80",
-            expanded && "text-foreground",
-          )}
-        >
-          {title}
-        </h3>
+        <h3 className="text-left text-base font-medium transition-colors duration-200">{title}</h3>
         <motion.div
           animate={{
             rotate: expanded ? 180 : 0,
@@ -166,14 +234,14 @@ export function MenuExpandable({ title, icon, children }: MenuExpandableProps) {
   );
 }
 
-export function LinksSection({
+function LinksSection({
   title,
   items,
   // isExtended,
-}: NonNullable<NonNullable<NonNullable<MegaMenuItems>[number]["linksSection"]>>) {
+}: LinksSectionProps) {
   return (
     <div className="mb-4">
-      {title && <div className="font-semibold mb-2 text-muted-foreground text-sm">{title}</div>}
+      {title && <div className="mb-2 text-muted-foreground/80 text-sm">{title}</div>}
       <ul>
         {items?.map((item, i) => {
           const linkConfig = getMenuLinkConfig(item.link);
@@ -199,17 +267,19 @@ export function LinksSection({
   );
 }
 
-export function MenuBanner({
+function MenuBanner({
   banner,
 }: { banner: NonNullable<NonNullable<MegaMenuItems>[number]["banner"]> }) {
   const media = banner.media;
   const hasMedia = typeof media === "object" && typeof media?.value === "object";
   const linkConfig = getMenuLinkConfig(banner.link);
 
+  // const t = useTranslations("Menu");
+
   // reusable?
 
   return (
-    <div className="mb-2 p-2 bg-muted/80 rounded-md overflow-hidden">
+    <div className="mb-2 p-4 bg-muted/80 rounded-md overflow-hidden">
       {banner.title && <div className="font-semibold">{banner.title}</div>}
       {banner.description && <div className="text-sm mb-2">{banner.description}</div>}
       {hasMedia && isImageType(media) && (
@@ -232,11 +302,7 @@ export function MenuBanner({
   );
 }
 
-type MobileMenuItemProps = {
-  item: NonNullable<MenuItems>[number] | NonNullable<MegaMenuItems>[number];
-};
-
-export function MobileMenuItem({ item }: MobileMenuItemProps) {
+function MobileMenuItem({ item }: MenuItemProps) {
   if (item.type === "link") {
     const linkConfig = getMenuLinkConfig(item.link);
     return (

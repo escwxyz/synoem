@@ -1,11 +1,25 @@
 import type { Locale } from "@synoem/config";
 import { InquiryButton } from "~/components/inquiry-button.client";
-import { NotificationBar } from "~/components/notification-bar.server";
 import { ThemeSwitcher } from "~/components/theme-switcher.client";
 import { Logo, LogoSkeleton } from "~/components/logo.server";
 import { Suspense } from "react";
-import { getCompanyInfoCached, getHeaderCached } from "../data/get-globals";
-import { MobileNavigation } from "../components/mobile-navigation.client";
+import { getCompanyInfoCached, getHeaderCached } from "~/data/get-globals";
+
+import dynamic from "next/dynamic";
+
+const MobileNavigation = dynamic(
+  () => import("~/components/navigation").then((mod) => mod.MobileNavigation),
+  {
+    ssr: true,
+  },
+);
+
+const DesktopNavigation = dynamic(
+  () => import("~/components/navigation").then((mod) => mod.DesktopNavigation),
+  {
+    ssr: true,
+  },
+);
 
 export const Header = async ({ locale }: { locale: Locale }) => {
   const companyInfoResponse = await getCompanyInfoCached(locale)();
@@ -21,7 +35,6 @@ export const Header = async ({ locale }: { locale: Locale }) => {
       id="site-header"
       className="sticky top-0 z-100 flex w-full max-h-[calc(var(--header-height)+1.5rem)] flex-col border-b border-border bg-background/50 backdrop-blur-xl transition-all duration-500"
     >
-      <NotificationBar locale={locale} />
       <div className="flex justify-between items-center h-(--header-height) w-full px-4">
         <div className="flex w-full md:flex-1/2 justify-between gap-4 items-center">
           <div className="flex items-center gap-2">
@@ -32,10 +45,7 @@ export const Header = async ({ locale }: { locale: Locale }) => {
               {companyInfoResponse?.data?.name}
             </span>
           </div>
-          {/* <Navigation locale={locale} /> */}
-          {/* <Suspense fallback={<DesktopNavigationSkeleton />}>
-            {hasNavigation && <div>Desktop Navigation</div>}
-          </Suspense> */}
+          {hasNavigation && <DesktopNavigation items={items} />}
         </div>
         <div className="hidden md:flex flex-1/2 justify-end items-center gap-4">
           <ThemeSwitcher />
@@ -44,11 +54,7 @@ export const Header = async ({ locale }: { locale: Locale }) => {
         <div className="block md:hidden">
           <ThemeSwitcher />
         </div>
-        {hasNavigation && (
-          <div className="block md:hidden">
-            <MobileNavigation items={items} />
-          </div>
-        )}
+        {hasNavigation && <MobileNavigation items={items} />}
       </div>
     </header>
   );
