@@ -38,23 +38,24 @@ export const MobileNavigation = ({ items }: Props) => {
       <button
         type="button"
         onClick={toggle}
-        className="relative w-8 h-8 flex items-center justify-center"
+        className="relative w-4 h-4 flex flex-col items-center justify-between"
       >
         <motion.span
           animate={!isOpen ? "open" : "closed"}
           variants={menuVariants}
-          className="absolute left-px top-2 block h-px w-5 rounded-full bg-current"
+          className="block h-px w-full rounded-full bg-current"
         />
         <motion.span
           animate={!isOpen ? "open" : "closed"}
           variants={menuVariants}
-          className="absolute left-px top-4 block h-px w-5 rounded-full bg-current"
+          className="block h-px w-full rounded-full bg-current"
         />
         <motion.span
           animate={!isOpen ? "open" : "closed"}
           variants={menuVariants}
-          className="absolute bottom-1.5 left-px block h-px w-5 rounded-full bg-current"
+          className="block h-px w-full rounded-full bg-current"
         />
+
         <motion.span
           animate={{
             visibility: isOpen ? "visible" : "hidden",
@@ -65,7 +66,7 @@ export const MobileNavigation = ({ items }: Props) => {
               ease: "easeInOut",
             },
           }}
-          className="absolute left-[3px] top-4 h-px w-[18px] rounded-full bg-current"
+          className="absolute left-[-1px] top-2 h-px w-[18px] rounded-full bg-current"
         />
         <motion.span
           animate={{
@@ -77,7 +78,7 @@ export const MobileNavigation = ({ items }: Props) => {
               ease: "easeInOut",
             },
           }}
-          className="absolute left-[3px] top-4 h-px w-[18px] rounded-full bg-current"
+          className="absolute left-[-1px] top-2 h-px w-[18px] rounded-full bg-current"
         />
       </button>
       <MobileMenu items={items} isOpen={isOpen} />
