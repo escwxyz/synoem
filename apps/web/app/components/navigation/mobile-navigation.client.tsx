@@ -1,27 +1,24 @@
 "use client";
 
-import type { MegaMenuItems, MenuItems } from "@synoem/types";
+import type { MenuItems } from "@synoem/types";
 import { AnimatePresence, motion, type Variants } from "motion/react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import Image from "next/image";
 import { useLenis } from "lenis/react";
 
 import { LanguageSwitcher } from "~/components/language-switcher.client";
 import { InquiryButton } from "~/components/inquiry-button.client";
-import type { LinksSectionProps, MenuItemProps, MenuLinkProps, NavigationProps } from "./types";
+import type { MenuItemProps, MenuLinkProps, NavigationProps } from "./types";
 import { ChevronDown, ExternalLinkIcon } from "lucide-react";
 import { cn } from "@synoem/ui/lib/utils";
 import { Link } from "@/i18n/navigation";
-import { getIconComponent, getMenuLinkConfig, getUrl, isImageType, isVideoType } from "@/app/utils";
+import { getMenuLinkConfig } from "~/utils";
 import { useIsMobile } from "@synoem/ui/hooks/use-mobile";
+import { MenuBanner } from "./menu-banner.client";
+import { MenuLinkSection } from "./menu-link-section.client";
 
 export const MobileNavigation = ({ items }: NavigationProps) => {
   const isMobile = useIsMobile();
-
-  if (!isMobile) {
-    return null;
-  }
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -45,6 +42,10 @@ export const MobileNavigation = ({ items }: NavigationProps) => {
       },
     },
   };
+
+  if (!isMobile) {
+    return null;
+  }
 
   return (
     <>
@@ -234,74 +235,6 @@ function MenuExpandable({ title, icon, children }: MenuExpandableProps) {
   );
 }
 
-function LinksSection({
-  title,
-  items,
-  // isExtended,
-}: LinksSectionProps) {
-  return (
-    <div className="mb-4">
-      {title && <div className="mb-2 text-muted-foreground/80 text-sm">{title}</div>}
-      <ul>
-        {items?.map((item, i) => {
-          const linkConfig = getMenuLinkConfig(item.link);
-          const Icon = item.icon ? getIconComponent(item.icon) : null;
-          return (
-            <li key={item.id || i} className="flex items-center gap-2 py-1">
-              {Icon && <Icon className="size-3 text-primary" />}
-              <MenuLink
-                href={linkConfig?.href || "#"}
-                openInNewTab={linkConfig?.openInNewTab}
-                className="flex flex-col gap-1"
-              >
-                {item.title}
-                {item.description && (
-                  <span className="text-[10px] text-muted-foreground">{item.description}</span>
-                )}
-              </MenuLink>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  );
-}
-
-function MenuBanner({
-  banner,
-}: { banner: NonNullable<NonNullable<MegaMenuItems>[number]["banner"]> }) {
-  const media = banner.media;
-  const hasMedia = typeof media === "object" && typeof media?.value === "object";
-  const linkConfig = getMenuLinkConfig(banner.link);
-
-  // const t = useTranslations("Menu");
-
-  // reusable?
-
-  return (
-    <div className="mb-2 p-4 bg-muted/80 rounded-md overflow-hidden">
-      {banner.title && <div className="font-semibold">{banner.title}</div>}
-      {banner.description && <div className="text-sm mb-2">{banner.description}</div>}
-      {hasMedia && isImageType(media) && (
-        <MenuLink href={linkConfig?.href || "#"} openInNewTab={linkConfig?.openInNewTab}>
-          <Image
-            src={getUrl(media.value.url || "")}
-            alt={media.value.alt}
-            width={160}
-            height={90}
-            className="rounded-md w-full h-auto dark:brightness-70 object-cover"
-          />
-        </MenuLink>
-      )}
-      {hasMedia && isVideoType(media) && (
-        <MenuLink href={linkConfig?.href || "#"} openInNewTab={linkConfig?.openInNewTab}>
-          <span>Learn More</span>
-        </MenuLink>
-      )}
-    </div>
-  );
-}
-
 function MobileMenuItem({ item }: MenuItemProps) {
   if (item.type === "link") {
     const linkConfig = getMenuLinkConfig(item.link);
@@ -331,6 +264,8 @@ function MobileMenuItem({ item }: MenuItemProps) {
   }
 
   if (item.type === "links" && item.linksSection) {
-    return <LinksSection title={item.linksSection.title} items={item.linksSection.items} />;
+    return <MenuLinkSection title={item.linksSection.title} items={item.linksSection.items} />;
   }
+
+  return null;
 }

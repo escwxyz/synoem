@@ -1,16 +1,15 @@
 "use client";
 
 import type { MegaMenuItems, MenuItems } from "@synoem/types";
-
 import { cn } from "@synoem/ui/lib/utils";
-import { Link, usePathname } from "@/i18n/navigation";
-import { getMenuLinkConfig, isVideoType, getUrl, isImageType } from "~/utils";
-
-import Image from "next/image";
+import { getMenuLinkConfig } from "~/utils";
 import { useState } from "react";
 import { motion } from "motion/react";
 import { ChevronDownIcon } from "lucide-react";
 import { useIsMobile } from "@synoem/ui/hooks/use-mobile";
+import { MenuLinkSection } from "./menu-link-section.client";
+import { MenuBanner } from "./menu-banner.client";
+import { MenuLink } from "./menu-link.client";
 
 const transition = {
   type: "spring",
@@ -116,7 +115,7 @@ function DesktopMenuItem({ item, active, setActive }: MenuItemProps) {
                         if (section.type === "links" && section.linksSection) {
                           return (
                             <li key={section.id}>
-                              <LinksSection
+                              <MenuLinkSection
                                 title={section.linksSection.title}
                                 items={section.linksSection.items}
                                 isExtended={section.linksSection.isExtended}
@@ -149,105 +148,6 @@ function DesktopMenuItem({ item, active, setActive }: MenuItemProps) {
     // @ts-expect-error
     <div onMouseEnter={() => setActive(item.id)} className="relative ">
       {content}
-    </div>
-  );
-}
-
-type MenuLinkProps = {
-  href: string;
-  openInNewTab?: boolean;
-  children: React.ReactNode;
-  className?: string;
-};
-
-function MenuLink({ href, openInNewTab, children, className }: MenuLinkProps) {
-  const pathname = usePathname();
-  const isActive = href === pathname;
-
-  return (
-    <Link
-      href={href}
-      className={cn(isActive && "underline", className)}
-      target={openInNewTab ? "_blank" : undefined}
-      rel={openInNewTab ? "noopener noreferrer" : undefined}
-    >
-      {children}
-    </Link>
-  );
-}
-
-function MenuBanner({
-  banner,
-}: { banner: NonNullable<NonNullable<MegaMenuItems>[number]["banner"]> }) {
-  const media = banner.media;
-  const hasMedia = typeof media === "object" && typeof media?.value === "object";
-  const linkConfig = getMenuLinkConfig(banner.link);
-
-  // const t = useTranslations("Menu");
-
-  // reusable?
-
-  return (
-    <div className="mb-2 p-4 bg-muted/80 rounded-md overflow-hidden">
-      {banner.title && <div className="font-semibold">{banner.title}</div>}
-      {banner.description && <div className="text-sm mb-2">{banner.description}</div>}
-      {hasMedia && isImageType(media) && (
-        <MenuLink
-          href={linkConfig?.href || "#"}
-          openInNewTab={linkConfig?.openInNewTab}
-          className="hover:opacity-80 transition-opacity duration-200"
-        >
-          <Image
-            src={getUrl(media.value.url || "")}
-            alt={media.value.alt}
-            width={160}
-            height={90}
-            className="rounded-md w-full h-auto dark:brightness-70 object-cover"
-          />
-        </MenuLink>
-      )}
-      {hasMedia && isVideoType(media) && (
-        <MenuLink href={linkConfig?.href || "#"} openInNewTab={linkConfig?.openInNewTab}>
-          <video
-            src={getUrl(media.value.url || "")}
-            loop
-            muted
-            className="rounded-md w-full h-auto dark:brightness-70 object-cover"
-          />
-        </MenuLink>
-      )}
-    </div>
-  );
-}
-
-function LinksSection({
-  title,
-  items,
-  isExtended,
-}: NonNullable<NonNullable<NonNullable<MegaMenuItems>[number]["linksSection"]>>) {
-  return (
-    <div className={cn("min-w-[94px]", isExtended ? "w-[216px]" : "w-[196px]")}>
-      {title && (
-        <span className="mb-5 block text-xs font-medium uppercase leading-none text-muted-foreground">
-          {title}
-        </span>
-      )}
-      <ul className={cn("flex flex-col", isExtended ? "gap-5" : "gap-[18px]")}>
-        {items?.map((item) => {
-          const linkConfig = getMenuLinkConfig(item.link);
-          if (!linkConfig) return null;
-          return (
-            <li key={item.id}>
-              <MenuLink href={linkConfig.href} openInNewTab={linkConfig.openInNewTab}>
-                {item.title}
-                {item.description && (
-                  <span className="block text-xs text-muted-foreground">{item.description}</span>
-                )}
-              </MenuLink>
-            </li>
-          );
-        })}
-      </ul>
     </div>
   );
 }

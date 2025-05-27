@@ -15,6 +15,10 @@ export type MenuItemProps = {
   item: NonNullable<MenuItems>[number] | NonNullable<MegaMenuItems>[number];
 };
 
+export type MenuBannerProps = {
+  banner: NonNullable<NonNullable<MegaMenuItems>[number]["banner"]>;
+};
+
 export type NavigationProps = {
   items: NonNullable<MenuItems>;
 };
