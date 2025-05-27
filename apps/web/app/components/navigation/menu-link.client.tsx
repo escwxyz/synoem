@@ -6,14 +6,21 @@ import { usePathname } from "@/i18n/navigation";
 import { cn } from "@synoem/ui/lib/utils";
 import { ExternalLinkIcon } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import { useMemo } from "react";
 
 export const MenuLink = ({ href, openInNewTab, children, className }: MenuLinkProps) => {
   const isMobile = useIsMobile();
 
   const pathname = usePathname();
-  const isActive = href === pathname;
 
-  const isExternal = href.startsWith("http");
+  const isActive = useMemo(() => {
+    if (href === "/" || href.includes("?")) {
+      return href === pathname;
+    }
+    return pathname === href || pathname.startsWith(`${href}/`);
+  }, [href, pathname]);
+
+  const isExternal = /^https?:\/\//i.test(href);
 
   if (isExternal) {
     return (

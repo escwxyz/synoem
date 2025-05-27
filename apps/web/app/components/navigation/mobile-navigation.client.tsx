@@ -53,6 +53,8 @@ export const MobileNavigation = ({ items }: NavigationProps) => {
         type="button"
         onClick={toggle}
         className="relative w-4 h-4 flex flex-col items-center justify-between"
+        aria-label={isOpen ? "Close menu" : "Open menu"}
+        aria-expanded={isOpen}
       >
         <motion.span
           animate={!isOpen ? "open" : "closed"}
@@ -112,20 +114,17 @@ const MobileMenu = (props: {
 
   useEffect(() => {
     setIsMounted(true);
+    return () => setIsMounted(false);
+  }, []);
 
+  useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
-
       lenis?.stop();
     } else {
       document.body.style.overflow = "";
       lenis?.start();
     }
-
-    return () => {
-      document.body.style.overflow = "";
-      setIsMounted(false);
-    };
   }, [isOpen, lenis]);
 
   useEffect(() => {

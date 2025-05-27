@@ -3,7 +3,7 @@
 import type { MegaMenuItems, MenuItems } from "@synoem/types";
 import { cn } from "@synoem/ui/lib/utils";
 import { getMenuLinkConfig } from "~/utils";
-import { useState } from "react";
+import { type Dispatch, type SetStateAction, useState } from "react";
 import { motion } from "motion/react";
 import { ChevronDownIcon } from "lucide-react";
 import { useIsMobile } from "@synoem/ui/hooks/use-mobile";
@@ -34,7 +34,11 @@ export const DesktopNavigation = ({ items }: Props) => {
   }
 
   return (
-    <nav onMouseLeave={() => setActive(null)} className=" flex justify-center space-x-4 px-8 py-6 ">
+    <nav
+      aria-label="Primary"
+      onMouseLeave={() => setActive(null)}
+      className="flex justify-center space-x-4 px-8 py-6"
+    >
       {items.map((item) => {
         return <DesktopMenuItem key={item.id} item={item} setActive={setActive} active={active} />;
       })}
@@ -44,7 +48,7 @@ export const DesktopNavigation = ({ items }: Props) => {
 
 type MenuItemProps = {
   item: NonNullable<MenuItems>[number] | NonNullable<MegaMenuItems>[number];
-  setActive: (item: string) => void;
+  setActive: Dispatch<SetStateAction<string | null>>;
   active: string | null;
 };
 
@@ -145,8 +149,7 @@ function DesktopMenuItem({ item, active, setActive }: MenuItemProps) {
   }
 
   return (
-    // @ts-expect-error
-    <div onMouseEnter={() => setActive(item.id)} className="relative ">
+    <div onMouseEnter={() => setActive(item.id || null)} className="relative ">
       {content}
     </div>
   );

@@ -28,6 +28,11 @@ export const MenuBanner = ({ banner }: MenuBannerProps) => {
             width={160}
             height={90}
             className="rounded-md w-full h-auto dark:brightness-70 object-cover"
+            loading="lazy"
+            priority={false}
+            // placeholder="blur"
+            // TODO: add blur data url
+            // blurDataURL={media.value.url}
           />
         </MenuLink>
       )}
@@ -37,6 +42,9 @@ export const MenuBanner = ({ banner }: MenuBannerProps) => {
             src={getUrl(media.value.url || "")}
             loop
             muted
+            autoPlay
+            playsInline
+            aria-label="Banner video"
             className="rounded-md w-full h-auto dark:brightness-70 object-cover"
           />
         </MenuLink>

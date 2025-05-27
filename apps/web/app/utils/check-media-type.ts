@@ -21,7 +21,9 @@ export const isImageType = (
   );
 };
 
-export const isVideoType = (media: Media): media is { relationTo: "videos"; value: Video } => {
+export const isVideoType = (
+  media: Media,
+): media is { relationTo: "videos"; value: NonNullable<Video> } => {
   return (
     media.relationTo === "videos" &&
     typeof media.value === "object" &&

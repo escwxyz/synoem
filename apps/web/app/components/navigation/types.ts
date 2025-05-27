@@ -1,9 +1,10 @@
 import type { MegaMenuItems, MenuItems } from "@synoem/types";
+import type { ReactNode } from "react";
 
 export type MenuLinkProps = {
   href: string;
   openInNewTab?: boolean;
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
 };
 

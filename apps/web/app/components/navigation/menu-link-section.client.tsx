@@ -27,7 +27,7 @@ export const MenuLinkSection = ({ title, items, isExtended }: LinksSectionProps)
         </div>
       )}
       <ul>
-        {items?.map((item, i) => {
+        {items?.map((item) => {
           const linkConfig = getMenuLinkConfig(item.link);
           const Icon = item.icon ? getIconComponent(item.icon) : null;
 
@@ -39,7 +39,7 @@ export const MenuLinkSection = ({ title, items, isExtended }: LinksSectionProps)
               <MenuLink
                 href={linkConfig.href}
                 openInNewTab={linkConfig.openInNewTab}
-                className={cn(isMobile && "flex flex-col gap-1")}
+                className={cn("flex flex-col", isMobile ? "gap-1" : "gap-2")}
               >
                 {item.title}
                 {item.description && (

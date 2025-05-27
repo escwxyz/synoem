@@ -22,9 +22,10 @@ const DesktopNavigation = dynamic(
 );
 
 export const Header = async ({ locale }: { locale: Locale }) => {
-  const companyInfoResponse = await getCompanyInfoCached(locale)();
-
-  const headerResponse = await getHeaderCached(locale)();
+  const [companyInfoResponse, headerResponse] = await Promise.all([
+    await getCompanyInfoCached(locale)(),
+    await getHeaderCached(locale)(),
+  ]);
 
   const items = headerResponse.data?.items;
 
@@ -36,7 +37,7 @@ export const Header = async ({ locale }: { locale: Locale }) => {
       className="sticky top-0 z-100 flex w-full max-h-[calc(var(--header-height)+1.5rem)] flex-col border-b border-border bg-background/50 backdrop-blur-xl transition-all duration-500"
     >
       <div className="flex justify-between items-center h-(--header-height) w-full px-4">
-        <div className="flex w-full md:flex-1/2 justify-between gap-4 items-center">
+        <div className="flex w-full md:w-1/2 justify-between gap-4 items-center">
           <div className="flex items-center gap-2">
             <Suspense fallback={<LogoSkeleton size={40} />}>
               <Logo locale={locale} size={40} />
@@ -47,7 +48,7 @@ export const Header = async ({ locale }: { locale: Locale }) => {
           </div>
           {hasNavigation && <DesktopNavigation items={items} />}
         </div>
-        <div className="hidden md:flex flex-1/2 justify-end items-center gap-4">
+        <div className="hidden md:flex w-1/2 justify-end items-center gap-4">
           <ThemeSwitcher />
           <InquiryButton />
         </div>

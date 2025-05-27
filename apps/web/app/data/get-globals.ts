@@ -19,7 +19,8 @@ async function getGlobalHelper<T extends GlobalSlug>(
   },
   payloadPromise: Promise<BasePayload> = getPayloadClient(),
 ): Promise<APIResponse<DataFromGlobalSlug<T>>> {
-  const { locale, slug, depth = 0 } = input;
+  const { locale, slug, depth: rawDepth = 0 } = input;
+  const depth = Math.max(0, Math.min(rawDepth, 3));
 
   const payload = await payloadPromise;
 
