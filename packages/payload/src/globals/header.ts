@@ -1,7 +1,6 @@
 import type { Field, GlobalConfig } from "payload";
 import { link } from "../fields/link";
 import { createTitleField } from "../fields/title";
-import { createDescriptionField } from "../fields/description";
 import { createIconSelectField } from "../fields/icon-select";
 import { revalidateGlobal } from "../hooks";
 
@@ -20,8 +19,8 @@ const menuItemFields: Field[] = [
     required: true,
     options: [
       {
-        label: "Section",
-        value: "section",
+        label: "Mega Menu",
+        value: "mega",
       },
       {
         label: "Link",
@@ -32,20 +31,21 @@ const menuItemFields: Field[] = [
 
   link({
     disableLabel: true,
+    appearances: false,
     overrides: {
       label: "Link",
       admin: {
-        condition: (data, siblingData) => siblingData?.type === "link",
+        condition: (_, siblingData) => siblingData?.type === "link",
       },
     },
   }),
   {
-    name: "sections",
+    name: "megaItems",
     type: "array",
-    label: "Menu Sections",
+    label: "Mega Menu Items",
+    interfaceName: "MegaMenuItems",
     admin: {
-      description: "Add sections to create a dropdown or mega menu",
-      condition: (data, siblingData) => siblingData?.type === "section",
+      condition: (_, siblingData) => siblingData?.type === "mega",
       components: {
         RowLabel: "@synoem/cms/components/row-labels#MenuSectionLabel",
       },
@@ -64,7 +64,7 @@ const menuItemFields: Field[] = [
         name: "linksSection",
         type: "group",
         admin: {
-          condition: (data, siblingData) => siblingData?.type === "links",
+          condition: (_, siblingData) => siblingData?.type === "links",
         },
         fields: [
           createTitleField({
@@ -91,10 +91,14 @@ const menuItemFields: Field[] = [
                 name: "title",
                 required: true,
               }),
-              createDescriptionField({
-                required: false,
-              }),
+              {
+                name: "description",
+                type: "text",
+                label: "Description",
+                localized: true,
+              },
               link({
+                appearances: false,
                 required: true,
                 disableLabel: true,
               }),
@@ -112,16 +116,19 @@ const menuItemFields: Field[] = [
         name: "banner",
         type: "group",
         admin: {
-          condition: (data, siblingData) => siblingData?.type === "banner",
+          condition: (_, siblingData) => siblingData?.type === "banner",
         },
         fields: [
           createTitleField({
             name: "title",
             required: true,
           }),
-          createDescriptionField({
-            required: false,
-          }),
+          {
+            name: "description",
+            type: "text",
+            label: "Description",
+            localized: true,
+          },
           {
             name: "media",
             type: "relationship",
@@ -129,6 +136,8 @@ const menuItemFields: Field[] = [
             hasMany: false,
           },
           link({
+            appearances: false,
+            disableLabel: true,
             overrides: {
               label: "Banner Link",
             },
@@ -143,7 +152,6 @@ export const Header: GlobalConfig = {
   slug: "header",
   admin: {
     group: "Settings",
-    description: "Configure website navigation",
   },
   fields: [
     {
@@ -152,7 +160,6 @@ export const Header: GlobalConfig = {
       label: "Menu Items",
       interfaceName: "MenuItems",
       admin: {
-        description: "Configure navigation menu items",
         components: {
           RowLabel: "@synoem/cms/components/row-labels#MenuItemLabel",
         },

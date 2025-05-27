@@ -36,7 +36,7 @@ export const sendNewsletterConfirmation: CollectionAfterOperationHook<
 
       const url = response.logo.url;
 
-      const logoUrl = url.startsWith("http") ? url : `${DMNO_CONFIG.CMS_SERVER_URL}${url}`;
+      const logoUrl = url.startsWith("http") ? url : `${DMNO_PUBLIC_CONFIG.CMS_SERVER_URL}${url}`;
 
       // TODO: utilize the payload job queue to send the email for more robust workflow
 

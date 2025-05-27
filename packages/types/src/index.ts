@@ -53,44 +53,44 @@ export type SolarPanelPowerPoints =
     }[]
   | null;
 /**
- * Configure navigation menu items
- *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "MenuItems".
  */
 export type MenuItems =
   | {
       text: string;
-      type: 'section' | 'link';
+      type: 'mega' | 'link';
       link?: LinkType;
-      /**
-       * Add sections to create a dropdown or mega menu
-       */
-      sections?:
-        | {
-            type?: ('links' | 'banner') | null;
-            linksSection?: {
-              title?: string | null;
-              items?: LinkItems;
-              isExtended?: boolean | null;
-            };
-            banner?: {
-              title: string;
-              desc?: string | null;
-              media?:
-                | ({
-                    relationTo: 'images';
-                    value: string | Image;
-                  } | null)
-                | ({
-                    relationTo: 'videos';
-                    value: string | Video;
-                  } | null);
-              link?: LinkType;
-            };
-            id?: string | null;
-          }[]
-        | null;
+      megaItems?: MegaMenuItems;
+      id?: string | null;
+    }[]
+  | null;
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MegaMenuItems".
+ */
+export type MegaMenuItems =
+  | {
+      type?: ('links' | 'banner') | null;
+      linksSection?: {
+        title?: string | null;
+        items?: LinkItems;
+        isExtended?: boolean | null;
+      };
+      banner?: {
+        title: string;
+        description?: string | null;
+        media?:
+          | ({
+              relationTo: 'images';
+              value: string | Image;
+            } | null)
+          | ({
+              relationTo: 'videos';
+              value: string | Video;
+            } | null);
+        link?: LinkType;
+      };
       id?: string | null;
     }[]
   | null;
@@ -102,7 +102,7 @@ export type LinkItems =
   | {
       icon?: string | null;
       title: string;
-      desc?: string | null;
+      description?: string | null;
       link?: LinkType;
       id?: string | null;
     }[]
@@ -3114,8 +3114,6 @@ export interface SocialLink {
   createdAt?: string | null;
 }
 /**
- * Configure website navigation
- *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header".
  */
@@ -3281,26 +3279,29 @@ export interface MenuItemsSelect<T extends boolean = true> {
   text?: T;
   type?: T;
   link?: T | LinkTypeSelect<T>;
-  sections?:
+  megaItems?: T | MegaMenuItemsSelect<T>;
+  id?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MegaMenuItems_select".
+ */
+export interface MegaMenuItemsSelect<T extends boolean = true> {
+  type?: T;
+  linksSection?:
     | T
     | {
-        type?: T;
-        linksSection?:
-          | T
-          | {
-              title?: T;
-              items?: T | LinkItemsSelect<T>;
-              isExtended?: T;
-            };
-        banner?:
-          | T
-          | {
-              title?: T;
-              desc?: T;
-              media?: T;
-              link?: T | LinkTypeSelect<T>;
-            };
-        id?: T;
+        title?: T;
+        items?: T | LinkItemsSelect<T>;
+        isExtended?: T;
+      };
+  banner?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        media?: T;
+        link?: T | LinkTypeSelect<T>;
       };
   id?: T;
 }
@@ -3311,7 +3312,7 @@ export interface MenuItemsSelect<T extends boolean = true> {
 export interface LinkItemsSelect<T extends boolean = true> {
   icon?: T;
   title?: T;
-  desc?: T;
+  description?: T;
   link?: T | LinkTypeSelect<T>;
   id?: T;
 }

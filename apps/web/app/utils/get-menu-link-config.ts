@@ -28,7 +28,7 @@ export const getMenuLinkConfig = (
 
   if (link.type === "internal" && link.internal) {
     if (typeof link.internal.value !== "object") {
-      console.error("Internal link is not populated");
+      console.warn("Internal link is not populated", link);
       return null;
     }
 

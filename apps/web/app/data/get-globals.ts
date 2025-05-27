@@ -15,10 +15,12 @@ async function getGlobalHelper<T extends GlobalSlug>(
   input: {
     locale?: Locale;
     slug: T;
+    depth?: number;
   },
   payloadPromise: Promise<BasePayload> = getPayloadClient(),
-): Promise<APIResponse<Omit<DataFromGlobalSlug<T>, "createdAt" | "updatedAt">>> {
-  const { locale, slug } = input;
+): Promise<APIResponse<DataFromGlobalSlug<T>>> {
+  const { locale, slug, depth: rawDepth = 0 } = input;
+  const depth = Math.max(0, Math.min(rawDepth, 3));
 
   const payload = await payloadPromise;
 
@@ -26,15 +28,17 @@ async function getGlobalHelper<T extends GlobalSlug>(
     const globalData = await payload.findGlobal({
       slug,
       locale,
-      select: {
-        createdAt: false,
-        updatedAt: false,
-      },
+      // TODO: this is not working as expected, it removes some other fields too
+      // select: {
+      //   createdAt: false,
+      //   updatedAt: false,
+      // },
+      depth,
     });
 
     return {
       status: "success",
-      data: globalData as Omit<DataFromGlobalSlug<T>, "createdAt" | "updatedAt">,
+      data: globalData,
     };
   } catch (error) {
     console.error(error);
@@ -54,7 +58,7 @@ export const getHeaderCached = (locale: Locale) => {
 
   return unstable_cache(
     async () => {
-      return await getGlobalHelper({ locale, slug: "header" });
+      return await getGlobalHelper({ locale, slug: "header", depth: 1 });
     },
     [tag],
     {
@@ -99,7 +103,7 @@ export const getCompanyInfoCached = (locale: Locale) => {
 
   return unstable_cache(
     async () => {
-      return await getGlobalHelper({ locale, slug: "company-info" });
+      return await getGlobalHelper({ locale, slug: "company-info", depth: 1 });
     },
     [tag],
     {

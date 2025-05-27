@@ -13,6 +13,7 @@ import { Inter } from "next/font/google";
 import { isValidLocale } from "~/utils/is-valid-locale";
 import { getCompanyInfoCached } from "~/data/get-globals";
 import { defaultLocale, type Locale, locales } from "@synoem/config";
+import { NotificationBar } from "~/components/notification-bar.server";
 
 import "@synoem/ui/web.css";
 import { getUrl } from "../utils/get-url";
@@ -128,6 +129,7 @@ export default async function RootLayout({
           <JotaiProvider>
             <NextIntlClientProvider locale={locale}>
               <SidebarProvider className="flex flex-col">
+                <NotificationBar locale={locale} />
                 <Header locale={locale} />
                 <SidebarInset className="w-full max-w-none flex-1 mx-auto p-4 md:p-8">
                   {children}
