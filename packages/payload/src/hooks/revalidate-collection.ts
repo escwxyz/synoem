@@ -1,5 +1,6 @@
 import type { CollectionAfterChangeHook } from "payload";
 import type { RevalidateCollectionBody } from "../types";
+import { cmsEnvs } from "@synoem/env";
 
 export const revalidateCollection: CollectionAfterChangeHook = async ({
   req: { payload, locale },
@@ -23,9 +24,9 @@ export const revalidateCollection: CollectionAfterChangeHook = async ({
     return;
   }
 
-  const baseUrl = DMNO_PUBLIC_CONFIG.WEB_SITE_URL;
+  const baseUrl = cmsEnvs.NEXT_PUBLIC_WEB_SITE_URL;
   const revalidatePath = "/api/revalidate-collection";
-  const secret = DMNO_CONFIG.WEB_SITE_REVALIDATE_SECRET;
+  const secret = cmsEnvs.REVALIDATE_SECRET;
 
   const fullRevalidateUrl = `${baseUrl.replace(/\/$/, "")}${revalidatePath}?secret=${encodeURIComponent(secret)}`;
 

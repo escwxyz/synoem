@@ -1,8 +1,8 @@
-import "dmno/auto-inject-globals";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { plugins } from "./plugins";
 import { mutableLocales, defaultLocale } from "@synoem/config";
+import { cmsEnvs } from "@synoem/env";
 import { buildConfig } from "payload";
 import { defaultLexical } from "./fields/default-lexical";
 import { postgresAdapter } from "@payloadcms/db-postgres";
@@ -32,11 +32,14 @@ import {
   Posts,
   Industries,
 } from "./collections";
+import sharp from "sharp";
+import { sendNewsletterConfirmationEmail } from "./tasks/send-newsletter-confirmation-email";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
 export default buildConfig({
+  blocks: [],
   routes: {
     admin: "/dashboard",
   },
@@ -59,15 +62,15 @@ export default buildConfig({
         "../../../apps/cms/src/app/(payload)/admin/importMap.js",
       ),
     },
-    suppressHydrationWarning: DMNO_CONFIG.CMS_APP_ENV === "production",
+    suppressHydrationWarning: cmsEnvs.CMS_APP_ENV === "production",
     livePreview: {
       url: ({ collectionConfig, locale, data }) => {
         if (collectionConfig?.slug === "pages") {
           const slug = data.slug === "home" ? "" : `/${data.slug}`;
-          return `${DMNO_PUBLIC_CONFIG.WEB_SITE_URL}/${locale.code}${slug}`;
+          return `${cmsEnvs.NEXT_PUBLIC_WEB_SITE_URL}/${locale.code}${slug}`;
         }
 
-        return DMNO_PUBLIC_CONFIG.WEB_SITE_URL;
+        return cmsEnvs.NEXT_PUBLIC_WEB_SITE_URL;
       },
       collections: ["pages"],
       breakpoints: [
@@ -96,7 +99,7 @@ export default buildConfig({
   db: postgresAdapter({
     idType: "uuid",
     pool: {
-      connectionString: DMNO_CONFIG.DATABASE_URI,
+      connectionString: cmsEnvs.DATABASE_URI,
     },
   }),
   collections: [
@@ -143,8 +146,8 @@ export default buildConfig({
     locales: mutableLocales,
     fallback: true,
   },
-  cors: DMNO_CONFIG.CMS_APP_ENV === "production" ? [DMNO_PUBLIC_CONFIG.WEB_SITE_URL] : "*",
-  secret: DMNO_CONFIG.PAYLOAD_SECRET,
+  cors: cmsEnvs.CMS_APP_ENV === "production" ? [cmsEnvs.NEXT_PUBLIC_WEB_SITE_URL] : "*",
+  secret: cmsEnvs.PAYLOAD_SECRET,
   typescript: {
     outputFile: path.resolve(dirname, "../../types/src/index.ts"),
   },
@@ -152,24 +155,47 @@ export default buildConfig({
     disable: true,
   },
   email: resendAdapter({
-    defaultFromAddress: DMNO_CONFIG.RESEND_FROM_EMAIL,
+    defaultFromAddress: cmsEnvs.RESEND_FROM_EMAIL,
     defaultFromName:
-      DMNO_CONFIG.CMS_APP_ENV === "development"
-        ? DMNO_PUBLIC_CONFIG.RESEND_FROM_NAME
-        : DMNO_CONFIG.RESEND_FROM_NAME,
-    apiKey: DMNO_CONFIG.RESEND_API_KEY,
+      cmsEnvs.CMS_APP_ENV === "production" ? cmsEnvs.RESEND_FROM_NAME : cmsEnvs.RESEND_FROM_NAME,
+    apiKey: cmsEnvs.RESEND_API_KEY,
   }),
   jobs: {
+    autoRun: [
+      {
+        cron: "0/5 * * * *",
+        limit: 10,
+        queue: "every-5-minutes",
+      },
+    ],
     tasks: [
       {
-        slug: "send-email",
-        handler: async ({ input, job, req }) => {
-          console.log(input, job, req);
-          return {
-            output: "Email sent",
-          };
-        },
+        slug: "send-newsletter-confirmation-email",
+        label: "Send Newsletter Confirmation Email to User",
+        inputSchema: [
+          {
+            name: "email",
+            type: "text",
+            required: true,
+          },
+          {
+            name: "createdAt",
+            type: "text",
+            required: true,
+          },
+          {
+            name: "token",
+            type: "text",
+            required: true,
+          },
+        ],
+        handler: sendNewsletterConfirmationEmail,
       },
+      // {
+      //   slug: "send-newsletter-notification-email-to-admin",
+      //   label: "Send Newsletter Notification Email to Admin",
+      //   handler: `${path.resolve(dirname, "./tasks/send-newsletter-notification-email-to-admin.ts")}#sendNewsletterNotificationEmailToAdmin`,
+      // },
     ],
     jobsCollectionOverrides: ({ defaultJobsCollection }) => {
       if (!defaultJobsCollection.admin) {
@@ -179,6 +205,6 @@ export default buildConfig({
       return defaultJobsCollection;
     },
   },
-
+  sharp,
   telemetry: false,
 });

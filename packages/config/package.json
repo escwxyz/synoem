@@ -15,7 +15,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "typescript": "catalog:",
-    "@synoem/typescript-config": "workspace:*"
+    "@synoem/typescript-config": "workspace:*",
+    "typescript": "catalog:"
   }
 }
