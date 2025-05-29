@@ -8,7 +8,6 @@ import { getPayloadClient } from "@synoem/payload/client";
 import { unstable_cache } from "next/cache";
 import type { Page } from "@synoem/types";
 import type { pageSchema } from "@synoem/schema";
-import { webEnvs } from "@synoem/env";
 
 async function getPage(
   input: z.infer<typeof pageSchema>,
@@ -58,7 +57,7 @@ export const getPageCached = (locale: Locale, slug: string) => {
     [tag],
     {
       tags: [tag],
-      revalidate: webEnvs.WEB_APP_ENV === "production" ? false : 30,
+      revalidate: process.env.WEB_APP_ENV === "production" ? false : 30,
     },
   );
 };

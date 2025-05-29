@@ -1,4 +1,3 @@
-import { webEnvs } from "@synoem/env";
 import createNextIntlPlugin from "next-intl/plugin";
 
 import type { NextConfig } from "next";
@@ -6,14 +5,14 @@ import type { NextConfig } from "next";
 const withNextIntl = createNextIntlPlugin();
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: webEnvs.ANALYZE,
+  enabled: false,
 });
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   // redirects,
   // transpilePackages: ["three"],
-  productionBrowserSourceMaps: webEnvs.WEB_APP_ENV === "development",
+  productionBrowserSourceMaps: process.env.WEB_APP_ENV === "development",
   // TODO: https://nextjs.org/docs/app/api-reference/config/next-config-js/serverExternalPackages
   serverExternalPackages: ["@prisma/client", "mongodb", "mongoose", "sharp", "websocket"],
   experimental: {

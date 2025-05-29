@@ -17,7 +17,6 @@
     }
   },
   "devDependencies": {
-    "@synoem/typescript-config": "workspace:*",
-    "typescript": "catalog:"
+    "@synoem/typescript-config": "workspace:*"
   }
 }

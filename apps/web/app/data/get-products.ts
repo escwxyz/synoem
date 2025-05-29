@@ -18,7 +18,6 @@ import {
 import { PRODUCT_SELECT_OBJECT } from "~/types/product-select-fields";
 import { getPayloadClient } from "@synoem/payload/client";
 import { unstable_cache } from "next/cache";
-import { webEnvs } from "@synoem/env";
 
 async function getProducts<T extends ProductTypeId>(
   input: z.infer<typeof productFilterMetadataSchema>,
@@ -77,7 +76,7 @@ export const getProductsCached = <T extends ProductTypeId>(locale: Locale, produ
     [tag],
     {
       tags: [tag],
-      revalidate: webEnvs.WEB_APP_ENV === "production" ? false : 30,
+      revalidate: process.env.WEB_APP_ENV === "production" ? false : 30,
     },
   );
 };

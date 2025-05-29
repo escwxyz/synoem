@@ -13,7 +13,6 @@ import type { BasePayload, DataFromCollectionSlug, PaginatedDocs } from "@synoem
 import type { productFilterMetadataSchema } from "@synoem/schema";
 import { getPayloadClient } from "@synoem/payload/client";
 import { unstable_cache } from "next/cache";
-import { webEnvs } from "@synoem/env";
 
 async function getProductFilterMetadata<T extends ProductTypeId>(
   input: z.infer<typeof productFilterMetadataSchema>,
@@ -74,7 +73,7 @@ export const getProductFilterMetadataCached = <T extends ProductTypeId>(
     [tag],
     {
       tags: [tag],
-      revalidate: webEnvs.WEB_APP_ENV === "production" ? 60 * 60 * 24 * 7 : 30, // Weekly update, instead of manual revalidation
+      revalidate: process.env.WEB_APP_ENV === "production" ? 60 * 60 * 24 * 7 : 30, // Weekly update, instead of manual revalidation
     },
   );
 };

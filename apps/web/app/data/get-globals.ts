@@ -10,7 +10,6 @@ import type {
 } from "@synoem/payload/types";
 import { getPayloadClient } from "@synoem/payload/client";
 import { unstable_cache } from "next/cache";
-import { webEnvs } from "@synoem/env";
 
 async function getGlobalHelper<T extends GlobalSlug>(
   input: {
@@ -64,7 +63,7 @@ export const getHeaderCached = (locale: Locale) => {
     [tag],
     {
       tags: [tag],
-      revalidate: webEnvs.WEB_APP_ENV === "production" ? false : 30,
+      revalidate: process.env.WEB_APP_ENV === "production" ? false : 30,
     },
   );
 };
@@ -79,7 +78,7 @@ export const getFooterCached = (locale: Locale) => {
     [tag],
     {
       tags: [tag],
-      revalidate: webEnvs.WEB_APP_ENV === "production" ? false : 30,
+      revalidate: process.env.WEB_APP_ENV === "production" ? false : 30,
     },
   );
 };
@@ -94,7 +93,7 @@ export const getSocialLinksCached = () => {
     [tag],
     {
       tags: [tag],
-      revalidate: webEnvs.WEB_APP_ENV === "production" ? false : 30,
+      revalidate: process.env.WEB_APP_ENV === "production" ? false : 30,
     },
   );
 };
@@ -109,7 +108,7 @@ export const getCompanyInfoCached = (locale: Locale) => {
     [tag],
     {
       tags: [tag],
-      revalidate: webEnvs.WEB_APP_ENV === "production" ? false : 30,
+      revalidate: process.env.WEB_APP_ENV === "production" ? false : 30,
     },
   );
 };

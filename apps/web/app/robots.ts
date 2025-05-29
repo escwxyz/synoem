@@ -1,5 +1,4 @@
 import type { MetadataRoute } from "next";
-import { webEnvs } from "@synoem/env";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -8,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/api/", "/_next/"],
     },
-    sitemap: `${webEnvs.NEXT_PUBLIC_WEB_SITE_URL}/sitemap.xml`,
+    sitemap: `${process.env.NEXT_PUBLIC_WEB_SITE_URL || ""}/sitemap.xml`,
   };
 }

@@ -8,8 +8,6 @@ import { unstable_cache } from "next/cache";
 import type { APIResponse } from "~/types/api-response";
 import type { faqSchema } from "@synoem/schema";
 import type { z } from "zod";
-import { webEnvs } from "@synoem/env";
-import { apiClient } from "~/libs/api-client";
 
 async function getFaqByType<T extends "general" | ProductTypeId>(
   input: z.infer<typeof faqSchema>,
@@ -57,7 +55,7 @@ export const getFaqByTypeCached = <T extends "general" | ProductTypeId>(
     [tag],
     {
       tags: [tag],
-      revalidate: webEnvs.WEB_APP_ENV === "production" ? false : 30,
+      revalidate: process.env.WEB_APP_ENV === "production" ? false : 30,
     },
   );
 };

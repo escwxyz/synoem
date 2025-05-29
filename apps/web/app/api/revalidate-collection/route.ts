@@ -6,12 +6,11 @@ import type {
   RevalidateCollectionTagName,
 } from "@synoem/payload/types";
 import { isValidLocale } from "@synoem/config";
-import { webEnvs } from "@synoem/env";
 
 export async function POST(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const secret = searchParams.get("secret");
-  if (secret !== webEnvs.REVALIDATE_SECRET) {
+  if (secret !== process.env.REVALIDATE_SECRET) {
     return new Response(JSON.stringify({ message: "Invalid secret" }), { status: 401 });
   }
 

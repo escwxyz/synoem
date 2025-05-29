@@ -21,7 +21,6 @@
   "dependencies": {
     "@orpc/server": "^1.3.0",
     "@payloadcms/next": "catalog:",
-    "@payloadcms/richtext-lexical": "catalog:",
     "@payloadcms/ui": "catalog:",
     "@synoem/api": "workspace:*",
     "@synoem/config": "workspace:*",

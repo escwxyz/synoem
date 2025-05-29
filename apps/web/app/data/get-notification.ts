@@ -8,7 +8,6 @@ import { getPayloadClient } from "@synoem/payload/client";
 import type { BasePayload, RevalidateCollectionListTagName } from "@synoem/payload/types";
 import { unstable_cache } from "next/cache";
 import type { Locale } from "@synoem/config";
-import { webEnvs } from "@synoem/env";
 
 async function getNotification(
   input: z.infer<typeof localeSchema>,
@@ -58,7 +57,7 @@ export const getNotificationCached = (locale: Locale) => {
     [tag],
     {
       tags: [tag],
-      revalidate: webEnvs.WEB_APP_ENV === "production" ? false : 30,
+      revalidate: process.env.WEB_APP_ENV === "production" ? false : 30,
     },
   );
 };

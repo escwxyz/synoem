@@ -46,8 +46,8 @@ export default buildConfig({
     autoLogin:
       process.env.CMS_APP_ENV === "development"
         ? {
-            email: "test@gmail.com",
-            password: "123456",
+            email: process.env.CMS_DEV_EMAIL || "",
+            password: process.env.CMS_DEV_PASSWORD || "",
             prefillOnly: true,
           }
         : false,
