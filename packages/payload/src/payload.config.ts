@@ -2,7 +2,6 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { plugins } from "./plugins";
 import { mutableLocales, defaultLocale } from "@synoem/config";
-import { cmsEnvs } from "@synoem/env";
 import { buildConfig } from "payload";
 import { defaultLexical } from "./fields/default-lexical";
 import { postgresAdapter } from "@payloadcms/db-postgres";
@@ -44,6 +43,38 @@ export default buildConfig({
     admin: "/dashboard",
   },
   admin: {
+    autoLogin:
+      process.env.CMS_APP_ENV === "development"
+        ? {
+            email: "test@gmail.com",
+            password: "123456",
+            prefillOnly: true,
+          }
+        : false,
+    meta: {
+      robots: "noindex, nofollow",
+      titleSuffix: " | Synoem Dashboard",
+      title: "Synoem Dashboard",
+      description: "Synoem Dashboard",
+      icons: [
+        {
+          rel: "icon",
+          type: "image/x-icon",
+          url: "/logos/favicon.ico",
+        },
+        {
+          rel: "apple-touch-icon",
+          type: "image/png",
+          url: "/logos/apple-touch-icon.png",
+        },
+      ],
+      openGraph: {
+        description: "Synoem Dashboard",
+        images: [],
+        siteName: "Synoem Dashboard",
+        title: "Synoem Dashboard",
+      },
+    },
     components: {
       views: {},
       graphics: {
@@ -62,15 +93,14 @@ export default buildConfig({
         "../../../apps/cms/src/app/(payload)/admin/importMap.js",
       ),
     },
-    suppressHydrationWarning: cmsEnvs.CMS_APP_ENV === "production",
+    suppressHydrationWarning: process.env.CMS_APP_ENV === "production",
     livePreview: {
       url: ({ collectionConfig, locale, data }) => {
         if (collectionConfig?.slug === "pages") {
           const slug = data.slug === "home" ? "" : `/${data.slug}`;
-          return `${cmsEnvs.NEXT_PUBLIC_WEB_SITE_URL}/${locale.code}${slug}`;
+          return `${process.env.NEXT_PUBLIC_WEB_SITE_URL}/${locale.code}${slug}` || "";
         }
-
-        return cmsEnvs.NEXT_PUBLIC_WEB_SITE_URL;
+        return process.env.NEXT_PUBLIC_WEB_SITE_URL || "";
       },
       collections: ["pages"],
       breakpoints: [
@@ -99,7 +129,7 @@ export default buildConfig({
   db: postgresAdapter({
     idType: "uuid",
     pool: {
-      connectionString: cmsEnvs.DATABASE_URI,
+      connectionString: process.env.DATABASE_URI || "",
     },
   }),
   collections: [
@@ -146,8 +176,9 @@ export default buildConfig({
     locales: mutableLocales,
     fallback: true,
   },
-  cors: cmsEnvs.CMS_APP_ENV === "production" ? [cmsEnvs.NEXT_PUBLIC_WEB_SITE_URL] : "*",
-  secret: cmsEnvs.PAYLOAD_SECRET,
+  cors:
+    process.env.CMS_APP_ENV === "production" ? [process.env.NEXT_PUBLIC_WEB_SITE_URL || ""] : "*",
+  secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
     outputFile: path.resolve(dirname, "../../types/src/index.ts"),
   },
@@ -155,10 +186,12 @@ export default buildConfig({
     disable: true,
   },
   email: resendAdapter({
-    defaultFromAddress: cmsEnvs.RESEND_FROM_EMAIL,
+    defaultFromAddress: process.env.RESEND_FROM_EMAIL || "",
     defaultFromName:
-      cmsEnvs.CMS_APP_ENV === "production" ? cmsEnvs.RESEND_FROM_NAME : cmsEnvs.RESEND_FROM_NAME,
-    apiKey: cmsEnvs.RESEND_API_KEY,
+      process.env.CMS_APP_ENV === "production"
+        ? process.env.RESEND_FROM_NAME || ""
+        : process.env.RESEND_FROM_NAME || "",
+    apiKey: process.env.RESEND_API_KEY || "",
   }),
   jobs: {
     autoRun: [

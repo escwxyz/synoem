@@ -46,7 +46,6 @@ export const cmsEnvs = createEnv({
   createFinalSchema: (shape) => {
     // TODO: replace with `check` when stable
     return z.object(shape).superRefine((env, ctx) => {
-      console.log("validating env: \n", env);
       const missingVars: string[] = [];
 
       if (env.CMS_APP_ENV === "production" || env.CMS_APP_ENV === "preview") {

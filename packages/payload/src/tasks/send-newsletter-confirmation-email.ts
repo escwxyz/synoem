@@ -6,7 +6,7 @@ import {
 import React from "react";
 
 import type { Locale } from "@synoem/config";
-import { cmsEnvs } from "@synoem/env";
+
 import { render, pretty } from "@react-email/render";
 
 export const sendNewsletterConfirmationEmail: TaskHandler<
@@ -37,9 +37,11 @@ export const sendNewsletterConfirmationEmail: TaskHandler<
 
     const url = response.logo.url;
 
-    const logoUrl = url.startsWith("http") ? url : `${cmsEnvs.NEXT_PUBLIC_CMS_SERVER_URL}${url}`;
+    const logoUrl = url.startsWith("http")
+      ? url
+      : `${process.env.NEXT_PUBLIC_CMS_SERVER_URL || ""}${url}`;
 
-    const unsubscribeUrl = `${cmsEnvs.NEXT_PUBLIC_WEB_SITE_URL}/${locale}/unsubscribe?email=${email}&token=${token}`;
+    const unsubscribeUrl = `${process.env.NEXT_PUBLIC_WEB_SITE_URL || ""}/${locale}/unsubscribe?email=${email}&token=${token}`;
 
     await payload.sendEmail({
       to: email,
@@ -51,7 +53,7 @@ export const sendNewsletterConfirmationEmail: TaskHandler<
             unsubscribeUrl,
             language: locale,
             logoUrl,
-            baseUrl: cmsEnvs.NEXT_PUBLIC_WEB_SITE_URL,
+            baseUrl: process.env.NEXT_PUBLIC_WEB_SITE_URL || "",
           }),
         ),
       ),

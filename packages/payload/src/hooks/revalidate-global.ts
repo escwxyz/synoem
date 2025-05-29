@@ -1,6 +1,5 @@
 import type { GlobalAfterChangeHook } from "payload";
 import type { RevalidateGlobalBody } from "../types";
-import { cmsEnvs } from "@synoem/env";
 
 export const revalidateGlobal: GlobalAfterChangeHook = async ({
   global,
@@ -12,9 +11,9 @@ export const revalidateGlobal: GlobalAfterChangeHook = async ({
   }
 
   const { slug } = global;
-  const baseUrl = cmsEnvs.NEXT_PUBLIC_WEB_SITE_URL;
+  const baseUrl = process.env.NEXT_PUBLIC_WEB_SITE_URL || "";
   const revalidatePath = "/api/revalidate-global";
-  const secret = cmsEnvs.REVALIDATE_SECRET;
+  const secret = process.env.REVALIDATE_SECRET || "";
 
   const fullRevalidateUrl = `${baseUrl.replace(/\/$/, "")}${revalidatePath}?secret=${encodeURIComponent(secret)}`;
 
