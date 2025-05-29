@@ -1,5 +1,5 @@
 import type { FieldHook } from "payload";
-import { slugify } from "../utils";
+import { slugify } from "@synoem/utils";
 
 export const formatSlug =
   (fallback: string): FieldHook =>

@@ -14,7 +14,7 @@ import {
   useLocale,
 } from "@payloadcms/ui";
 
-import { slugify } from "@synoem/payload/utils";
+import { slugify } from "@synoem/utils";
 
 type SlugComponentProps = {
   fieldToUse: string;
