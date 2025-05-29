@@ -3,6 +3,7 @@ import type { BasePayload, RevalidateCollectionListTagName } from "@synoem/paylo
 import type { APIResponse } from "../types/api-response";
 import type { Certification } from "@synoem/types";
 import { unstable_cache } from "next/cache";
+import { webEnvs } from "@synoem/env";
 
 async function getCertificationLogos(
   payloadPromise: Promise<BasePayload> = getPayloadClient(),
@@ -46,7 +47,7 @@ export const getCertificationLogosCached = () => {
     },
     [tags],
     {
-      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? false : 30,
+      revalidate: webEnvs.WEB_APP_ENV === "production" ? false : 30,
       tags: [tags],
     },
   );

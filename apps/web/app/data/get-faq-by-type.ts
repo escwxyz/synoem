@@ -1,3 +1,5 @@
+import "server-only";
+
 import type { Locale, ProductTypeId } from "@synoem/config";
 import { getPayloadClient } from "@synoem/payload/client";
 import type { BasePayload, RevalidateGlobalTagName } from "@synoem/payload/types";
@@ -6,6 +8,8 @@ import { unstable_cache } from "next/cache";
 import type { APIResponse } from "~/types/api-response";
 import type { faqSchema } from "@synoem/schema";
 import type { z } from "zod";
+import { webEnvs } from "@synoem/env";
+import { apiClient } from "~/libs/api-client";
 
 async function getFaqByType<T extends "general" | ProductTypeId>(
   input: z.infer<typeof faqSchema>,
@@ -47,12 +51,13 @@ export const getFaqByTypeCached = <T extends "general" | ProductTypeId>(
 
   return unstable_cache(
     async () => {
+      // return await apiClient.globals.getFaq()
       return await getFaqByType<T>({ locale, type });
     },
     [tag],
     {
       tags: [tag],
-      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? false : 30,
+      revalidate: webEnvs.WEB_APP_ENV === "production" ? false : 30,
     },
   );
 };

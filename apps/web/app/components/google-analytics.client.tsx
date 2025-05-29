@@ -1,9 +1,10 @@
 "use client";
 
 import Script from "next/script";
+import { webEnvs } from "@synoem/env";
 
 const GoogleAnalytics = () => {
-  const gid = DMNO_CONFIG.GOOGLE_ANALYTICS_ID || "";
+  const gid = webEnvs.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || "";
 
   return (
     <>

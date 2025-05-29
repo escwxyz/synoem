@@ -3,34 +3,32 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "DMNO_ENV=development dmno run -w -- next dev --port 3001",
-    "build:local": "DMNO_ENV=development dmno run -- next build",
+    "dev": "next dev --port 3001",
     "build": "next build",
-    "build:preview": "DMNO_ENV=preview dmno run -- opennextjs-cloudflare build",
-    "build:prod": "DMNO_ENV=production dmno run -- opennextjs-cloudflare build",
-    "preview": "DMNO_ENV=production dmno run -- opennextjs-cloudflare preview",
-    "inject-env": "DMNO_ENV=production dmno resolve --service web --format json > .env.json && wrangler secret bulk < .env.json",
-    "deploy:preview": "pnpm run build:preview && pnpm run inject-env && pnpm run preview",
-    "deploy:prod": "pnpm run build:prod && opennextjs-cloudflare deploy",
+    "build:worker": "pnpm opennextjs-cloudflare build",
+    "preview:worker": "pnpm opennextjs-cloudflare preview",
+    "preview": "pnpm build:worker && pnpm preview:worker",
+    "deploy": "pnpm build:worker && pnpm opennextjs-cloudflare deploy",
+    "check:size": "wrangler deploy --minify --dry-run",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings ./cloudflare-env.d.ts"
   },
   "dependencies": {
-    "@dmno/cloudflare-platform": "^0.0.4",
-    "@dmno/nextjs-integration": "^0.0.14",
     "@hookform/resolvers": "^5.0.1",
     "@next-safe-action/adapter-react-hook-form": "^1.0.14",
-    "@opennextjs/cloudflare": "^1.0.4",
+    "@opennextjs/cloudflare": "^1.1.0",
+    "@orpc/client": "^1.3.0",
     "@payloadcms/live-preview-react": "^3.39.1",
     "@react-three/drei": "catalog:",
     "@react-three/fiber": "catalog:",
+    "@synoem/api": "workspace:*",
     "@synoem/config": "workspace:*",
+    "@synoem/env": "workspace:*",
     "@synoem/payload": "workspace:*",
     "@synoem/schema": "workspace:*",
     "@synoem/types": "workspace:*",
     "@synoem/ui": "workspace:*",
     "canvas-confetti": "1.9.3",
     "client-only": "^0.0.1",
-    "dmno": "^0.0.39",
     "jotai": "^2.12.4",
     "lenis": "^1.3.1",
     "lucide-react": "catalog:",
@@ -52,6 +50,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "4.20250522.0",
     "@lingual/i18n-check": "^0.8.4",
     "@next/bundle-analyzer": "^15.3.2",
     "@synoem/typescript-config": "workspace:*",
@@ -61,6 +60,6 @@
     "@types/react-dom": "catalog:",
     "tailwindcss": "catalog:",
     "typescript": "catalog:",
-    "wrangler": "^4.16.1"
+    "wrangler": "^4.17.0"
   }
 }

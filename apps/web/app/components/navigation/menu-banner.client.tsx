@@ -10,8 +10,6 @@ export const MenuBanner = ({ banner }: MenuBannerProps) => {
   const hasMedia = typeof media === "object" && typeof media?.value === "object";
   const linkConfig = getMenuLinkConfig(banner.link);
 
-  // const t = useTranslations("Menu");
-
   return (
     <div className="mb-2 p-4 bg-muted/80 rounded-md overflow-hidden">
       {banner.title && <div className="font-semibold">{banner.title}</div>}
@@ -30,9 +28,12 @@ export const MenuBanner = ({ banner }: MenuBannerProps) => {
             className="rounded-md w-full h-auto dark:brightness-70 object-cover"
             loading="lazy"
             priority={false}
-            // placeholder="blur"
-            // TODO: add blur data url
-            // blurDataURL={media.value.url}
+            {...(media.value.blurDataUrl
+              ? {
+                  placeholder: "blur",
+                  blurDataURL: media.value.blurDataUrl,
+                }
+              : {})}
           />
         </MenuLink>
       )}

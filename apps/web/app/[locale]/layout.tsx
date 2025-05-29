@@ -14,6 +14,7 @@ import { isValidLocale } from "~/utils/is-valid-locale";
 import { getCompanyInfoCached } from "~/data/get-globals";
 import { defaultLocale, type Locale, locales } from "@synoem/config";
 import { NotificationBar } from "~/components/notification-bar.server";
+import { webEnvs } from "@synoem/env";
 
 import "@synoem/ui/web.css";
 import { getUrl } from "../utils/get-url";
@@ -32,7 +33,7 @@ export const generateMetadata = async ({
 
   const languages = locales.reduce(
     (acc, locale) => {
-      acc[locale] = `${DMNO_PUBLIC_CONFIG.WEB_SITE_URL}/${locale}`;
+      acc[locale] = `${webEnvs.NEXT_PUBLIC_WEB_SITE_URL}/${locale}`;
       return acc;
     },
     {} as Record<Locale, string>,
@@ -53,7 +54,7 @@ export const generateMetadata = async ({
   const openGraph: NonNullable<Metadata["openGraph"]> = {
     title: companyInfo.data?.name,
     description: companyInfo.data?.longDescription,
-    url: DMNO_PUBLIC_CONFIG.WEB_SITE_URL,
+    url: webEnvs.NEXT_PUBLIC_WEB_SITE_URL,
     siteName: companyInfo.data?.name,
     locale: effectiveLocale,
     type: "website",
@@ -68,7 +69,7 @@ export const generateMetadata = async ({
   };
 
   return {
-    metadataBase: new URL(DMNO_PUBLIC_CONFIG.WEB_SITE_URL),
+    metadataBase: new URL(webEnvs.NEXT_PUBLIC_WEB_SITE_URL),
     title: companyInfo.data?.name,
     description: companyInfo.data?.longDescription,
     keywords,
@@ -86,7 +87,7 @@ export const generateMetadata = async ({
       },
     },
     alternates: {
-      canonical: DMNO_PUBLIC_CONFIG.WEB_SITE_URL,
+      canonical: webEnvs.NEXT_PUBLIC_WEB_SITE_URL,
       languages,
     },
   };
@@ -109,7 +110,7 @@ export default async function RootLayout({
     <html
       lang={locale}
       className={inter.className}
-      suppressHydrationWarning={DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production"}
+      suppressHydrationWarning={webEnvs.WEB_APP_ENV === "production"}
     >
       <head>
         {/* <script src="https://cdn.jsdelivr.net/npm/react-scan/dist/auto.global.js" /> */}
@@ -140,7 +141,7 @@ export default async function RootLayout({
             </NextIntlClientProvider>
           </JotaiProvider>
         </ThemeProvider>
-        {DMNO_CONFIG.WEB_APP_ENV === "production" && DMNO_CONFIG.GOOGLE_ANALYTICS_ID && (
+        {webEnvs.WEB_APP_ENV === "production" && webEnvs.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID && (
           <GoogleAnalytics />
         )}
       </body>

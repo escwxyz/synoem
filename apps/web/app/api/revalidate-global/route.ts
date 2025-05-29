@@ -2,11 +2,12 @@ import type { NextRequest } from "next/server";
 import { revalidateTag } from "next/cache";
 import type { RevalidateGlobalBody, RevalidateGlobalTagName } from "@synoem/payload/types";
 import { isValidLocale } from "@synoem/config";
+import { webEnvs } from "@synoem/env";
 
 export async function POST(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const secret = searchParams.get("secret");
-  if (secret !== DMNO_CONFIG.WEB_SITE_REVALIDATE_SECRET) {
+  if (secret !== webEnvs.REVALIDATE_SECRET) {
     return new Response(JSON.stringify({ message: "Invalid secret" }), { status: 401 });
   }
 

@@ -11,6 +11,7 @@ import type {
 import type { productSchema } from "@synoem/schema";
 import { getPayloadClient } from "@synoem/payload/client";
 import { unstable_cache } from "next/cache";
+import { webEnvs } from "@synoem/env";
 
 async function getProductCategory<T extends ProductTypeId>(
   input: z.infer<typeof productSchema>,
@@ -79,7 +80,7 @@ export const getProductCategoryCached = <T extends ProductTypeId>(
     [tag],
     {
       tags: [tag],
-      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? false : 30, // We don't need to revalidate because we have to change the config file for this to work
+      revalidate: webEnvs.WEB_APP_ENV === "production" ? false : 30, // We don't need to revalidate because we have to change the config file for this to work
     },
   );
 };
