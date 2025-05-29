@@ -9,20 +9,19 @@ import { Header } from "~/layouts/header-layout.server";
 import { Footer } from "~/layouts/footer-layout.server";
 import { WebVitals } from "~/components/web-vitals.client";
 import GoogleAnalytics from "~/components/google-analytics.client";
-import { Inter } from "next/font/google";
+// import { Inter } from "next/font/google";
 import { isValidLocale } from "~/utils/is-valid-locale";
 import { getCompanyInfoCached } from "~/data/get-globals";
 import { defaultLocale, type Locale, locales } from "@synoem/config";
 import { NotificationBar } from "~/components/notification-bar.server";
-import { webEnvs } from "@synoem/env";
 
 import "@synoem/ui/web.css";
 import { getUrl } from "../utils/get-url";
 
-const inter = Inter({
-  preload: true,
-  subsets: ["latin"],
-});
+// const inter = Inter({
+//   preload: true,
+//   subsets: ["latin"],
+// });
 
 export const generateMetadata = async ({
   params,
@@ -33,7 +32,7 @@ export const generateMetadata = async ({
 
   const languages = locales.reduce(
     (acc, locale) => {
-      acc[locale] = `${webEnvs.NEXT_PUBLIC_WEB_SITE_URL}/${locale}`;
+      acc[locale] = `${process.env.NEXT_PUBLIC_WEB_SITE_URL || ""}/${locale}`;
       return acc;
     },
     {} as Record<Locale, string>,
@@ -54,7 +53,7 @@ export const generateMetadata = async ({
   const openGraph: NonNullable<Metadata["openGraph"]> = {
     title: companyInfo.data?.name,
     description: companyInfo.data?.longDescription,
-    url: webEnvs.NEXT_PUBLIC_WEB_SITE_URL,
+    url: process.env.NEXT_PUBLIC_WEB_SITE_URL || "",
     siteName: companyInfo.data?.name,
     locale: effectiveLocale,
     type: "website",
@@ -69,7 +68,7 @@ export const generateMetadata = async ({
   };
 
   return {
-    metadataBase: new URL(webEnvs.NEXT_PUBLIC_WEB_SITE_URL),
+    metadataBase: new URL(process.env.NEXT_PUBLIC_WEB_SITE_URL || ""),
     title: companyInfo.data?.name,
     description: companyInfo.data?.longDescription,
     keywords,
@@ -87,7 +86,7 @@ export const generateMetadata = async ({
       },
     },
     alternates: {
-      canonical: webEnvs.NEXT_PUBLIC_WEB_SITE_URL,
+      canonical: process.env.NEXT_PUBLIC_WEB_SITE_URL || "",
       languages,
     },
   };
@@ -109,8 +108,8 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={inter.className}
-      suppressHydrationWarning={webEnvs.WEB_APP_ENV === "production"}
+      // className={inter.className}
+      suppressHydrationWarning={process.env.WEB_APP_ENV === "production"}
     >
       <head>
         {/* <script src="https://cdn.jsdelivr.net/npm/react-scan/dist/auto.global.js" /> */}
@@ -141,9 +140,8 @@ export default async function RootLayout({
             </NextIntlClientProvider>
           </JotaiProvider>
         </ThemeProvider>
-        {webEnvs.WEB_APP_ENV === "production" && webEnvs.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID && (
-          <GoogleAnalytics />
-        )}
+        {process.env.WEB_APP_ENV === "production" &&
+          process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID && <GoogleAnalytics />}
       </body>
     </html>
   );
