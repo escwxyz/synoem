@@ -112,7 +112,7 @@ interface NewsletterConfirmationEmailProps {
   baseUrl: string;
 }
 
-const NewsletterConfirmation = ({
+export const NewsletterConfirmation = ({
   subscriptionDate,
   unsubscribeUrl,
   language = "en",
