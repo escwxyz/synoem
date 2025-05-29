@@ -1,24 +1,24 @@
 import { s3Storage } from "@payloadcms/storage-s3";
 
 export const storage = s3Storage({
-  enabled: DMNO_CONFIG.CMS_APP_ENV === "production" || DMNO_CONFIG.CMS_APP_ENV === "preview",
+  enabled: process.env.CMS_APP_ENV === "production" || process.env.CMS_APP_ENV === "preview",
   collections: {
     images: {
       prefix: "images",
       disablePayloadAccessControl: true,
       generateFileURL: ({ filename, prefix }) => {
-        return `${DMNO_CONFIG.S3_ENDPOINT}/object/public/${DMNO_CONFIG.S3_BUCKET_NAME}/${prefix}/${filename}`;
+        return `${process.env.S3_ENDPOINT}/object/public/${process.env.S3_BUCKET_NAME}/${prefix}/${filename}`;
       },
     },
   },
-  bucket: DMNO_CONFIG.S3_BUCKET_NAME ?? "",
+  bucket: process.env.S3_BUCKET_NAME ?? "",
   config: {
-    endpoint: `${DMNO_CONFIG.S3_ENDPOINT}/s3`,
+    endpoint: `${process.env.S3_ENDPOINT}/s3`,
     credentials: {
-      accessKeyId: DMNO_CONFIG.S3_ACCESS_KEY_ID ?? "",
-      secretAccessKey: DMNO_CONFIG.S3_ACCESS_KEY_SECRET ?? "",
+      accessKeyId: process.env.S3_ACCESS_KEY_ID ?? "",
+      secretAccessKey: process.env.S3_ACCESS_KEY_SECRET ?? "",
     },
-    region: DMNO_CONFIG.S3_REGION,
+    region: process.env.S3_REGION,
     forcePathStyle: true,
   },
 });

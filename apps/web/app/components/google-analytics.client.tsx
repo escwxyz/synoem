@@ -3,7 +3,7 @@
 import Script from "next/script";
 
 const GoogleAnalytics = () => {
-  const gid = DMNO_CONFIG.GOOGLE_ANALYTICS_ID || "";
+  const gid = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || "";
 
   return (
     <>

@@ -1,11 +1,8 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
-  "globalPassThroughEnv": [
-    "DMNO_PARENT_SERVER",
-    "DMNO_VAULT_KEY_PROD",
-    "ENABLE_EXPERIMENTAL_COREPACK"
-  ],
+  "globalPassThroughEnv": ["ENABLE_EXPERIMENTAL_COREPACK"],
+  "globalDependencies": [".env*"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],

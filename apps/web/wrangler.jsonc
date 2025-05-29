@@ -29,10 +29,10 @@
    */
 
   /**
-   * Environment Variables
+   * Environment Variables when deploying to Cloudflare
    * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
    */
-  "vars": { "DMNO_ENV": "production" },
+  "vars": {},
   /**
    * Note: Use secrets to store sensitive data.
    * https://developers.cloudflare.com/workers/configuration/secrets/

@@ -12,21 +12,12 @@ interface Props {
 
 export const ThemeSwitcher = ({ onThemeChange }: Props) => {
   const { theme, setTheme } = useTheme();
-  const [isRotating, setIsRotating] = useState(false);
 
   const toggleTheme = () => {
-    if (isRotating) return;
-
-    setIsRotating(true);
-
     const nextTheme = theme === "light" ? "dark" : theme === "dark" ? "system" : "light";
 
     setTheme(nextTheme);
     onThemeChange?.();
-
-    setTimeout(() => {
-      setIsRotating(false);
-    }, 400);
   };
 
   return (

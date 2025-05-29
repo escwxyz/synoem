@@ -23,9 +23,9 @@ export const revalidateCollection: CollectionAfterChangeHook = async ({
     return;
   }
 
-  const baseUrl = DMNO_PUBLIC_CONFIG.WEB_SITE_URL;
+  const baseUrl = process.env.NEXT_PUBLIC_WEB_SITE_URL || "";
   const revalidatePath = "/api/revalidate-collection";
-  const secret = DMNO_CONFIG.WEB_SITE_REVALIDATE_SECRET;
+  const secret = process.env.REVALIDATE_SECRET || "";
 
   const fullRevalidateUrl = `${baseUrl.replace(/\/$/, "")}${revalidatePath}?secret=${encodeURIComponent(secret)}`;
 

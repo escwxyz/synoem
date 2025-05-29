@@ -6,7 +6,7 @@ import { isValidLocale } from "@synoem/config";
 export async function POST(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const secret = searchParams.get("secret");
-  if (secret !== DMNO_CONFIG.WEB_SITE_REVALIDATE_SECRET) {
+  if (secret !== process.env.REVALIDATE_SECRET) {
     return new Response(JSON.stringify({ message: "Invalid secret" }), { status: 401 });
   }
 

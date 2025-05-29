@@ -258,7 +258,7 @@ export interface Config {
   };
   jobs: {
     tasks: {
-      'send-email': TaskSendEmail;
+      'send-newsletter-confirmation-email': TaskSendNewsletterConfirmationEmail;
       schedulePublish: TaskSchedulePublish;
       inline: {
         input: unknown;
@@ -441,6 +441,7 @@ export interface Industry {
 export interface Image {
   id: string;
   alt: string;
+  blurDataUrl?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -1956,7 +1957,7 @@ export interface PayloadJob {
     | {
         executedAt: string;
         completedAt: string;
-        taskSlug: 'inline' | 'send-email' | 'schedulePublish';
+        taskSlug: 'inline' | 'send-newsletter-confirmation-email' | 'schedulePublish';
         taskID: string;
         input?:
           | {
@@ -1989,7 +1990,7 @@ export interface PayloadJob {
         id?: string | null;
       }[]
     | null;
-  taskSlug?: ('inline' | 'send-email' | 'schedulePublish') | null;
+  taskSlug?: ('inline' | 'send-newsletter-confirmation-email' | 'schedulePublish') | null;
   queue?: string | null;
   waitUntil?: string | null;
   processing?: boolean | null;
@@ -2389,6 +2390,7 @@ export interface NewsletterSubscribersSelect<T extends boolean = true> {
  */
 export interface ImagesSelect<T extends boolean = true> {
   alt?: T;
+  blurDataUrl?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -3360,10 +3362,14 @@ export interface FaqSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TaskSend-email".
+ * via the `definition` "TaskSend-newsletter-confirmation-email".
  */
-export interface TaskSendEmail {
-  input?: unknown;
+export interface TaskSendNewsletterConfirmationEmail {
+  input: {
+    email: string;
+    createdAt: string;
+    token: string;
+  };
   output?: unknown;
 }
 /**

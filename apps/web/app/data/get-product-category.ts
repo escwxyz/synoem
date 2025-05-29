@@ -79,7 +79,7 @@ export const getProductCategoryCached = <T extends ProductTypeId>(
     [tag],
     {
       tags: [tag],
-      revalidate: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "production" ? false : 30, // We don't need to revalidate because we have to change the config file for this to work
+      revalidate: process.env.WEB_APP_ENV === "production" ? false : 30, // We don't need to revalidate because we have to change the config file for this to work
     },
   );
 };

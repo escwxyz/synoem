@@ -20,19 +20,15 @@ export const ProductPagination = ({ totalCount, className, ...props }: Props) =>
     const result = [];
     const maxPagesToShow = 5;
 
-    // 安全检查
     if (totalPages <= 0) return [];
 
-    // 计算起始和结束页码
     let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
     const endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
 
-    // 调整起始页码，确保显示足够的页码
     if (endPage - startPage + 1 < maxPagesToShow) {
       startPage = Math.max(1, endPage - maxPagesToShow + 1);
     }
 
-    // 添加首页和省略号
     if (startPage > 1) {
       result.push(1);
       if (startPage > 2) {
@@ -40,12 +36,10 @@ export const ProductPagination = ({ totalCount, className, ...props }: Props) =>
       }
     }
 
-    // 添加中间页码
     for (let i = startPage; i <= endPage; i++) {
       result.push(i);
     }
 
-    // 添加尾页和省略号
     if (endPage < totalPages) {
       if (endPage < totalPages - 1) {
         result.push("...");

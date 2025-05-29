@@ -9,15 +9,10 @@
     "dmno": "pnpm exec dmno plugin",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "format:biome": "biome format --write .",
-    "lint": "turbo lint",
-    "vault": "pnpm exec dmno plugin -p vault/prod -- setup",
-    "vault:add": "pnpm exec dmno plugin -p vault/prod -- add",
-    "vault:delete": "pnpm exec dmno plugin -p vault/prod -- delete",
-    "vault:upsert": "pnpm exec dmno plugin -p vault/prod -- upsert"
+    "lint": "turbo lint"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "@cloudflare/workers-types": "4.20250522.0",
     "@synoem/typescript-config": "workspace:*",
     "turbo": "^2.5.3",
     "typescript": "catalog:",
@@ -26,13 +21,6 @@
   "packageManager": "pnpm@10.4.1",
   "engines": {
     "node": ">=22"
-  },
-  "dependencies": {
-    "@dmno/cloudflare-platform": "^0.0.4",
-    "@dmno/encrypted-vault-plugin": "^0.0.10",
-    "@dmno/netlify-platform": "^0.0.5",
-    "@dmno/vercel-platform": "^0.0.3",
-    "dmno": "^0.0.39"
   },
   "pnpm": {
     "overrides": {

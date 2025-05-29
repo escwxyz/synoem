@@ -3,5 +3,5 @@ export const getUrl = (url: string) => {
     return url;
   }
 
-  return `${DMNO_PUBLIC_CONFIG.CMS_SERVER_URL}${url}`;
+  return `${process.env.NEXT_PUBLIC_CMS_SERVER_URL}${url}`;
 };

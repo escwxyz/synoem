@@ -8,7 +8,7 @@ import { locales, PRODUCT_TYPES } from "@synoem/config";
 import type { MetadataRoute } from "next";
 import { getPayloadClient } from "@synoem/payload/client";
 
-const BASE_URL = DMNO_PUBLIC_CONFIG.WEB_SITE_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_WEB_SITE_URL || "";
 
 interface PopulatedCategory {
   slug: string;

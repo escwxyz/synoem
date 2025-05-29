@@ -1,5 +1,5 @@
 "use client";
-
+// TODO: tree shaking, not import all icons
 import { useField, FieldLabel as Label } from "@payloadcms/ui";
 import { cn } from "@synoem/ui/lib/utils";
 import { Button } from "@synoem/ui/components/button";
@@ -11,11 +11,7 @@ import {
   CommandItem,
   CommandList,
 } from "@synoem/ui/components/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@synoem/ui/components/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@synoem/ui/components/popover";
 import { icons as LucideIcons } from "lucide-react";
 import type { TextFieldClientProps } from "payload";
 import { useState, useEffect } from "react";
@@ -83,10 +79,8 @@ export const IconSelectField: React.FC<TextFieldClientProps> = (props) => {
   const filteredIcons = searchQuery
     ? ICON_DATA.filter(
         (icon) =>
-          icon?.displayName
-            ?.toLowerCase()
-            .includes(searchQuery.toLowerCase()) ||
-          icon?.name?.toLowerCase().includes(searchQuery.toLowerCase())
+          icon?.displayName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          icon?.name?.toLowerCase().includes(searchQuery.toLowerCase()),
       )
     : ICON_DATA;
 
@@ -124,7 +118,7 @@ export const IconSelectField: React.FC<TextFieldClientProps> = (props) => {
             variant="outline"
             className={cn(
               "w-[220px] justify-start text-left font-normal",
-              !selectedIcon && "text-muted-foreground"
+              !selectedIcon && "text-muted-foreground",
             )}
           >
             {renderSelectedIcon()}
@@ -142,9 +136,7 @@ export const IconSelectField: React.FC<TextFieldClientProps> = (props) => {
               <CommandEmpty>No icons found</CommandEmpty>
               <CommandGroup>
                 {filteredIcons.length === 0 ? (
-                  <div className="p-4 text-center">
-                    No icons match your search
-                  </div>
+                  <div className="p-4 text-center">No icons match your search</div>
                 ) : (
                   <div className="grid grid-cols-4 gap-2 p-2">
                     {filteredIcons.slice(0, 200).map((icon) => {
@@ -152,11 +144,7 @@ export const IconSelectField: React.FC<TextFieldClientProps> = (props) => {
                         return null;
                       }
 
-                      const {
-                        name,
-                        component: IconComponent,
-                        displayName,
-                      } = icon;
+                      const { name, component: IconComponent, displayName } = icon;
                       return (
                         <CommandItem
                           key={name}
@@ -166,17 +154,15 @@ export const IconSelectField: React.FC<TextFieldClientProps> = (props) => {
                         >
                           <div className="flex flex-col items-center">
                             <IconComponent className="w-6 h-6 mb-1" />
-                            <span className="text-xs text-center">
-                              {displayName}
-                            </span>
+                            <span className="text-xs text-center">{displayName}</span>
                           </div>
                         </CommandItem>
                       );
                     })}
                     {filteredIcons.length > 200 && (
                       <div className="col-span-4 text-center text-sm p-2 text-muted-foreground">
-                        Showing first 200 of {filteredIcons.length} results.
-                        Refine your search to see more.
+                        Showing first 200 of {filteredIcons.length} results. Refine your search to
+                        see more.
                       </div>
                     )}
                   </div>

@@ -16,14 +16,14 @@ import type { ProductTypeId, Locale } from "@synoem/config";
 import type { ProductWithSelectFields } from "~/types/product-select-fields";
 import type { PumpController, SolarPanel } from "@synoem/types";
 
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 
-// const RequestQuoteButton = dynamic(
-//   () => import("./request-quote-button.client").then((mod) => mod.RequestQuoteButton),
-//   {
-//     ssr: false,
-//   },
-// );
+// // const RequestQuoteButton = dynamic(
+// //   () => import("./request-quote-button.client").then((mod) => mod.RequestQuoteButton),
+// //   {
+// //     ssr: false,
+// //   },
+// // );
 
 export const ProductCard = <T extends ProductTypeId>({
   productTypeId,
@@ -198,7 +198,12 @@ export const ProductCard = <T extends ProductTypeId>({
                   alt={title}
                   height={300}
                   width={coverImage.width || 300}
-                  // https://nextjs.org/docs/app/api-reference/components/image#blurdataurl
+                  {...(coverImage.blurDataUrl
+                    ? {
+                        placeholder: "blur",
+                        blurDataURL: coverImage.blurDataUrl,
+                      }
+                    : {})}
                   className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105 dark:brightness-60"
                 />
               ) : (

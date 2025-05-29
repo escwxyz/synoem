@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/api/", "/_next/"],
     },
-    sitemap: `${DMNO_PUBLIC_CONFIG.WEB_SITE_URL}/sitemap.xml`,
+    sitemap: `${process.env.NEXT_PUBLIC_WEB_SITE_URL || ""}/sitemap.xml`,
   };
 }

@@ -1,4 +1,3 @@
-import { dmnoNextConfigPlugin } from "@dmno/nextjs-integration";
 import createNextIntlPlugin from "next-intl/plugin";
 
 import type { NextConfig } from "next";
@@ -6,16 +5,16 @@ import type { NextConfig } from "next";
 const withNextIntl = createNextIntlPlugin();
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: process.env.ANALYZE === "true",
+  enabled: false,
 });
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   // redirects,
   // transpilePackages: ["three"],
-  productionBrowserSourceMaps: DMNO_PUBLIC_CONFIG.WEB_APP_ENV === "development",
+  productionBrowserSourceMaps: process.env.WEB_APP_ENV === "development",
   // TODO: https://nextjs.org/docs/app/api-reference/config/next-config-js/serverExternalPackages
-  serverExternalPackages: ["@prisma/client", "mongodb", "mongoose"],
+  serverExternalPackages: ["@prisma/client", "mongodb", "mongoose", "sharp", "websocket"],
   experimental: {
     serverActions: {
       bodySizeLimit: "10mb",
@@ -49,7 +48,7 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default dmnoNextConfigPlugin()(withNextIntl(withBundleAnalyzer(nextConfig)));
+export default withNextIntl(withBundleAnalyzer(nextConfig));
 
 import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 initOpenNextCloudflareForDev();

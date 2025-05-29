@@ -11,10 +11,6 @@
     "./types": "./src/types.ts",
     "./utils": "./src/utils/index.ts"
   },
-  "scripts": {
-    "generate:types": "dmno run -- payload generate:types",
-    "migrate": "dmno run -- payload migrate"
-  },
   "keywords": [],
   "author": "",
   "license": "MIT",
@@ -25,18 +21,16 @@
     "@payloadcms/richtext-lexical": "catalog:",
     "@payloadcms/storage-s3": "catalog:",
     "@synoem/config": "workspace:*",
-    "@synoem/schema": "workspace:*",
     "@synoem/transactional": "workspace:*",
     "@synoem/types": "workspace:*",
     "@synoem/typescript-config": "workspace:*",
-    "dmno": "^0.0.39",
+    "@synoem/utils": "workspace:*",
     "payload": "catalog:",
     "react": "catalog:",
-    "zod": "catalog:"
+    "sharp": "^0.34.2"
   },
   "devDependencies": {
     "@types/node": "catalog:",
-    "@types/react": "catalog:",
-    "typescript": "catalog:"
+    "@types/react": "catalog:"
   }
 }
