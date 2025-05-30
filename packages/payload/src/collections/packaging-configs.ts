@@ -11,7 +11,6 @@ export const PackagingConfigs: CollectionConfig = {
   },
   admin: {
     useAsTitle: "title",
-    group: "Products",
   },
   fields: [
     {

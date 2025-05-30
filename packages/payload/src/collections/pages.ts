@@ -7,6 +7,7 @@ import { CallToActionBlock } from "../blocks/call-to-action";
 import { MediaBlock } from "../blocks/media";
 import { FeatureBlock } from "../blocks/feature";
 import { TimelineBlock } from "../blocks/timeline";
+import { FAQBlock } from "../blocks/faq";
 import { admin, authenticatedOrPublished } from "../access";
 import { revalidateCollection } from "../hooks";
 
@@ -43,6 +44,7 @@ export const Pages: CollectionConfig<"pages"> = {
                 MediaBlock,
                 FeatureBlock,
                 TimelineBlock,
+                FAQBlock,
               ],
               required: true,
               admin: {

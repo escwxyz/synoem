@@ -169,6 +169,7 @@ export interface Config {
   blocks: {};
   collections: {
     users: User;
+    faqs: Faq;
     pages: Page;
     industries: Industry;
     notifications: Notification;
@@ -206,6 +207,7 @@ export interface Config {
   };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
+    faqs: FaqsSelect<false> | FaqsSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     industries: IndustriesSelect<false> | IndustriesSelect<true>;
     notifications: NotificationsSelect<false> | NotificationsSelect<true>;
@@ -242,7 +244,6 @@ export interface Config {
     'contact-info': ContactInfo;
     'social-links': SocialLink;
     header: Header;
-    faq: Faq;
   };
   globalsSelect: {
     footer: FooterSelect<false> | FooterSelect<true>;
@@ -250,7 +251,6 @@ export interface Config {
     'contact-info': ContactInfoSelect<false> | ContactInfoSelect<true>;
     'social-links': SocialLinksSelect<false> | SocialLinksSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
-    faq: FaqSelect<false> | FaqSelect<true>;
   };
   locale: 'en' | 'de';
   user: User & {
@@ -307,6 +307,32 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs".
+ */
+export interface Faq {
+  id: string;
+  type: 'general' | 'solar-panel' | 'pump-controller';
+  question: string;
+  answer: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
  */
 export interface Page {
@@ -319,6 +345,7 @@ export interface Page {
     | MediaBlockType
     | FeatureBlockType
     | TimelineBlockType
+    | FAQBlockType
   )[];
   publishedAt?: string | null;
   /**
@@ -1802,6 +1829,20 @@ export interface TimelineBlockType {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FAQBlockType".
+ */
+export interface FAQBlockType {
+  title?: string | null;
+  description?: string | null;
+  type: 'general' | 'solar-panel' | 'pump-controller';
+  style: 'accordion' | 'card';
+  content: (string | Faq)[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'faqBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "notifications".
  */
 export interface Notification {
@@ -2009,6 +2050,10 @@ export interface PayloadLockedDocument {
         value: string | User;
       } | null)
     | ({
+        relationTo: 'faqs';
+        value: string | Faq;
+      } | null)
+    | ({
         relationTo: 'pages';
         value: string | Page;
       } | null)
@@ -2161,6 +2206,17 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs_select".
+ */
+export interface FaqsSelect<T extends boolean = true> {
+  type?: T;
+  question?: T;
+  answer?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages_select".
  */
 export interface PagesSelect<T extends boolean = true> {
@@ -2174,6 +2230,7 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockTypeSelect<T>;
         featureBlock?: T | FeatureBlockTypeSelect<T>;
         timelineBlock?: T | TimelineBlockTypeSelect<T>;
+        faqBlock?: T | FAQBlockTypeSelect<T>;
       };
   publishedAt?: T;
   prerender?: T;
@@ -2291,6 +2348,19 @@ export interface TimelineBlockTypeSelect<T extends boolean = true> {
         content?: T;
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FAQBlockType_select".
+ */
+export interface FAQBlockTypeSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  type?: T;
+  style?: T;
+  content?: T;
   id?: T;
   blockName?: T;
 }
@@ -3127,42 +3197,6 @@ export interface Header {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "faq".
- */
-export interface Faq {
-  id: string;
-  general?: {
-    content?:
-      | {
-          question: string;
-          answer: string;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  'solar-panel'?: {
-    content?:
-      | {
-          question: string;
-          answer: string;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  'pump-controller'?: {
-    content?:
-      | {
-          question: string;
-          answer: string;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
@@ -3317,48 +3351,6 @@ export interface LinkItemsSelect<T extends boolean = true> {
   description?: T;
   link?: T | LinkTypeSelect<T>;
   id?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "faq_select".
- */
-export interface FaqSelect<T extends boolean = true> {
-  general?:
-    | T
-    | {
-        content?:
-          | T
-          | {
-              question?: T;
-              answer?: T;
-              id?: T;
-            };
-      };
-  'solar-panel'?:
-    | T
-    | {
-        content?:
-          | T
-          | {
-              question?: T;
-              answer?: T;
-              id?: T;
-            };
-      };
-  'pump-controller'?:
-    | T
-    | {
-        content?:
-          | T
-          | {
-              question?: T;
-              answer?: T;
-              id?: T;
-            };
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -6,7 +6,6 @@
     "build": "turbo build",
     "check:biome": "biome check --write .",
     "dev": "turbo dev",
-    "dmno": "pnpm exec dmno plugin",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "format:biome": "biome format --write .",
     "lint": "turbo lint"
