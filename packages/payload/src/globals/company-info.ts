@@ -1,10 +1,14 @@
 import type { GlobalConfig } from "payload";
 import { revalidateGlobal } from "../hooks";
+import { anyone } from "../access";
 
 export const CompanyInfo: GlobalConfig = {
   slug: "company-info",
   admin: {
     group: "Settings",
+  },
+  access: {
+    read: anyone,
   },
   fields: [
     {

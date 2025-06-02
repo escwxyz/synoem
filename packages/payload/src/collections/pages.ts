@@ -64,13 +64,22 @@ export const Pages: CollectionConfig<"pages"> = {
       },
     },
     {
-      name: "prerender",
-      type: "checkbox",
-      defaultValue: false,
+      name: "type",
+      type: "select",
       admin: {
         position: "sidebar",
-        description: "Whether to prerender the page",
       },
+      options: [
+        {
+          label: "Static",
+          value: "static",
+        },
+        {
+          label: "Archive",
+          value: "archive",
+        },
+      ],
+      defaultValue: "static",
     },
     ...slug(),
   ],

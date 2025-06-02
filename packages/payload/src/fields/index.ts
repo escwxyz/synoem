@@ -7,3 +7,4 @@ export * from "./lead-time";
 export * from "./icon-select";
 export * from "./product-gallery";
 export * from "./inquiry-join";
+export * from "./color";

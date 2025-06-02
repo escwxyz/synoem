@@ -7,9 +7,10 @@ catalog:
   "@payloadcms/richtext-lexical": ^3.39.1
   "@payloadcms/email-resend": ^3.39.1
   "@payloadcms/db-postgres": ^3.39.1
-  "@payloadcms/plugin-form-builder": ^3.39.1
+  "@payloadcms/live-preview-react": ^3.39.1
   "@payloadcms/next": ^3.39.1
   "@payloadcms/payload-cloud": ^3.39.1
+  "@payloadcms/plugin-import-export": ^3.39.1
   "@payloadcms/plugin-nested-docs": ^3.39.1
   "@payloadcms/storage-s3": ^3.39.1
   "payload": ^3.39.1

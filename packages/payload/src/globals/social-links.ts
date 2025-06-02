@@ -1,11 +1,15 @@
 import { SOCIAL_PLATFORMS, getPlatformLabel, type SocialPlatform } from "@synoem/config";
 import type { GlobalConfig } from "payload";
 import { revalidateGlobal } from "../hooks";
+import { anyone } from "../access";
 
 export const SocialLinks: GlobalConfig = {
   slug: "social-links",
   admin: {
     group: "Settings",
+  },
+  access: {
+    read: anyone,
   },
   fields: [
     {

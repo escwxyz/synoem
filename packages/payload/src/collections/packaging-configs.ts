@@ -95,7 +95,7 @@ export const PackagingConfigs: CollectionConfig = {
       type: "collapsible",
       label: "Container Configuration",
       admin: {
-        condition: (data, siblingData) => {
+        condition: (_, siblingData) => {
           return !!siblingData?.qtyPerPallet;
         },
         description: "Container-level shipping information (only available when using pallets)",

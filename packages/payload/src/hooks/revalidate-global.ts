@@ -1,4 +1,4 @@
-import type { GlobalAfterChangeHook } from "payload";
+import { type GlobalAfterChangeHook, APIError } from "payload";
 import type { RevalidateGlobalBody } from "../types";
 
 export const revalidateGlobal: GlobalAfterChangeHook = async ({
@@ -32,8 +32,9 @@ export const revalidateGlobal: GlobalAfterChangeHook = async ({
     });
 
     if (!response.ok) {
-      throw new Error(
-        `Failed to revalidate globals for slug '${slug}' (locale: ${locale}). Status: ${response.status}`,
+      throw new APIError(
+        `Failed to revalidate globals for slug '${slug}' (locale: ${locale}).`,
+        500,
       );
     }
 

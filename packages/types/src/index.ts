@@ -192,6 +192,7 @@ export interface Config {
     'pump-controllers': PumpController;
     'solar-panel-categories': SolarPanelCategory;
     'pump-controller-categories': PumpControllerCategory;
+    exports: Export;
     'payload-jobs': PayloadJob;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -230,6 +231,7 @@ export interface Config {
     'pump-controllers': PumpControllersSelect<false> | PumpControllersSelect<true>;
     'solar-panel-categories': SolarPanelCategoriesSelect<false> | SolarPanelCategoriesSelect<true>;
     'pump-controller-categories': PumpControllerCategoriesSelect<false> | PumpControllerCategoriesSelect<true>;
+    exports: ExportsSelect<false> | ExportsSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -348,10 +350,7 @@ export interface Page {
     | FAQBlockType
   )[];
   publishedAt?: string | null;
-  /**
-   * Whether to prerender the page
-   */
-  prerender?: boolean | null;
+  type?: ('static' | 'archive') | null;
   slug: string;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -1948,6 +1947,42 @@ export interface Post {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exports".
+ */
+export interface Export {
+  id: string;
+  name?: string | null;
+  format: 'csv' | 'json';
+  limit?: number | null;
+  sort?: string | null;
+  locale?: ('all' | 'en' | 'de') | null;
+  drafts?: ('yes' | 'no') | null;
+  selectionToUse?: ('currentSelection' | 'currentFilters' | 'all') | null;
+  fields?: string[] | null;
+  collectionSlug: string;
+  where?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-jobs".
  */
 export interface PayloadJob {
@@ -2142,6 +2177,10 @@ export interface PayloadLockedDocument {
         value: string | PumpControllerCategory;
       } | null)
     | ({
+        relationTo: 'exports';
+        value: string | Export;
+      } | null)
+    | ({
         relationTo: 'payload-jobs';
         value: string | PayloadJob;
       } | null);
@@ -2233,7 +2272,7 @@ export interface PagesSelect<T extends boolean = true> {
         faqBlock?: T | FAQBlockTypeSelect<T>;
       };
   publishedAt?: T;
-  prerender?: T;
+  type?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -2995,6 +3034,33 @@ export interface PumpControllerCategoriesSelect<T extends boolean = true> {
   heroImage?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exports_select".
+ */
+export interface ExportsSelect<T extends boolean = true> {
+  name?: T;
+  format?: T;
+  limit?: T;
+  sort?: T;
+  locale?: T;
+  drafts?: T;
+  selectionToUse?: T;
+  fields?: T;
+  collectionSlug?: T;
+  where?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
