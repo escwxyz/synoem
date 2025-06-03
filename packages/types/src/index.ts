@@ -680,7 +680,22 @@ export interface SolarPanelCategory {
  */
 export interface Inquiry {
   id: string;
-  formType: 'simple' | 'product' | 'full';
+  /**
+   * Inquiry status
+   */
+  status?: ('new' | 'replied' | 'following' | 'converted' | 'closed') | null;
+  /**
+   * Cloudflare Turnstile token used to verify the inquiry
+   */
+  token?: string | null;
+  /**
+   * Only for internal use, not displayed to customers
+   */
+  internalNotes?: string | null;
+  /**
+   * Date and time of the scheduled action
+   */
+  scheduledDate?: string | null;
   /**
    * Product inquiry related product
    */
@@ -693,22 +708,10 @@ export interface Inquiry {
         relationTo: 'pump-controllers';
         value: string | PumpController;
       } | null);
-  /**
-   * Inquiry status
-   */
-  status?: ('new' | 'replied' | 'following' | 'converted' | 'closed') | null;
-  /**
-   * Only for internal use, not displayed to customers
-   */
-  internalNotes?: string | null;
-  /**
-   * Date and time of the scheduled action
-   */
-  scheduledDate?: string | null;
   name: string;
   email: string;
   phone: string;
-  requirements: string;
+  message: string;
   company?: string | null;
   position?: string | null;
   type?: ('wholesaler' | 'retailer' | 'manufacturer' | 'project-developer' | 'other') | null;
@@ -1233,7 +1236,6 @@ export interface Inquiry {
         id?: string | null;
       }[]
     | null;
-  source?: ('website' | 'exhibition' | 'referral' | 'social-media' | 'email' | 'phone' | 'other') | null;
   page?: string | null;
   ipAddress?: string | null;
   userAgent?: string | null;
@@ -2432,15 +2434,15 @@ export interface NotificationsSelect<T extends boolean = true> {
  * via the `definition` "inquiries_select".
  */
 export interface InquiriesSelect<T extends boolean = true> {
-  formType?: T;
-  relatedProduct?: T;
   status?: T;
+  token?: T;
   internalNotes?: T;
   scheduledDate?: T;
+  relatedProduct?: T;
   name?: T;
   email?: T;
   phone?: T;
-  requirements?: T;
+  message?: T;
   company?: T;
   position?: T;
   type?: T;
@@ -2468,7 +2470,6 @@ export interface InquiriesSelect<T extends boolean = true> {
         file?: T;
         id?: T;
       };
-  source?: T;
   page?: T;
   ipAddress?: T;
   userAgent?: T;

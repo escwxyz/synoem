@@ -39,7 +39,7 @@ export const MenuLink = ({ href, openInNewTab, children, className }: MenuLinkPr
   return (
     <Link
       href={href}
-      className={cn(isActive && "underline", className)}
+      className={cn(isActive && "bg-muted/50 text-primary", className)}
       target={openInNewTab ? "_blank" : undefined}
       rel={openInNewTab ? "noopener noreferrer" : undefined}
     >

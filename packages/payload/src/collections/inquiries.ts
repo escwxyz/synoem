@@ -7,9 +7,9 @@ import {
   getProductTypeOptions,
   INQUIRY_EMPLOYEES,
   INQUIRY_FREQUENCIES,
-  INQUIRY_SOURCES,
   INQUIRY_TIMELINES,
 } from "@synoem/config";
+import { verifyTurnstile } from "../hooks";
 
 export const Inquiries: CollectionConfig<"inquiries"> = {
   slug: "inquiries",
@@ -21,33 +21,6 @@ export const Inquiries: CollectionConfig<"inquiries"> = {
     create: () => true,
   },
   fields: [
-    {
-      name: "formType",
-      type: "select",
-      required: true,
-      options: [
-        { label: "Simple", value: "simple" },
-        { label: "Product", value: "product" },
-        { label: "Full", value: "full" },
-      ],
-      defaultValue: "simple",
-      admin: {
-        position: "sidebar",
-        readOnly: true,
-      },
-    },
-    {
-      name: "relatedProduct",
-      type: "relationship",
-      relationTo: ["solar-panels", "pump-controllers"],
-      hasMany: false,
-      admin: {
-        condition: (data) => data.formType === "product",
-        description: "Product inquiry related product",
-        position: "sidebar",
-        readOnly: true,
-      },
-    },
     {
       name: "status",
       type: "select",
@@ -63,6 +36,19 @@ export const Inquiries: CollectionConfig<"inquiries"> = {
         { label: "Closed", value: "closed" },
       ],
       defaultValue: "new",
+    },
+    {
+      name: "token",
+      type: "text",
+      label: "Token",
+      admin: {
+        readOnly: true,
+        position: "sidebar",
+        description: "Cloudflare Turnstile token used to verify the inquiry",
+      },
+      access: {
+        read: admin,
+      },
     },
     {
       name: "internalNotes",
@@ -100,6 +86,17 @@ export const Inquiries: CollectionConfig<"inquiries"> = {
       },
     },
     {
+      name: "relatedProduct",
+      type: "relationship",
+      relationTo: ["solar-panels", "pump-controllers"],
+      hasMany: false,
+      admin: {
+        description: "Product inquiry related product",
+        position: "sidebar",
+        readOnly: true,
+      },
+    },
+    {
       type: "collapsible",
       label: "Basic Information",
       admin: {
@@ -127,9 +124,9 @@ export const Inquiries: CollectionConfig<"inquiries"> = {
           required: true,
         },
         {
-          name: "requirements",
+          name: "message",
           type: "textarea",
-          label: "Requirements",
+          label: "Message",
           required: true,
         },
       ],
@@ -301,18 +298,6 @@ export const Inquiries: CollectionConfig<"inquiries"> = {
       },
       fields: [
         {
-          name: "source",
-          type: "select",
-          label: "Inquiry Source",
-          options: INQUIRY_SOURCES,
-          admin: {
-            readOnly: true,
-          },
-          access: {
-            read: admin,
-          },
-        },
-        {
           name: "page",
           type: "text",
           label: "Page",
@@ -349,20 +334,7 @@ export const Inquiries: CollectionConfig<"inquiries"> = {
     },
   ],
   hooks: {
-    afterChange: [
-      async ({ doc, operation, req }) => {
-        // Sending email notification to admin when a new inquiry is created
-        // Sending a confirmation email to the client with the inquiry details
-        if (operation === "create") {
-          // TODO
-
-          const { payload } = req;
-
-          // await payload.sendEmail({
-          //   // TODO
-          // })
-        }
-      },
-    ],
+    beforeChange: [verifyTurnstile],
+    afterChange: [],
   },
 };
