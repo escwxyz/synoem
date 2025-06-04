@@ -2,12 +2,12 @@
 
 import { actionClient } from "~/libs/safe-action";
 import { newsletterFormSchema, unsubscribeNewsletterFormSchema } from "@synoem/schema";
-import { getMetadata } from "~/utils/get-metadata";
+import { getMetadata } from "~/utils";
 import type { APIResponse } from "~/types/api-response";
 import { getPayloadClient } from "@synoem/payload/client";
 
 export const subscribeNewsletter = actionClient
-  .schema(newsletterFormSchema)
+  .inputSchema(newsletterFormSchema)
   .action(async ({ parsedInput }): Promise<APIResponse<string>> => {
     const { email } = parsedInput;
 

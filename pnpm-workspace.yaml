@@ -30,4 +30,6 @@ catalog:
   "@react-three/drei": ^10.0.6
   "three": ^0.175.0
   "react-hook-form": ^7.56.1
-  "next": ^15.3.2
+  "next": ^15.3.3
+  "@next/bundle-analyzer": ^15.3.3
+  "motion": ^12.15.0

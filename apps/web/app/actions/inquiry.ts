@@ -4,11 +4,11 @@ import { actionClient } from "~/libs/safe-action";
 import { getMetadata } from "~/utils/get-metadata";
 import { inquiryFormSchema } from "@synoem/schema";
 import { getPayloadClient } from "@synoem/payload/client";
-import type { APIResponse } from "../types/api-response";
-import { transformFileToBuffer } from "../utils/transform-file-to-buffer";
+import type { APIResponse } from "~/types/api-response";
+import { transformFileToBuffer } from "~/utils";
 
 export const sendInquiry = actionClient
-  .schema(inquiryFormSchema)
+  .inputSchema(inquiryFormSchema)
   .action(async ({ parsedInput }): Promise<APIResponse<string>> => {
     const {
       terms,
@@ -30,6 +30,17 @@ export const sendInquiry = actionClient
         error: {
           code: "BAD_REQUEST",
           details: "Terms and conditions must be accepted",
+        },
+      };
+    }
+
+    if (!token) {
+      return {
+        status: "error",
+        messageKey: "api.sendInquiry.tokenRequired",
+        error: {
+          code: "BAD_REQUEST",
+          details: "Token is required",
         },
       };
     }
@@ -109,7 +120,7 @@ export const sendInquiry = actionClient
         data: response.id,
       };
     } catch (error) {
-      console.error(error);
+      console.error(`Error sending inquiry: ${error}`);
       return {
         status: "error",
         messageKey: "api.sendInquiry.error",
