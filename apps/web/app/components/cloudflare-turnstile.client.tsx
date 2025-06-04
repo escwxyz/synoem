@@ -12,6 +12,9 @@ export const CloudflareTurnstile = () => {
       options={{
         size: "flexible",
       }}
+      scriptOptions={{
+        appendTo: "body",
+      }}
       onSuccess={setToken}
     />
   );
