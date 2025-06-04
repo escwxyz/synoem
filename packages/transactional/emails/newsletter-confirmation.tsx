@@ -13,6 +13,7 @@ import {
   Img,
 } from "@react-email/components";
 import type { Locale } from "@synoem/config";
+import { formatDate } from "../utils";
 
 export interface Translations {
   preview: string;
@@ -77,31 +78,6 @@ export const translations: Record<Locale, Translations> = {
     privacyPolicy: "Datenschutzrichtlinie",
     unsubscribe: "Abmelden",
   },
-};
-
-export const formatDate = (date: string, language: Locale): string => {
-  try {
-    const dateObj = new Date(date);
-
-    const options: Intl.DateTimeFormatOptions = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
-
-    return new Intl.DateTimeFormat(getLocale(language), options).format(dateObj);
-  } catch (error) {
-    return date;
-  }
-};
-
-const getLocale = (language: Locale): string => {
-  const localeMap: Record<Locale, string> = {
-    en: "en-US",
-    de: "de-DE",
-  };
-
-  return localeMap[language] || "en-US";
 };
 
 interface NewsletterConfirmationEmailProps {

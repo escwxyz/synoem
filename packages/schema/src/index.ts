@@ -1,4 +1,5 @@
 // TODO: i18n for validation messages
+// https://next-safe-action.dev/docs/define-actions/validation-errors#create-custom-validation-errors
 
 import { z } from "zod";
 import {
@@ -57,14 +58,14 @@ export const termsSchema = z.object({
   }),
 });
 
-const basicSchema = z.object({
+export const basicInquirySchema = z.object({
   name: z.string().min(2),
   email: z.string().email(),
   phone: z.string().min(5),
   message: z.string().min(10),
 });
 
-const companySchema = z.object({
+export const companyInquirySchema = z.object({
   company: z.string().optional(),
   position: z.string().optional(),
   type: z
@@ -79,9 +80,12 @@ const companySchema = z.object({
       Object.values(INQUIRY_EMPLOYEES).map((employee) => employee.value) as [string, ...string[]],
     )
     .optional(),
+  contactEmail: z.boolean().optional(),
+  contactPhone: z.boolean().optional(),
+  contactWhatsapp: z.boolean().optional(),
 });
 
-const productInquirySchema = z.object({
+export const productInquirySchema = z.object({
   productTypeId: z
     .enum(
       Object.values(PRODUCT_TYPES).map((productType) => productType.id) as [
@@ -124,8 +128,8 @@ const metadataSchema = z.object({
   userAgent: z.string(),
 });
 
-export const inquiryFormSchema = basicSchema
-  .merge(companySchema)
+export const inquiryFormSchema = basicInquirySchema
+  .merge(companyInquirySchema)
   .merge(productInquirySchema)
   .merge(termsSchema)
   .merge(
