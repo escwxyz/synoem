@@ -1,7 +1,32 @@
 {
   "RequestQuoteButton": {
     "requestQuote": "Anfragen",
-    "description": "Bitte füllen Sie das Formular unten aus, um eine Anfrage für das Produkt zu stellen."
+    "description": "Bitte füllen Sie das Formular unten aus, um eine Anfrage für das Produkt zu stellen.",
+    "basicInformation": {
+      "title": "Grundinformationen"
+    },
+    "productInformation": {
+      "title": "Produktinformationen"
+    },
+    "companyInformation": {
+      "title": "Unternehmensinformationen"
+    },
+    "support": {
+      "title": "Benötigen Sie Hilfe?",
+      "description": "Wenn Sie Fragen haben oder Hilfe benötigen, kontaktieren Sie bitte unseren Support-Team.",
+      "button": "Support kontaktieren"
+    },
+    "buttons": {
+      "clearAll": "Alle löschen",
+      "next": "Weiter",
+      "submit": "Absenden",
+      "back": "Zurück",
+      "close": "Schließen"
+    },
+    "confirmation": {
+      "title": "Anfrage gesendet",
+      "message": "Vielen Dank für Ihre Anfrage. Wir werden uns schnellstmöglich um Ihre Anfrage kümmern."
+    }
   },
   "RelatedProducts": {
     "title": "Vielleicht gefällt Ihnen auch diese",
@@ -212,5 +237,135 @@
   },
   "CertificationLogos": {
     "title": "Vielseitig zertifiziert durch diese Autoritäten"
+  },
+  "InquiryFormFields": {
+    "basicInformation": {
+      "title": "Grundinformationen"
+    },
+
+    "productInformation": {
+      "title": "Produktinformationen"
+    },
+    "companyInformation": {
+      "title": "Unternehmensinformationen"
+    },
+    "name": {
+      "label": "Vollständiger Name",
+      "placeholder": "Max Mustermann"
+    },
+    "email": {
+      "label": "E-Mail",
+      "placeholder": "example@email.com"
+    },
+    "phone": {
+      "label": "Telefonnummer",
+      "placeholder": "+491234567890"
+    },
+    "message": {
+      "label": "Nachricht",
+      "placeholder": "Hier Ihre Nachricht eingeben"
+    },
+    "terms": {
+      "label": "Ich stimme den {terms} und der {privacyPolicy} zu",
+      "privacyPolicy": "Datenschutzrichtlinie",
+      "terms": "Nutzungsbedingungen"
+    },
+    "productType": {
+      "label": "Produkttyp"
+    },
+    "productName": {
+      "label": "Produktname"
+    },
+    "sku": {
+      "label": "Artikelnummer"
+    },
+    "frequency": {
+      "label": "Häufigkeit",
+      "options": {
+        "one-time": "Einmalig",
+        "monthly": "Monatlich",
+        "quarterly": "Quartalsweise",
+        "yearly": "Jährlich"
+      }
+    },
+    "destination": {
+      "label": "Ziel"
+    },
+    "timeline": {
+      "label": "Nachfragezeitraum",
+      "options": {
+        "immediate": "Sofort",
+        "1-month": "1 Monat",
+        "3-months": "3 Monate",
+        "6-months": "6 Monate"
+      }
+    },
+    "quantity": {
+      "label": "Menge",
+      "unit": {
+        "pcs": "Stk",
+        "sets": "Set",
+        "plts": "PLT",
+        "ctns": "CTN"
+      }
+    },
+    "attachments": {
+      "label": "Anhänge (Optional, max 3 Dateien)",
+      "uploader": {
+        "label": "Dateien hierher ziehen oder",
+        "description": "Dateien durchsuchen",
+        "supportedFileTypes": "PDF, Word, Excel, JPG, PNG (max 3 Dateien, 10MB insgesamt)"
+      }
+    },
+    "company": {
+      "label": "Unternehmen",
+      "placeholder": "z.B. Synoem GmbH"
+    },
+    "website": {
+      "label": "Webseite",
+      "placeholder": "https://www.example.com"
+    },
+    "position": {
+      "label": "Position",
+      "placeholder": "z.B. CEO, CTO, usw."
+    },
+    "type": {
+      "label": "Unternehmensart",
+      "placeholder": "Großhändler",
+      "options": {
+        "wholesaler": "Großhändler",
+        "distributor": "Vertriebspartner",
+        "retailer": "Verkäufer",
+        "manufacturer": "Hersteller",
+        "project-developer": "Projektentwickler",
+        "other": "Andere"
+      }
+    },
+    "country": {
+      "label": "Land",
+      "placeholder": "Deutschland"
+    },
+    "employees": {
+      "label": "Anzahl der Mitarbeiter",
+      "placeholder": "1-10"
+    },
+    "contactPreferences": {
+      "label": "Kontaktinformationen",
+      "options": {
+        "email": "E-Mail",
+        "phone": "Telefon",
+        "whatsapp": "WhatsApp"
+      }
+    },
+    "buttons": {
+      "submit": "Anfrage absenden",
+      "newInquiry": "Neue Anfrage"
+    },
+    "confirmation": {
+      "title": "Vielen Dank für Ihre Anfrage!"
+    }
+  },
+  "FormStepIndicator": {
+    "step": "Schritt {step} von {total}"
   }
 }

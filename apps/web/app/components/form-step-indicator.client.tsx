@@ -4,6 +4,7 @@ import { cn } from "@synoem/ui/lib/utils";
 import { Check } from "lucide-react";
 import { Progress } from "@synoem/ui/components/progress";
 import { AnimatePresence, motion } from "motion/react";
+import { useTranslations } from "next-intl";
 
 interface StepIndicatorProps {
   style?: "default" | "progress";
@@ -12,7 +13,7 @@ interface StepIndicatorProps {
    * @default "horizontal"
    */
   orientation?: "horizontal" | "vertical";
-  steps: { id: string; title: string }[];
+  steps: { id: string; title?: string }[];
   currentStep: number;
 }
 
@@ -22,13 +23,15 @@ export const FormStepIndicator = ({
   steps,
   currentStep,
 }: StepIndicatorProps) => {
+  const t = useTranslations("FormStepIndicator");
+
   return (
     <>
       {style === "progress" ? (
         <div className="mb-8">
           <div className={cn("mb-2 flex justify-between")}>
             <span className="text-sm font-medium">
-              Step {currentStep + 1} of {steps.length}
+              {t("step", { step: currentStep + 1, total: steps.length })}
             </span>
             <span className="text-sm font-medium">
               {Math.round((100 / steps.length) * currentStep)}%
@@ -92,22 +95,24 @@ export const FormStepIndicator = ({
                     )}
                   </AnimatePresence>
                 </div>
-                <div
-                  className={cn(
-                    "hidden md:block",
-                    orientation === "vertical" && "ml-4 space-y-1",
-                    orientation === "horizontal" && "mt-1",
-                  )}
-                >
-                  <p
+                {step.title && (
+                  <div
                     className={cn(
-                      "text-sm font-medium leading-none",
-                      index <= currentStep ? "text-foreground" : "text-muted-foreground",
+                      "hidden md:block",
+                      orientation === "vertical" && "ml-4 space-y-1",
+                      orientation === "horizontal" && "mt-1",
                     )}
                   >
-                    {step.title}
-                  </p>
-                </div>
+                    <p
+                      className={cn(
+                        "text-sm font-medium leading-none",
+                        index <= currentStep ? "text-foreground" : "text-muted-foreground",
+                      )}
+                    >
+                      {step.title}
+                    </p>
+                  </div>
+                )}
               </div>
             );
           })}

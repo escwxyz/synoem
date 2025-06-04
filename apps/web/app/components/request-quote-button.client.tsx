@@ -1,268 +1,373 @@
-// "use client";
+"use client";
 
-// import {
-//   Drawer,
-//   DrawerClose,
-//   DrawerContent,
-//   DrawerDescription,
-//   DrawerFooter,
-//   DrawerHeader,
-//   DrawerTitle,
-//   DrawerTrigger,
-// } from "@synoem/ui/components/drawer";
-// import { Button } from "@synoem/ui/components/button";
-// import { ScrollArea } from "@synoem/ui/components/scroll-area";
-// import { useRequestQuoteForm } from "~/hooks";
-// import { Form } from "@synoem/ui/components/form";
-// import { useState } from "react";
-// import type { SolarPanel, PumpController } from "@synoem/types";
-// import { useIsMobile } from "@synoem/ui/hooks/use-mobile";
-// import {
-//   Dialog,
-//   DialogContent,
-//   DialogDescription,
-//   DialogHeader,
-//   DialogTitle,
-//   DialogTrigger,
-// } from "@synoem/ui/components/dialog";
-// import type { ProductTypeId } from "@synoem/config";
-// import type { Locale } from "@synoem/config";
-// import { useTranslations } from "next-intl";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@synoem/ui/components/drawer";
+import { Button } from "@synoem/ui/components/button";
+import { useRequestQuoteForm } from "~/hooks";
+import { useState } from "react";
+import type { SolarPanel, PumpController } from "@synoem/types";
+import { useIsMobile } from "@synoem/ui/hooks/use-mobile";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@synoem/ui/components/dialog";
+import type { ProductTypeId } from "@synoem/config";
+import type { Locale } from "@synoem/config";
+import { useTranslations } from "next-intl";
+import { ArrowLeft, ArrowRight, Loader2, X } from "lucide-react";
+import { Form } from "@synoem/ui/components/form";
+import { FormStepIndicator } from "./form-step-indicator.client";
+import { basicInquirySchema, type inquiryFormSchema, productInquirySchema } from "@synoem/schema";
 
-// // Support two modes: check if product / product type is provided
+import {
+  TermsField,
+  type FormStep,
+  BasicInquiryForm,
+  ProductInquiryForm,
+  CompanyInquiryForm,
+} from "./inquiry-form";
+import { motion, AnimatePresence } from "motion/react";
+import dynamic from "next/dynamic";
+import { SubmissionConfirmation } from "./submission-confirmation.client";
+import { scrollLockAtom } from "~/atoms";
+import { useSetAtom } from "jotai";
 
-// type Props = {
-//   product?: Pick<SolarPanel | PumpController, "modelName" | "id">;
-//   productTypeId?: ProductTypeId;
-//   locale: Locale;
-// } & React.ComponentProps<typeof Button>;
+const Turnstile = dynamic(
+  () => import("~/components/cloudflare-turnstile.client").then((mod) => mod.CloudflareTurnstile),
+  {
+    ssr: false,
+  },
+);
 
-// export const RequestQuoteButton = ({ product, productTypeId, locale, ...props }: Props) => {
-//   const isMobile = useIsMobile();
+type Props = {
+  product?: Pick<SolarPanel | PumpController, "modelName" | "id">;
+  productTypeId?: ProductTypeId;
+  locale: Locale;
+  // shimmer?: boolean;
+} & React.ComponentProps<typeof Button>;
 
-//   if (isMobile) {
-//     return (
-//       <RequestQuoteMobile
-//         product={product}
-//         productTypeId={productTypeId}
-//         locale={locale}
-//         {...props}
-//       />
-//     );
-//   }
+export const RequestQuoteButton = ({ product, productTypeId, locale, ...props }: Props) => {
+  const isMobile = useIsMobile();
 
-//   return (
-//     <RequestQuoteDesktop
-//       product={product}
-//       productTypeId={productTypeId}
-//       locale={locale}
-//       {...props}
-//     />
-//   );
-// };
+  const t = useTranslations("RequestQuoteButton");
 
-// const RequestQuoteMobile = ({ product, productTypeId, locale, ...props }: Props) => {
-//   const [open, setOpen] = useState<boolean>(false);
+  const steps: FormStep<typeof inquiryFormSchema>[] = [
+    {
+      id: "basic",
+      title: t("basicInformation.title"),
+      schema: basicInquirySchema,
+      component: <BasicInquiryForm />,
+    },
+    {
+      id: "product",
+      title: t("productInformation.title"),
+      schema: productInquirySchema,
+      component: <ProductInquiryForm />,
+    },
+    {
+      id: "contact",
+      title: t("companyInformation.title"),
+      schema: basicInquirySchema,
+      component: <CompanyInquiryForm />,
+    },
+  ];
 
-//   const { isSubmitting, isSuccess, error, form, onSubmit } = useRequestQuoteForm({
-//     product,
-//     productTypeId,
-//   });
+  if (isMobile) {
+    return (
+      <RequestQuoteMobile
+        product={product}
+        productTypeId={productTypeId}
+        locale={locale}
+        steps={steps}
+        {...props}
+      />
+    );
+  }
 
-//   const handleClose = () => {
-//     setOpen(false);
-//     form.reset();
-//   };
+  return (
+    <RequestQuoteDesktop
+      product={product}
+      productTypeId={productTypeId}
+      locale={locale}
+      steps={steps}
+      {...props}
+    />
+  );
+};
 
-//   const t = useTranslations("RequestQuoteButton");
+const RequestQuoteMobile = ({
+  product,
+  productTypeId,
+  locale,
+  steps,
+  // shimmer = false,
+  ...props
+}: Props & { steps: FormStep<typeof inquiryFormSchema>[] }) => {
+  const [open, setOpen] = useState<boolean>(false);
 
-//   return (
-//     <>
-//       <Drawer
-//         open={open}
-//         onOpenChange={setOpen}
-//         disablePreventScroll
-//         preventScrollRestoration
-//         dismissible={false}
-//       >
-//         <DrawerTrigger asChild>
-//           {/** TODO: polish the button */}
-//           <Button className="min-w-[200px]" {...props}>
-//             {t("requestQuote")}
-//           </Button>
-//         </DrawerTrigger>
-//         <DrawerContent className="flex flex-col h-full max-h-[85vh] pb-0">
-//           <DrawerHeader className="text-left shrink-0 border-b">
-//             <DrawerTitle className="text-center">{t("requestQuote")}</DrawerTitle>
-//             <DrawerDescription>{t("description")}</DrawerDescription>
-//           </DrawerHeader>
-//           <div className="flex-1 flex-col h-full overflow-hidden">
-//             <ScrollArea className="h-full w-full">
-//               <Form {...form}>
-//                 <form onSubmit={form.handleSubmit(onSubmit)}>
-//                   <div className="p-4 my-2 flex-1">
-//                     {isSuccess ? (
-//                       <div>
-//                         {/* <SubmissionConfirmation
-//                             title="Submission Successful!"
-//                             message="Thank you for your submission. We'll be in touch soon."
-//                             type="form"
-//                             onDismiss={handleClose}
-//                           /> */}
-//                       </div>
-//                     ) : (
-//                       <>
-//                         {error && <div>{error}</div>}
-//                         {/* <ProductInquiryForm form={form} locale={locale} /> */}
-//                       </>
-//                     )}
-//                   </div>
+  const { form, step, isSubmitting, handlePrevStep, handleNextStep, handleReset } =
+    useRequestQuoteForm({
+      productTypeId,
+      product,
+      steps,
+    });
 
-//                   <DrawerFooter className="pt-2 sticky border-t bottom-0 w-full backdrop-blur-md shrink-0 bg-background/80 safe-area-bottom">
-//                     <DrawerClose asChild>
-//                       <Button variant="outline" onClick={handleClose}>
-//                         Close
-//                       </Button>
-//                     </DrawerClose>
-//                     <Button type="submit" disabled={isSubmitting || !form.formState.isValid}>
-//                       {isSubmitting ? (
-//                         <>
-//                           <svg className="mr-3 size-5 animate-spin" viewBox="0 0 24 24" />
-//                           Submitting...
-//                         </>
-//                       ) : (
-//                         "Submit Inquiry"
-//                       )}
-//                     </Button>
-//                   </DrawerFooter>
-//                 </form>
-//               </Form>
-//             </ScrollArea>
-//           </div>
-//         </DrawerContent>
-//       </Drawer>
-//     </>
-//   );
-// };
+  if (!form) {
+    return null;
+  }
 
-// const RequestQuoteDesktop = ({ product, productTypeId, locale, ...props }: Props) => {
-//   const { isSubmitting, isSuccess, error, form, onSubmit } = useRequestQuoteForm({
-//     product,
-//     productTypeId,
-//   });
+  const t = useTranslations("RequestQuoteButton");
 
-//   const [open, setOpen] = useState(false);
+  const setScrollLock = useSetAtom(scrollLockAtom);
 
-//   const t = useTranslations("RequestQuoteButton");
+  const handleOpenChange = (open: boolean) => {
+    setOpen(open);
+    // if (open) {
+    //   setScrollLock(true);
+    // } else {
+    //   setScrollLock(false);
+    // }
+  };
 
-//   return (
-//     <Dialog open={open} onOpenChange={setOpen}>
-//       {/** TODO: polish the button */}
+  const handleClose = () => {
+    handleReset();
+    setOpen(false);
+  };
 
-//       <DialogTrigger asChild>
-//         <Button className="min-w-[200px]" {...props}>
-//           {t("requestQuote")}
-//         </Button>
-//       </DialogTrigger>
-//       <DialogContent className="max-w-[1200px] w-[90vw] p-0 overflow-hidden">
-//         <DialogHeader className="p-6 pb-2">
-//           <DialogTitle className="text-2xl">{t("requestQuote")}</DialogTitle>
-//           <DialogDescription className="text-base">{t("description")}</DialogDescription>
-//         </DialogHeader>
-//         {
-//           // TODO: add comprehensive information
-//         }
-//         <div className="flex h-[calc(85vh-120px)] max-h-[700px]">
-//           <div className="w-1/2 p-8 border-r bg-muted/20">
-//             <h3 className="text-xl font-semibold mb-6">Contact Information</h3>
-//             <div className="space-y-6">
-//               <div>
-//                 <p className="font-medium text-lg">Email</p>
-//                 <p className="text-muted-foreground">info@synoem.com</p>
-//               </div>
-//               <div>
-//                 <p className="font-medium text-lg">Phone</p>
-//                 <p className="text-muted-foreground">+1 234 567 8900</p>
-//               </div>
-//               <div>
-//                 <p className="font-medium text-lg">Address</p>
-//                 <p className="text-muted-foreground">123 Business Street, Tech City</p>
-//               </div>
-//               <div className="pt-4">
-//                 <h4 className="font-medium text-lg mb-2">Business Hours</h4>
-//                 <p className="text-muted-foreground">Monday - Friday: 9AM - 6PM</p>
-//                 <p className="text-muted-foreground">Saturday: 10AM - 4PM</p>
-//                 <p className="text-muted-foreground">Sunday: Closed</p>
-//               </div>
-//             </div>
-//           </div>
+  return (
+    <>
+      <Drawer
+        open={open}
+        onOpenChange={handleOpenChange}
+        disablePreventScroll
+        preventScrollRestoration
+        dismissible={false}
+      >
+        <DrawerTrigger asChild>
+          {/** TODO: polish the button */}
+          <Button
+            onClick={(e) => {
+              e.currentTarget.blur();
+            }}
+          >
+            {t("requestQuote")}
+          </Button>
+        </DrawerTrigger>
+        <DrawerContent className="flex flex-col h-full max-h-[90vh] pb-0">
+          <DrawerHeader className="text-left shrink-0 border-b">
+            <DrawerTitle className="text-center">{t("requestQuote")}</DrawerTitle>
+            <DrawerDescription>{t("description")}</DrawerDescription>
+          </DrawerHeader>
+          <div className="p-4">
+            <FormStepIndicator
+              style="progress"
+              steps={steps.map((step) => ({ id: step.id, title: step.title ?? "" }))}
+              currentStep={step}
+            />
+          </div>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(handleNextStep, (errors) => {
+                console.log("errors", errors);
+                // TODO: Send to sentry
+              })}
+              className="flex flex-col flex-1 min-h-0 overflow-y-auto"
+            >
+              <div className="p-4 flex-1 min-h-0 overflow-y-auto">{steps[step]?.component}</div>
 
-//           <div className="w-1/2 flex flex-col">
-//             {isSuccess ? (
-//               <div className="flex items-center justify-center h-full p-6">
-//                 {/* <SubmissionConfirmation
-//                     title="Submission Successful!"
-//                     message="Thank you for your submission. We'll be in touch soon."
-//                     type="form"
-//                   /> */}
-//               </div>
-//             ) : (
-//               <div className="flex-1 px-8 pt-4 h-full overflow-y-auto overflow-x-hidden">
-//                 <Form {...form}>
-//                   <form onSubmit={form.handleSubmit(onSubmit)}>
-//                     {error && (
-//                       <div className="bg-destructive/10 text-destructive p-3 rounded-md mb-4">
-//                         {error}
-//                       </div>
-//                     )}
-//                     <div className="space-y-6">
-//                       {/* <ProductInquiryForm form={form} locale={locale} /> */}
-//                     </div>
-//                     <div className="sticky bottom-0 p-4 bg-background/80 backdrop-blur-md">
-//                       <Button
-//                         type="submit"
-//                         disabled={isSubmitting}
-//                         className="w-full mt-4"
-//                         size="lg"
-//                       >
-//                         {isSubmitting ? (
-//                           <>
-//                             <svg
-//                               className="mr-2 h-4 w-4 animate-spin"
-//                               xmlns="http://www.w3.org/2000/svg"
-//                               fill="none"
-//                               viewBox="0 0 24 24"
-//                               aria-hidden="true"
-//                               role="presentation"
-//                             >
-//                               <circle
-//                                 className="opacity-25"
-//                                 cx="12"
-//                                 cy="12"
-//                                 r="10"
-//                                 stroke="currentColor"
-//                                 strokeWidth="4"
-//                               />
-//                               <path
-//                                 className="opacity-75"
-//                                 fill="currentColor"
-//                                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-//                               />
-//                             </svg>
-//                             Submitting...
-//                           </>
-//                         ) : (
-//                           "Submit Inquiry"
-//                         )}
-//                       </Button>
-//                     </div>
-//                   </form>
-//                 </Form>
-//               </div>
-//             )}
-//           </div>
-//         </div>
-//       </DialogContent>
-//     </Dialog>
-//   );
-// };
+              <DrawerFooter className="pt-2 sticky border-t bottom-0 w-full backdrop-blur-md shrink-0 bg-background/80 safe-area-bottom">
+                <input type="hidden" {...form.register("token")} />
+                <Turnstile />
+                <TermsField name="terms" />
+                <div className="flex flex-col gap-2">
+                  <div className="grid grid-cols-2 gap-2">
+                    <Button
+                      variant="outline"
+                      className="w-full"
+                      onClick={handlePrevStep}
+                      disabled={isSubmitting}
+                    >
+                      {step === 0 ? <> {t("buttons.clearAll")}</> : <>{t("buttons.back")}</>}
+                    </Button>
+                    <Button type="submit" className="w-full" disabled={isSubmitting}>
+                      {step < steps.length - 1 ? (
+                        <>{t("buttons.next")}</>
+                      ) : (
+                        <>
+                          {isSubmitting ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                          ) : (
+                            t("buttons.submit")
+                          )}
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                  <Button variant="outline" className="w-full" onClick={handleClose}>
+                    {t("buttons.close")}
+                  </Button>
+                </div>
+              </DrawerFooter>
+            </form>
+          </Form>
+        </DrawerContent>
+      </Drawer>
+    </>
+  );
+};
+
+const RequestQuoteDesktop = ({
+  product,
+  productTypeId,
+  steps,
+  ...props
+}: Props & { steps: FormStep<typeof inquiryFormSchema>[] }) => {
+  const {
+    form,
+    isSubmitting,
+    isSuccess,
+    handlePrevStep,
+    step,
+    handleNextStep,
+    error,
+    handleReset,
+  } = useRequestQuoteForm({
+    product,
+    productTypeId,
+    steps,
+  });
+
+  if (!form) {
+    console.log("form is not ready");
+    return null;
+  }
+
+  const [open, setOpen] = useState(false);
+
+  const t = useTranslations("RequestQuoteButton");
+
+  const setScrollLock = useSetAtom(scrollLockAtom);
+
+  const handleOpenChange = (open: boolean) => {
+    setOpen(open);
+    if (open) {
+      setScrollLock(true);
+    } else {
+      setScrollLock(false);
+    }
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={handleOpenChange}>
+      <DialogTrigger asChild>
+        <Button {...props}>{t("requestQuote")}</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[1000px] p-0 overflow-hidden">
+        <DialogHeader className="hidden">
+          <DialogTitle className="text-2xl">{t("requestQuote")}</DialogTitle>
+          <DialogDescription className="text-base">{t("description")}</DialogDescription>
+        </DialogHeader>
+        <div className="grid grid-cols-1 md:grid-cols-2 h-[700px]">
+          <div className="bg-card p-8 flex flex-col h-full">
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold tracking-tight">{t("requestQuote")}</h2>
+              <p className="text-muted-foreground mt-2">{t("description")}</p>
+            </div>
+            <FormStepIndicator
+              style="default"
+              orientation="vertical"
+              steps={steps.map((step) => ({ id: step.id, title: step.title ?? "" }))}
+              currentStep={step}
+            />
+            <div className="mt-auto">
+              <div className="rounded-lg bg-secondary/50 p-4">
+                <h4 className="text-sm font-medium leading-none mb-2">{t("support.title")}</h4>
+                <p className="text-sm text-muted-foreground">{t("support.description")}</p>
+                <Button variant="link" className="p-0 h-auto text-sm mt-2">
+                  {t("support.button")}
+                </Button>
+              </div>
+            </div>
+          </div>
+          <Form {...form}>
+            {isSuccess ? (
+              <SubmissionConfirmation
+                title={t("confirmation.title")}
+                message={t("confirmation.message")}
+                onDismiss={handleReset}
+              />
+            ) : (
+              <form
+                onSubmit={form.handleSubmit(handleNextStep, (errors) => {
+                  console.log("errors", errors);
+                  // TODO: Send to sentry
+                })}
+                className="flex flex-col h-full overflow-y-auto"
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    className="p-8 flex-1 min-h-0 overflow-y-auto"
+                    key={step}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {steps[step]?.component}
+                  </motion.div>
+                </AnimatePresence>
+                {error && (
+                  <div className="mb-4 rounded bg-destructive/10 p-2 text-destructive">{error}</div>
+                )}
+                <div className="flex flex-col gap-4 p-4 pt-2 backdrop-blur-xl bg-background/50">
+                  <input type="hidden" {...form.register("token")} />
+                  <Turnstile />
+                  <TermsField name="terms" />
+                  <div className="flex justify-between border-t pt-4">
+                    <Button variant="outline" onClick={handlePrevStep} disabled={isSubmitting}>
+                      {step === 0 ? (
+                        <>
+                          <X className="mr-2 h-4 w-4" /> {t("buttons.clearAll")}
+                        </>
+                      ) : (
+                        <>
+                          <ArrowLeft className="mr-2 h-4 w-4" /> {t("buttons.back")}
+                        </>
+                      )}
+                    </Button>
+                    <Button type="submit" disabled={isSubmitting}>
+                      {step < steps.length - 1 ? (
+                        <>
+                          {t("buttons.next")} <ArrowRight className="ml-2 h-4 w-4" />
+                        </>
+                      ) : (
+                        <>
+                          {isSubmitting ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                          ) : (
+                            t("buttons.submit")
+                          )}
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </div>
+              </form>
+            )}
+          </Form>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};

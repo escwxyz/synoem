@@ -1,103 +1,125 @@
-// "use client";
+"use client";
 
-// import { useState } from "react";
-// import { zodResolver } from "@hookform/resolvers/zod";
-// import { productInquiryFormSchema } from "@synoem/schema";
-// import { useHookFormAction } from "@next-safe-action/adapter-react-hook-form/hooks";
-// import type { SolarPanel, PumpController } from "@synoem/types";
-// import { sendProductInquiry } from "~/actions";
-// import type { ProductTypeId } from "@synoem/config";
-// import type { z } from "zod";
+import { useEffect, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import type { inquiryFormSchema } from "@synoem/schema";
+import { useHookFormAction } from "@next-safe-action/adapter-react-hook-form/hooks";
+import type { SolarPanel, PumpController } from "@synoem/types";
+import { sendInquiry } from "~/actions";
 
-// export const useRequestQuoteForm = ({
-//   productTypeId,
-//   product,
-// }: {
-//   productTypeId?: ProductTypeId;
-//   product?: Pick<SolarPanel | PumpController, "modelName" | "id">;
-// }) => {
-//   const [isSubmitting, setIsSubmitting] = useState(false);
-//   const [isSuccess, setIsSuccess] = useState(false);
-//   const [error, setError] = useState<string | null>(null);
+import type { z } from "zod";
+import type { FormStep } from "../components/inquiry-form/types";
+import type { ProductTypeId } from "@synoem/config";
+import { useAtomValue } from "jotai";
+import { cloudflareTurnstileTokenAtom } from "~/atoms";
 
-//   const productName = product?.modelName || "";
+type FormData = z.infer<typeof inquiryFormSchema>;
 
-//   const relatedProductId = product?.id;
+export const useRequestQuoteForm = ({
+  productTypeId,
+  product,
+  steps,
+}: {
+  productTypeId?: ProductTypeId;
+  steps: FormStep<typeof inquiryFormSchema>[];
+  product?: Pick<SolarPanel | PumpController, "modelName" | "id">;
+}) => {
+  const [step, setStep] = useState<number>(0);
 
-//   const { form, action } = useHookFormAction(
-//     sendProductInquiry,
-//     zodResolver(productInquiryFormSchema),
-//     {
-//       formProps: {
-//         defaultValues: {
-//           name: "",
-//           email: "",
-//           phone: "",
-//           requirements: "",
-//           terms: false,
-//           productTypeId,
-//           productName,
-//           quantity: 1,
-//           quantityUnit: "pcs",
-//           attachments: [],
-//           relatedProductId,
-//         },
-//       },
-//     },
-//   );
+  const token = useAtomValue(cloudflareTurnstileTokenAtom);
 
-//   const onSubmit = async (data: z.infer<typeof productInquiryFormSchema>) => {
-//     setIsSubmitting(true);
-//     setError(null);
+  const currentSchema = steps[step]?.schema;
 
-//     const formData = new FormData();
+  if (!currentSchema) {
+    console.error("No current schema");
+    return {
+      isSubmitting: false,
+      isSuccess: false,
+      error: "No current schema",
+      form: undefined,
+      handleNextStep: () => {},
+      handlePrevStep: () => {},
+      progress: 0,
+      step: 0,
+      formData: {},
+      setFormData: () => {},
+    };
+  }
 
-//     formData.append("name", data.name);
-//     formData.append("email", data.email);
-//     formData.append("phone", data.phone);
-//     formData.append("requirements", data.requirements);
-//     formData.append("productTypeId", data.productTypeId);
-//     formData.append("productName", data.productName);
-//     formData.append("quantity", String(data.quantity));
-//     formData.append("quantityUnit", data.quantityUnit);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-//     formData.append("relatedProductId", String(data.relatedProductId || relatedProductId));
+  const productName = product?.modelName || "";
 
-//     if (data.frequency) formData.append("frequency", data.frequency);
-//     if (data.destination) formData.append("destination", data.destination);
-//     if (data.timeline) formData.append("timeline", data.timeline);
+  const relatedProductId = product?.id;
 
-//     const attachmentFiles = data.attachments;
-//     if (Array.isArray(attachmentFiles) && attachmentFiles.length > 0) {
-//       for (const file of attachmentFiles) {
-//         formData.append("attachments", file);
-//       }
-//     }
-//     if (data.terms === true) {
-//       formData.append("terms", "on");
-//     }
+  const { form, action } = useHookFormAction(sendInquiry, zodResolver(currentSchema), {
+    formProps: {
+      defaultValues: {
+        productTypeId,
+        relatedProductId,
+        productName,
+      },
+    },
+  });
 
-//     try {
-//       const result = await action.executeAsync(data);
+  const handleNextStep = (data: Partial<FormData>) => {
+    const allValues = form.getValues();
+    const updatedData = { ...allValues, ...data };
 
-//       if (result?.data?.status === "success") {
-//         setIsSuccess(true);
-//         form.reset();
-//       } else {
-//         setError(result?.data?.messageKey || "An error occurred");
-//         return;
-//       }
-//     } catch (error) {
-//       console.error(error);
-//       setError(error instanceof Error ? error.message : "An error occurred");
-//     }
-//   };
+    if (step < steps.length - 1) {
+      setStep(step + 1);
 
-//   return {
-//     isSubmitting,
-//     isSuccess,
-//     error,
-//     form,
-//     onSubmit,
-//   };
-// };
+      form.reset(updatedData as z.infer<typeof currentSchema>);
+    } else {
+      if (!token || !token.trim()) {
+        setIsSuccess(false);
+        setIsSubmitting(false);
+        setError("Please complete the Turnstile challenge.");
+        return;
+      }
+      setIsSubmitting(true);
+      setTimeout(async () => {
+        await action.executeAsync(updatedData as FormData);
+        setIsSuccess(true);
+        setIsSubmitting(false);
+      }, 1000);
+    }
+  };
+
+  const handlePrevStep = () => {
+    console.log("handlePrevStep", step);
+    if (step === 0) {
+      handleReset();
+    }
+    if (step > 0) {
+      setStep(step - 1); // TODO: this is not working
+    }
+  };
+
+  const handleReset = () => {
+    form.reset();
+    setIsSubmitting(false);
+    setIsSuccess(false);
+    setStep(0);
+    setError(null);
+  };
+
+  useEffect(() => {
+    if (token) {
+      form.setValue("token", token);
+    }
+  }, [token, form]);
+
+  return {
+    isSubmitting,
+    isSuccess,
+    error,
+    form,
+    handleNextStep,
+    handlePrevStep,
+    handleReset,
+    step,
+  };
+};

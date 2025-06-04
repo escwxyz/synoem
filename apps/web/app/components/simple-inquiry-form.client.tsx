@@ -1,158 +1,125 @@
-// "use client";
+"use client";
 
-// import { useState } from "react";
-// import { zodResolver } from "@hookform/resolvers/zod";
-// import { simpleInquiryFormSchema } from "@synoem/schema";
-// import {
-//   Form,
-//   FormControl,
-//   FormField,
-//   FormItem,
-//   FormLabel,
-//   FormMessage,
-// } from "@synoem/ui/components/form";
-// import { Button } from "@synoem/ui/components/button";
-// import { Textarea } from "@synoem/ui/components/textarea";
-// import { Input } from "@synoem/ui/components/input";
-// import { Checkbox } from "@synoem/ui/components/checkbox";
-// import { AlertCircle } from "lucide-react";
-// import { useHookFormAction } from "@next-safe-action/adapter-react-hook-form/hooks";
-// // import { sendSimpleInquiry } from "~/actions";
+import { useEffect, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { inquiryFormSchema } from "@synoem/schema";
+import { Form } from "@synoem/ui/components/form";
+import { Button } from "@synoem/ui/components/button";
+import { useHookFormAction } from "@next-safe-action/adapter-react-hook-form/hooks";
+import { sendInquiry } from "@/app/actions";
+import { SubmissionConfirmation } from "~/components/submission-confirmation.client";
+import { useAtomValue } from "jotai";
+import { cloudflareTurnstileTokenAtom } from "~/atoms";
+import {
+  NameField,
+  EmailField,
+  PhoneField,
+  TermsField,
+  MessageField,
+} from "~/components/inquiry-form";
+import dynamic from "next/dynamic";
+import { useTranslations } from "next-intl";
+import { Loader2 } from "lucide-react";
 
-// export const SimpleInquiryForm = () => {
-//   const [isSubmitting, setIsSubmitting] = useState(false);
-//   const [isSuccess, setIsSuccess] = useState(false);
-//   const [error, setError] = useState<string | null>(null);
+const Turnstile = dynamic(
+  () => import("~/components/cloudflare-turnstile.client").then((mod) => mod.CloudflareTurnstile),
+  {
+    ssr: false,
+  },
+);
 
-//   const { form, handleSubmitWithAction, resetFormAndAction } = useHookFormAction(
-//     sendSimpleInquiry,
-//     zodResolver(simpleInquiryFormSchema),
-//     {
-//       actionProps: {
-//         onError: (error) => {
-//           //   setError(error.message);
-//         },
-//         onExecute: () => {
-//           setIsSubmitting(true);
-//           setError(null);
-//         },
-//         onSuccess: (data) => {
-//           setIsSuccess(true);
-//           setIsSubmitting(false);
-//           resetFormAndAction();
-//         },
-//       },
+export const SimpleInquiryForm = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-//       formProps: {
-//         defaultValues: {
-//           name: "",
-//           email: "",
-//           phone: "",
-//           requirements: "",
-//           terms: false,
-//         },
-//       },
-//     },
-//   );
+  const token = useAtomValue(cloudflareTurnstileTokenAtom);
 
-//   if (isSuccess) {
-//     return (
-//       <div className="p-4 bg-green-100 text-green-800 rounded">
-//         <h3 className="font-bold mb-2">Thank you for your inquiry!</h3>
-//         <p>We will get back to you shortly.</p>
-//       </div>
-//     );
-//   }
+  const { form, resetFormAndAction, handleSubmitWithAction } = useHookFormAction(
+    sendInquiry,
+    zodResolver(inquiryFormSchema),
+    {
+      actionProps: {
+        onExecute: () => {
+          setIsSubmitting(true);
+          setErrorMessage(null);
 
-//   return (
-//     <Form {...form}>
-//       <form onSubmit={handleSubmitWithAction} className="space-y-4">
-//         {error && (
-//           <div className="flex items-start gap-2 rounded-md border border-red-300 bg-red-50 p-3">
-//             <AlertCircle className="mt-0.5 h-5 w-5 text-red-400" />
-//             <p className="text-sm text-red-600">{error}</p>
-//           </div>
-//         )}
+          if (!token || !token.trim()) {
+            setIsSuccess(false);
+            setIsSubmitting(false);
+            setErrorMessage("Please complete the Turnstile challenge."); // TODO: i18n
+            return;
+          }
+        },
+        onSuccess: (data) => {
+          setIsSubmitting(false);
+          if (data.data?.status === "success") {
+            setIsSuccess(true);
+            setTimeout(() => {
+              resetFormAndAction();
+            }, 1000);
+          } else {
+            setErrorMessage(data.data?.messageKey ?? "An error occurred. Please try again."); // TODO: i18n
+          }
+        },
+      },
 
-//         <FormField
-//           control={form.control}
-//           name="name"
-//           render={({ field }) => (
-//             <FormItem>
-//               <FormLabel>Full Name</FormLabel>
-//               <FormControl>
-//                 <Input {...field} />
-//               </FormControl>
-//               <FormMessage />
-//             </FormItem>
-//           )}
-//         />
+      formProps: {
+        defaultValues: {
+          name: "",
+          email: "",
+          phone: "",
+          message: "",
+          token: token ?? "",
+          terms: false,
+        },
+      },
+    },
+  );
 
-//         <FormField
-//           control={form.control}
-//           name="email"
-//           render={({ field }) => (
-//             <FormItem>
-//               <FormLabel>Email</FormLabel>
-//               <FormControl>
-//                 <Input {...field} />
-//               </FormControl>
-//               <FormMessage />
-//             </FormItem>
-//           )}
-//         />
+  useEffect(() => {
+    if (token) {
+      form.setValue("token", token);
+    }
+  }, [token, form]);
 
-//         <FormField
-//           control={form.control}
-//           name="phone"
-//           render={({ field }) => (
-//             <FormItem>
-//               <FormLabel>Phone Number</FormLabel>
-//               <FormControl>
-//                 <Input {...field} />
-//               </FormControl>
-//               <FormMessage />
-//             </FormItem>
-//           )}
-//         />
+  const t = useTranslations("InquiryFormFields");
 
-//         <FormField
-//           control={form.control}
-//           name="requirements"
-//           render={({ field }) => (
-//             <FormItem>
-//               <FormLabel>Requirements</FormLabel>
-//               <FormControl>
-//                 <Textarea {...field} />
-//               </FormControl>
-//               <FormMessage />
-//             </FormItem>
-//           )}
-//         />
+  if (isSuccess) {
+    return (
+      <SubmissionConfirmation
+        title={t("confirmation.title")}
+        message={t("confirmation.message")}
+        onDismiss={() => {
+          resetFormAndAction();
+          setIsSuccess(false);
+        }}
+        buttonText={t("buttons.newInquiry")}
+      />
+    );
+  }
 
-//         <FormField
-//           control={form.control}
-//           name="terms"
-//           render={({ field }) => (
-//             <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-//               <FormControl>
-//                 <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-//               </FormControl>
-//               <div className="space-y-1 leading-none">
-//                 <FormLabel>
-//                   I have read and agree to the terms and conditions
-//                   <span className="text-red-500">*</span>
-//                 </FormLabel>
-//               </div>
-//               <FormMessage />
-//             </FormItem>
-//           )}
-//         />
-
-//         <Button type="submit" className="w-full" disabled={isSubmitting}>
-//           {isSubmitting ? "Submitting..." : "Submit Inquiry"}
-//         </Button>
-//       </form>
-//     </Form>
-//   );
-// };
+  return (
+    <div className="mx-auto w-full max-w-md rounded-lg bg-card/40 p-6 shadow-lg">
+      <Form {...form}>
+        <form onSubmit={handleSubmitWithAction} className="space-y-4">
+          <NameField name="name" />
+          <EmailField name="email" />
+          <PhoneField name="phone" />
+          <MessageField name="message" />
+          <input type="hidden" {...form.register("token")} />
+          <Turnstile />
+          <TermsField name="terms" />
+          {errorMessage && (
+            <div className="mb-4 rounded bg-destructive/10 p-2 text-destructive">
+              {errorMessage}
+            </div>
+          )}
+          <Button type="submit" className="w-full" disabled={isSubmitting}>
+            {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : t("buttons.submit")}
+          </Button>
+        </form>
+      </Form>
+    </div>
+  );
+};

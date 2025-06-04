@@ -1,7 +1,32 @@
 {
   "RequestQuoteButton": {
     "requestQuote": "Request Quote",
-    "description": "Please fill in the form below to request a quote for the product."
+    "description": "Please fill in the form below to request a quote for the product.",
+    "basicInformation": {
+      "title": "Basic Information"
+    },
+    "productInformation": {
+      "title": "Product Information"
+    },
+    "companyInformation": {
+      "title": "Company Information"
+    },
+    "support": {
+      "title": "Need help?",
+      "description": "If you have any questions or need assistance, please contact our support team.",
+      "button": "Contact Support"
+    },
+    "buttons": {
+      "clearAll": "Clear All",
+      "next": "Next",
+      "submit": "Submit",
+      "back": "Back",
+      "close": "Close"
+    },
+    "confirmation": {
+      "title": "Request Submitted",
+      "message": "Thank you for your request. We will get back to you shortly."
+    }
   },
   "RelatedProducts": {
     "title": "Maybe you'll like these",
@@ -220,5 +245,137 @@
   },
   "CertificationLogos": {
     "title": "Widely certified by these authorities"
+  },
+
+  "InquiryFormFields": {
+    "basicInformation": {
+      "title": "Basic Information"
+    },
+
+    "productInformation": {
+      "title": "Product Information"
+    },
+    "companyInformation": {
+      "title": "Company Information"
+    },
+    "name": {
+      "label": "Full Name",
+      "placeholder": "John Doe"
+    },
+    "email": {
+      "label": "Email",
+      "placeholder": "example@email.com"
+    },
+    "phone": {
+      "label": "Phone Number",
+      "placeholder": "+1234567890"
+    },
+    "message": {
+      "label": "Message",
+      "placeholder": "Enter your message here"
+    },
+    "terms": {
+      "label": "I agree to the {terms} and {privacyPolicy}",
+      "privacyPolicy": "Privacy Policy",
+      "terms": "Terms"
+    },
+    "productType": {
+      "label": "Product Type"
+    },
+    "productName": {
+      "label": "Product Name"
+    },
+    "sku": {
+      "label": "SKU"
+    },
+    "frequency": {
+      "label": "Frequency",
+      "options": {
+        "one-time": "One-time Purchase",
+        "monthly": "Monthly",
+        "quarterly": "Quarterly",
+        "yearly": "Yearly"
+      }
+    },
+    "destination": {
+      "label": "Destination"
+    },
+    "timeline": {
+      "label": "Demand Timeline",
+      "options": {
+        "immediate": "Immediate",
+        "1-month": "1 Month",
+        "3-months": "3 Months",
+        "6-months": "6 Months"
+      }
+    },
+    "quantity": {
+      "label": "Quantity",
+      "unit": {
+        "pcs": "PCS",
+        "sets": "SETS",
+        "plts": "PLTS",
+        "ctns": "CTNS"
+      }
+    },
+    "attachments": {
+      "label": "Attachments (Optional, max 3 files)",
+      "uploader": {
+        "label": "Drag & drop files here or",
+        "description": "click to browse files",
+        "supportedFileTypes": "PDF, Word, Excel, JPG, PNG (max 3 files, 10MB total)"
+      }
+    },
+    "company": {
+      "label": "Company",
+      "placeholder": "e.g. Synoem"
+    },
+    "website": {
+      "label": "Website",
+      "placeholder": "https://www.example.com"
+    },
+    "position": {
+      "label": "Position",
+      "placeholder": "e.g. CEO, CTO, etc."
+    },
+    "type": {
+      "label": "Company Type",
+      "placeholder": "Wholesaler",
+      "options": {
+        "wholesaler": "Wholesaler",
+        "distributor": "Distributor",
+        "retailer": "Retailer",
+        "manufacturer": "Manufacturer",
+        "project-developer": "Project Developer",
+        "other": "Other"
+      }
+    },
+    "country": {
+      "label": "Country",
+      "placeholder": "Select Country"
+    },
+    "employees": {
+      "label": "Number of Employees",
+      "placeholder": "1-10"
+    },
+    "contactPreferences": {
+      "label": "Contact Preferences",
+      "options": {
+        "email": "Email",
+        "phone": "Phone",
+        "whatsapp": "Whatsapp"
+      }
+    },
+    "buttons": {
+      "submit": "Submit Inquiry",
+      "newInquiry": "New Inquiry"
+    },
+    "confirmation": {
+      "title": "Thank you for your inquiry!",
+      "message": "We will get back to you shortly."
+    }
+  },
+  "FormStepIndicator": {
+    "step": "Step {step} of {total}"
   }
 }

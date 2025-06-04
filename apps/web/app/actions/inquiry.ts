@@ -6,6 +6,7 @@ import { inquiryFormSchema } from "@synoem/schema";
 import { getPayloadClient } from "@synoem/payload/client";
 import type { APIResponse } from "~/types/api-response";
 import { transformFileToBuffer } from "~/utils";
+import type { QuantityUnit } from "@synoem/config";
 
 export const sendInquiry = actionClient
   .inputSchema(inquiryFormSchema)
@@ -20,6 +21,8 @@ export const sendInquiry = actionClient
       relatedProductId,
       attachments,
       token,
+      quantity,
+      quantityUnit,
       ...rest
     } = parsedInput;
 
@@ -111,6 +114,10 @@ export const sendInquiry = actionClient
           userAgent: metadata.userAgent,
           relatedProduct,
           attachments: attachmentResults.length > 0 ? attachmentResults : undefined,
+          qty: {
+            value: quantity,
+            unit: quantityUnit as QuantityUnit,
+          },
           ...(rest as Record<string, unknown>),
         },
       });

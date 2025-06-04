@@ -14,9 +14,9 @@ import { isValidLocale } from "~/utils/is-valid-locale";
 import { getCompanyInfoCached } from "~/data/get-globals";
 import { defaultLocale, type Locale, locales } from "@synoem/config";
 import { NotificationBar } from "~/components/notification-bar.server";
-
-import "@synoem/ui/web.css";
+import { ReactLenis } from "lenis/react";
 import { getUrl } from "../utils/get-url";
+import "@synoem/ui/web.css";
 
 // const inter = Inter({
 //   preload: true,
@@ -122,19 +122,21 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange={false}
         >
-          <JotaiProvider>
-            <NextIntlClientProvider locale={locale}>
-              <SidebarProvider className="flex flex-col">
-                <NotificationBar locale={locale} />
-                <Header locale={locale} />
-                <SidebarInset className="w-full max-w-none flex-1 mx-auto p-4 md:p-8">
-                  {children}
-                </SidebarInset>
-                <CookieConsent />
-                <Footer locale={locale} />
-              </SidebarProvider>
-            </NextIntlClientProvider>
-          </JotaiProvider>
+          <ReactLenis root>
+            <JotaiProvider>
+              <NextIntlClientProvider locale={locale}>
+                <SidebarProvider className="flex flex-col">
+                  <NotificationBar locale={locale} />
+                  <Header locale={locale} />
+                  <SidebarInset className="w-full max-w-none flex-1 mx-auto p-4 md:p-8">
+                    {children}
+                  </SidebarInset>
+                  <CookieConsent />
+                  <Footer locale={locale} />
+                </SidebarProvider>
+              </NextIntlClientProvider>
+            </JotaiProvider>
+          </ReactLenis>
         </ThemeProvider>
         {process.env.WEB_APP_ENV === "production" &&
           process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID && <GoogleAnalytics />}
