@@ -1,9 +1,17 @@
 import type { Page } from "@synoem/types";
 import { Timeline } from "./timeline.client";
+import { Hero } from "./hero.client";
+import { Faq } from "./faq.client";
+import { Feature } from "./feature.client";
+import { Features } from "./features.server";
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const blockComponents: Record<string, React.FC<any>> = {
   timelineBlock: Timeline,
+  heroBlock: Hero,
+  faqBlock: Faq,
+  featureBlock: Feature,
+  featuresBlock: Features,
 };
 
 export const RenderBlocks: React.FC<{

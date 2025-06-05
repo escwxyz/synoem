@@ -2,7 +2,6 @@ import type { Tab, Field } from "payload";
 import {
   create3dModelField,
   createGalleryField,
-  createIconSelectField,
   createLeadTimeField,
   createMoqGroup,
   slug,
@@ -11,6 +10,7 @@ import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { formatSku } from "../../hooks";
 import { getVariantOptionTypes, type ProductTypeId } from "@synoem/config";
 import { createInquiryJoinField } from "../../fields";
+import { FeatureBlock } from "../../blocks/feature";
 
 export const createSharedFields = (productTypeId: ProductTypeId): Field[] => {
   return [
@@ -111,25 +111,13 @@ export const productDetailsTab: Tab = {
     },
     {
       name: "features",
-      type: "array",
+      type: "blocks",
       minRows: 2,
       maxRows: 6,
-      interfaceName: "ProductFeatures",
-      fields: [
-        {
-          name: "title",
-          type: "text",
-          required: true,
-          localized: true,
-        },
-        {
-          name: "description",
-          type: "textarea",
-          required: true,
-          localized: true,
-        },
-        createIconSelectField({}),
-      ],
+      admin: {
+        description: "Showcased features of the product, min. 2, max. 6",
+      },
+      blocks: [FeatureBlock],
     },
 
     createGalleryField(),

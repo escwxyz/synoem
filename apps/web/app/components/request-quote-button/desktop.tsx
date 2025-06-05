@@ -15,15 +15,15 @@ import {
   DialogTrigger,
 } from "@synoem/ui/components/dialog";
 import { Button } from "@synoem/ui/components/button";
-import { FormStepIndicator } from "../form-step-indicator.client";
+import { FormStepIndicator } from "~/components/form-step-indicator.client";
 import { Form } from "@synoem/ui/components/form";
-import { SubmissionConfirmation } from "../submission-confirmation.client";
+import { SubmissionConfirmation } from "~/components/submission-confirmation.client";
 import { motion } from "motion/react";
 import { AnimatePresence } from "motion/react";
 import dynamic from "next/dynamic";
-import { ArrowRight, X } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Loader2 } from "lucide-react";
-import { TermsField } from "../inquiry-form";
+import { TermsField } from "~/components/inquiry-form";
 import { ArrowLeft } from "lucide-react";
 
 const Turnstile = dynamic(
@@ -127,7 +127,6 @@ export const RequestQuoteDesktop = ({
               <form
                 onSubmit={form.handleSubmit(handleNextStep, (errors) => {
                   console.log("Form validation errors:", errors);
-                  // TODO: Send to sentry
                 })}
                 className="flex flex-col h-full overflow-y-auto"
               >

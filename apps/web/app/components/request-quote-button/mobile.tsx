@@ -19,12 +19,12 @@ import {
   DrawerTrigger,
 } from "@synoem/ui/components/drawer";
 import { Button } from "@synoem/ui/components/button";
-import { FormStepIndicator } from "../form-step-indicator.client";
+import { FormStepIndicator } from "~/components/form-step-indicator.client";
 import { Form } from "@synoem/ui/components/form";
 import dynamic from "next/dynamic";
-import { TermsField } from "../inquiry-form";
+import { TermsField } from "~/components/inquiry-form";
 import { Loader2 } from "lucide-react";
-import { SubmissionConfirmation } from "../submission-confirmation.client";
+import { SubmissionConfirmation } from "~/components/submission-confirmation.client";
 
 const Turnstile = dynamic(
   () => import("~/components/cloudflare-turnstile.client").then((mod) => mod.CloudflareTurnstile),
@@ -128,7 +128,6 @@ export const RequestQuoteMobile = ({
               <form
                 onSubmit={form.handleSubmit(handleNextStep, (errors) => {
                   console.log("Form validation errors:", errors);
-                  // TODO: Send to sentry
                 })}
                 className="flex flex-col flex-1 min-h-0 overflow-y-auto"
               >

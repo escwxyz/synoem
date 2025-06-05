@@ -5,7 +5,7 @@ import { ContentBlock } from "../blocks/content";
 import { title } from "../fields/title";
 import { CallToActionBlock } from "../blocks/call-to-action";
 import { MediaBlock } from "../blocks/media";
-import { FeatureBlock } from "../blocks/feature";
+import { FeaturesBlock } from "../blocks/features";
 import { TimelineBlock } from "../blocks/timeline";
 import { FAQBlock } from "../blocks/faq";
 import { admin, authenticatedOrPublished } from "../access";
@@ -42,7 +42,7 @@ export const Pages: CollectionConfig<"pages"> = {
                 ContentBlock,
                 CallToActionBlock,
                 MediaBlock,
-                FeatureBlock,
+                FeaturesBlock,
                 TimelineBlock,
                 FAQBlock,
               ],

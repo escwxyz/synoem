@@ -8,18 +8,6 @@
 
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ProductFeatures".
- */
-export type ProductFeatures =
-  | {
-      title: string;
-      description: string;
-      iconName?: string | null;
-      id?: string | null;
-    }[]
-  | null;
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ProductVariants".
  */
 export type ProductVariants = {
@@ -345,7 +333,7 @@ export interface Page {
     | ContentBlockType
     | CallToActionBlockType
     | MediaBlockType
-    | FeatureBlockType
+    | FeaturesBlockType
     | TimelineBlockType
     | FAQBlockType
   )[];
@@ -535,7 +523,10 @@ export interface SolarPanel {
     };
     [k: string]: unknown;
   };
-  features?: ProductFeatures;
+  /**
+   * Showcased features of the product, min. 2, max. 6
+   */
+  features?: FeatureBlockType[] | null;
   /**
    * Upload images for the product
    */
@@ -1298,7 +1289,10 @@ export interface PumpController {
     };
     [k: string]: unknown;
   };
-  features?: ProductFeatures;
+  /**
+   * Showcased features of the product, min. 2, max. 6
+   */
+  features?: FeatureBlockType[] | null;
   /**
    * Upload images for the product
    */
@@ -1421,6 +1415,44 @@ export interface Model {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeatureBlockType".
+ */
+export interface FeatureBlockType {
+  type: 'text' | 'number';
+  title?: string | null;
+  number?: number | null;
+  description?: string | null;
+  icon: string;
+  /**
+   * Delay in seconds before the feature content starts to animate
+   */
+  delay?: number | null;
+  /**
+   * If checked, the number will be appended with a plus sign
+   */
+  withPlus?: boolean | null;
+  /**
+   * If checked, the number will be displayed as a percentage
+   */
+  isPercentage?: boolean | null;
+  /**
+   * Ticker will start from this value
+   */
+  startValue?: number | null;
+  /**
+   * Number of decimal places to display
+   */
+  decimalPlaces?: number | null;
+  /**
+   * Direction of the number ticker
+   */
+  direction?: ('up' | 'down') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featureBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1763,38 +1795,16 @@ export interface MediaBlockType {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FeatureBlockType".
+ * via the `definition` "FeaturesBlockType".
  */
-export interface FeatureBlockType {
+export interface FeaturesBlockType {
   /**
-   * A short, optional heading above the main title.
+   * Showcased features of the product, min. 2, max. 6
    */
-  eyebrow?: string | null;
-  title: string;
-  /**
-   * Secondary heading under the main title.
-   */
-  subtitle?: string | null;
-  desc?: string | null;
-  ctaPrimary?: LinkType;
-  ctaSecondary?: LinkType;
-  features: {
-    image?: (string | null) | Image;
-    title: string;
-    desc?: string | null;
-    id?: string | null;
-  }[];
-  /**
-   * Select if text is on the top or the bottom.
-   */
-  textPlacement?: ('top' | 'bottom') | null;
-  /**
-   * Align text within its column (left, center, or right).
-   */
-  textAlignment?: ('start' | 'center' | 'end') | null;
+  features?: FeatureBlockType[] | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'featureBlock';
+  blockType: 'featuresBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2269,7 +2279,7 @@ export interface PagesSelect<T extends boolean = true> {
         contentBlock?: T | ContentBlockTypeSelect<T>;
         callToActionBlock?: T | CallToActionBlockTypeSelect<T>;
         mediaBlock?: T | MediaBlockTypeSelect<T>;
-        featureBlock?: T | FeatureBlockTypeSelect<T>;
+        featuresBlock?: T | FeaturesBlockTypeSelect<T>;
         timelineBlock?: T | TimelineBlockTypeSelect<T>;
         faqBlock?: T | FAQBlockTypeSelect<T>;
       };
@@ -2353,25 +2363,33 @@ export interface MediaBlockTypeSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FeatureBlockType_select".
+ * via the `definition` "FeaturesBlockType_select".
  */
-export interface FeatureBlockTypeSelect<T extends boolean = true> {
-  eyebrow?: T;
-  title?: T;
-  subtitle?: T;
-  desc?: T;
-  ctaPrimary?: T | LinkTypeSelect<T>;
-  ctaSecondary?: T | LinkTypeSelect<T>;
+export interface FeaturesBlockTypeSelect<T extends boolean = true> {
   features?:
     | T
     | {
-        image?: T;
-        title?: T;
-        desc?: T;
-        id?: T;
+        featureBlock?: T | FeatureBlockTypeSelect<T>;
       };
-  textPlacement?: T;
-  textAlignment?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeatureBlockType_select".
+ */
+export interface FeatureBlockTypeSelect<T extends boolean = true> {
+  type?: T;
+  title?: T;
+  number?: T;
+  description?: T;
+  icon?: T;
+  delay?: T;
+  withPlus?: T;
+  isPercentage?: T;
+  startValue?: T;
+  decimalPlaces?: T;
+  direction?: T;
   id?: T;
   blockName?: T;
 }
@@ -2767,7 +2785,11 @@ export interface SolarPanelsSelect<T extends boolean = true> {
       };
   modelName?: T;
   description?: T;
-  features?: T | ProductFeaturesSelect<T>;
+  features?:
+    | T
+    | {
+        featureBlock?: T | FeatureBlockTypeSelect<T>;
+      };
   gallery?: T;
   dimensions?:
     | T
@@ -2875,16 +2897,6 @@ export interface SolarPanelsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ProductFeatures_select".
- */
-export interface ProductFeaturesSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
-  iconName?: T;
-  id?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "SolarPanelPowerPoints_select".
  */
 export interface SolarPanelPowerPointsSelect<T extends boolean = true> {
@@ -2937,7 +2949,11 @@ export interface PumpControllersSelect<T extends boolean = true> {
   category?: T;
   modelName?: T;
   description?: T;
-  features?: T | ProductFeaturesSelect<T>;
+  features?:
+    | T
+    | {
+        featureBlock?: T | FeatureBlockTypeSelect<T>;
+      };
   gallery?: T;
   wideAmplitudeVoltage?:
     | T

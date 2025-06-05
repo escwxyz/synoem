@@ -9,7 +9,7 @@ import { Header } from "~/layouts/header-layout.server";
 import { Footer } from "~/layouts/footer-layout.server";
 // import { WebVitals } from "~/components/web-vitals.client";
 import GoogleAnalytics from "~/components/google-analytics.client";
-// import { Inter } from "next/font/google";
+
 import { isValidLocale } from "~/utils/is-valid-locale";
 import { getCompanyInfoCached } from "~/data/get-globals";
 import { defaultLocale, type Locale, locales } from "@synoem/config";
@@ -19,11 +19,6 @@ import { getUrl } from "../utils/get-url";
 import { RouteListener } from "~/components/route-listener.client";
 
 import "@synoem/ui/web.css";
-
-// const inter = Inter({
-//   preload: true,
-//   subsets: ["latin"],
-// });
 
 export const generateMetadata = async ({
   params,
@@ -53,7 +48,7 @@ export const generateMetadata = async ({
       : null;
 
   const openGraph: NonNullable<Metadata["openGraph"]> = {
-    title: companyInfo.data?.name,
+    title: `${companyInfo.data?.name} - ${companyInfo.data?.shortDescription}`,
     description: companyInfo.data?.longDescription,
     url: process.env.NEXT_PUBLIC_WEB_SITE_URL || "",
     siteName: companyInfo.data?.name,

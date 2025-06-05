@@ -1,134 +1,154 @@
-import { link } from "../fields/link";
 import type { Block } from "payload";
-import { createTitleField, title } from "../fields/title";
-import { createDescriptionField } from "../fields/description";
+import { createIconSelectField } from "../fields";
 
 export const FeatureBlock: Block = {
   slug: "featureBlock",
   interfaceName: "FeatureBlockType",
+  labels: {
+    singular: "Feature Block",
+    plural: "Feature Blocks",
+  },
+  admin: {
+    group: "Content",
+  },
   fields: [
     {
-      type: "collapsible",
-      label: "Text Content",
-      admin: {
-        initCollapsed: true,
-      },
-      fields: [
-        createTitleField({
-          name: "eyebrow",
-          label: "Eyebrow",
-          required: false,
-          admin: {
-            description: "A short, optional heading above the main title.",
-          },
-        }),
-        title,
-        createTitleField({
-          name: "subtitle",
-          label: "Subtitle",
-          required: false,
-          admin: {
-            description: "Secondary heading under the main title.",
-          },
-        }),
-        createDescriptionField({
-          required: false,
-        }),
-      ],
-    },
-    {
-      type: "collapsible",
-      label: "Primary CTA (Optional)",
-      admin: {
-        initCollapsed: true,
-      },
-      fields: [
-        link({
-          required: false,
-          overrides: {
-            name: "ctaPrimary",
-            label: "Primary CTA (Optional)",
-          },
-        }),
-      ],
-    },
-    {
-      type: "collapsible",
-      label: "Secondary CTA (Optional)",
-      admin: {
-        initCollapsed: true,
-      },
-      fields: [
-        link({
-          required: false,
-          overrides: {
-            name: "ctaSecondary",
-            label: "Secondary CTA (Optional)",
-          },
-        }),
-      ],
-    },
-    {
-      name: "features",
-      type: "array",
-      label: "Features",
-      minRows: 1,
-      maxRows: 4,
-      required: true,
-      fields: [
+      name: "type",
+      type: "select",
+      options: [
         {
-          name: "image",
-          label: "Image",
-          type: "upload",
-          relationTo: "images",
+          label: "Text",
+          value: "text",
         },
-        title,
-        createDescriptionField({
-          required: false,
-        }),
+        {
+          label: "Number",
+          value: "number",
+        },
       ],
+      defaultValue: "text",
+      required: true,
     },
     {
+      type: "row",
+      fields: [
+        {
+          name: "title",
+          type: "text",
+          label: "Title",
+          localized: true,
+          // @ts-expect-error - siblingData is not typed
+          validate: (value, { siblingData }) => {
+            if (siblingData.type === "text" && !value) {
+              return "Text is required when type is text";
+            }
+            return true;
+          },
+          admin: {
+            condition: (_, siblingData) => siblingData.type === "text",
+            width: "50%",
+          },
+        },
+        {
+          name: "number",
+          type: "number",
+          label: "Number",
+          // @ts-expect-error - siblingData is not typed
+          validate: (value, { siblingData }) => {
+            if (siblingData.type === "number" && !value) {
+              return "Number is required when type is number";
+            }
+            return true;
+          },
+          admin: {
+            condition: (_, siblingData) => siblingData.type === "number",
+            width: "50%",
+          },
+        },
+        {
+          name: "description",
+          type: "text",
+          label: "Description",
+          required: false,
+          localized: true,
+          admin: {
+            width: "50%",
+          },
+        },
+      ],
+    },
+
+    createIconSelectField({
+      name: "icon",
+      label: "Icon",
+      required: true,
+    }),
+
+    {
       type: "collapsible",
-      label: "Layout",
+      label: "Configuration",
       admin: {
         initCollapsed: true,
       },
       fields: [
         {
-          type: "row",
-          fields: [
-            {
-              name: "textPlacement",
-              label: "Text Placement",
-              type: "select",
-              options: [
-                { label: "Top", value: "top" },
-                { label: "Bottom", value: "bottom" },
-              ],
-              defaultValue: "top",
-              admin: {
-                width: "50%",
-                description: "Select if text is on the top or the bottom.",
-              },
-            },
-            {
-              name: "textAlignment",
-              label: "Text Alignment",
-              type: "select",
-              options: [
-                { label: "Start", value: "start" },
-                { label: "Center", value: "center" },
-                { label: "End", value: "end" },
-              ],
-              defaultValue: "start",
-              admin: {
-                width: "50%",
-                description:
-                  "Align text within its column (left, center, or right).",
-              },
-            },
-          ],
+          name: "delay",
+          type: "number",
+          label: "Delay",
+          defaultValue: 0,
+          admin: {
+            description: "Delay in seconds before the feature content starts to animate",
+          },
+        },
+        {
+          name: "withPlus",
+          type: "checkbox",
+          label: "With Plus",
+          defaultValue: false,
+          admin: {
+            description: "If checked, the number will be appended with a plus sign",
+            condition: (_, siblingData) => siblingData.type === "number",
+          },
+        },
+        {
+          name: "isPercentage",
+          type: "checkbox",
+          label: "Is Percentage",
+          defaultValue: false,
+          admin: {
+            description: "If checked, the number will be displayed as a percentage",
+            condition: (_, siblingData) => siblingData.type === "number",
+          },
+        },
+        {
+          name: "startValue",
+          type: "number",
+          label: "Start Value",
+          defaultValue: 0,
+          admin: {
+            description: "Ticker will start from this value",
+            condition: (_, siblingData) => siblingData.type === "number",
+          },
+        },
+        {
+          name: "decimalPlaces",
+          type: "number",
+          label: "Decimal Places",
+          defaultValue: 0,
+          admin: {
+            description: "Number of decimal places to display",
+            condition: (_, siblingData) => siblingData.type === "number",
+          },
+        },
+        {
+          name: "direction",
+          type: "select",
+          label: "Direction",
+          options: ["up", "down"],
+          defaultValue: "up",
+          admin: {
+            description: "Direction of the number ticker",
+            condition: (_, siblingData) => siblingData.type === "number",
+          },
         },
       ],
     },
