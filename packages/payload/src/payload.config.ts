@@ -6,7 +6,7 @@ import { buildConfig } from "payload";
 import { defaultLexical } from "./fields/default-lexical";
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { resendAdapter } from "@payloadcms/email-resend";
-import { Footer, Header, CompanyInfo, ContactInfo, SocialLinks, FAQ } from "./globals";
+import { Footer, Header, CompanyInfo, ContactInfo, SocialLinks } from "./globals";
 import {
   SolarPanels,
   PumpControllers,
@@ -30,6 +30,7 @@ import {
   Users,
   Posts,
   Industries,
+  Faqs,
 } from "./collections";
 import sharp from "sharp";
 import { sendNewsletterConfirmationEmail } from "./tasks/send-newsletter-confirmation-email";
@@ -107,14 +108,8 @@ export default buildConfig({
         {
           label: "Mobile",
           name: "mobile",
-          width: 375,
-          height: 667,
-        },
-        {
-          label: "Tablet",
-          name: "tablet",
-          width: 768,
-          height: 1024,
+          width: 430,
+          height: 932,
         },
         {
           label: "Desktop",
@@ -134,6 +129,7 @@ export default buildConfig({
   }),
   collections: [
     Users,
+    Faqs,
     Pages,
     //
     Industries,
@@ -169,7 +165,7 @@ export default buildConfig({
     PumpControllers,
     ...productCategoryCollections,
   ],
-  globals: [Footer, CompanyInfo, ContactInfo, SocialLinks, Header, FAQ],
+  globals: [Footer, CompanyInfo, ContactInfo, SocialLinks, Header],
   plugins: plugins(),
   localization: {
     defaultLocale,
@@ -224,11 +220,6 @@ export default buildConfig({
         ],
         handler: sendNewsletterConfirmationEmail,
       },
-      // {
-      //   slug: "send-newsletter-notification-email-to-admin",
-      //   label: "Send Newsletter Notification Email to Admin",
-      //   handler: `${path.resolve(dirname, "./tasks/send-newsletter-notification-email-to-admin.ts")}#sendNewsletterNotificationEmailToAdmin`,
-      // },
     ],
     jobsCollectionOverrides: ({ defaultJobsCollection }) => {
       if (!defaultJobsCollection.admin) {

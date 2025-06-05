@@ -1,13 +1,15 @@
-import { SceneCanvas } from "~/components/scene-canvas.client";
-import { ReactLenis } from "lenis/react";
+// import { SceneCanvas } from "~/components/scene-canvas.client";
+
+import { ScrollListener } from "~/components/scroll-listener.client";
 
 export default function HomeLayout({ children }: { children: React.ReactNode }) {
   return (
-    <ReactLenis root>
-      <div className="fixed inset-0 pointer-events-none">
+    <>
+      <ScrollListener />
+      {/* <div className="fixed inset-0 pointer-events-none">
         <SceneCanvas />
-      </div>
+      </div> */}
       <div className="relative">{children}</div>
-    </ReactLenis>
+    </>
   );
 }

@@ -3,6 +3,7 @@ import { link } from "../fields/link";
 import { createTitleField } from "../fields/title";
 import { createIconSelectField } from "../fields/icon-select";
 import { revalidateGlobal } from "../hooks";
+import { anyone } from "../access";
 
 const menuItemFields: Field[] = [
   {
@@ -152,6 +153,9 @@ export const Header: GlobalConfig = {
   slug: "header",
   admin: {
     group: "Settings",
+  },
+  access: {
+    read: anyone,
   },
   fields: [
     {

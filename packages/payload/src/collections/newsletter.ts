@@ -12,7 +12,7 @@ export const NewsletterSubscribers: CollectionConfig<"newsletter-subscribers"> =
   access: {
     read: admin,
     create: anyone,
-    // TODO: current newsletter subscribers are related to the user collection,
+    // TODO: current newsletter subscribers are not related to the user collection,
     // update: adminOrSelf,
   },
   fields: [

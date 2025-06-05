@@ -1,11 +1,10 @@
 import type { Locale } from "@synoem/config";
-import { InquiryButton } from "~/components/inquiry-button.client";
-import { ThemeSwitcher } from "~/components/theme-switcher.client";
 import { Logo, LogoSkeleton } from "~/components/logo.server";
 import { Suspense } from "react";
 import { getCompanyInfoCached, getHeaderCached } from "~/data/get-globals";
 
 import dynamic from "next/dynamic";
+import { HeaderButtons } from "./header-buttons.client";
 
 const MobileNavigation = dynamic(
   () => import("~/components/navigation").then((mod) => mod.MobileNavigation),
@@ -48,13 +47,7 @@ export const Header = async ({ locale }: { locale: Locale }) => {
           </div>
           {hasNavigation && <DesktopNavigation items={items} />}
         </div>
-        <div className="hidden md:flex w-1/2 justify-end items-center gap-4">
-          <ThemeSwitcher />
-          <InquiryButton />
-        </div>
-        <div className="block md:hidden">
-          <ThemeSwitcher />
-        </div>
+        <HeaderButtons locale={locale} />
         {hasNavigation && <MobileNavigation items={items} />}
       </div>
     </header>

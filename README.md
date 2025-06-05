@@ -2,8 +2,5 @@
 
 
 - Re-render in product category page
-- History Timeline
 - Downloads / Warranty / Certs
-- FAQ
-- React Email template
-- Generate Blurhash in CMS / images
+- React Email Dynamic Templates Collection for beforeEmail by FormBuilder Plugin

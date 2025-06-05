@@ -1,9 +1,11 @@
 "use client";
 
+// TODO: pointer events
+
 import type { MegaMenuItems, MenuItems } from "@synoem/types";
 import { cn } from "@synoem/ui/lib/utils";
 import { getMenuLinkConfig } from "~/utils";
-import { type Dispatch, type SetStateAction, useState } from "react";
+import { type Dispatch, type SetStateAction, useMemo, useState } from "react";
 import { motion } from "motion/react";
 import { ChevronDownIcon } from "lucide-react";
 import { useIsMobile } from "@synoem/ui/hooks/use-mobile";
@@ -55,6 +57,15 @@ type MenuItemProps = {
 function DesktopMenuItem({ item, active, setActive }: MenuItemProps) {
   let content: React.ReactNode;
 
+  const indicator = useMemo(() => {
+    return (
+      <motion.div
+        layoutId="hovered"
+        className="absolute inset-0 h-full w-full rounded-full bg-accent/50 pointer-events-none"
+      />
+    );
+  }, []);
+
   if (item.type === "link") {
     const linkConfig = getMenuLinkConfig(item.link);
     content = (
@@ -63,18 +74,13 @@ function DesktopMenuItem({ item, active, setActive }: MenuItemProps) {
           href={linkConfig?.href || "#"}
           openInNewTab={linkConfig?.openInNewTab}
           className={cn(
-            "inline-flex h-9 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-muted-foreground",
+            "inline-flex h-9 w-max items-center justify-center rounded-full px-4 py-2 text-sm font-medium text-muted-foreground",
             active === item.id && "text-foreground",
           )}
         >
           {item.text}
         </MenuLink>
-        {active === item.id && (
-          <motion.div
-            layoutId="hovered"
-            className="absolute inset-0 h-full w-full rounded-full bg-muted/50"
-          />
-        )}
+        {active === item.id && indicator}
       </>
     );
   }
@@ -92,12 +98,7 @@ function DesktopMenuItem({ item, active, setActive }: MenuItemProps) {
             aria-hidden="true"
           />
         </motion.div>
-        {active === item.id && (
-          <motion.div
-            layoutId="hovered"
-            className="absolute inset-0 h-full w-full rounded-full bg-muted/50"
-          />
-        )}
+        {active === item.id && indicator}
 
         {active !== null && (
           <motion.div

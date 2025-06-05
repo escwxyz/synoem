@@ -19,16 +19,22 @@ export async function generateStaticParams() {
     },
   });
 
+  const excludedSlugs = ["home", "product", "products"];
+
   const params = pages.docs
-    ?.filter((doc) => {
-      return doc.slug !== "home";
-    })
-    .map(({ slug }) => {
-      return { slug };
-    });
+    ?.filter((doc) => !excludedSlugs.includes(doc.slug))
+    .map(({ slug }) => ({ slug }));
 
   return params;
 }
+
+// export async function generateMetadata({ params }: { params: Promise<{ slug: string; locale: string }> }) {
+//   const { slug, locale } = await params;
+
+//   if (!isValidLocale(locale)) {
+//     return notFound();
+//   }
+// }
 
 export default async function Page({
   params,

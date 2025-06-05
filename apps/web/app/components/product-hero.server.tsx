@@ -6,22 +6,20 @@ import type {
 } from "@synoem/types";
 import Image from "next/image";
 import { getUrl } from "~/utils/get-url";
-
 import { SocialShareButtons } from "./social-share-buttons.client";
 import { ImagePlaceholder } from "@synoem/ui/components/image-placeholder";
 import { ProductBreadcrumbs } from "./product-breadcrumbs.server";
 import { ProductFeatures } from "./product-features.server";
 import type { Locale, ProductTypeId } from "@synoem/config";
-
 import dynamic from "next/dynamic";
 
 const ProductHeroModel = dynamic(() =>
   import("./product-hero-model.client").then((mod) => mod.ProductHeroModel),
 );
 
-// const RequestQuoteButton = dynamic(() =>
-//   import("./request-quote-button.client").then((mod) => mod.RequestQuoteButton),
-// );
+const RequestQuoteButton = dynamic(() =>
+  import("./request-quote-button").then((mod) => mod.RequestQuoteButton),
+);
 
 interface ProductHeroProps {
   productCategory:
@@ -82,11 +80,11 @@ export const ProductHero = ({
 
                 <div className="w-full flex flex-col md:flex-row justify-between items-center">
                   <div className="w-full flex flex-col md:flex-row gap-2">
-                    {/* <RequestQuoteButton
+                    <RequestQuoteButton
                       product={product}
                       productTypeId={productTypeId}
                       locale={locale}
-                    /> */}
+                    />
                   </div>
                 </div>
               </div>

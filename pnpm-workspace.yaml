@@ -7,9 +7,10 @@ catalog:
   "@payloadcms/richtext-lexical": ^3.39.1
   "@payloadcms/email-resend": ^3.39.1
   "@payloadcms/db-postgres": ^3.39.1
-  "@payloadcms/db-sqlite": ^3.39.1
+  "@payloadcms/live-preview-react": ^3.39.1
   "@payloadcms/next": ^3.39.1
   "@payloadcms/payload-cloud": ^3.39.1
+  "@payloadcms/plugin-import-export": ^3.39.1
   "@payloadcms/plugin-nested-docs": ^3.39.1
   "@payloadcms/storage-s3": ^3.39.1
   "payload": ^3.39.1
@@ -29,4 +30,6 @@ catalog:
   "@react-three/drei": ^10.0.6
   "three": ^0.175.0
   "react-hook-form": ^7.56.1
-  "next": ^15.3.2
+  "next": ^15.3.3
+  "@next/bundle-analyzer": ^15.3.3
+  "motion": ^12.15.0

@@ -7,6 +7,7 @@ import { CallToActionBlock } from "../blocks/call-to-action";
 import { MediaBlock } from "../blocks/media";
 import { FeatureBlock } from "../blocks/feature";
 import { TimelineBlock } from "../blocks/timeline";
+import { FAQBlock } from "../blocks/faq";
 import { admin, authenticatedOrPublished } from "../access";
 import { revalidateCollection } from "../hooks";
 
@@ -43,6 +44,7 @@ export const Pages: CollectionConfig<"pages"> = {
                 MediaBlock,
                 FeatureBlock,
                 TimelineBlock,
+                FAQBlock,
               ],
               required: true,
               admin: {
@@ -62,13 +64,22 @@ export const Pages: CollectionConfig<"pages"> = {
       },
     },
     {
-      name: "prerender",
-      type: "checkbox",
-      defaultValue: false,
+      name: "type",
+      type: "select",
       admin: {
         position: "sidebar",
-        description: "Whether to prerender the page",
       },
+      options: [
+        {
+          label: "Static",
+          value: "static",
+        },
+        {
+          label: "Archive",
+          value: "archive",
+        },
+      ],
+      defaultValue: "static",
     },
     ...slug(),
   ],

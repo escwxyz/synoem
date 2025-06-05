@@ -169,6 +169,7 @@ export interface Config {
   blocks: {};
   collections: {
     users: User;
+    faqs: Faq;
     pages: Page;
     industries: Industry;
     notifications: Notification;
@@ -191,6 +192,7 @@ export interface Config {
     'pump-controllers': PumpController;
     'solar-panel-categories': SolarPanelCategory;
     'pump-controller-categories': PumpControllerCategory;
+    exports: Export;
     'payload-jobs': PayloadJob;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -206,6 +208,7 @@ export interface Config {
   };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
+    faqs: FaqsSelect<false> | FaqsSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     industries: IndustriesSelect<false> | IndustriesSelect<true>;
     notifications: NotificationsSelect<false> | NotificationsSelect<true>;
@@ -228,6 +231,7 @@ export interface Config {
     'pump-controllers': PumpControllersSelect<false> | PumpControllersSelect<true>;
     'solar-panel-categories': SolarPanelCategoriesSelect<false> | SolarPanelCategoriesSelect<true>;
     'pump-controller-categories': PumpControllerCategoriesSelect<false> | PumpControllerCategoriesSelect<true>;
+    exports: ExportsSelect<false> | ExportsSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -242,7 +246,6 @@ export interface Config {
     'contact-info': ContactInfo;
     'social-links': SocialLink;
     header: Header;
-    faq: Faq;
   };
   globalsSelect: {
     footer: FooterSelect<false> | FooterSelect<true>;
@@ -250,7 +253,6 @@ export interface Config {
     'contact-info': ContactInfoSelect<false> | ContactInfoSelect<true>;
     'social-links': SocialLinksSelect<false> | SocialLinksSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
-    faq: FaqSelect<false> | FaqSelect<true>;
   };
   locale: 'en' | 'de';
   user: User & {
@@ -307,6 +309,32 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs".
+ */
+export interface Faq {
+  id: string;
+  type: 'general' | 'solar-panel' | 'pump-controller';
+  question: string;
+  answer: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
  */
 export interface Page {
@@ -319,12 +347,10 @@ export interface Page {
     | MediaBlockType
     | FeatureBlockType
     | TimelineBlockType
+    | FAQBlockType
   )[];
   publishedAt?: string | null;
-  /**
-   * Whether to prerender the page
-   */
-  prerender?: boolean | null;
+  type?: ('static' | 'archive') | null;
   slug: string;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -654,7 +680,22 @@ export interface SolarPanelCategory {
  */
 export interface Inquiry {
   id: string;
-  formType: 'simple' | 'product' | 'full';
+  /**
+   * Inquiry status
+   */
+  status?: ('new' | 'replied' | 'following' | 'converted' | 'closed') | null;
+  /**
+   * Cloudflare Turnstile token used to verify the inquiry
+   */
+  token?: string | null;
+  /**
+   * Only for internal use, not displayed to customers
+   */
+  internalNotes?: string | null;
+  /**
+   * Date and time of the scheduled action
+   */
+  scheduledDate?: string | null;
   /**
    * Product inquiry related product
    */
@@ -667,22 +708,10 @@ export interface Inquiry {
         relationTo: 'pump-controllers';
         value: string | PumpController;
       } | null);
-  /**
-   * Inquiry status
-   */
-  status?: ('new' | 'replied' | 'following' | 'converted' | 'closed') | null;
-  /**
-   * Only for internal use, not displayed to customers
-   */
-  internalNotes?: string | null;
-  /**
-   * Date and time of the scheduled action
-   */
-  scheduledDate?: string | null;
   name: string;
   email: string;
   phone: string;
-  requirements: string;
+  message: string;
   company?: string | null;
   position?: string | null;
   type?: ('wholesaler' | 'retailer' | 'manufacturer' | 'project-developer' | 'other') | null;
@@ -1207,7 +1236,6 @@ export interface Inquiry {
         id?: string | null;
       }[]
     | null;
-  source?: ('website' | 'exhibition' | 'referral' | 'social-media' | 'email' | 'phone' | 'other') | null;
   page?: string | null;
   ipAddress?: string | null;
   userAgent?: string | null;
@@ -1802,6 +1830,20 @@ export interface TimelineBlockType {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FAQBlockType".
+ */
+export interface FAQBlockType {
+  title?: string | null;
+  description?: string | null;
+  type: 'general' | 'solar-panel' | 'pump-controller';
+  style: 'accordion' | 'card';
+  content: (string | Faq)[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'faqBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "notifications".
  */
 export interface Notification {
@@ -1907,6 +1949,42 @@ export interface Post {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exports".
+ */
+export interface Export {
+  id: string;
+  name?: string | null;
+  format: 'csv' | 'json';
+  limit?: number | null;
+  sort?: string | null;
+  locale?: ('all' | 'en' | 'de') | null;
+  drafts?: ('yes' | 'no') | null;
+  selectionToUse?: ('currentSelection' | 'currentFilters' | 'all') | null;
+  fields?: string[] | null;
+  collectionSlug: string;
+  where?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-jobs".
  */
 export interface PayloadJob {
@@ -2009,6 +2087,10 @@ export interface PayloadLockedDocument {
         value: string | User;
       } | null)
     | ({
+        relationTo: 'faqs';
+        value: string | Faq;
+      } | null)
+    | ({
         relationTo: 'pages';
         value: string | Page;
       } | null)
@@ -2097,6 +2179,10 @@ export interface PayloadLockedDocument {
         value: string | PumpControllerCategory;
       } | null)
     | ({
+        relationTo: 'exports';
+        value: string | Export;
+      } | null)
+    | ({
         relationTo: 'payload-jobs';
         value: string | PayloadJob;
       } | null);
@@ -2161,6 +2247,17 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs_select".
+ */
+export interface FaqsSelect<T extends boolean = true> {
+  type?: T;
+  question?: T;
+  answer?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages_select".
  */
 export interface PagesSelect<T extends boolean = true> {
@@ -2174,9 +2271,10 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockTypeSelect<T>;
         featureBlock?: T | FeatureBlockTypeSelect<T>;
         timelineBlock?: T | TimelineBlockTypeSelect<T>;
+        faqBlock?: T | FAQBlockTypeSelect<T>;
       };
   publishedAt?: T;
-  prerender?: T;
+  type?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -2296,6 +2394,19 @@ export interface TimelineBlockTypeSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FAQBlockType_select".
+ */
+export interface FAQBlockTypeSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  type?: T;
+  style?: T;
+  content?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "industries_select".
  */
 export interface IndustriesSelect<T extends boolean = true> {
@@ -2323,15 +2434,15 @@ export interface NotificationsSelect<T extends boolean = true> {
  * via the `definition` "inquiries_select".
  */
 export interface InquiriesSelect<T extends boolean = true> {
-  formType?: T;
-  relatedProduct?: T;
   status?: T;
+  token?: T;
   internalNotes?: T;
   scheduledDate?: T;
+  relatedProduct?: T;
   name?: T;
   email?: T;
   phone?: T;
-  requirements?: T;
+  message?: T;
   company?: T;
   position?: T;
   type?: T;
@@ -2359,7 +2470,6 @@ export interface InquiriesSelect<T extends boolean = true> {
         file?: T;
         id?: T;
       };
-  source?: T;
   page?: T;
   ipAddress?: T;
   userAgent?: T;
@@ -2928,6 +3038,33 @@ export interface PumpControllerCategoriesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exports_select".
+ */
+export interface ExportsSelect<T extends boolean = true> {
+  name?: T;
+  format?: T;
+  limit?: T;
+  sort?: T;
+  locale?: T;
+  drafts?: T;
+  selectionToUse?: T;
+  fields?: T;
+  collectionSlug?: T;
+  where?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-jobs_select".
  */
 export interface PayloadJobsSelect<T extends boolean = true> {
@@ -3127,42 +3264,6 @@ export interface Header {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "faq".
- */
-export interface Faq {
-  id: string;
-  general?: {
-    content?:
-      | {
-          question: string;
-          answer: string;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  'solar-panel'?: {
-    content?:
-      | {
-          question: string;
-          answer: string;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  'pump-controller'?: {
-    content?:
-      | {
-          question: string;
-          answer: string;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
@@ -3317,48 +3418,6 @@ export interface LinkItemsSelect<T extends boolean = true> {
   description?: T;
   link?: T | LinkTypeSelect<T>;
   id?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "faq_select".
- */
-export interface FaqSelect<T extends boolean = true> {
-  general?:
-    | T
-    | {
-        content?:
-          | T
-          | {
-              question?: T;
-              answer?: T;
-              id?: T;
-            };
-      };
-  'solar-panel'?:
-    | T
-    | {
-        content?:
-          | T
-          | {
-              question?: T;
-              answer?: T;
-              id?: T;
-            };
-      };
-  'pump-controller'?:
-    | T
-    | {
-        content?:
-          | T
-          | {
-              question?: T;
-              answer?: T;
-              id?: T;
-            };
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

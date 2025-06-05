@@ -2,11 +2,12 @@ import type { GlobalConfig } from "payload";
 import { link } from "../fields/link";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { revalidateGlobal } from "../hooks";
+import { anyone } from "../access";
 
 export const Footer: GlobalConfig = {
   slug: "footer",
   access: {
-    read: () => true,
+    read: anyone,
   },
   admin: {
     group: "Settings",

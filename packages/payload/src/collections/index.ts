@@ -19,3 +19,4 @@ export * from "./packaging-configs";
 export * from "./datasheets";
 export * from "./warranties";
 export * from "./drawings";
+export * from "./faqs";

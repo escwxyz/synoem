@@ -16,14 +16,14 @@ import type { ProductTypeId, Locale } from "@synoem/config";
 import type { ProductWithSelectFields } from "~/types/product-select-fields";
 import type { PumpController, SolarPanel } from "@synoem/types";
 
-// import dynamic from "next/dynamic";
+import dynamic from "next/dynamic";
 
-// // const RequestQuoteButton = dynamic(
-// //   () => import("./request-quote-button.client").then((mod) => mod.RequestQuoteButton),
-// //   {
-// //     ssr: false,
-// //   },
-// // );
+const RequestQuoteButton = dynamic(
+  () => import("./request-quote-button").then((mod) => mod.RequestQuoteButton),
+  {
+    ssr: false,
+  },
+);
 
 export const ProductCard = <T extends ProductTypeId>({
   productTypeId,
@@ -335,7 +335,7 @@ export const ProductCard = <T extends ProductTypeId>({
             variants={buttonContainerVariants}
             layoutId={`buttons-${product.id}`}
           >
-            {/* <RequestQuoteButton
+            <RequestQuoteButton
               product={product}
               productTypeId={productTypeId}
               locale={locale}
@@ -346,7 +346,7 @@ export const ProductCard = <T extends ProductTypeId>({
                     ? "w-auto"
                     : "w-full",
               )}
-            /> */}
+            />
             <Button
               asChild
               variant="outline"

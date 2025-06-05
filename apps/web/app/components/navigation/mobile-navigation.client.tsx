@@ -4,10 +4,8 @@ import type { MenuItems } from "@synoem/types";
 import { AnimatePresence, motion, type Variants } from "motion/react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { useLenis } from "lenis/react";
 
 import { LanguageSwitcher } from "~/components/language-switcher.client";
-import { InquiryButton } from "~/components/inquiry-button.client";
 import type { MenuItemProps, MenuLinkProps, NavigationProps } from "./types";
 import { ChevronDown, ExternalLinkIcon } from "lucide-react";
 import { cn } from "@synoem/ui/lib/utils";
@@ -17,12 +15,32 @@ import { useIsMobile } from "@synoem/ui/hooks/use-mobile";
 import { MenuBanner } from "./menu-banner.client";
 import { MenuLinkSection } from "./menu-link-section.client";
 
+import { useLocale } from "next-intl";
+import { defaultLocale, isValidLocale, type Locale } from "@synoem/config";
+import { mobileNavigationOpenAtom, scrollLockAtom } from "~/atoms";
+import { useAtom, useSetAtom } from "jotai";
+import { useScrollLock } from "~/hooks";
+import dynamic from "next/dynamic";
+
+const RequestQuoteButton = dynamic(
+  () => import("~/components/request-quote-button").then((mod) => mod.RequestQuoteButton),
+  {
+    ssr: false,
+  },
+);
+
 export const MobileNavigation = ({ items }: NavigationProps) => {
   const isMobile = useIsMobile();
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useAtom(mobileNavigationOpenAtom);
+  const setScrollLock = useSetAtom(scrollLockAtom);
 
-  const toggle = () => setIsOpen(!isOpen);
+  useScrollLock();
+
+  const toggle = () => {
+    setIsOpen((prev) => !prev);
+    setScrollLock(!isOpen);
+  };
 
   const menuVariants: Variants = {
     open: {
@@ -110,22 +128,14 @@ const MobileMenu = (props: {
   const [isMounted, setIsMounted] = useState(false);
   const { items, isOpen, onToggle } = props;
 
-  const lenis = useLenis();
+  const locale = useLocale();
+
+  const effectiveLocale = isValidLocale(locale) ? (locale as Locale) : defaultLocale;
 
   useEffect(() => {
     setIsMounted(true);
     return () => setIsMounted(false);
   }, []);
-
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-      lenis?.stop();
-    } else {
-      document.body.style.overflow = "";
-      lenis?.start();
-    }
-  }, [isOpen, lenis]);
 
   useEffect(() => {
     if (isOpen) {
@@ -151,7 +161,7 @@ const MobileMenu = (props: {
       </div>
       <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-primary/20 flex justify-between items-center">
         <LanguageSwitcher />
-        <InquiryButton />
+        <RequestQuoteButton locale={effectiveLocale} />
       </div>
     </motion.div>
   ) : null;

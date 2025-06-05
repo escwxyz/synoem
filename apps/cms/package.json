@@ -19,10 +19,8 @@
     "deploy": "npx vercel deploy --prod"
   },
   "dependencies": {
-    "@orpc/server": "^1.3.0",
     "@payloadcms/next": "catalog:",
     "@payloadcms/ui": "catalog:",
-    "@synoem/api": "workspace:*",
     "@synoem/config": "workspace:*",
     "@synoem/payload": "workspace:*",
     "@synoem/types": "workspace:*",

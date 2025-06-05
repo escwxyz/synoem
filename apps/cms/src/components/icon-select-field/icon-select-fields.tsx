@@ -1,8 +1,8 @@
 "use client";
+
 // TODO: tree shaking, not import all icons
-import { useField, FieldLabel as Label } from "@payloadcms/ui";
+import { useField, FieldLabel as Label, Button } from "@payloadcms/ui";
 import { cn } from "@synoem/ui/lib/utils";
-import { Button } from "@synoem/ui/components/button";
 import {
   Command,
   CommandEmpty,
@@ -57,6 +57,8 @@ const processIconData = () => {
 
 const ICON_DATA = processIconData();
 
+type IconValue = (typeof ICON_DATA)[number];
+
 export const IconSelectField: React.FC<TextFieldClientProps> = (props) => {
   const { field, path } = props;
   const label = field.label || "Icon";
@@ -64,8 +66,7 @@ export const IconSelectField: React.FC<TextFieldClientProps> = (props) => {
 
   const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  const [selectedIcon, setSelectedIcon] = useState<any>(null);
+  const [selectedIcon, setSelectedIcon] = useState<IconValue>(null);
 
   useEffect(() => {
     if (value) {
@@ -98,7 +99,7 @@ export const IconSelectField: React.FC<TextFieldClientProps> = (props) => {
       const { component: IconComponent, displayName } = selectedIcon;
       return (
         <span className="flex items-center gap-2">
-          <IconComponent className="w-5 h-5" />
+          <IconComponent className="w-6 h-6" />
           {displayName}
         </span>
       );
@@ -109,25 +110,29 @@ export const IconSelectField: React.FC<TextFieldClientProps> = (props) => {
   };
 
   return (
-    <div className="twp field-type icon-select-field">
+    <div className="field-type icon-select-field">
       <Label htmlFor={`field-${path?.replace(/\./gi, "__")}`} label={label} />
 
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger className="mb-[10px]" asChild>
-          <Button
-            variant="outline"
-            className={cn(
-              "w-[220px] justify-start text-left font-normal",
-              !selectedIcon && "text-muted-foreground",
-            )}
-          >
-            {renderSelectedIcon()}
+        <div className="flex items-center gap-4">
+          <PopoverTrigger className="mb-[10px]" asChild>
+            <Button
+              buttonStyle="secondary"
+              className={cn(!selectedIcon && "text-muted-foreground")}
+              onClick={() => setOpen(true)}
+            >
+              {renderSelectedIcon()}
+            </Button>
+          </PopoverTrigger>
+          <Button onClick={() => setValue(null)} buttonStyle="secondary" disabled={!selectedIcon}>
+            Clear
           </Button>
-        </PopoverTrigger>
+        </div>
 
-        <PopoverContent className="p-0 w-[320px]" side="right" align="start">
+        <PopoverContent className="p-0 w-[320px] bg-background" side="right" align="start">
           <Command>
             <CommandInput
+              className="text-foreground bg-muted"
               placeholder="Search icon..."
               value={searchQuery}
               onValueChange={setSearchQuery}

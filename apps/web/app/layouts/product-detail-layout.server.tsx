@@ -7,9 +7,6 @@ import type {
 } from "@synoem/types";
 import { ProductHero } from "~/components/product-hero.server";
 import { ProductTabs } from "~/components/product-tabs";
-import { getFaqByTypeCached } from "~/data/get-faq-by-type";
-import { Suspense } from "react";
-import { FaqSection } from "~/components/faqs.client";
 
 interface ProductDetailPageProps {
   productTypeId: ProductTypeId;
@@ -18,8 +15,6 @@ interface ProductDetailPageProps {
 }
 
 export const ProductDetailPage = ({ product, productTypeId, locale }: ProductDetailPageProps) => {
-  const faqs = getFaqByTypeCached(locale, productTypeId)();
-
   return (
     <>
       <ProductHero
@@ -30,9 +25,6 @@ export const ProductDetailPage = ({ product, productTypeId, locale }: ProductDet
       />
 
       <ProductTabs productTypeId={productTypeId} product={product} />
-      <Suspense fallback={<div>Loading...</div>}>
-        <FaqSection faqsPromise={faqs} type={productTypeId} />
-      </Suspense>
     </>
   );
 };

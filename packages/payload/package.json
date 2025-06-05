@@ -17,6 +17,7 @@
   "dependencies": {
     "@payloadcms/db-postgres": "catalog:",
     "@payloadcms/email-resend": "catalog:",
+    "@payloadcms/plugin-import-export": "catalog:",
     "@payloadcms/plugin-nested-docs": "catalog:",
     "@payloadcms/richtext-lexical": "catalog:",
     "@payloadcms/storage-s3": "catalog:",

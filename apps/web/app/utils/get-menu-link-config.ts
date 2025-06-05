@@ -1,5 +1,4 @@
 import type { LinkType } from "@synoem/types";
-import type { Locale } from "@synoem/config";
 
 export const getMenuLinkConfig = (
   link?: LinkType | null,
