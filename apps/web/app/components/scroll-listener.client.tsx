@@ -12,7 +12,7 @@ export function ScrollListener() {
 
   useEffect(() => {
     return scrollYProgress.on("change", (latest) => {
-      setShowInHeader(latest > 0.2);
+      setShowInHeader(latest > 0.3);
     });
   }, [scrollYProgress, setShowInHeader]);
 

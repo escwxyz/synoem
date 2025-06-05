@@ -48,7 +48,11 @@ export const RequestQuoteDesktop = ({
 
   if (!formState) {
     console.log("form is not ready");
-    return null;
+    return (
+      <div className="flex items-center justify-center p-4">
+        <Loader2 className="h-6 w-6 animate-spin" />
+      </div>
+    );
   }
 
   const {
@@ -61,11 +65,6 @@ export const RequestQuoteDesktop = ({
     error,
     handleReset,
   } = formState;
-
-  if (!form) {
-    console.log("form is not ready");
-    return null;
-  }
 
   const [open, setOpen] = useState(false);
 
@@ -127,7 +126,7 @@ export const RequestQuoteDesktop = ({
             ) : (
               <form
                 onSubmit={form.handleSubmit(handleNextStep, (errors) => {
-                  console.log("errors", errors);
+                  console.log("Form validation errors:", errors);
                   // TODO: Send to sentry
                 })}
                 className="flex flex-col h-full overflow-y-auto"
@@ -156,17 +155,9 @@ export const RequestQuoteDesktop = ({
                       type="button" // IMPORTANT: explicitly set type to button to prevent step reset
                       variant="outline"
                       onClick={handlePrevStep}
-                      disabled={isSubmitting}
+                      disabled={step === 0 || isSubmitting}
                     >
-                      {step === 0 ? (
-                        <>
-                          <X className="mr-2 h-4 w-4" /> {t("buttons.clearAll")}
-                        </>
-                      ) : (
-                        <>
-                          <ArrowLeft className="mr-2 h-4 w-4" /> {t("buttons.back")}
-                        </>
-                      )}
+                      <ArrowLeft className="mr-2 h-4 w-4" /> {t("buttons.back")}
                     </Button>
                     <Button type="submit" disabled={isSubmitting}>
                       {step < steps.length - 1 ? (

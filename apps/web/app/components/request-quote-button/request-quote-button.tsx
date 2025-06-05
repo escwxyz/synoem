@@ -25,8 +25,8 @@ export const RequestQuoteButton = ({
 
   const t = useTranslations("RequestQuoteButton");
 
-  const steps: FormStep[] = useMemo(() => {
-    return [
+  const steps: FormStep[] = useMemo(
+    () => [
       {
         id: "basic",
         title: t("basicInformation.title"),
@@ -45,8 +45,9 @@ export const RequestQuoteButton = ({
         schema: basicInquirySchema,
         component: <CompanyInquiryForm />,
       },
-    ];
-  }, [t]);
+    ],
+    [t],
+  );
 
   if (isMobile) {
     return (

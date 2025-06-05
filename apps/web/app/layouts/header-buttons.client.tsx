@@ -40,7 +40,7 @@ export const HeaderButtons = ({ locale }: HeaderButtonsProps) => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 40 }}
             transition={{ duration: 0.3 }}
-            style={{ display: "flex", alignItems: "center" }}
+            className="flex items-center"
           >
             <RequestQuoteButton locale={locale} />
           </motion.div>

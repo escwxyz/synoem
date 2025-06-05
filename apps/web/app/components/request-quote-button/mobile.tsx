@@ -51,7 +51,11 @@ export const RequestQuoteMobile = ({
 
   if (!formState) {
     console.log("form is not ready");
-    return null;
+    return (
+      <div className="flex items-center justify-center p-4">
+        <Loader2 className="h-6 w-6 animate-spin" />
+      </div>
+    );
   }
 
   const {
@@ -80,14 +84,6 @@ export const RequestQuoteMobile = ({
   };
 
   const text = buttonText ?? t("requestQuote");
-
-  const handleBack = () => {
-    if (step === 0) {
-      handleReset();
-    } else {
-      handlePrevStep();
-    }
-  };
 
   return (
     <>
@@ -131,7 +127,7 @@ export const RequestQuoteMobile = ({
             ) : (
               <form
                 onSubmit={form.handleSubmit(handleNextStep, (errors) => {
-                  console.log("errors", errors);
+                  console.log("Form validation errors:", errors);
                   // TODO: Send to sentry
                 })}
                 className="flex flex-col flex-1 min-h-0 overflow-y-auto"
@@ -152,10 +148,10 @@ export const RequestQuoteMobile = ({
                       type="button" // IMPORTANT: explicitly set type to button to prevent step reset
                       variant="outline"
                       className="w-full"
-                      onClick={handleBack}
-                      disabled={isSubmitting}
+                      onClick={handlePrevStep}
+                      disabled={step === 0 || isSubmitting}
                     >
-                      {step === 0 ? <> {t("buttons.clearAll")}</> : <>{t("buttons.back")}</>}
+                      {t("buttons.back")}
                     </Button>
                     <Button type="submit" className="w-full" disabled={isSubmitting}>
                       {step < steps.length - 1 ? (

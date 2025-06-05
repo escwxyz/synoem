@@ -8,7 +8,7 @@ export const CloudflareTurnstile = () => {
   const setToken = useSetAtom(cloudflareTurnstileTokenAtom);
   return (
     <Turnstile
-      siteKey={process.env.CLOUDFLARE_TURNSTILE_SITE_KEY ?? "1x00000000000000000000AA"}
+      siteKey={process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY ?? "1x00000000000000000000AA"}
       options={{
         size: "flexible",
       }}

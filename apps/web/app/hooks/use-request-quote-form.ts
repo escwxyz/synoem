@@ -24,6 +24,10 @@ export const useRequestQuoteForm = ({
   steps: FormStep[];
   product?: Pick<SolarPanel | PumpController, "modelName" | "id">;
 }) => {
+  if (steps.length === 0) {
+    throw new Error("Steps array cannot be empty");
+  }
+
   const [step, setStep] = useState(0);
 
   const token = useAtomValue(cloudflareTurnstileTokenAtom);
@@ -49,6 +53,7 @@ export const useRequestQuoteForm = ({
         relatedProductId,
         productName,
       },
+      shouldUnregister: false,
     },
   });
 
@@ -71,9 +76,15 @@ export const useRequestQuoteForm = ({
           return;
         }
         setIsSubmitting(true);
-        await action.executeAsync(updatedData as FormData);
-        setIsSuccess(true);
-        setIsSubmitting(false);
+        try {
+          await action.executeAsync(updatedData as FormData);
+        } catch (error) {
+          console.error(error);
+          setError("An error occurred while submitting the form. Please try again.");
+        } finally {
+          setIsSuccess(true);
+          setIsSubmitting(false);
+        }
       }
     }
   };
@@ -85,11 +96,14 @@ export const useRequestQuoteForm = ({
   };
 
   const handleReset = () => {
-    form.reset();
+    console.log("handleReset");
+    form.clearErrors();
+    form.reset({ productTypeId, relatedProductId, productName });
     setIsSubmitting(false);
     setIsSuccess(false);
     setStep(0);
     setError(null);
+    console.log(form.getValues());
   };
 
   useEffect(() => {
