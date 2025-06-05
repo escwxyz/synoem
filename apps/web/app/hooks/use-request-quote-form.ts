@@ -24,7 +24,7 @@ export const useRequestQuoteForm = ({
   steps: FormStep[];
   product?: Pick<SolarPanel | PumpController, "modelName" | "id">;
 }) => {
-  const [step, setStep] = useState<number>(0);
+  const [step, setStep] = useState(0);
 
   const token = useAtomValue(cloudflareTurnstileTokenAtom);
 
@@ -64,38 +64,45 @@ export const useRequestQuoteForm = ({
     },
   });
 
-  const handleNextStep = (data: Partial<FormData>) => {
+  const handleNextStep = async (data: Partial<FormData>) => {
     const allValues = form.getValues();
     const updatedData = { ...allValues, ...data };
 
-    if (step < steps.length - 1) {
-      setStep(step + 1);
+    const valid = await form.trigger();
 
-      form.reset(updatedData as z.infer<typeof currentSchema>);
-    } else {
-      if (!token || !token.trim()) {
-        setIsSuccess(false);
-        setIsSubmitting(false);
-        setError("Please complete the Turnstile challenge.");
-        return;
+    if (valid) {
+      if (step < steps.length - 1) {
+        setStep((prev) => {
+          console.log("setStep called, prev:", prev, "new:", prev + 1);
+          return prev + 1;
+        });
+
+        form.reset(updatedData as z.infer<typeof currentSchema>);
+      } else {
+        if (!token || !token.trim()) {
+          setIsSuccess(false);
+          setIsSubmitting(false);
+          setError("Please complete the Turnstile challenge.");
+          return;
+        }
+        setIsSubmitting(true);
+        setTimeout(async () => {
+          await action.executeAsync(updatedData as FormData);
+          setIsSuccess(true);
+          setIsSubmitting(false);
+        }, 1000);
       }
-      setIsSubmitting(true);
-      setTimeout(async () => {
-        await action.executeAsync(updatedData as FormData);
-        setIsSuccess(true);
-        setIsSubmitting(false);
-      }, 1000);
     }
   };
 
   const handlePrevStep = () => {
-    console.log("handlePrevStep", step);
-    if (step === 0) {
-      handleReset();
-    }
     if (step > 0) {
-      setStep(step - 1); // TODO: this is not working
+      setStep((prev) => {
+        console.log("setStep called, prev:", prev, "new:", prev - 1);
+        return prev - 1;
+      });
     }
+    // console.log("handlePrevStep", step);
   };
 
   const handleReset = () => {
@@ -112,7 +119,19 @@ export const useRequestQuoteForm = ({
     }
   }, [token, form]);
 
+  useEffect(() => {
+    console.log("Step changed:", step);
+  }, [step]);
+
+  useEffect(() => {
+    console.log("Form component mounted");
+    return () => {
+      console.log("Form component unmounted");
+    };
+  }, []);
+
   return {
+    step,
     isSubmitting,
     isSuccess,
     error,
@@ -120,6 +139,5 @@ export const useRequestQuoteForm = ({
     handleNextStep,
     handlePrevStep,
     handleReset,
-    step,
   };
 };

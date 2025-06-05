@@ -116,14 +116,14 @@ export default async function RootLayout({
       </head>
       <body className="flex min-h-screen flex-col antialiased [--header-height:calc(theme(spacing.14))]">
         {/* <WebVitals /> */}
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange={false}
-        >
-          <ReactLenis root>
-            <JotaiProvider>
+        <JotaiProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange={false}
+          >
+            <ReactLenis root>
               <NextIntlClientProvider locale={locale}>
                 <SidebarProvider className="flex flex-col">
                   <NotificationBar locale={locale} />
@@ -135,11 +135,11 @@ export default async function RootLayout({
                   <Footer locale={locale} />
                 </SidebarProvider>
               </NextIntlClientProvider>
-            </JotaiProvider>
-          </ReactLenis>
-        </ThemeProvider>
-        {process.env.WEB_APP_ENV === "production" &&
-          process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID && <GoogleAnalytics />}
+            </ReactLenis>
+          </ThemeProvider>
+          {process.env.WEB_APP_ENV === "production" &&
+            process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID && <GoogleAnalytics />}
+        </JotaiProvider>
       </body>
     </html>
   );

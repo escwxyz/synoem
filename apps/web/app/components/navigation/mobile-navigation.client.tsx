@@ -14,12 +14,20 @@ import { getMenuLinkConfig } from "~/utils";
 import { useIsMobile } from "@synoem/ui/hooks/use-mobile";
 import { MenuBanner } from "./menu-banner.client";
 import { MenuLinkSection } from "./menu-link-section.client";
-import { RequestQuoteButton } from "../request-quote-button.client";
+
 import { useLocale } from "next-intl";
 import { defaultLocale, isValidLocale, type Locale } from "@synoem/config";
 import { mobileNavigationOpenAtom, scrollLockAtom } from "~/atoms";
 import { useAtom, useSetAtom } from "jotai";
 import { useScrollLock } from "~/hooks";
+import dynamic from "next/dynamic";
+
+const RequestQuoteButton = dynamic(
+  () => import("~/components/request-quote-button").then((mod) => mod.RequestQuoteButton),
+  {
+    ssr: false,
+  },
+);
 
 export const MobileNavigation = ({ items }: NavigationProps) => {
   const isMobile = useIsMobile();

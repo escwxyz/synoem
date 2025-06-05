@@ -1,0 +1,157 @@
+"use client";
+
+import {
+  mobileNavigationOpenAtom,
+  requestQuoteMobileDrawerOpenAtom,
+  scrollLockAtom,
+} from "@/app/atoms";
+import type { RequestQuoteMobileProps } from "./types";
+import { useAtom, useSetAtom } from "jotai";
+import { useRequestQuoteForm } from "@/app/hooks";
+import { useTranslations } from "next-intl";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@synoem/ui/components/drawer";
+import { Button } from "@synoem/ui/components/button";
+import { FormStepIndicator } from "../form-step-indicator.client";
+import { Form } from "@synoem/ui/components/form";
+import dynamic from "next/dynamic";
+import { TermsField } from "../inquiry-form";
+import { Loader2 } from "lucide-react";
+
+const Turnstile = dynamic(
+  () => import("~/components/cloudflare-turnstile.client").then((mod) => mod.CloudflareTurnstile),
+  {
+    ssr: false,
+  },
+);
+
+export const RequestQuoteMobile = ({
+  product,
+  productTypeId,
+  locale,
+  steps,
+  buttonText,
+  //   step,
+  // shimmer = false,
+  ...props
+}: RequestQuoteMobileProps) => {
+  const [open, setOpen] = useAtom(requestQuoteMobileDrawerOpenAtom);
+
+  const { form, isSubmitting, handlePrevStep, handleNextStep, step, handleReset } =
+    useRequestQuoteForm({
+      productTypeId,
+      product,
+      steps,
+    });
+
+  if (!form) {
+    return null;
+  }
+
+  const t = useTranslations("RequestQuoteButton");
+
+  const setScrollLock = useSetAtom(scrollLockAtom);
+  const setMobileNavigationOpen = useSetAtom(mobileNavigationOpenAtom);
+
+  const handleOpenChange = (open: boolean) => {
+    setMobileNavigationOpen(false);
+    setOpen(open);
+    setScrollLock(false);
+    if (!open) {
+      handleReset();
+    }
+  };
+
+  const text = buttonText ?? t("requestQuote");
+
+  const handleBack = () => {
+    if (step === 0) {
+      handleReset();
+    } else {
+      handlePrevStep();
+    }
+  };
+
+  return (
+    <>
+      <Drawer
+        open={open}
+        onOpenChange={handleOpenChange}
+        disablePreventScroll
+        preventScrollRestoration
+      >
+        <DrawerTrigger asChild>
+          {/** TODO: polish the button */}
+          <Button
+            onClick={(e) => {
+              e.currentTarget.blur();
+            }}
+          >
+            {text}
+          </Button>
+        </DrawerTrigger>
+        <DrawerContent className="flex flex-col h-full max-h-[90vh] pb-0">
+          <DrawerHeader className="text-left shrink-0 border-b">
+            <DrawerTitle className="text-center">{t("requestQuote")}</DrawerTitle>
+            <DrawerDescription>{t("description")}</DrawerDescription>
+          </DrawerHeader>
+          <div className="p-4">
+            <FormStepIndicator
+              style="progress"
+              steps={steps.map((step) => ({ id: step.id, title: step.title ?? "" }))}
+              currentStep={step}
+            />
+          </div>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(handleNextStep, (errors) => {
+                console.log("errors", errors);
+                // TODO: Send to sentry
+              })}
+              className="flex flex-col flex-1 min-h-0 overflow-y-auto"
+            >
+              <div className="p-4 flex-1 min-h-0 overflow-y-auto">{steps[step]?.component}</div>
+
+              <DrawerFooter className="pt-2 sticky border-t bottom-0 w-full backdrop-blur-md shrink-0 bg-background/80 safe-area-bottom">
+                <input type="hidden" {...form.register("token")} />
+                <Turnstile />
+                <TermsField name="terms" />
+                <div className="flex flex-col gap-2">
+                  <Button
+                    type="button" // IMPORTANT: explicitly set type to button to prevent step reset
+                    variant="outline"
+                    className="w-full"
+                    onClick={handleBack}
+                    disabled={isSubmitting}
+                  >
+                    {step === 0 ? <> {t("buttons.clearAll")}</> : <>{t("buttons.back")}</>}
+                  </Button>
+                  <Button type="submit" className="w-full" disabled={isSubmitting}>
+                    {step < steps.length - 1 ? (
+                      <>{t("buttons.next")}</>
+                    ) : (
+                      <>
+                        {isSubmitting ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          t("buttons.submit")
+                        )}
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </DrawerFooter>
+            </form>
+          </Form>
+        </DrawerContent>
+      </Drawer>
+    </>
+  );
+};
