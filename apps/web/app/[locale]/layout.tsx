@@ -16,6 +16,8 @@ import { defaultLocale, type Locale, locales } from "@synoem/config";
 import { NotificationBar } from "~/components/notification-bar.server";
 import { ReactLenis } from "lenis/react";
 import { getUrl } from "../utils/get-url";
+import { RouteListener } from "~/components/route-listener.client";
+
 import "@synoem/ui/web.css";
 
 // const inter = Inter({
@@ -125,6 +127,7 @@ export default async function RootLayout({
           >
             <ReactLenis root>
               <NextIntlClientProvider locale={locale}>
+                <RouteListener />
                 <SidebarProvider className="flex flex-col">
                   <NotificationBar locale={locale} />
                   <Header locale={locale} />

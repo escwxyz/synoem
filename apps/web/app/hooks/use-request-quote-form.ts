@@ -72,10 +72,7 @@ export const useRequestQuoteForm = ({
 
     if (valid) {
       if (step < steps.length - 1) {
-        setStep((prev) => {
-          console.log("setStep called, prev:", prev, "new:", prev + 1);
-          return prev + 1;
-        });
+        setStep((prev) => prev + 1);
 
         form.reset(updatedData as z.infer<typeof currentSchema>);
       } else {
@@ -97,12 +94,8 @@ export const useRequestQuoteForm = ({
 
   const handlePrevStep = () => {
     if (step > 0) {
-      setStep((prev) => {
-        console.log("setStep called, prev:", prev, "new:", prev - 1);
-        return prev - 1;
-      });
+      setStep((prev) => prev - 1);
     }
-    // console.log("handlePrevStep", step);
   };
 
   const handleReset = () => {
