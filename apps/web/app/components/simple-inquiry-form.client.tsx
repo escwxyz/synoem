@@ -102,12 +102,12 @@ export const SimpleInquiryForm = () => {
   return (
     <div className="mx-auto w-full max-w-md rounded-lg bg-card/40 p-6 shadow-lg">
       <Form {...form}>
-        <form onSubmit={handleSubmitWithAction} className="space-y-4">
+        <form onSubmit={handleSubmitWithAction} className="space-y-4" autoComplete="on">
           <NameField name="name" />
           <EmailField name="email" />
           <PhoneField name="phone" />
           <MessageField name="message" />
-          <input type="hidden" {...form.register("token")} />
+          <input type="hidden" {...form.register("token")} autoComplete="off" />
           <Turnstile />
           <TermsField name="terms" />
           {errorMessage && (

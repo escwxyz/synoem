@@ -17,6 +17,7 @@ interface EmailFieldProps<T extends z.ZodSchema> {
   label?: string;
   className?: string;
   placeholder?: string;
+  autoComplete?: boolean;
 }
 
 export const EmailField = <T extends z.ZodSchema>({
@@ -24,6 +25,7 @@ export const EmailField = <T extends z.ZodSchema>({
   label = "Email",
   className,
   placeholder,
+  autoComplete = true,
 }: EmailFieldProps<T>) => {
   const {
     control,
@@ -47,6 +49,7 @@ export const EmailField = <T extends z.ZodSchema>({
               value={field.value ?? ""}
               placeholder={placeholder}
               required
+              autoComplete={autoComplete ? "email" : "off"}
             />
           </FormControl>
           {errors[name] && <FormMessage>{errors[name]?.message as string}</FormMessage>}

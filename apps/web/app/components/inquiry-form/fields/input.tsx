@@ -19,6 +19,7 @@ interface InputFieldProps<T extends z.ZodSchema> {
   required?: boolean;
   readonly?: boolean;
   placeholder?: string;
+  autoComplete?: boolean;
 }
 
 export const InputField = <T extends z.ZodSchema>({
@@ -28,6 +29,7 @@ export const InputField = <T extends z.ZodSchema>({
   required,
   readonly,
   placeholder,
+  autoComplete = true,
 }: InputFieldProps<T>) => {
   const {
     control,
@@ -50,6 +52,7 @@ export const InputField = <T extends z.ZodSchema>({
               readOnly={readonly}
               placeholder={placeholder}
               required={required}
+              autoComplete={autoComplete ? "on" : "off"}
             />
           </FormControl>
           {errors[name] && <FormMessage>{errors[name]?.message as string}</FormMessage>}

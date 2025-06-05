@@ -30,6 +30,7 @@ interface SelectFieldProps<T extends z.ZodSchema> {
   required?: boolean;
   placeholder?: string;
   className?: string;
+  autoComplete?: boolean;
 }
 
 export const SelectField = <T extends z.ZodSchema>({
@@ -39,6 +40,7 @@ export const SelectField = <T extends z.ZodSchema>({
   required,
   placeholder,
   className,
+  autoComplete = true,
 }: SelectFieldProps<T>) => {
   const {
     control,
@@ -51,12 +53,19 @@ export const SelectField = <T extends z.ZodSchema>({
       name={name}
       render={({ field }) => (
         <FormItem className={cn(className)}>
-          <FormLabel>
-            {label} {required && <span className="text-destructive">*</span>}
-          </FormLabel>
+          {label && (
+            <FormLabel htmlFor={name}>
+              {label} {required && <span className="text-destructive">*</span>}
+            </FormLabel>
+          )}
           <FormControl>
-            <Select {...field} value={field.value ?? ""} onValueChange={field.onChange}>
-              <SelectTrigger>
+            <Select
+              {...field}
+              value={field.value ?? ""}
+              onValueChange={field.onChange}
+              autoComplete={autoComplete ? "on" : "off"}
+            >
+              <SelectTrigger id={name}>
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
               <SelectContent>

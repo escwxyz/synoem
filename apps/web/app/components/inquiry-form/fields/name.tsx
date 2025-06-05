@@ -17,6 +17,7 @@ interface TermsFieldProps<T extends z.ZodSchema> {
   className?: string;
   label?: string;
   placeholder?: string;
+  autoComplete?: boolean;
 }
 
 export const NameField = <T extends z.ZodSchema>({
@@ -24,6 +25,7 @@ export const NameField = <T extends z.ZodSchema>({
   label = "Full Name",
   className,
   placeholder,
+  autoComplete = true,
 }: TermsFieldProps<T>) => {
   const {
     control,
@@ -49,6 +51,7 @@ export const NameField = <T extends z.ZodSchema>({
               value={field.value ?? ""}
               placeholder={placeholder}
               required
+              autoComplete={autoComplete ? "name" : "off"}
             />
           </FormControl>
           {errors[name] && <FormMessage>{errors[name]?.message as string}</FormMessage>}

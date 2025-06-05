@@ -17,6 +17,7 @@ interface MessageFieldProps<T extends z.ZodSchema> {
   label?: string;
   className?: string;
   placeholder?: string;
+  autoComplete?: boolean;
 }
 
 export const MessageField = <T extends z.ZodSchema>({
@@ -24,6 +25,7 @@ export const MessageField = <T extends z.ZodSchema>({
   label = "Message",
   className,
   placeholder,
+  autoComplete = true,
 }: MessageFieldProps<T>) => {
   const {
     control,
@@ -48,6 +50,7 @@ export const MessageField = <T extends z.ZodSchema>({
               placeholder={placeholder}
               required
               rows={4}
+              autoComplete={autoComplete ? "on" : "off"}
             />
           </FormControl>
           {errors[name] && <FormMessage>{errors[name]?.message as string}</FormMessage>}

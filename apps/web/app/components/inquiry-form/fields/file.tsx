@@ -13,6 +13,9 @@ import { type FieldPath, useFormContext } from "react-hook-form";
 import type { z } from "zod";
 import { FileUploader } from "~/components/file-uploader.client";
 
+// TODO: label id warning
+// Ref: https://github.com/shadcn-ui/ui/issues/2459
+
 interface FileFieldProps<T extends z.ZodSchema> {
   name: FieldPath<z.infer<T>>;
   className?: string;
@@ -40,7 +43,7 @@ export const FileField = <T extends z.ZodSchema>({
       render={({ field }) => (
         <FormItem className={cn(className)}>
           {label && (
-            <FormLabel>
+            <FormLabel htmlFor={name}>
               {label} {required && <span className="text-destructive">*</span>}
             </FormLabel>
           )}

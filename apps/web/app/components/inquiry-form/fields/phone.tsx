@@ -17,6 +17,7 @@ interface PhoneFieldProps<T extends z.ZodSchema> {
   className?: string;
   placeholder?: string;
   label?: string;
+  autoComplete?: boolean;
 }
 
 export const PhoneField = <T extends z.ZodSchema>({
@@ -24,6 +25,7 @@ export const PhoneField = <T extends z.ZodSchema>({
   label = "Phone Number",
   className,
   placeholder,
+  autoComplete = true,
 }: PhoneFieldProps<T>) => {
   const {
     control,
@@ -48,6 +50,7 @@ export const PhoneField = <T extends z.ZodSchema>({
               value={field.value ?? ""}
               placeholder={placeholder}
               required
+              autoComplete={autoComplete ? "tel" : "off"}
             />
           </FormControl>
           {errors[name] && <FormMessage>{errors[name]?.message as string}</FormMessage>}

@@ -87,7 +87,11 @@ export const NewsletterInput = () => {
       <div className="text-sm text-muted-foreground">{t("title")}</div>
 
       <Form {...form}>
-        <form onSubmit={handleSubmitWithAction} className="flex flex-col gap-2 max-w-sm my-2">
+        <form
+          onSubmit={handleSubmitWithAction}
+          autoComplete="on"
+          className="flex flex-col gap-2 max-w-sm my-2"
+        >
           <FormField
             control={form.control}
             name="email"
@@ -100,6 +104,7 @@ export const NewsletterInput = () => {
                       type="email"
                       placeholder="example@email.com"
                       aria-label={t("emailPlaceholder")}
+                      autoComplete="email"
                       className="h-14 w-full bg-transparent pl-12 focus:outline-none border-none shadow-none focus:border-none focus:ring-0 focus-visible:border-none focus-visible:ring-0 text-foreground dark:text-foreground/60 placeholder:text-foreground/60 dark:placeholder:text-foreground/60 [&:-webkit-autofill]:[-webkit-text-fill-color:inherit]"
                       {...field}
                       onChange={(e) => {
