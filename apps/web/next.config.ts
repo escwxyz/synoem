@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
   // transpilePackages: ["three"],
   productionBrowserSourceMaps: process.env.WEB_APP_ENV === "development",
   // TODO: https://nextjs.org/docs/app/api-reference/config/next-config-js/serverExternalPackages
-  serverExternalPackages: ["@prisma/client", "mongodb", "mongoose", "sharp", "websocket"],
+  serverExternalPackages: [],
   experimental: {
     serverActions: {
       bodySizeLimit: "10mb",

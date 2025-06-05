@@ -31,11 +31,7 @@ export const MobileNavigation = ({ items }: NavigationProps) => {
 
   const toggle = () => {
     setIsOpen((prev) => !prev);
-    if (isOpen) {
-      setScrollLock(false);
-    } else {
-      setScrollLock(true);
-    }
+    setScrollLock(!isOpen);
   };
 
   const menuVariants: Variants = {

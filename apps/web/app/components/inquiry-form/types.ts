@@ -1,6 +1,6 @@
-import type { z } from "zod";
+import type { z, ZodTypeAny } from "zod";
 
-export type FormStep<T extends z.ZodSchema> = {
+export type FormStep<T extends ZodTypeAny = ZodTypeAny> = {
   id: string;
   title?: string;
   description?: string;

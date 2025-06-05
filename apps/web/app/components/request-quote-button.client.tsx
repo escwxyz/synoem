@@ -28,7 +28,7 @@ import { useTranslations } from "next-intl";
 import { ArrowLeft, ArrowRight, Loader2, X } from "lucide-react";
 import { Form } from "@synoem/ui/components/form";
 import { FormStepIndicator } from "./form-step-indicator.client";
-import { basicInquirySchema, type inquiryFormSchema, productInquirySchema } from "@synoem/schema";
+import { basicInquirySchema, productInquirySchema } from "@synoem/schema";
 
 import {
   TermsField,
@@ -40,8 +40,12 @@ import {
 import { motion, AnimatePresence } from "motion/react";
 import dynamic from "next/dynamic";
 import { SubmissionConfirmation } from "./submission-confirmation.client";
-import { scrollLockAtom } from "~/atoms";
-import { useSetAtom } from "jotai";
+import {
+  mobileNavigationOpenAtom,
+  requestQuoteMobileDrawerOpenAtom,
+  scrollLockAtom,
+} from "~/atoms";
+import { useAtom, useSetAtom } from "jotai";
 
 const Turnstile = dynamic(
   () => import("~/components/cloudflare-turnstile.client").then((mod) => mod.CloudflareTurnstile),
@@ -54,6 +58,7 @@ type Props = {
   product?: Pick<SolarPanel | PumpController, "modelName" | "id">;
   productTypeId?: ProductTypeId;
   locale: Locale;
+  buttonText?: string;
   // shimmer?: boolean;
 } & React.ComponentProps<typeof Button>;
 
@@ -62,7 +67,7 @@ export const RequestQuoteButton = ({ product, productTypeId, locale, ...props }:
 
   const t = useTranslations("RequestQuoteButton");
 
-  const steps: FormStep<typeof inquiryFormSchema>[] = [
+  const steps: FormStep[] = [
     {
       id: "basic",
       title: t("basicInformation.title"),
@@ -111,17 +116,17 @@ const RequestQuoteMobile = ({
   productTypeId,
   locale,
   steps,
+  buttonText,
   // shimmer = false,
   ...props
-}: Props & { steps: FormStep<typeof inquiryFormSchema>[] }) => {
-  const [open, setOpen] = useState<boolean>(false);
+}: Props & { steps: FormStep[] }) => {
+  const [open, setOpen] = useAtom(requestQuoteMobileDrawerOpenAtom);
 
-  const { form, step, isSubmitting, handlePrevStep, handleNextStep, handleReset } =
-    useRequestQuoteForm({
-      productTypeId,
-      product,
-      steps,
-    });
+  const { form, step, isSubmitting, handlePrevStep, handleNextStep } = useRequestQuoteForm({
+    productTypeId,
+    product,
+    steps,
+  });
 
   if (!form) {
     return null;
@@ -130,20 +135,16 @@ const RequestQuoteMobile = ({
   const t = useTranslations("RequestQuoteButton");
 
   const setScrollLock = useSetAtom(scrollLockAtom);
+  const setMobileNavigationOpen = useSetAtom(mobileNavigationOpenAtom);
 
   const handleOpenChange = (open: boolean) => {
+    setMobileNavigationOpen(false);
     setOpen(open);
-    // if (open) {
-    //   setScrollLock(true);
-    // } else {
-    //   setScrollLock(false);
-    // }
+
+    setScrollLock(false);
   };
 
-  const handleClose = () => {
-    handleReset();
-    setOpen(false);
-  };
+  const text = buttonText ?? t("requestQuote");
 
   return (
     <>
@@ -152,7 +153,6 @@ const RequestQuoteMobile = ({
         onOpenChange={handleOpenChange}
         disablePreventScroll
         preventScrollRestoration
-        dismissible={false}
       >
         <DrawerTrigger asChild>
           {/** TODO: polish the button */}
@@ -161,7 +161,7 @@ const RequestQuoteMobile = ({
               e.currentTarget.blur();
             }}
           >
-            {t("requestQuote")}
+            {text}
           </Button>
         </DrawerTrigger>
         <DrawerContent className="flex flex-col h-full max-h-[90vh] pb-0">
@@ -191,31 +191,26 @@ const RequestQuoteMobile = ({
                 <Turnstile />
                 <TermsField name="terms" />
                 <div className="flex flex-col gap-2">
-                  <div className="grid grid-cols-2 gap-2">
-                    <Button
-                      variant="outline"
-                      className="w-full"
-                      onClick={handlePrevStep}
-                      disabled={isSubmitting}
-                    >
-                      {step === 0 ? <> {t("buttons.clearAll")}</> : <>{t("buttons.back")}</>}
-                    </Button>
-                    <Button type="submit" className="w-full" disabled={isSubmitting}>
-                      {step < steps.length - 1 ? (
-                        <>{t("buttons.next")}</>
-                      ) : (
-                        <>
-                          {isSubmitting ? (
-                            <Loader2 className="h-4 w-4 animate-spin" />
-                          ) : (
-                            t("buttons.submit")
-                          )}
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                  <Button variant="outline" className="w-full" onClick={handleClose}>
-                    {t("buttons.close")}
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    onClick={handlePrevStep}
+                    disabled={isSubmitting}
+                  >
+                    {step === 0 ? <> {t("buttons.clearAll")}</> : <>{t("buttons.back")}</>}
+                  </Button>
+                  <Button type="submit" className="w-full" disabled={isSubmitting}>
+                    {step < steps.length - 1 ? (
+                      <>{t("buttons.next")}</>
+                    ) : (
+                      <>
+                        {isSubmitting ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          t("buttons.submit")
+                        )}
+                      </>
+                    )}
                   </Button>
                 </div>
               </DrawerFooter>
@@ -231,8 +226,9 @@ const RequestQuoteDesktop = ({
   product,
   productTypeId,
   steps,
+  buttonText,
   ...props
-}: Props & { steps: FormStep<typeof inquiryFormSchema>[] }) => {
+}: Props & { steps: FormStep[] }) => {
   const {
     form,
     isSubmitting,
@@ -268,10 +264,12 @@ const RequestQuoteDesktop = ({
     }
   };
 
+  const text = buttonText ?? t("requestQuote");
+
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button {...props}>{t("requestQuote")}</Button>
+        <Button {...props}>{text}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[1000px] p-0 overflow-hidden">
         <DialogHeader className="hidden">

@@ -21,7 +21,7 @@ export const useRequestQuoteForm = ({
   steps,
 }: {
   productTypeId?: ProductTypeId;
-  steps: FormStep<typeof inquiryFormSchema>[];
+  steps: FormStep[];
   product?: Pick<SolarPanel | PumpController, "modelName" | "id">;
 }) => {
   const [step, setStep] = useState<number>(0);
