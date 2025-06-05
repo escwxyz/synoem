@@ -8,7 +8,7 @@ import {
   ProductInquiryForm,
   type FormStep,
 } from "../inquiry-form";
-import { basicInquirySchema, productInquirySchema } from "@synoem/schema";
+import { basicInquirySchema, companyInquirySchema, productInquirySchema } from "@synoem/schema";
 
 import { RequestQuoteMobile } from "./mobile";
 import { RequestQuoteDesktop } from "./desktop";
@@ -42,7 +42,7 @@ export const RequestQuoteButton = ({
       {
         id: "contact",
         title: t("companyInformation.title"),
-        schema: basicInquirySchema,
+        schema: companyInquirySchema,
         component: <CompanyInquiryForm />,
       },
     ],

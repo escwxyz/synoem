@@ -63,6 +63,9 @@ export const basicInquirySchema = z.object({
   email: z.string().email(),
   phone: z.string().min(5),
   message: z.string().min(10),
+  contactEmail: z.boolean().optional(),
+  contactPhone: z.boolean().optional(),
+  contactWhatsapp: z.boolean().optional(),
 });
 
 export const companyInquirySchema = z.object({
@@ -80,9 +83,6 @@ export const companyInquirySchema = z.object({
       Object.values(INQUIRY_EMPLOYEES).map((employee) => employee.value) as [string, ...string[]],
     )
     .optional(),
-  contactEmail: z.boolean().optional(),
-  contactPhone: z.boolean().optional(),
-  contactWhatsapp: z.boolean().optional(),
 });
 
 export const productInquirySchema = z.object({
