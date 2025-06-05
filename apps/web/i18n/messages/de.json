@@ -363,6 +363,9 @@
     },
     "confirmation": {
       "title": "Vielen Dank für Ihre Anfrage!"
+    },
+    "cloudflareTokenRequired": {
+      "message": "Bitte bestätigen Sie die Turnstile-Challenge."
     }
   },
   "FormStepIndicator": {

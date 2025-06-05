@@ -147,8 +147,17 @@ export const RequestQuoteDesktop = ({
                   <div className="mb-4 rounded bg-destructive/10 p-2 text-destructive">{error}</div>
                 )}
                 <div className="flex flex-col gap-4 p-4 pt-2 backdrop-blur-xl bg-background/50">
-                  <input type="hidden" {...form.register("token")} />
-                  <Turnstile />
+                  {process.env.WEB_APP_ENV === "production" && (
+                    <>
+                      <input
+                        type="hidden"
+                        {...form.register("token", {
+                          required: t("cloudflareTokenRequired.message"),
+                        })}
+                      />
+                      <Turnstile />
+                    </>
+                  )}
                   <TermsField name="terms" />
                   <div className="flex justify-between border-t pt-4">
                     <Button

@@ -29,6 +29,7 @@ const Turnstile = dynamic(
 );
 
 export const SimpleInquiryForm = () => {
+  const t = useTranslations("InquiryFormFields");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -47,7 +48,7 @@ export const SimpleInquiryForm = () => {
           if (!token || !token.trim()) {
             setIsSuccess(false);
             setIsSubmitting(false);
-            setErrorMessage("Please complete the Turnstile challenge."); // TODO: i18n
+            setErrorMessage("cloudflareTokenRequired.message");
             return;
           }
         },
@@ -83,8 +84,6 @@ export const SimpleInquiryForm = () => {
     }
   }, [token, form]);
 
-  const t = useTranslations("InquiryFormFields");
-
   if (isSuccess) {
     return (
       <SubmissionConfirmation
@@ -107,12 +106,21 @@ export const SimpleInquiryForm = () => {
           <EmailField name="email" />
           <PhoneField name="phone" />
           <MessageField name="message" />
-          <input type="hidden" {...form.register("token")} autoComplete="off" />
-          <Turnstile />
+          {process.env.WEB_APP_ENV === "production" && (
+            <>
+              <input
+                type="hidden"
+                {...form.register("token", {
+                  required: t("cloudflareTokenRequired.message"),
+                })}
+              />
+              <Turnstile />
+            </>
+          )}
           <TermsField name="terms" />
           {errorMessage && (
             <div className="mb-4 rounded bg-destructive/10 p-2 text-destructive">
-              {errorMessage}
+              {t(errorMessage)}
             </div>
           )}
           <Button type="submit" className="w-full" disabled={isSubmitting}>

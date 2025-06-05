@@ -72,18 +72,24 @@ export const useRequestQuoteForm = ({
         if (!token || !token.trim()) {
           setIsSuccess(false);
           setIsSubmitting(false);
-          setError("Please complete the Turnstile challenge.");
+          setError("cloudflareTokenRequired.message");
           return;
         }
         setIsSubmitting(true);
-        try {
-          await action.executeAsync(updatedData as FormData);
-        } catch (error) {
-          console.error(error);
-          setError("An error occurred while submitting the form. Please try again.");
-        } finally {
+
+        const response = await action.executeAsync(updatedData as FormData);
+
+        if (response.data?.status === "success") {
           setIsSuccess(true);
           setIsSubmitting(false);
+        } else {
+          setError(
+            response.data?.messageKey ??
+              "An error occurred while submitting the form. Please try again.",
+          );
+          setIsSubmitting(false);
+          setIsSuccess(false);
+          return;
         }
       }
     }

@@ -140,8 +140,17 @@ export const RequestQuoteMobile = ({
                       {error}
                     </div>
                   )}
-                  <input type="hidden" {...form.register("token")} />
-                  <Turnstile />
+                  {process.env.WEB_APP_ENV === "production" && (
+                    <>
+                      <input
+                        type="hidden"
+                        {...form.register("token", {
+                          required: t("cloudflareTokenRequired.message"),
+                        })}
+                      />
+                      <Turnstile />
+                    </>
+                  )}
                   <TermsField name="terms" />
                   <div className="flex flex-col gap-2">
                     <Button

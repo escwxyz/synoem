@@ -26,6 +26,9 @@
     "confirmation": {
       "title": "Request Submitted",
       "message": "Thank you for your request. We will get back to you shortly."
+    },
+    "cloudflareTokenRequired": {
+      "message": "Please complete the Turnstile challenge."
     }
   },
   "RelatedProducts": {
@@ -373,6 +376,9 @@
     "confirmation": {
       "title": "Thank you for your inquiry!",
       "message": "We will get back to you shortly."
+    },
+    "cloudflareTokenRequired": {
+      "message": "Please complete the Turnstile challenge."
     }
   },
   "FormStepIndicator": {
