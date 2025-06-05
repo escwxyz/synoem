@@ -24,6 +24,7 @@ import { Form } from "@synoem/ui/components/form";
 import dynamic from "next/dynamic";
 import { TermsField } from "../inquiry-form";
 import { Loader2 } from "lucide-react";
+import { SubmissionConfirmation } from "../submission-confirmation.client";
 
 const Turnstile = dynamic(
   () => import("~/components/cloudflare-turnstile.client").then((mod) => mod.CloudflareTurnstile),
@@ -38,21 +39,31 @@ export const RequestQuoteMobile = ({
   locale,
   steps,
   buttonText,
-  // shimmer = false,
   ...props
 }: RequestQuoteMobileProps) => {
   const [open, setOpen] = useAtom(requestQuoteMobileDrawerOpenAtom);
 
-  const { form, isSubmitting, handlePrevStep, handleNextStep, step, handleReset } =
-    useRequestQuoteForm({
-      productTypeId,
-      product,
-      steps,
-    });
+  const formState = useRequestQuoteForm({
+    product,
+    productTypeId,
+    steps,
+  });
 
-  if (!form) {
+  if (!formState) {
+    console.log("form is not ready");
     return null;
   }
+
+  const {
+    form,
+    isSubmitting,
+    isSuccess,
+    handlePrevStep,
+    step,
+    handleNextStep,
+    error,
+    handleReset,
+  } = formState;
 
   const t = useTranslations("RequestQuoteButton");
 
@@ -89,9 +100,11 @@ export const RequestQuoteMobile = ({
         <DrawerTrigger asChild>
           {/** TODO: polish the button */}
           <Button
+            type="button"
             onClick={(e) => {
               e.currentTarget.blur();
             }}
+            {...props}
           >
             {text}
           </Button>
@@ -109,45 +122,58 @@ export const RequestQuoteMobile = ({
             />
           </div>
           <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(handleNextStep, (errors) => {
-                console.log("errors", errors);
-                // TODO: Send to sentry
-              })}
-              className="flex flex-col flex-1 min-h-0 overflow-y-auto"
-            >
-              <div className="p-4 flex-1 min-h-0 overflow-y-auto">{steps[step]?.component}</div>
+            {isSuccess ? (
+              <SubmissionConfirmation
+                title={t("confirmation.title")}
+                message={t("confirmation.message")}
+                onDismiss={handleReset}
+              />
+            ) : (
+              <form
+                onSubmit={form.handleSubmit(handleNextStep, (errors) => {
+                  console.log("errors", errors);
+                  // TODO: Send to sentry
+                })}
+                className="flex flex-col flex-1 min-h-0 overflow-y-auto"
+              >
+                <div className="p-4 flex-1 min-h-0 overflow-y-auto">{steps[step]?.component}</div>
 
-              <DrawerFooter className="pt-2 sticky border-t bottom-0 w-full backdrop-blur-md shrink-0 bg-background/80 safe-area-bottom">
-                <input type="hidden" {...form.register("token")} />
-                <Turnstile />
-                <TermsField name="terms" />
-                <div className="flex flex-col gap-2">
-                  <Button
-                    type="button" // IMPORTANT: explicitly set type to button to prevent step reset
-                    variant="outline"
-                    className="w-full"
-                    onClick={handleBack}
-                    disabled={isSubmitting}
-                  >
-                    {step === 0 ? <> {t("buttons.clearAll")}</> : <>{t("buttons.back")}</>}
-                  </Button>
-                  <Button type="submit" className="w-full" disabled={isSubmitting}>
-                    {step < steps.length - 1 ? (
-                      <>{t("buttons.next")}</>
-                    ) : (
-                      <>
-                        {isSubmitting ? (
-                          <Loader2 className="h-4 w-4 animate-spin" />
-                        ) : (
-                          t("buttons.submit")
-                        )}
-                      </>
-                    )}
-                  </Button>
-                </div>
-              </DrawerFooter>
-            </form>
+                <DrawerFooter className="pt-2 sticky border-t bottom-0 w-full backdrop-blur-md shrink-0 bg-background/80 safe-area-bottom">
+                  {error && (
+                    <div className="mb-4 rounded bg-destructive/10 p-2 text-destructive">
+                      {error}
+                    </div>
+                  )}
+                  <input type="hidden" {...form.register("token")} />
+                  <Turnstile />
+                  <TermsField name="terms" />
+                  <div className="flex flex-col gap-2">
+                    <Button
+                      type="button" // IMPORTANT: explicitly set type to button to prevent step reset
+                      variant="outline"
+                      className="w-full"
+                      onClick={handleBack}
+                      disabled={isSubmitting}
+                    >
+                      {step === 0 ? <> {t("buttons.clearAll")}</> : <>{t("buttons.back")}</>}
+                    </Button>
+                    <Button type="submit" className="w-full" disabled={isSubmitting}>
+                      {step < steps.length - 1 ? (
+                        <>{t("buttons.next")}</>
+                      ) : (
+                        <>
+                          {isSubmitting ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                          ) : (
+                            t("buttons.submit")
+                          )}
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </DrawerFooter>
+              </form>
+            )}
           </Form>
         </DrawerContent>
       </Drawer>

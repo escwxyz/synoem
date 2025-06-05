@@ -38,9 +38,19 @@ export const RequestQuoteDesktop = ({
   productTypeId,
   steps,
   buttonText,
-  //   step,
   ...props
 }: RequestQuoteDesktopProps) => {
+  const formState = useRequestQuoteForm({
+    product,
+    productTypeId,
+    steps,
+  });
+
+  if (!formState) {
+    console.log("form is not ready");
+    return null;
+  }
+
   const {
     form,
     isSubmitting,
@@ -50,11 +60,7 @@ export const RequestQuoteDesktop = ({
     handleNextStep,
     error,
     handleReset,
-  } = useRequestQuoteForm({
-    product,
-    productTypeId,
-    steps,
-  });
+  } = formState;
 
   if (!form) {
     console.log("form is not ready");
@@ -80,7 +86,9 @@ export const RequestQuoteDesktop = ({
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button {...props}>{text}</Button>
+        <Button type="button" {...props}>
+          {text}
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[1000px] p-0 overflow-hidden">
         <DialogHeader className="hidden">
@@ -114,10 +122,7 @@ export const RequestQuoteDesktop = ({
               <SubmissionConfirmation
                 title={t("confirmation.title")}
                 message={t("confirmation.message")}
-                onDismiss={() => {
-                  console.log("handleReset");
-                  // handleReset();
-                }}
+                onDismiss={handleReset}
               />
             ) : (
               <form

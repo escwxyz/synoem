@@ -31,19 +31,7 @@ export const useRequestQuoteForm = ({
   const currentSchema = steps[step]?.schema;
 
   if (!currentSchema) {
-    console.error("No current schema");
-    return {
-      isSubmitting: false,
-      isSuccess: false,
-      error: "No current schema",
-      form: undefined,
-      handleNextStep: () => {},
-      handlePrevStep: () => {},
-      progress: 0,
-      step: 0,
-      formData: {},
-      setFormData: () => {},
-    };
+    return undefined;
   }
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -83,11 +71,9 @@ export const useRequestQuoteForm = ({
           return;
         }
         setIsSubmitting(true);
-        setTimeout(async () => {
-          await action.executeAsync(updatedData as FormData);
-          setIsSuccess(true);
-          setIsSubmitting(false);
-        }, 1000);
+        await action.executeAsync(updatedData as FormData);
+        setIsSuccess(true);
+        setIsSubmitting(false);
       }
     }
   };
@@ -111,17 +97,6 @@ export const useRequestQuoteForm = ({
       form.setValue("token", token);
     }
   }, [token, form]);
-
-  useEffect(() => {
-    console.log("Step changed:", step);
-  }, [step]);
-
-  useEffect(() => {
-    console.log("Form component mounted");
-    return () => {
-      console.log("Form component unmounted");
-    };
-  }, []);
 
   return {
     step,
