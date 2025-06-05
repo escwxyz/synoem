@@ -38,7 +38,6 @@ export const RequestQuoteMobile = ({
   locale,
   steps,
   buttonText,
-  //   step,
   // shimmer = false,
   ...props
 }: RequestQuoteMobileProps) => {

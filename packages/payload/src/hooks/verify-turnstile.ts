@@ -12,9 +12,8 @@ export const verifyTurnstile: CollectionBeforeChangeHook<Inquiry> = async ({
 
   req.payload.logger.info("Verifying turnstile token");
 
-  const secret = "1x0000000000000000000000000000000AA";
-
-  // const secret = process.env.CLOUDFLARE_TURNSTILE_SECRET_KEY;
+  const secret =
+    process.env.CLOUDFLARE_TURNSTILE_SECRET_KEY ?? "1x0000000000000000000000000000000AA";
   if (!secret) {
     throw new APIError("CLOUDFLARE_TURNSTILE_SECRET_KEY is not set", 500);
   }
