@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { JotaiProvider } from "~/components/jotai-provider.client";
@@ -11,83 +10,13 @@ import { Footer } from "~/layouts/footer-layout.server";
 import GoogleAnalytics from "~/components/google-analytics.client";
 
 import { isValidLocale } from "~/utils/is-valid-locale";
-import { getCompanyInfoCached } from "~/data/get-globals";
-import { defaultLocale, type Locale, locales } from "@synoem/config";
+
 import { NotificationBar } from "~/components/notification-bar.server";
 import { ReactLenis } from "lenis/react";
-import { getUrl } from "../utils/get-url";
+
 import { RouteListener } from "~/components/route-listener.client";
 
 import "@synoem/ui/web.css";
-
-export const generateMetadata = async ({
-  params,
-}: { params: Promise<{ locale: string }> }): Promise<Metadata> => {
-  const { locale } = await params;
-
-  const effectiveLocale: Locale = isValidLocale(locale) ? (locale as Locale) : defaultLocale;
-
-  const languages = locales.reduce(
-    (acc, locale) => {
-      acc[locale] = `${process.env.NEXT_PUBLIC_WEB_SITE_URL || ""}/${locale}`;
-      return acc;
-    },
-    {} as Record<Locale, string>,
-  );
-
-  const companyInfo = await getCompanyInfoCached(effectiveLocale)();
-
-  const keywords =
-    effectiveLocale === "de"
-      ? ["Solarmodule", "Erneubare Energie", "Photovoltaik", "Photovoltaik Anlage"]
-      : ["Solar Panel", "Renewable Energy", "Photovoltaic"];
-
-  const openGraphImageSrc =
-    companyInfo.data?.openGraphImage && typeof companyInfo.data.openGraphImage === "object"
-      ? companyInfo.data.openGraphImage.url
-      : null;
-
-  const openGraph: NonNullable<Metadata["openGraph"]> = {
-    title: `${companyInfo.data?.name} - ${companyInfo.data?.shortDescription}`,
-    description: companyInfo.data?.longDescription,
-    url: process.env.NEXT_PUBLIC_WEB_SITE_URL || "",
-    siteName: companyInfo.data?.name,
-    locale: effectiveLocale,
-    type: "website",
-    ...(openGraphImageSrc && {
-      images: [
-        {
-          url: getUrl(openGraphImageSrc),
-          alt: companyInfo.data?.name,
-        },
-      ],
-    }),
-  };
-
-  return {
-    metadataBase: new URL(process.env.NEXT_PUBLIC_WEB_SITE_URL || ""),
-    title: companyInfo.data?.name,
-    description: companyInfo.data?.longDescription,
-    keywords,
-    openGraph,
-    twitter: {
-      title: companyInfo.data?.name,
-      description: companyInfo.data?.longDescription,
-    },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-      },
-    },
-    alternates: {
-      canonical: process.env.NEXT_PUBLIC_WEB_SITE_URL || "",
-      languages,
-    },
-  };
-};
 
 export default async function RootLayout({
   children,
