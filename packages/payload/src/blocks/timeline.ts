@@ -36,6 +36,17 @@ export const TimelineBlock: Block = {
           required: true,
         },
         {
+          name: "datePrecision",
+          type: "select",
+          label: "Date Precision",
+          options: [
+            { label: "Year", value: "year" },
+            { label: "Month", value: "month" },
+            { label: "Day", value: "day" },
+          ],
+          defaultValue: "year",
+        },
+        {
           name: "content",
           type: "richText",
           editor: lexicalEditor({
