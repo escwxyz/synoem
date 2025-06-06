@@ -386,5 +386,10 @@
   },
   "LastUpdated": {
     "lastUpdated": "Last updated"
+  },
+  "ContactUsForm": {
+    "title": "Contact Us",
+    "description": "Wherever you are, we're here to help you within 24 hours.",
+    "button": "Contact Us"
   }
 }
