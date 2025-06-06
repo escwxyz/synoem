@@ -25,6 +25,7 @@ import { ArrowRight } from "lucide-react";
 import { Loader2 } from "lucide-react";
 import { TermsField } from "~/components/inquiry-form";
 import { ArrowLeft } from "lucide-react";
+import { usePathname, useRouter } from "@/i18n/navigation";
 
 const Turnstile = dynamic(
   () => import("~/components/cloudflare-turnstile.client").then((mod) => mod.CloudflareTurnstile),
@@ -80,6 +81,16 @@ export const RequestQuoteDesktop = ({
     }
   };
 
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const navigateToContactUs = () => {
+    handleOpenChange(false);
+    if (pathname !== "/contact") {
+      router.push("/contact");
+    }
+  };
+
   const text = buttonText ?? t("requestQuote");
 
   return (
@@ -110,7 +121,11 @@ export const RequestQuoteDesktop = ({
               <div className="rounded-lg bg-secondary/50 p-4">
                 <h4 className="text-sm font-medium leading-none mb-2">{t("support.title")}</h4>
                 <p className="text-sm text-muted-foreground">{t("support.description")}</p>
-                <Button variant="link" className="p-0 h-auto text-sm mt-2">
+                <Button
+                  onClick={navigateToContactUs}
+                  variant="link"
+                  className="p-0 h-auto text-sm mt-2"
+                >
                   {t("support.button")}
                 </Button>
               </div>
