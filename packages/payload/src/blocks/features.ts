@@ -19,5 +19,27 @@ export const FeaturesBlock: Block = {
       },
       blocks: [FeatureBlock],
     },
+    {
+      name: "columns",
+      type: "select",
+      admin: {
+        description: "Number of columns to display the features on desktop",
+      },
+      options: [
+        {
+          label: "2 Columns",
+          value: "2",
+        },
+        {
+          label: "3 Columns",
+          value: "3",
+        },
+        {
+          label: "Single Column",
+          value: "1",
+        },
+      ],
+      defaultValue: "2",
+    },
   ],
 };

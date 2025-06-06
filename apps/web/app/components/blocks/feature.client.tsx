@@ -31,7 +31,7 @@ export const Feature = ({
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{ duration: 0.6, delay: delay || 0, ease: "easeOut" }}
       className={cn(
-        "group relative overflow-hidden rounded-xl border border-border/30 bg-card p-6 shadow-lg shadow-black/[0.03] hover:cursor-pointer hover:scale-105 transition-all duration-300",
+        "group relative overflow-hidden rounded-xl border border-border/30 bg-card p-6 shadow-lg shadow-black/[0.03] hover:cursor-pointer hover:scale-103 transition-all duration-300",
       )}
     >
       <div
