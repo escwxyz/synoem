@@ -1,6 +1,6 @@
 import type { CollectionConfig } from "payload";
-import { admin, adminOrSelf, anyone } from "../access";
-import { generateNewsletterToken, sendNewsletterConfirmation } from "../hooks";
+import { admin, adminOrSelf, anyone } from "../../access";
+import { generateNewsletterToken, sendNewsletterConfirmation } from "../../hooks";
 
 export const NewsletterSubscribers: CollectionConfig<"newsletter-subscribers"> = {
   slug: "newsletter-subscribers",

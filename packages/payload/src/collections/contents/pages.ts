@@ -1,15 +1,15 @@
 import type { CollectionConfig } from "payload";
-import { slug } from "../fields";
-import { HeroBlock } from "../blocks/hero";
-import { ContentBlock } from "../blocks/content";
-import { title } from "../fields/title";
-import { CallToActionBlock } from "../blocks/call-to-action";
-import { MediaBlock } from "../blocks/media";
-import { FeaturesBlock } from "../blocks/features";
-import { TimelineBlock } from "../blocks/timeline";
-import { FAQBlock } from "../blocks/faq";
-import { admin, authenticatedOrPublished } from "../access";
-import { revalidateCollection } from "../hooks";
+import { slug } from "../../fields";
+import { HeroBlock } from "../../blocks/hero";
+import { ContentBlock } from "../../blocks/content";
+import { title } from "../../fields/title";
+import { CallToActionBlock } from "../../blocks/call-to-action";
+import { MediaBlock } from "../../blocks/media";
+import { FeaturesBlock } from "../../blocks/features";
+import { TimelineBlock } from "../../blocks/timeline";
+import { FAQBlock } from "../../blocks/faq";
+import { admin, authenticatedOrPublished } from "../../access";
+import { revalidateCollection } from "../../hooks";
 
 export const Pages: CollectionConfig<"pages"> = {
   slug: "pages",
@@ -61,6 +61,9 @@ export const Pages: CollectionConfig<"pages"> = {
       type: "date",
       admin: {
         position: "sidebar",
+        date: {
+          pickerAppearance: "dayAndTime",
+        },
       },
     },
     {

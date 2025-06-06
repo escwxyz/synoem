@@ -14,66 +14,6 @@ export const Footer: GlobalConfig = {
   },
   fields: [
     {
-      name: "companySection",
-      type: "group",
-      label: "Company Section",
-      admin: {
-        description: "Company Section for the footer",
-      },
-      fields: [
-        {
-          name: "logo",
-          type: "select",
-          options: [
-            {
-              label: "With Slogan",
-              value: "withSlogan",
-            },
-            {
-              label: "Without Slogan",
-              value: "withoutSlogan",
-            },
-          ],
-          defaultValue: "withSlogan",
-        },
-        {
-          name: "useCompanyDescription",
-          type: "radio",
-          options: [
-            {
-              label: "Yes",
-              value: "yes",
-            },
-            {
-              label: "No",
-              value: "no",
-            },
-          ],
-          defaultValue: "yes",
-        },
-        {
-          name: "companyDescription",
-          type: "select",
-          label: "Company Description",
-          options: [
-            {
-              label: "Short Description",
-              value: "shortDescription",
-            },
-            {
-              label: "Long Description",
-              value: "longDescription",
-            },
-          ],
-          admin: {
-            condition: (siblingData) => siblingData.useCompanyDescription === "yes",
-          },
-          defaultValue: "shortDescription",
-        },
-      ],
-    },
-
-    {
       name: "columns",
       type: "array",
       label: "Columns",

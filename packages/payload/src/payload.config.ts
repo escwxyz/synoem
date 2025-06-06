@@ -131,36 +131,23 @@ export default buildConfig({
     Users,
     Faqs,
     Pages,
-    //
     Industries,
-    //
     Notifications,
-    // Forms
     Inquiries,
     NewsletterSubscribers,
-    // Media
     Images,
     Videos,
     Models,
     Documents,
     Attachments,
-    // Warranty
     Warranties,
-    // Instructions
     Instructions,
-    // Certifications
     Certifications,
-    // Packaging Configs
     PackagingConfigs,
-    // Datasheets
     Datasheets,
-    // Drawings
     Drawings,
-    // Testimonials
     Testimonials,
-    // Posts
     Posts,
-    // Products,
     SolarPanels,
     PumpControllers,
     ...productCategoryCollections,

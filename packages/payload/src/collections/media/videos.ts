@@ -2,7 +2,6 @@ import { anyone } from "../../access";
 import type { CollectionConfig } from "payload";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-// import { Caption, Category, Alt, Tags, Extension } from "./shared-fields";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -15,26 +14,21 @@ export const Videos: CollectionConfig = {
   admin: {
     group: "Media",
     useAsTitle: "filename",
-    defaultColumns: ["filename", "duration", "updatedAt"],
+    defaultColumns: ["filename", "caption", "updatedAt"],
   },
   fields: [
-    // Alt,
-    // Caption,
     {
-      name: "duration",
+      name: "caption",
       type: "text",
-      label: "Duration",
+      label: "Caption",
     },
-    // Category,
-    // Tags,
-    // Extension,
   ],
   upload: {
     adminThumbnail: "thumbnail",
-    staticDir: path.resolve(
-      dirname,
-      "../../../../../apps/payload/public/media",
-    ),
+    staticDir:
+      process.env.CMS_APP_ENV === "development"
+        ? path.resolve(dirname, "../../../../../apps/cms/public/media/")
+        : undefined,
     mimeTypes: ["video/mp4", "video/webm", "video/ogg"],
   },
 };

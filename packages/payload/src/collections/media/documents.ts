@@ -19,10 +19,10 @@ export const Documents: CollectionConfig = {
   fields: [],
   upload: {
     adminThumbnail: "thumbnail",
-    staticDir: path.resolve(
-      dirname,
-      "../../../../../apps/payload/public/media",
-    ),
+    staticDir:
+      process.env.CMS_APP_ENV === "development"
+        ? path.resolve(dirname, "../../../../../apps/cms/public/media/")
+        : undefined,
     mimeTypes: ["application/pdf"],
     focalPoint: false,
   },

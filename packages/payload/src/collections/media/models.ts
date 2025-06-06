@@ -38,10 +38,12 @@ export const Models: CollectionConfig = {
     // },
   ],
   upload: {
-    staticDir: path.resolve(dirname, "../../../../../apps/cms/public/media"),
-
-    // TODO: not working as expected, need to find a way to only allow 3d models
-    // mimeTypes: ["application/octet-stream", "application/macbinary"],
+    staticDir:
+      process.env.CMS_APP_ENV === "development"
+        ? path.resolve(dirname, "../../../../../apps/cms/public/media/")
+        : undefined,
+    // TODO: still not working for `.gltf` files.
+    mimeTypes: ["application/octet-stream", "model/gltf-binary", "model/gltf+json"],
   },
   hooks: {
     afterChange: [],

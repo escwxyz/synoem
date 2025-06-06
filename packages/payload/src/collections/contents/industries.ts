@@ -1,5 +1,5 @@
 import type { CollectionConfig } from "payload";
-import { slug } from "../fields";
+import { slug } from "../../fields";
 
 export const Industries: CollectionConfig<"industries"> = {
   slug: "industries",

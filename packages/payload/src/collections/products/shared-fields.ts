@@ -201,7 +201,7 @@ export const createVariantsTab = (productTypeId: ProductTypeId): Tab => {
                 name: "type",
                 type: "select",
                 required: true,
-                options: getVariantOptionTypes(),
+                options: getVariantOptionTypes(), // TODO: color field
                 admin: {
                   readOnly: true,
                 },
