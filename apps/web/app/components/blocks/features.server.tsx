@@ -3,6 +3,10 @@ import { Feature } from "./feature.client";
 import { cn } from "@synoem/ui/lib/utils";
 
 export const Features = ({ features, columns }: FeaturesBlockType) => {
+  if (!features?.length) {
+    return null;
+  }
+
   return (
     <div className="max-w-4xl mx-auto">
       <div
@@ -13,7 +17,7 @@ export const Features = ({ features, columns }: FeaturesBlockType) => {
           columns === "3" && "md:grid-cols-3 md:gap-8",
         )}
       >
-        {features?.map((feature) => (
+        {features.map((feature) => (
           <Feature key={feature.id} {...feature} />
         ))}
       </div>

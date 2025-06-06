@@ -4,8 +4,12 @@ export const convertDateString = (
   date: string,
   locale: Locale,
   precision: "year" | "month" | "day",
-) => {
+): string | null => {
   const dateObj = new Date(date);
+
+  if (Number.isNaN(dateObj.getTime())) {
+    return null;
+  }
   const year = dateObj.getFullYear();
   const month = dateObj.getMonth() + 1;
   const day = dateObj.getDate();
@@ -17,7 +21,10 @@ export const convertDateString = (
     return year.toString();
   }
   if (precision === "month") {
-    return locale === "de" ? `${paddedMonth}.${year}` : `${paddedMonth}/${year}`;
+    return new Intl.DateTimeFormat(locale, {
+      year: "numeric",
+      month: "2-digit",
+    }).format(dateObj);
   }
   if (precision === "day") {
     return locale === "de"

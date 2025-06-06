@@ -1,7 +1,7 @@
 "use client";
 
 import { useScroll, useTransform, motion } from "motion/react";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useMemo } from "react";
 import type { TimelineBlockType } from "@synoem/types";
 import { RichText } from "../rich-text.client";
 import { Calendar } from "lucide-react";
@@ -92,8 +92,11 @@ const DateIndicator = ({
   precision,
 }: { date: string; precision: "year" | "month" | "day" }) => {
   const locale = useLocale();
-  const effectiveLocale = isValidLocale(locale) ? locale : defaultLocale;
-  const formattedDate = convertDateString(date, effectiveLocale, precision);
+
+  const formattedDate = useMemo(() => {
+    const effectiveLocale = isValidLocale(locale) ? locale : defaultLocale;
+    return convertDateString(date, effectiveLocale, precision);
+  }, [date, precision, locale]);
 
   return (
     <div className="flex items-center gap-2 text-muted-foreground">
@@ -102,3 +105,5 @@ const DateIndicator = ({
     </div>
   );
 };
+
+DateIndicator.displayName = "DateIndicator";

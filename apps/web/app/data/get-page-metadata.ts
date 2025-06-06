@@ -19,10 +19,12 @@ export const getPageMetadata = async ({
 
   const companyInfo = await getCompanyInfoCached(locale)();
 
-  const keywords =
-    locale === "de"
-      ? ["Solarmodule", "Erneubare Energie", "Photovoltaik", "Photovoltaik Anlage"]
-      : ["Solar Panel", "Renewable Energy", "Photovoltaic"];
+  const keywordMap: Record<Locale, string[]> = {
+    de: ["Solarmodule", "Erneubare Energie", "Photovoltaik", "Photovoltaik Anlage"],
+    en: ["Solar Panel", "Renewable Energy", "Photovoltaic"],
+  };
+
+  const keywords = keywordMap[locale] || keywordMap.en;
 
   const openGraphImageSrc =
     companyInfo.data?.openGraphImage && typeof companyInfo.data.openGraphImage === "object"

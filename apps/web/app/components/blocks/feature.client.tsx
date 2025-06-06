@@ -48,10 +48,11 @@ export const Feature = ({
             "from-accent/80 to-accent/60",
           )}
         >
-          {(() => {
-            const Icon = getIconComponent(icon);
-            return Icon && <Icon className="text-foreground/70" />;
-          })()}
+          {icon &&
+            (() => {
+              const Icon = getIconComponent(icon);
+              return Icon ? <Icon className="text-foreground/70" /> : null;
+            })()}
         </div>
 
         <div className="flex flex-col">

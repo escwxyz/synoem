@@ -83,7 +83,11 @@ export const ContactUsForm = () => {
               <div className="flex flex-col items-center justify-end overflow-hidden w-full h-full">
                 <div className="relative mx-auto h-[400px] min-h-60 overflow-hidden bg-gradient-to-b text-3xl tracking-tight text-foreground md:h-[550px] md:min-h-80 md:text-4xl md:leading-[1.05] lg:text-5xl">
                   <h3 className="px-4 text-wrap md:px-6">{t("description")}</h3>
-                  <div className="absolute -bottom-20 -right-20 md:-bottom-30 md:-right-30 z-10 flex h-full w-full max-w-[400px] items-end justify-end transition-all duration-700 hover:scale-105 md:max-w-[550px]">
+                  <div
+                    aria-label="Interactive 3D globe visualization"
+                    role="img"
+                    className="absolute -bottom-20 -right-20 md:-bottom-30 md:-right-30 z-10 flex h-full w-full max-w-[400px] items-end justify-end transition-all duration-700 hover:scale-105 md:max-w-[550px]"
+                  >
                     <World key={theme} data={[]} globeConfig={globeConfig} />
                   </div>
                 </div>

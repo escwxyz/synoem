@@ -93,6 +93,15 @@ export function Globe({ globeConfig, data }: WorldProps) {
       groupRef.current.add(globeRef.current);
       setIsInitialized(true);
     }
+
+    return () => {
+      if (globeRef.current && groupRef.current) {
+        groupRef.current.remove(globeRef.current);
+        // @ts-expect-error
+        globeRef.current?.dispose?.();
+        globeRef.current = null;
+      }
+    };
   }, []);
 
   // Build material when globe is initialized or when relevant props change
@@ -277,21 +286,11 @@ export function World(props: WorldProps) {
   );
 }
 
-// export function hexToRgb(hex: string) {
-//   const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-//   const newHex = hex.replace(shorthandRegex, (m, r, g, b) => r + r + g + g + b + b);
-
-//   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(newHex);
-//   return result
-//     ? {
-//         r: Number.parseInt(result[1] ?? "0", 16),
-//         g: Number.parseInt(result[2] ?? "0", 16),
-//         b: Number.parseInt(result[3] ?? "0", 16),
-//       }
-//     : null;
-// }
-
 export function genRandomNumbers(min: number, max: number, count: number) {
+  const range = max - min;
+  if (count > range) {
+    throw new Error(`Cannot generate ${count} unique numbers in range ${min}-${max}`);
+  }
   const arr: number[] = [];
   while (arr.length < count) {
     const r = Math.floor(Math.random() * (max - min)) + min;
