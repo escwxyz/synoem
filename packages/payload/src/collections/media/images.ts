@@ -16,6 +16,7 @@ export const Images: CollectionConfig = {
   access: {
     read: anyone,
   },
+  folders: true,
   fields: [
     {
       name: "alt",

@@ -1,13 +1,16 @@
 "use client";
 
 import { useScroll, useTransform, motion } from "motion/react";
-import { useRef, useState, useEffect, useMemo } from "react";
+import { useRef, useState, useEffect } from "react";
 import type { TimelineBlockType } from "@synoem/types";
 import { RichText } from "../rich-text.client";
 import { Calendar } from "lucide-react";
 import { useIsMobile } from "@synoem/ui/hooks/use-mobile";
 import { useLocale } from "next-intl";
 import { cn } from "@synoem/ui/lib/utils";
+import { convertDateString } from "@/app/utils/convert-datestring";
+import { isValidLocale } from "@/app/utils/is-valid-locale";
+import { defaultLocale } from "@synoem/config";
 
 export const Timeline = ({ items }: TimelineBlockType) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -88,34 +91,14 @@ const DateIndicator = ({
   date,
   precision,
 }: { date: string; precision: "year" | "month" | "day" }) => {
-  const dateObj = new Date(date);
-  const year = dateObj.getFullYear();
-  const month = dateObj.getMonth() + 1;
-  const day = dateObj.getDate();
-
   const locale = useLocale();
-
-  const formattedDate = useMemo(() => {
-    const paddedMonth = String(month).padStart(2, "0");
-    const paddedDay = String(day).padStart(2, "0");
-
-    if (precision === "year") {
-      return year;
-    }
-    if (precision === "month") {
-      return locale === "de" ? `${paddedMonth}.${year}` : `${paddedMonth}/${year}`;
-    }
-    if (precision === "day") {
-      return locale === "de"
-        ? `${paddedDay}.${paddedMonth}.${year}`
-        : `${paddedMonth}/${paddedDay}/${year}`;
-    }
-  }, [precision, locale, day, month, year]);
+  const effectiveLocale = isValidLocale(locale) ? locale : defaultLocale;
+  const formattedDate = convertDateString(date, effectiveLocale, precision);
 
   return (
     <div className="flex items-center gap-2 text-muted-foreground">
       <Calendar className="w-4 h-4" />
-      <span className="text-md text-muted-foreground">{formattedDate}</span>
+      {formattedDate && <span className="text-md text-muted-foreground">{formattedDate}</span>}
     </div>
   );
 };

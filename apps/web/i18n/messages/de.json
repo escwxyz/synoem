@@ -370,5 +370,8 @@
   },
   "FormStepIndicator": {
     "step": "Schritt {step} von {total}"
+  },
+  "LastUpdated": {
+    "lastUpdated": "Zuletzt aktualisiert"
   }
 }

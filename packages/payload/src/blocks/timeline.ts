@@ -12,6 +12,13 @@ import { createIconSelectField } from "../fields/icon-select";
 export const TimelineBlock: Block = {
   slug: "timelineBlock",
   interfaceName: "TimelineBlockType",
+  admin: {
+    group: "Content",
+  },
+  labels: {
+    singular: "Timeline Block",
+    plural: "Timeline Blocks",
+  },
   fields: [
     {
       name: "items",

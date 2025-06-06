@@ -4,6 +4,9 @@ import { FeatureBlock } from "./feature";
 export const FeaturesBlock: Block = {
   slug: "featuresBlock",
   interfaceName: "FeaturesBlockType",
+  admin: {
+    group: "Content",
+  },
   labels: {
     singular: "Features Block",
     plural: "Features Blocks",

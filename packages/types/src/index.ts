@@ -181,6 +181,7 @@ export interface Config {
     'solar-panel-categories': SolarPanelCategory;
     'pump-controller-categories': PumpControllerCategory;
     exports: Export;
+    'payload-folders': FolderInterface;
     'payload-jobs': PayloadJob;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -192,6 +193,9 @@ export interface Config {
     };
     'pump-controllers': {
       relatedInquires: 'inquiries';
+    };
+    'payload-folders': {
+      documentsAndFolders: 'payload-folders' | 'images';
     };
   };
   collectionsSelect: {
@@ -220,6 +224,7 @@ export interface Config {
     'solar-panel-categories': SolarPanelCategoriesSelect<false> | SolarPanelCategoriesSelect<true>;
     'pump-controller-categories': PumpControllerCategoriesSelect<false> | PumpControllerCategoriesSelect<true>;
     exports: ExportsSelect<false> | ExportsSelect<true>;
+    'payload-folders': PayloadFoldersSelect<false> | PayloadFoldersSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -338,6 +343,7 @@ export interface Page {
     | FAQBlockType
   )[];
   publishedAt?: string | null;
+  showLastUpdated?: boolean | null;
   type?: ('static' | 'archive') | null;
   slug: string;
   slugLock?: boolean | null;
@@ -456,6 +462,7 @@ export interface Image {
   id: string;
   alt: string;
   blurDataUrl?: string | null;
+  folder?: (string | null) | FolderInterface;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -467,6 +474,31 @@ export interface Image {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-folders".
+ */
+export interface FolderInterface {
+  id: string;
+  name: string;
+  folder?: (string | null) | FolderInterface;
+  documentsAndFolders?: {
+    docs?: (
+      | {
+          relationTo?: 'payload-folders';
+          value: string | FolderInterface;
+        }
+      | {
+          relationTo?: 'images';
+          value: string | Image;
+        }
+    )[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1802,6 +1834,10 @@ export interface FeaturesBlockType {
    * Showcased features of the product, min. 2, max. 6
    */
   features?: FeatureBlockType[] | null;
+  /**
+   * Number of columns to display the features on desktop
+   */
+  columns?: ('2' | '3' | '1') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'featuresBlock';
@@ -1816,6 +1852,7 @@ export interface TimelineBlockType {
         title: string;
         icon?: string | null;
         date: string;
+        datePrecision?: ('year' | 'month' | 'day') | null;
         content: {
           root: {
             type: string;
@@ -2193,6 +2230,10 @@ export interface PayloadLockedDocument {
         value: string | Export;
       } | null)
     | ({
+        relationTo: 'payload-folders';
+        value: string | FolderInterface;
+      } | null)
+    | ({
         relationTo: 'payload-jobs';
         value: string | PayloadJob;
       } | null);
@@ -2284,6 +2325,7 @@ export interface PagesSelect<T extends boolean = true> {
         faqBlock?: T | FAQBlockTypeSelect<T>;
       };
   publishedAt?: T;
+  showLastUpdated?: T;
   type?: T;
   slug?: T;
   slugLock?: T;
@@ -2371,6 +2413,7 @@ export interface FeaturesBlockTypeSelect<T extends boolean = true> {
     | {
         featureBlock?: T | FeatureBlockTypeSelect<T>;
       };
+  columns?: T;
   id?: T;
   blockName?: T;
 }
@@ -2404,6 +2447,7 @@ export interface TimelineBlockTypeSelect<T extends boolean = true> {
         title?: T;
         icon?: T;
         date?: T;
+        datePrecision?: T;
         content?: T;
         id?: T;
       };
@@ -2519,6 +2563,7 @@ export interface NewsletterSubscribersSelect<T extends boolean = true> {
 export interface ImagesSelect<T extends boolean = true> {
   alt?: T;
   blurDataUrl?: T;
+  folder?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -3078,6 +3123,17 @@ export interface ExportsSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-folders_select".
+ */
+export interface PayloadFoldersSelect<T extends boolean = true> {
+  name?: T;
+  folder?: T;
+  documentsAndFolders?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

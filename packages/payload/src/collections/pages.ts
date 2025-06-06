@@ -64,6 +64,14 @@ export const Pages: CollectionConfig<"pages"> = {
       },
     },
     {
+      name: "showLastUpdated",
+      type: "checkbox",
+      defaultValue: false,
+      admin: {
+        position: "sidebar",
+      },
+    },
+    {
       name: "type",
       type: "select",
       admin: {

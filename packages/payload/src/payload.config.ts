@@ -231,4 +231,7 @@ export default buildConfig({
   },
   sharp,
   telemetry: false,
+  folders: {
+    debug: process.env.CMS_APP_ENV === "development",
+  },
 });
