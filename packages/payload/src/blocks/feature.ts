@@ -1,5 +1,5 @@
 import type { Block } from "payload";
-import { createIconSelectField } from "../fields";
+import { iconField } from "../fields";
 
 export const FeatureBlock: Block = {
   slug: "featureBlock",
@@ -76,13 +76,9 @@ export const FeatureBlock: Block = {
         },
       ],
     },
-
-    createIconSelectField({
-      name: "icon",
-      label: "Icon",
+    iconField({
       required: true,
     }),
-
     {
       type: "collapsible",
       label: "Configuration",

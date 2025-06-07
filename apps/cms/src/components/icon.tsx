@@ -6,18 +6,34 @@ import type { SelectFieldClientComponent } from "payload";
 import type { Option } from "@payloadcms/ui/elements/ReactSelect";
 import { FixedSizeList as List, areEqual } from "react-window";
 
-const ICON_BASE_URL = "https://cdn.jsdelivr.net/npm/lucide-static@0.508.0/icons/";
+const ICON_URLS = {
+  lucide: "https://cdn.jsdelivr.net/npm/lucide-static@0.508.0/icons/",
+  ...(process.env.S3_ENDPOINT && process.env.CMS_APP_ENV === "production"
+    ? {
+        custom: `${process.env.S3_ENDPOINT}/object/public/${process.env.S3_BUCKET_NAME}/icons/`,
+      }
+    : {}),
+};
 
-const IconPreview: React.FC<{ name: string }> = React.memo(({ name }) => (
-  <img
-    src={`${ICON_BASE_URL}${name}.svg`}
-    alt={name}
-    width={20}
-    height={20}
-    loading="lazy"
-    className="w-4 h-4 mr-2 flex-shrink-0 dark:invert"
-  />
-));
+const IconPreview: React.FC<{ name: string }> = React.memo(({ name }) => {
+  const source = name.split(":")[0] || "lucide";
+
+  const src =
+    source === "custom" && ICON_URLS.custom
+      ? `${ICON_URLS.custom}${name.split(":")[1]}.svg`
+      : `${ICON_URLS.lucide}${name.split(":")[1]}.svg`;
+
+  return (
+    <img
+      src={src}
+      alt={name}
+      width={20}
+      height={20}
+      loading="lazy"
+      className="w-4 h-4 mr-2 flex-shrink-0 dark:invert"
+    />
+  );
+});
 
 IconPreview.displayName = "IconPreview";
 
