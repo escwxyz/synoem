@@ -18,7 +18,10 @@ export const Attachments: CollectionConfig = {
     create: () => true,
   },
   upload: {
-    staticDir: path.resolve(dirname, "../../../../public/media/attachments"),
+    staticDir:
+      process.env.CMS_APP_ENV === "development"
+        ? path.resolve(dirname, "../../../../../apps/cms/public/media/attachments")
+        : undefined,
     mimeTypes: [
       "image/jpeg",
       "image/png",

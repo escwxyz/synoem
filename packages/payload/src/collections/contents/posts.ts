@@ -1,5 +1,5 @@
 import type { CollectionConfig } from "payload";
-import { slug } from "../fields";
+import { slug } from "../../fields";
 import {
   BlocksFeature,
   FixedToolbarFeature,
@@ -8,8 +8,8 @@ import {
   HorizontalRuleFeature,
   lexicalEditor,
 } from "@payloadcms/richtext-lexical";
-import { MediaBlock } from "../blocks/media";
-import { admin, editorOrAdmin, published } from "../access";
+import { MediaBlock } from "../../blocks/media";
+import { admin, editorOrAdmin, published } from "../../access";
 
 export const Posts: CollectionConfig = {
   slug: "posts",
@@ -19,6 +19,11 @@ export const Posts: CollectionConfig = {
     update: editorOrAdmin,
     delete: admin,
   },
+  admin: {
+    group: "Content",
+    defaultColumns: ["title", "slug", "updatedAt"],
+    useAsTitle: "title",
+  },
   fields: [
     {
       name: "title",
@@ -26,15 +31,6 @@ export const Posts: CollectionConfig = {
       required: true,
       localized: true,
     },
-    // {
-    //   name: "postCategories",
-    //   type: "relationship",
-    //   relationTo: "post-categories",
-    //   hasMany: true,
-    //   admin: {
-    //     position: "sidebar",
-    //   },
-    // },
     ...slug(),
     {
       name: "authors",
@@ -63,6 +59,15 @@ export const Posts: CollectionConfig = {
             return value;
           },
         ],
+      },
+    },
+    {
+      name: "tags",
+      type: "text",
+      hasMany: true,
+      localized: true,
+      admin: {
+        position: "sidebar",
       },
     },
 

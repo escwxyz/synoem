@@ -1,6 +1,6 @@
 import type { CollectionConfig } from "payload";
-import { admin } from "../access";
-import { createQuantityGroup } from "../fields/unit";
+import { admin } from "../../access";
+import { createQuantityGroup } from "../../fields/unit";
 import {
   COUNTRIES_REGIONS,
   CUSTOMER_TYPES,
@@ -9,7 +9,7 @@ import {
   INQUIRY_FREQUENCIES,
   INQUIRY_TIMELINES,
 } from "@synoem/config";
-import { verifyTurnstile } from "../hooks";
+import { verifyTurnstile } from "../../hooks";
 
 export const Inquiries: CollectionConfig<"inquiries"> = {
   slug: "inquiries",

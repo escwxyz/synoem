@@ -13,6 +13,9 @@ import {
   INQUIRY_EMPLOYEES,
 } from "@synoem/config";
 
+const createEnumSchema = <T extends readonly { value: string }[]>(values: T) =>
+  z.enum(values.map((v) => v.value) as [string, ...string[]]);
+
 export const localeSchema = z.object({
   locale: z.enum(locales),
 });
@@ -54,14 +57,14 @@ export const faqSchema = z
 
 export const termsSchema = z.object({
   terms: z.coerce.boolean().refine((bool) => bool === true, {
-    message: "You must agree to our terms and conditions",
+    message: "You must agree to our terms and conditions", // TODO:return message key instead
   }),
 });
 
 export const basicInquirySchema = z.object({
   name: z.string().min(2),
   email: z.string().email(),
-  phone: z.string().min(5),
+  phone: z.string().regex(/^[\+]?[1-9][\d]{0,15}$/, "Invalid phone number format"),
   message: z.string().min(10),
   contactEmail: z.boolean().optional(),
   contactPhone: z.boolean().optional(),
@@ -71,18 +74,10 @@ export const basicInquirySchema = z.object({
 export const companyInquirySchema = z.object({
   company: z.string().optional(),
   position: z.string().optional(),
-  type: z
-    .enum(Object.values(CUSTOMER_TYPES).map((type) => type.value) as [string, ...string[]])
-    .optional(),
-  country: z
-    .enum(Object.values(COUNTRIES_REGIONS).map((country) => country.value) as [string, ...string[]])
-    .optional(),
+  type: createEnumSchema(CUSTOMER_TYPES).optional(),
+  country: createEnumSchema(COUNTRIES_REGIONS).optional(),
   website: z.string().optional(),
-  employees: z
-    .enum(
-      Object.values(INQUIRY_EMPLOYEES).map((employee) => employee.value) as [string, ...string[]],
-    )
-    .optional(),
+  employees: createEnumSchema(INQUIRY_EMPLOYEES).optional(),
 });
 
 export const productInquirySchema = z.object({
@@ -97,29 +92,22 @@ export const productInquirySchema = z.object({
   productName: z.string().optional(),
   quantity: z.number().optional(),
   quantityUnit: z.string().optional(),
-  frequency: z
-    .enum(
-      Object.values(INQUIRY_FREQUENCIES).map((frequency) => frequency.value) as [
-        string,
-        ...string[],
-      ],
-    )
-    .optional(),
-  destination: z
-    .enum(
-      Object.values(COUNTRIES_REGIONS).map((destination) => destination.value) as [
-        string,
-        ...string[],
-      ],
-    )
-    .optional(),
-  timeline: z
-    .enum(
-      Object.values(INQUIRY_TIMELINES).map((timeline) => timeline.value) as [string, ...string[]],
-    )
-    .optional(),
+  frequency: createEnumSchema(INQUIRY_FREQUENCIES).optional(),
+  destination: createEnumSchema(COUNTRIES_REGIONS).optional(),
+  timeline: createEnumSchema(INQUIRY_TIMELINES).optional(),
   relatedProductId: z.string().optional(),
-  attachments: z.array(z.instanceof(File)).max(3).optional(),
+  attachments: z
+    .array(
+      z
+        .instanceof(File)
+        .refine((file) => file.size <= 10 * 1024 * 1024)
+        .refine(
+          (file) =>
+            ["application/pdf", "image/jpeg", "image/png", "image/webp"].includes(file.type), // TODO
+        ),
+    )
+    .max(3)
+    .optional(),
 });
 
 const metadataSchema = z.object({

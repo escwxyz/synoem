@@ -9,9 +9,9 @@ import { getUrl } from "~/utils/get-url";
 import { SocialShareButtons } from "./social-share-buttons.client";
 import { ImagePlaceholder } from "@synoem/ui/components/image-placeholder";
 import { ProductBreadcrumbs } from "./product-breadcrumbs.server";
-import { ProductFeatures } from "./product-features.server";
 import type { Locale, ProductTypeId } from "@synoem/config";
 import dynamic from "next/dynamic";
+import { Feature } from "./blocks/feature.client";
 
 const ProductHeroModel = dynamic(() =>
   import("./product-hero-model.client").then((mod) => mod.ProductHeroModel),
@@ -75,7 +75,15 @@ export const ProductHero = ({
                 <h1 className="text-xl md:text-4xl font-bold mb-2 md:mb-4">{title}</h1>
                 <p className="text-sm md:text-lg mb-4 md:mb-6 whitespace-normal">{excerpt}</p>
                 <div className="w-full mb-4">
-                  <ProductFeatures features={features} />
+                  {features && features.length > 0 && (
+                    <div className="max-w-4xl mx-auto">
+                      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-12">
+                        {features?.map((feature) => (
+                          <Feature key={feature.id} {...feature} />
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <div className="w-full flex flex-col md:flex-row justify-between items-center">

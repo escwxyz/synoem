@@ -10,7 +10,7 @@ export const MediaBlock: Block = {
         description: "Select a media item to display",
       },
       type: "relationship",
-      relationTo: ["images", "videos", "models"],
+      relationTo: ["images", "videos"],
       required: true,
       hasMany: false,
     },

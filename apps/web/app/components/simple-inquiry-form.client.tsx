@@ -10,6 +10,7 @@ import { sendInquiry } from "@/app/actions";
 import { SubmissionConfirmation } from "~/components/submission-confirmation.client";
 import { useAtomValue } from "jotai";
 import { cloudflareTurnstileTokenAtom } from "~/atoms";
+import { cn } from "@synoem/ui/lib/utils";
 import {
   NameField,
   EmailField,
@@ -28,7 +29,10 @@ const Turnstile = dynamic(
   },
 );
 
-export const SimpleInquiryForm = () => {
+export const SimpleInquiryForm = ({
+  className,
+  buttonText,
+}: { className?: string; buttonText?: string }) => {
   const t = useTranslations("InquiryFormFields");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -84,6 +88,8 @@ export const SimpleInquiryForm = () => {
     }
   }, [token, form]);
 
+  const text = buttonText ?? t("buttons.submit");
+
   if (isSuccess) {
     return (
       <SubmissionConfirmation
@@ -99,7 +105,7 @@ export const SimpleInquiryForm = () => {
   }
 
   return (
-    <div className="mx-auto w-full max-w-md rounded-lg bg-card/40 p-6 shadow-lg">
+    <div className={cn("mx-auto w-full max-w-md rounded-lg bg-card/40 p-6 shadow-lg", className)}>
       <Form {...form}>
         <form onSubmit={handleSubmitWithAction} className="space-y-4" autoComplete="on">
           <NameField name="name" />
@@ -124,7 +130,7 @@ export const SimpleInquiryForm = () => {
             </div>
           )}
           <Button type="submit" className="w-full" disabled={isSubmitting}>
-            {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : t("buttons.submit")}
+            {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : text}
           </Button>
         </form>
       </Form>

@@ -126,41 +126,29 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || "",
     },
+    push: process.env.CMS_APP_ENV === "development",
   }),
   collections: [
     Users,
     Faqs,
     Pages,
-    //
     Industries,
-    //
     Notifications,
-    // Forms
     Inquiries,
     NewsletterSubscribers,
-    // Media
     Images,
     Videos,
     Models,
     Documents,
     Attachments,
-    // Warranty
     Warranties,
-    // Instructions
     Instructions,
-    // Certifications
     Certifications,
-    // Packaging Configs
     PackagingConfigs,
-    // Datasheets
     Datasheets,
-    // Drawings
     Drawings,
-    // Testimonials
     Testimonials,
-    // Posts
     Posts,
-    // Products,
     SolarPanels,
     PumpControllers,
     ...productCategoryCollections,
@@ -231,4 +219,7 @@ export default buildConfig({
   },
   sharp,
   telemetry: false,
+  folders: {
+    debug: process.env.CMS_APP_ENV === "development",
+  },
 });

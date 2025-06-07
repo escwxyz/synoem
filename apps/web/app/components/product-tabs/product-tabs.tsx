@@ -45,10 +45,10 @@ export const ProductTabs = ({ productTypeId, product }: Props) => {
       });
     }
 
-    tabs.push({
-      value: "documents",
-      labelKey: "documents",
-    });
+    // tabs.push({
+    //   value: "documents",
+    //   labelKey: "documents",
+    // });
   }
 
   const isMobile = useIsMobile();
@@ -78,9 +78,9 @@ export const ProductTabs = ({ productTypeId, product }: Props) => {
                   {tab.value === "warranty" && hasWarranty && productTypeId === "solar-panel" && (
                     <SolarPanelWarrantyTab solarPanel={product as SolarPanel} />
                   )}
-                  {tab.value === "documents" && productTypeId === "solar-panel" && (
+                  {/* {tab.value === "documents" && productTypeId === "solar-panel" && (
                     <div>Documents</div>
-                  )}
+                  )} */}
                 </AccordionContent>
               </AccordionItem>
             );
@@ -109,15 +109,9 @@ export const ProductTabs = ({ productTypeId, product }: Props) => {
           </TabsContent>
 
           {productTypeId === "solar-panel" && hasWarranty && (
-            <>
-              <TabsContent value="warranty">
-                <SolarPanelWarrantyTab solarPanel={product as SolarPanel} />
-              </TabsContent>
-
-              <TabsContent value="documents">
-                <div>Documents</div>
-              </TabsContent>
-            </>
+            <TabsContent value="warranty">
+              <SolarPanelWarrantyTab solarPanel={product as SolarPanel} />
+            </TabsContent>
           )}
         </Tabs>
       )}

@@ -2,11 +2,13 @@ import { link } from "../fields/link";
 import type { Block } from "payload";
 import { createTitleField } from "../fields/title";
 import { createDescriptionField } from "../fields/description";
-import { create3DSettingsField } from "../fields/3d-settings";
 
 export const HeroBlock: Block = {
   slug: "heroBlock",
   interfaceName: "HeroBlockType",
+  admin: {
+    group: "Content",
+  },
   fields: [
     {
       type: "collapsible",
@@ -80,19 +82,13 @@ export const HeroBlock: Block = {
       name: "media",
       label: "Media",
       type: "relationship",
-      relationTo: ["images", "videos", "models"],
+      relationTo: ["images", "videos"],
       hasMany: false,
       required: true,
       admin: {
-        description:
-          "Select an image, video, or model to display in the hero section.",
+        description: "Select an image or video to display in the hero section.",
       },
     },
-    create3DSettingsField({
-      admin: {
-        condition: (data) => data?.media?.relationTo === "models",
-      },
-    }),
     {
       type: "collapsible",
       label: "Layout",
@@ -129,8 +125,7 @@ export const HeroBlock: Block = {
               defaultValue: "start",
               admin: {
                 width: "50%",
-                description:
-                  "Align text within its column (left, center, or right).",
+                description: "Align text within its column (left, center, or right).",
               },
             },
           ],

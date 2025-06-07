@@ -1,7 +1,8 @@
 import type { Field, GlobalConfig } from "payload";
 import { link } from "../fields/link";
+import { iconField } from "../fields";
 import { createTitleField } from "../fields/title";
-import { createIconSelectField } from "../fields/icon-select";
+
 import { revalidateGlobal } from "../hooks";
 import { anyone } from "../access";
 
@@ -83,11 +84,7 @@ const menuItemFields: Field[] = [
               },
             },
             fields: [
-              createIconSelectField({
-                name: "icon",
-                label: "Icon",
-                required: false,
-              }),
+              iconField(),
               createTitleField({
                 name: "title",
                 required: true,
