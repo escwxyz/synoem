@@ -110,6 +110,7 @@
     "overview": "Übersicht",
     "gallery": "Galerie",
     "specifications": "Spezifikationen",
+    "packaging": "Verpackung",
     "warranty": "Garantie",
     "documents": "Dokumente"
   },
@@ -378,5 +379,32 @@
     "title": "Kontaktiere uns",
     "description": "Wo immer Sie sind, wir sind hier, um Ihnen innerhalb von 24 Stunden zu helfen.",
     "button": "Kontaktiere uns"
+  },
+  "PackageQuantityCalculator": {
+    "title": "Verpackungskonfiguration & Berechnung",
+    "projectParameters": "Projektparameter",
+    "projectParametersDescription": "Geben Sie Ihre Projektspezifikationen ein, um die benötigten Panel zu berechnen",
+    "projectCapacity": "Projektkapazität (MW)",
+    "panelWattage": "Solarmodulleistung (Wp)",
+    "packagingInformation": "Verpackungsinformationen",
+    "piecesPerPallet": "Stück pro Palette",
+
+    "piecesPerContainer": "Stück pro Container",
+    "palletDimensions": "Palette Abmessungen (m³)",
+    "palletWeight": "Palette Gewicht (kg)",
+
+    "calculationResults": "Berechnungsergebnisse",
+    "panelsNeeded": "Benötigte Solarmodule",
+    "containersNeeded": "CTNs",
+    "palletsNeeded": "Pallets",
+    "totalPallets": "Gesamt Paletten",
+    "pallets": "Paletten",
+    "remainingPanels": "Verbleibende Module",
+    "totalWeight": "Gesamtgewicht",
+    "totalArea": "Gesamtfläche",
+    "detailedBreakdown": "Ausführliche Berechnung",
+    "totalWeightUnit": "kg",
+    "totalAreaUnit": "m²",
+    "overallOutputPower": "Gesamtleistung"
   }
 }

@@ -3064,6 +3064,14 @@ export interface FeatureBlockType {
    * Direction of the number ticker
    */
   direction?: ('up' | 'down') | null;
+  /**
+   * If checked, the icon will have a background
+   */
+  iconBackground?: boolean | null;
+  /**
+   * Alignment of the icon and content
+   */
+  alignment?: ('default' | 'reverse' | 'between' | 'between-reverse' | 'center') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'featureBlock';
@@ -4007,6 +4015,8 @@ export interface FeatureBlockTypeSelect<T extends boolean = true> {
   startValue?: T;
   decimalPlaces?: T;
   direction?: T;
+  iconBackground?: T;
+  alignment?: T;
   id?: T;
   blockName?: T;
 }

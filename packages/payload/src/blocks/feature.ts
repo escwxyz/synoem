@@ -146,6 +146,26 @@ export const FeatureBlock: Block = {
             condition: (_, siblingData) => siblingData.type === "number",
           },
         },
+        {
+          name: "iconBackground",
+          type: "checkbox",
+          label: "Icon Background",
+          defaultValue: true,
+          admin: {
+            description: "If checked, the icon will have a background",
+            condition: (_, siblingData) => siblingData.type === "number",
+          },
+        },
+        {
+          name: "alignment",
+          type: "select",
+          label: "Alignment",
+          options: ["default", "reverse", "between", "between-reverse", "center"],
+          defaultValue: "default",
+          admin: {
+            description: "Alignment of the icon and content",
+          },
+        },
       ],
     },
   ],

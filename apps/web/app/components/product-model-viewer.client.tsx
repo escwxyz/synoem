@@ -42,7 +42,7 @@ export const ProductModelViewer = ({
   ...props
 }: ProductModelViewerProps) => {
   if (!three.model || typeof three.model !== "object" || !three.model?.url) {
-    console.warn("StandaloneModelViewer: No model provided");
+    console.log("ProductModelViewer: No model provided");
     return null;
   }
 
