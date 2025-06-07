@@ -3,10 +3,10 @@
 import type { FeatureBlockType } from "@synoem/types";
 import { NumberTicker } from "@synoem/ui/components/number-ticker";
 import { motion, useInView } from "motion/react";
+import { DynamicIcon, type IconName } from "lucide-react/dynamic";
 
 import { useRef } from "react";
 import { cn } from "@synoem/ui/lib/utils";
-import { getIconComponent } from "@/app/utils";
 
 export const Feature = ({
   type,
@@ -48,11 +48,7 @@ export const Feature = ({
             "from-accent/80 to-accent/60",
           )}
         >
-          {icon &&
-            (() => {
-              const Icon = getIconComponent(icon);
-              return Icon ? <Icon className="text-foreground/70" /> : null;
-            })()}
+          <DynamicIcon name={icon as IconName} />
         </div>
 
         <div className="flex flex-col">

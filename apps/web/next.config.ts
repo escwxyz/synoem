@@ -14,12 +14,23 @@ const nextConfig: NextConfig = {
   // transpilePackages: ["three"],
   productionBrowserSourceMaps: process.env.WEB_APP_ENV === "development",
   // TODO: https://nextjs.org/docs/app/api-reference/config/next-config-js/serverExternalPackages
-  serverExternalPackages: ["sharp"],
+  serverExternalPackages: [
+    "sharp",
+    "drizzle-kit",
+    "drizzle-kit/api",
+    "pino",
+    "libsql",
+    "pino-pretty",
+    "graphql",
+  ],
+  webpack: (config, { dev, isServer }) => {
+    // config.module.rules.push({})
+  },
   experimental: {
     serverActions: {
       bodySizeLimit: "10mb",
     },
-    optimizePackageImports: ["three", "recharts"],
+    optimizePackageImports: ["three", "recharts", "lucide-react"],
     serverComponentsHmrCache: true,
 
     // ppr: "incremental", // https://github.com/opennextjs/opennextjs-cloudflare/tree/main/examples/next-partial-prerendering

@@ -3,8 +3,9 @@
 import { useIsMobile } from "@synoem/ui/hooks/use-mobile";
 import type { LinksSectionProps } from "./types";
 import { cn } from "@synoem/ui/lib/utils";
-import { getIconComponent, getMenuLinkConfig } from "@/app/utils";
+import { getMenuLinkConfig } from "@/app/utils";
 import { MenuLink } from "./menu-link.client";
+import { DynamicIcon, type IconName } from "lucide-react/dynamic";
 
 export const MenuLinkSection = ({ title, items, isExtended }: LinksSectionProps) => {
   const isMobile = useIsMobile();
@@ -29,13 +30,17 @@ export const MenuLinkSection = ({ title, items, isExtended }: LinksSectionProps)
       <ul>
         {items?.map((item) => {
           const linkConfig = getMenuLinkConfig(item.link);
-          const Icon = item.icon ? getIconComponent(item.icon) : null;
 
           if (!linkConfig || typeof item.id !== "string") return null;
 
           return (
             <li key={item.id} className="flex items-center gap-2 py-1">
-              {Icon && <Icon className={cn("text-primary", isMobile ? "size-3" : "size-4")} />}
+              {item.icon && (
+                <DynamicIcon
+                  name={item.icon as IconName}
+                  className={cn("text-primary", isMobile ? "size-3" : "size-4")}
+                />
+              )}
               <MenuLink
                 href={linkConfig.href}
                 openInNewTab={linkConfig.openInNewTab}
