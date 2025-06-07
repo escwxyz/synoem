@@ -8,9 +8,9 @@ import { FixedSizeList as List, areEqual } from "react-window";
 
 const ICON_URLS = {
   lucide: "https://cdn.jsdelivr.net/npm/lucide-static@0.508.0/icons/",
-  ...(process.env.S3_ENDPOINT && process.env.CMS_APP_ENV === "production"
+  ...(process.env.NEXT_PUBLIC_S3_ENDPOINT && process.env.CMS_APP_ENV === "production"
     ? {
-        custom: `${process.env.S3_ENDPOINT}/object/public/${process.env.S3_BUCKET_NAME}/icons/`,
+        custom: `${process.env.NEXT_PUBLIC_S3_ENDPOINT}/object/public/${process.env.NEXT_PUBLIC_S3_BUCKET_NAME}/icons/`,
       }
     : {}),
 };
@@ -31,13 +31,23 @@ const IconPreview: React.FC<{ name: string }> = React.memo(({ name }) => {
       height={20}
       loading="lazy"
       className="w-4 h-4 mr-2 flex-shrink-0 dark:invert"
+      onError={(e) => {
+        console.log("error", e);
+        e.currentTarget.style.display = "none";
+      }}
     />
   );
 });
 
 IconPreview.displayName = "IconPreview";
 
-const CustomOption: React.FC<ReactSelectOption> = ({ data, innerProps, isSelected }: any) => (
+interface CustomOptionProps {
+  data: { value: string; label: string };
+  innerProps: React.HTMLAttributes<HTMLDivElement>;
+  isSelected: boolean;
+}
+
+const CustomOption = ({ data, innerProps, isSelected }: CustomOptionProps) => (
   <div
     {...innerProps}
     className={`cursor-pointer flex items-center p-2 hover:bg-accent-500 ${isSelected ? "bg-accent-500" : ""}`}
@@ -47,7 +57,7 @@ const CustomOption: React.FC<ReactSelectOption> = ({ data, innerProps, isSelecte
   </div>
 );
 
-const SingleValue: React.FC<ReactSelectOption> = ({ data }: any) => (
+const SingleValue = ({ data }: { data: { value: string; label: string } }) => (
   <div className="flex items-center absolute">
     <IconPreview name={data.value} />
     {data.label}
@@ -75,7 +85,10 @@ const Row = React.memo(({ index, style, data }: RowProps) => {
 
 Row.displayName = "VirtualizedRow";
 
-const VirtualMenuList: React.FC<any> = ({ children, maxHeight }) => {
+const VirtualMenuList = ({
+  children,
+  maxHeight,
+}: { children: React.ReactNode; maxHeight: number }) => {
   const items = React.Children.toArray(children);
   const itemCount = items.length;
   const listHeight = Math.min(maxHeight, itemCount * ITEM_HEIGHT);

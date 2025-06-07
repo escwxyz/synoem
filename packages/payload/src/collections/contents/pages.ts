@@ -74,24 +74,6 @@ export const Pages: CollectionConfig<"pages"> = {
         position: "sidebar",
       },
     },
-    {
-      name: "type",
-      type: "select",
-      admin: {
-        position: "sidebar",
-      },
-      options: [
-        {
-          label: "Static",
-          value: "static",
-        },
-        {
-          label: "Archive",
-          value: "archive",
-        },
-      ],
-      defaultValue: "static",
-    },
     ...slug(),
   ],
   versions: {

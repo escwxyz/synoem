@@ -11,7 +11,8 @@ interface Props {
 }
 
 export const Icon = ({ name, size = 20, className }: Props) => {
-  const iconName = name.split(":")[1];
+  const parts = name.split(":");
+  const iconName = parts.length === 2 ? parts[1] : null;
 
   if (!iconName) {
     return null;
@@ -23,7 +24,7 @@ export const Icon = ({ name, size = 20, className }: Props) => {
 
   return (
     <Image
-      src={`${process.env.S3_ENDPOINT}/object/public/${process.env.S3_BUCKET_NAME}/icons/${iconName}.svg`}
+      src={`${process.env.NEXT_PUBLIC_S3_ENDPOINT}/object/public/${process.env.NEXT_PUBLIC_S3_BUCKET_NAME}/icons/${iconName}.svg`}
       alt={name}
       width={size}
       height={size}

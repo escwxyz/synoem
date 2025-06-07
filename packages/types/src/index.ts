@@ -1943,7 +1943,6 @@ export interface Page {
   )[];
   publishedAt?: string | null;
   showLastUpdated?: boolean | null;
-  type?: ('static' | 'archive') | null;
   slug: string;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -3399,10 +3398,6 @@ export interface MediaBlockType {
     | {
         relationTo: 'videos';
         value: string | Video;
-      }
-    | {
-        relationTo: 'models';
-        value: string | Model;
       };
   id?: string | null;
   blockName?: string | null;
@@ -3906,7 +3901,6 @@ export interface PagesSelect<T extends boolean = true> {
       };
   publishedAt?: T;
   showLastUpdated?: T;
-  type?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;

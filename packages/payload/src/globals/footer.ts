@@ -82,6 +82,7 @@ export const Footer: GlobalConfig = {
               fields: [
                 link({
                   appearances: false,
+                  localizedLabel: true,
                 }),
               ],
               admin: {
@@ -152,6 +153,7 @@ export const Footer: GlobalConfig = {
           fields: [
             link({
               appearances: false,
+              localizedLabel: true,
             }),
           ],
           maxRows: 6,
