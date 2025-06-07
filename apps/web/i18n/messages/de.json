@@ -406,5 +406,24 @@
     "totalWeightUnit": "kg",
     "totalAreaUnit": "m²",
     "overallOutputPower": "Gesamtleistung"
+  },
+  "CarbonReductionCalculator": {
+    "title": "Kohlenstoffreduktionsrechner",
+    "description": "Schätzen Sie den Umwelt- und Kohlenstofffußabdruck Ihres Solarpakets",
+    "projectCapacity": "Projektkapazität (MW)",
+    "effectiveHours": "Effektive Stunden pro Jahr",
+    "hours": "Stunden",
+    "emissionIntensity": "Emissionsintensität (Tonne CO₂/MWh)",
+    "projectLifespan": "Projektlebensdauer (Jahre)",
+    "annualImpact": "Jährliche Auswirkung",
+    "lifetimeEnvironmentalImpact": "Lebenszeitliche Umweltauswirkung",
+    "totalCarbonReduction": "Gesamte Kohlenstoffreduktion",
+    "annualPowerGeneration": "Jährliche Leistungserzeugung",
+    "annualCarbonReduction": "Jährliche Kohlenstoffreduktion",
+    "equivalentTrees": "Äquivalente Bäume",
+    "equivalentCars": "Äquivalente Autos",
+    "cleanEnergy": "Rein Energie",
+    "removingCarsFromRoad": "Autos von der Straße entfernen",
+    "note": "Hinweis: Diese Berechnungen sind Schätzungen und können aufgrund regionaler Unterschiede in der Energieproduktion und -verwendung variieren."
   }
 }

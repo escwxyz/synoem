@@ -419,5 +419,24 @@
     "totalWeightUnit": "kg",
     "totalAreaUnit": "m²",
     "overallOutputPower": "Overall Output Power"
+  },
+  "CarbonReductionCalculator": {
+    "title": "Carbon Reduction Calculator",
+    "description": "Estimate the environmental impact and carbon footprint reduction of your solar project",
+    "projectCapacity": "Project Capacity (MW)",
+    "effectiveHours": "Effective Hours per Year",
+    "hours": "hours",
+    "emissionIntensity": "Emission Intensity (tonnes CO₂/MWh)",
+    "projectLifespan": "Project Lifespan (years)",
+    "annualImpact": "Annual Impact",
+    "lifetimeEnvironmentalImpact": "Lifetime Environmental Impact",
+    "totalCarbonReduction": "Total Carbon Reduction",
+    "annualPowerGeneration": "Annual Power Generation",
+    "annualCarbonReduction": "Annual CO₂ Reduction",
+    "equivalentTrees": "Equivalent Trees",
+    "equivalentCars": "Equivalent Cars",
+    "cleanEnergy": "Clean Energy",
+    "removingCarsFromRoad": "Removing Cars from Road",
+    "note": "Note: These calculations are estimates and may vary based on regional differences in energy production and consumption."
   }
 }

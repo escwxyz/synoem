@@ -27,16 +27,6 @@ const ProductModelViewer = dynamic(
   },
 );
 
-const CarbonReductionCalculator = dynamic(
-  () =>
-    import("~/components/carbon-reduction-calculator.client").then(
-      (mod) => mod.CarbonReductionCalculator,
-    ),
-  {
-    ssr: false,
-  },
-);
-
 const OemInfo = dynamic(() => import("~/components/oem-info.client").then((mod) => mod.OemInfo), {
   ssr: false,
 });
