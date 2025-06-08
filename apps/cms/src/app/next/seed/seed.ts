@@ -1,6 +1,6 @@
 import type { CollectionSlug, Payload, PayloadRequest, File, GlobalSlug } from "payload";
-import { faqs } from "./data/faq";
-import { pages } from "./data/page";
+import { faqs } from "./data/faqs";
+import { pages } from "./data/pages";
 import { getHeaderData } from "./data/header";
 
 const IMAGE_BASE_URL = `${process.env.NEXT_PUBLIC_S3_ENDPOINT}/object/public/${process.env.NEXT_PUBLIC_S3_BUCKET_NAME}/images/seed`;
