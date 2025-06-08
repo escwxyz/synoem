@@ -138,6 +138,9 @@ export const seed = async ({
           alt: "Open Graph Image",
         },
         file: openGraphImage,
+        context: {
+          skipRevalidation: true,
+        },
       }),
     ]);
 
@@ -341,6 +344,10 @@ function getMimeType(filename: string): string {
 }
 
 async function fetchFileByURL(url: string): Promise<File> {
+  if (!url.startsWith(IMAGE_BASE_URL)) {
+    throw new Error(`Invalid URL: ${url}`);
+  }
+
   const res = await fetch(url, {
     credentials: "include",
     method: "GET",
