@@ -1,5 +1,3 @@
-// TODO: svg not shown
-
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { getUrl } from "~/utils/get-url";

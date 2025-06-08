@@ -1,7 +1,13 @@
 import { s3Storage } from "@payloadcms/storage-s3";
 
 export const storage = s3Storage({
-  enabled: true,
+  enabled: Boolean(
+    process.env.S3_ENDPOINT &&
+      process.env.S3_BUCKET_NAME &&
+      process.env.S3_ACCESS_KEY_ID &&
+      process.env.S3_ACCESS_KEY_SECRET &&
+      process.env.S3_REGION,
+  ),
   collections: {
     images: {
       prefix: "images",

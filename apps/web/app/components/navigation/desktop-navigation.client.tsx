@@ -105,9 +105,11 @@ function DesktopMenuItem({ item, active, setActive }: MenuItemProps) {
                 <motion.div
                   transition={transition}
                   layoutId="active"
-                  className="bg-muted backdrop-blur-2xl rounded-xl p-4"
+                  className="bg-muted/99 backdrop-blur-4xl rounded-xl p-4"
                 >
-                  <div className="absolute bottom-0 left-0 h-48 w-48 rounded-full bg-primary/30 blur-3xl dark:bg-primary/10" />
+                  {/* TODO: This border indicator is moving position after the animation */}
+                  <div className="absolute left-1/2 top-0 h-px w-1/2 -translate-x-1/2 bg-gradient-to-r from-transparent via-primary/70 to-transparent dark:via-primary/30" />
+
                   <motion.div layout className="w-max h-full p-4">
                     <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                       {item.megaItems?.map((section) => {
@@ -133,7 +135,6 @@ function DesktopMenuItem({ item, active, setActive }: MenuItemProps) {
                       })}
                     </ul>
                   </motion.div>
-                  <div className="absolute left-1/2 top-0 h-px w-1/2 -translate-x-1/2 bg-gradient-to-r from-transparent via-primary/70 to-transparent dark:via-primary/30" />
                 </motion.div>
               </div>
             )}

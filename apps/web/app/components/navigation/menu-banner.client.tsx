@@ -11,7 +11,7 @@ export const MenuBanner = ({ banner }: MenuBannerProps) => {
   const linkConfig = getMenuLinkConfig(banner.link);
 
   return (
-    <div className="mb-2 p-4 bg-muted/80 rounded-md overflow-hidden">
+    <div className="mb-2 p-4 border rounded-md overflow-hidden">
       {banner.title && <div className="font-semibold">{banner.title}</div>}
       {banner.description && <div className="text-sm mb-2">{banner.description}</div>}
       {hasMedia && isImageType(media) && (
