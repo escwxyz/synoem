@@ -21,6 +21,22 @@ export const TimelineBlock: Block = {
   },
   fields: [
     {
+      name: "title",
+      type: "text",
+      localized: true,
+      admin: {
+        description: "Title of the timeline block",
+      },
+    },
+    {
+      name: "description",
+      type: "text",
+      localized: true,
+      admin: {
+        description: "Description of the timeline block",
+      },
+    },
+    {
       name: "items",
       type: "array",
       fields: [

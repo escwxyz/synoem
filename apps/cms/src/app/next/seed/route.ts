@@ -1,7 +1,7 @@
 import { createLocalReq } from "payload";
 import { getPayloadClient } from "@synoem/payload/client";
 import { headers } from "next/headers";
-// import { seed } from "./seed";
+import { seed } from "./seed";
 
 export const maxDuration = 60;
 
@@ -22,7 +22,7 @@ export async function POST(): Promise<Response> {
     const payloadReq = await createLocalReq({ user }, payload);
 
     // TODO: uncomment this when we want to seed data
-    // await seed({ payload, req: payloadReq });
+    await seed({ payload, req: payloadReq });
 
     return Response.json({ success: true });
   } catch (e) {

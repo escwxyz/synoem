@@ -57,6 +57,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  devIndicators: false,
 };
 
 export default withNextIntl(withBundleAnalyzer(nextConfig));
