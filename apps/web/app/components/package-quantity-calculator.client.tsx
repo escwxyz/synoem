@@ -23,6 +23,7 @@ import {
 import type { ProductTypeId } from "@synoem/config";
 import { Feature } from "./blocks/feature.client";
 import { useLocale, useTranslations } from "next-intl";
+import { LocalizedNumberInput } from "~/components/localized-number-input.client";
 
 interface CalculationResults {
   panelsNeeded: number;
@@ -74,7 +75,7 @@ export const PackageQuantityCalculator = ({
     return null;
   }
 
-  const [projectCapacity, setProjectCapacity] = useState<string>("1.0");
+  const [projectCapacity, setProjectCapacity] = useState<number>(1.0);
 
   const [panelWattage, setPanelWattage] = useState<number>(panelWattageOptions[0] ?? 0);
 
@@ -102,7 +103,7 @@ export const PackageQuantityCalculator = ({
 
   useEffect(() => {
     const calculateResults = () => {
-      const projectSizeW = Number.parseFloat(projectCapacity) * 1000000;
+      const projectSizeW = projectCapacity * 1000000;
 
       if (projectSizeW > 0 && panelWattage > 0 && piecesPerPallet > 0 && piecesPerContainer > 0) {
         const panelsNeeded = Math.ceil(projectSizeW / panelWattage);
@@ -157,16 +158,16 @@ export const PackageQuantityCalculator = ({
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="project-size">{t("projectCapacity")}</Label>
-                <Input
-                  id="project-size"
-                  type="number"
-                  step="0.1"
-                  min="0.1"
+                <LocalizedNumberInput
                   value={projectCapacity}
-                  onChange={(e) => {
-                    setProjectCapacity(e.target.value);
-                  }}
-                  placeholder="1.0"
+                  onChange={(value) => setProjectCapacity(value)}
+                  min={0.1}
+                  max={1000}
+                  step={0.1}
+                  placeholder={(1.0).toLocaleString(locale, {
+                    maximumFractionDigits: 1,
+                    minimumFractionDigits: 1,
+                  })}
                 />
               </div>
               <div className="space-y-2">

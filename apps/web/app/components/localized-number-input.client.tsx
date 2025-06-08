@@ -95,6 +95,11 @@ export const LocalizedNumberInput = ({
         onChange={handleInputChange}
         placeholder={placeholder}
         className={className}
+        role="spinbutton"
+        aria-valuenow={value}
+        aria-valuemin={min}
+        aria-valuemax={max}
+        aria-label={placeholder || "Numeric input"}
       />
 
       <Button type="button" onClick={handleIncrement} variant="ghost" size="icon">
