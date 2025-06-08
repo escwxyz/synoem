@@ -1784,7 +1784,6 @@ export interface Config {
     'pump-controllers': PumpController;
     'solar-panel-categories': SolarPanelCategory;
     'pump-controller-categories': PumpControllerCategory;
-    exports: Export;
     'payload-jobs': PayloadJob;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -1816,7 +1815,6 @@ export interface Config {
     'pump-controllers': PumpControllersSelect<false> | PumpControllersSelect<true>;
     'solar-panel-categories': SolarPanelCategoriesSelect<false> | SolarPanelCategoriesSelect<true>;
     'pump-controller-categories': PumpControllerCategoriesSelect<false> | PumpControllerCategoriesSelect<true>;
-    exports: ExportsSelect<false> | ExportsSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -2053,6 +2051,7 @@ export interface Image {
   id: string;
   alt: string;
   blurDataUrl?: string | null;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -2064,16 +2063,6 @@ export interface Image {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
-  sizes?: {
-    thumbnail?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2810,7 +2799,15 @@ export interface MediaBlockType {
  */
 export interface FeaturesBlockType {
   /**
-   * Showcased features of the product, min. 2, max. 6
+   * Title of the features block
+   */
+  title?: string | null;
+  /**
+   * Description of the features block
+   */
+  description?: string | null;
+  /**
+   * Showcased features, min. 2, max. 6
    */
   features?: FeatureBlockType[] | null;
   /**
@@ -2826,6 +2823,14 @@ export interface FeaturesBlockType {
  * via the `definition` "TimelineBlockType".
  */
 export interface TimelineBlockType {
+  /**
+   * Title of the timeline block
+   */
+  title?: string | null;
+  /**
+   * Description of the timeline block
+   */
+  description?: string | null;
   items?:
     | {
         title: string;
@@ -3564,42 +3569,6 @@ export interface Post {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "exports".
- */
-export interface Export {
-  id: string;
-  name?: string | null;
-  format: 'csv' | 'json';
-  limit?: number | null;
-  sort?: string | null;
-  locale?: ('all' | 'en' | 'de') | null;
-  drafts?: ('yes' | 'no') | null;
-  selectionToUse?: ('currentSelection' | 'currentFilters' | 'all') | null;
-  fields?: string[] | null;
-  collectionSlug: string;
-  where?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-jobs".
  */
 export interface PayloadJob {
@@ -3794,10 +3763,6 @@ export interface PayloadLockedDocument {
         value: string | PumpControllerCategory;
       } | null)
     | ({
-        relationTo: 'exports';
-        value: string | Export;
-      } | null)
-    | ({
         relationTo: 'payload-jobs';
         value: string | PayloadJob;
       } | null);
@@ -3971,6 +3936,8 @@ export interface MediaBlockTypeSelect<T extends boolean = true> {
  * via the `definition` "FeaturesBlockType_select".
  */
 export interface FeaturesBlockTypeSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
   features?:
     | T
     | {
@@ -4007,6 +3974,8 @@ export interface FeatureBlockTypeSelect<T extends boolean = true> {
  * via the `definition` "TimelineBlockType_select".
  */
 export interface TimelineBlockTypeSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
   items?:
     | T
     | {
@@ -4129,6 +4098,7 @@ export interface NewsletterSubscribersSelect<T extends boolean = true> {
 export interface ImagesSelect<T extends boolean = true> {
   alt?: T;
   blurDataUrl?: T;
+  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -4140,20 +4110,6 @@ export interface ImagesSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
-  sizes?:
-    | T
-    | {
-        thumbnail?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4677,33 +4633,6 @@ export interface PumpControllerCategoriesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "exports_select".
- */
-export interface ExportsSelect<T extends boolean = true> {
-  name?: T;
-  format?: T;
-  limit?: T;
-  sort?: T;
-  locale?: T;
-  drafts?: T;
-  selectionToUse?: T;
-  fields?: T;
-  collectionSlug?: T;
-  where?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-jobs_select".
  */
 export interface PayloadJobsSelect<T extends boolean = true> {
@@ -4828,7 +4757,7 @@ export interface CompanyInfo {
   /**
    * The logo of the company
    */
-  logo: string | Image;
+  logo?: (string | null) | Image;
   /**
    * The logo of the company in dark mode
    */

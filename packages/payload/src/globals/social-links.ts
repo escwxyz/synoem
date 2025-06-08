@@ -30,11 +30,13 @@ export const SocialLinks: GlobalConfig = {
             label: getPlatformLabel(platform as SocialPlatform),
             value: platform,
           })),
+          defaultValue: "facebook",
         },
         {
           name: "url",
           type: "text",
           required: true,
+          defaultValue: "https://www.facebook.com/",
         },
       ],
     },

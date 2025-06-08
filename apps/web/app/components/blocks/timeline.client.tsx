@@ -12,7 +12,7 @@ import { convertDateString } from "@/app/utils/convert-datestring";
 import { isValidLocale } from "@/app/utils/is-valid-locale";
 import { defaultLocale } from "@synoem/config";
 
-export const Timeline = ({ items }: TimelineBlockType) => {
+export const Timeline = ({ items, title, description }: TimelineBlockType) => {
   const ref = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
@@ -40,6 +40,10 @@ export const Timeline = ({ items }: TimelineBlockType) => {
 
   return (
     <div className="w-full font-sans md:px-10" ref={containerRef}>
+      {title && <div className="text-center text-3xl font-bold">{title}</div>}
+      {description && (
+        <div className="text-center text-sm text-muted-foreground">{description}</div>
+      )}
       <div ref={ref} className="relative max-w-7xl mx-auto pb-20">
         {items.map((item) => (
           <div key={item.id || item.title} className="flex justify-start pt-10 md:pt-40 md:gap-10">
@@ -50,7 +54,7 @@ export const Timeline = ({ items }: TimelineBlockType) => {
               </div>
               {!isMobile && (
                 <div className="pl-20 flex flex-col gap-4">
-                  <h3 className="block  text-3xl font-bold ">{item.title}</h3>
+                  <h3 className="block  text-2xl font-bold ">{item.title}</h3>
                   <DateIndicator date={item.date} precision={item.datePrecision || "year"} />
                 </div>
               )}

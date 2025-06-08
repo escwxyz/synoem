@@ -15,11 +15,13 @@ export const ContactInfo: GlobalConfig = {
       name: "email",
       type: "email",
       required: true,
+      defaultValue: "info@example.com",
     },
     {
       name: "phone",
       type: "text",
       required: true,
+      defaultValue: "+1234567890",
     },
     {
       name: "addresses",
@@ -56,6 +58,16 @@ export const ContactInfo: GlobalConfig = {
           name: "country",
           type: "text",
           required: true,
+        },
+      ],
+      defaultValue: [
+        {
+          line1: "123 Main St",
+          line2: "Apt 1",
+          city: "New York",
+          state: "NY",
+          zip: "10001",
+          country: "USA",
         },
       ],
     },

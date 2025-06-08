@@ -32,7 +32,7 @@ export const Feature = ({
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
 
-  const backgroundOpacity = !opacity || opacity === 100 ? "bg-card" : `bg-card/${100 - opacity}`;
+  const backgroundOpacity = !opacity || opacity === 100 ? "bg-card" : `bg-card/${opacity}`;
 
   return (
     <motion.div
