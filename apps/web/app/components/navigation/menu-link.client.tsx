@@ -39,7 +39,11 @@ export const MenuLink = ({ href, openInNewTab, children, className }: MenuLinkPr
   return (
     <Link
       href={href}
-      className={cn(isActive && "bg-muted/50 text-primary", className)}
+      className={cn(
+        "opacity-80 hover:opacity-100 transition-opacity duration-200",
+        isActive && !isMobile && "bg-muted/50 text-primary",
+        className,
+      )}
       target={openInNewTab ? "_blank" : undefined}
       rel={openInNewTab ? "noopener noreferrer" : undefined}
     >

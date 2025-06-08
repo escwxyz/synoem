@@ -18,16 +18,13 @@ export const MenuLinkSection = ({ title, items, isExtended }: LinksSectionProps)
       )}
     >
       {title && (
-        <div
-          className={cn(
-            "text-xs font-medium uppercase leading-none text-muted-foreground",
-            isMobile ? "mb-2" : "mb-5",
-          )}
+        <span
+          className={cn("block text-xs font-medium uppercase leading-none text-muted-foreground")}
         >
           {title}
-        </div>
+        </span>
       )}
-      <ul>
+      <ul className={cn("flex flex-col gap-4", isMobile ? "mt-2" : "mt-4")}>
         {items?.map((item) => {
           const linkConfig = getMenuLinkConfig(item.link);
 
@@ -35,25 +32,35 @@ export const MenuLinkSection = ({ title, items, isExtended }: LinksSectionProps)
 
           return (
             <li key={item.id} className="flex items-center gap-2 py-1">
-              {item.icon && (
-                <Icon
-                  name={item.icon}
-                  className={cn("text-primary", isMobile ? "size-3" : "size-4")}
-                />
-              )}
               <MenuLink
                 href={linkConfig.href}
                 openInNewTab={linkConfig.openInNewTab}
-                className={cn("flex flex-col", isMobile ? "gap-1" : "gap-2")}
+                className={cn("flex items-center gap-2")}
               >
-                {item.title}
-                {item.description && (
-                  <span
-                    className={cn("text-muted-foreground", isMobile ? "text-[10px]" : "text-xs")}
-                  >
-                    {item.description}
-                  </span>
+                {item.icon && (
+                  <div className="z-10 flex size-9 shrink-0 items-center justify-center rounded-lg border">
+                    <Icon
+                      name={item.icon}
+                      className="size-4 text-muted-foreground dark:[&_stop:not([stop-opacity])]:gradient-stop-opacity-40 dark:[&_stop[stop-opacity=&quot;0.6&quot;]]:gradient-stop-opacity-100"
+                    />
+                  </div>
                 )}
+
+                <div className="z-10">
+                  <span className="block text-sm leading-none tracking-snug transition-colors duration-200 text-muted-foreground">
+                    {item.title}
+                  </span>
+                  {item.description && (
+                    <span
+                      className={cn(
+                        "mt-1.5 block font-light leading-none tracking-extra-tight text-muted-foreground",
+                        isMobile ? "text-[10px]" : "text-xs",
+                      )}
+                    >
+                      {item.description}
+                    </span>
+                  )}
+                </div>
               </MenuLink>
             </li>
           );
