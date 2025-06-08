@@ -23,9 +23,9 @@ const nextConfig: NextConfig = {
     "pino-pretty",
     "graphql",
   ],
-  webpack: (config, { dev, isServer }) => {
-    // config.module.rules.push({})
-  },
+  // webpack: (config, { dev, isServer }) => {
+  //   // config.module.rules.push({})
+  // },
   experimental: {
     serverActions: {
       bodySizeLimit: "10mb",
