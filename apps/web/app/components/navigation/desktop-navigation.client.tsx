@@ -29,17 +29,11 @@ interface Props {
 export const DesktopNavigation = ({ items }: Props) => {
   const [active, setActive] = useState<string | null>(null);
 
-  const isMobile = useIsMobile();
-
-  if (isMobile) {
-    return null;
-  }
-
   return (
     <nav
       aria-label="Primary"
       onMouseLeave={() => setActive(null)}
-      className="flex justify-center space-x-4 px-8 py-6"
+      className={cn("hidden justify-center space-x-4 px-8 py-6 md:flex")}
     >
       {items.map((item) => {
         return <DesktopMenuItem key={item.id} item={item} setActive={setActive} active={active} />;

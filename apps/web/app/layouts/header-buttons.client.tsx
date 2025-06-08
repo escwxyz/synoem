@@ -24,11 +24,11 @@ export const HeaderButtons = ({ locale }: HeaderButtonsProps) => {
   const isMobile = useIsMobile();
 
   if (isMobile) {
-    return <ThemeSwitcher />;
+    return null;
   }
 
   return (
-    <div className="flex w-1/2 justify-end items-center gap-4">
+    <div className="flex w-full justify-end items-center gap-4">
       <motion.div layout transition={{ type: "spring", stiffness: 400, damping: 30 }}>
         <ThemeSwitcher />
       </motion.div>

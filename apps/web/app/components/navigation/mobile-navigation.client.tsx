@@ -11,7 +11,6 @@ import { ChevronDown, ExternalLinkIcon } from "lucide-react";
 import { cn } from "@synoem/ui/lib/utils";
 import { Link } from "@/i18n/navigation";
 import { getMenuLinkConfig } from "~/utils";
-import { useIsMobile } from "@synoem/ui/hooks/use-mobile";
 import { MenuBanner } from "./menu-banner.client";
 import { MenuLinkSection } from "./menu-link-section.client";
 
@@ -21,6 +20,7 @@ import { mobileNavigationOpenAtom, scrollLockAtom } from "~/atoms";
 import { useAtom, useSetAtom } from "jotai";
 import { useScrollLock } from "~/hooks";
 import dynamic from "next/dynamic";
+import { ThemeSwitcher } from "~/components/theme-switcher.client";
 
 const RequestQuoteButton = dynamic(
   () => import("~/components/request-quote-button").then((mod) => mod.RequestQuoteButton),
@@ -30,8 +30,6 @@ const RequestQuoteButton = dynamic(
 );
 
 export const MobileNavigation = ({ items }: NavigationProps) => {
-  const isMobile = useIsMobile();
-
   const [isOpen, setIsOpen] = useAtom(mobileNavigationOpenAtom);
   const setScrollLock = useSetAtom(scrollLockAtom);
 
@@ -61,12 +59,9 @@ export const MobileNavigation = ({ items }: NavigationProps) => {
     },
   };
 
-  if (!isMobile) {
-    return null;
-  }
-
   return (
-    <>
+    <div className="md:hidden flex justify-between items-center">
+      <ThemeSwitcher />
       <button
         type="button"
         onClick={toggle}
@@ -116,7 +111,7 @@ export const MobileNavigation = ({ items }: NavigationProps) => {
         />
       </button>
       <MobileMenu items={items} isOpen={isOpen} />
-    </>
+    </div>
   );
 };
 
