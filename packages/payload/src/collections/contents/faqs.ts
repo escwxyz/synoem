@@ -1,6 +1,6 @@
 import { PRODUCT_TYPES } from "@synoem/config";
 import type { CollectionConfig } from "payload";
-import { anyone } from "../access";
+import { anyone } from "../../access";
 
 const sanitizeString = (str: string) => str.replace(/\s+/g, " ").trim();
 

@@ -1,5 +1,5 @@
 import type { CollectionConfig } from "payload";
-import { updateNotificationState } from "../hooks/update-notification-state";
+import { updateNotificationState } from "../../hooks/update-notification-state";
 
 export const Notifications: CollectionConfig<"notifications"> = {
   slug: "notifications",

@@ -26,6 +26,7 @@ export const SocialLinks: GlobalConfig = {
           type: "select",
           required: true,
           options: SOCIAL_PLATFORMS.map((platform) => ({
+            // TODO: use the icon field here
             label: getPlatformLabel(platform as SocialPlatform),
             value: platform,
           })),

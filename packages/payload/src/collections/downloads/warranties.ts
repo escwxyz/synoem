@@ -1,5 +1,5 @@
 import type { CollectionConfig } from "payload";
-import { createDurationGroup } from "../fields/unit";
+import { createDurationGroup } from "../../fields/unit";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 
 export const Warranties: CollectionConfig = {

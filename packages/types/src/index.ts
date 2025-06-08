@@ -8,13 +8,1622 @@
 
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ProductFeatures".
+ * via the `definition` "IconName".
  */
-export type ProductFeatures =
+export type IconName =
+  | 'lucide:a-arrow-down'
+  | 'lucide:a-arrow-up'
+  | 'lucide:a-large-small'
+  | 'lucide:accessibility'
+  | 'lucide:activity'
+  | 'lucide:air-vent'
+  | 'lucide:airplay'
+  | 'lucide:alarm-clock-check'
+  | 'lucide:alarm-clock-minus'
+  | 'lucide:alarm-clock-off'
+  | 'lucide:alarm-clock-plus'
+  | 'lucide:alarm-clock'
+  | 'lucide:alarm-smoke'
+  | 'lucide:album'
+  | 'lucide:align-center-horizontal'
+  | 'lucide:align-center-vertical'
+  | 'lucide:align-center'
+  | 'lucide:align-end-horizontal'
+  | 'lucide:align-end-vertical'
+  | 'lucide:align-horizontal-distribute-center'
+  | 'lucide:align-horizontal-distribute-end'
+  | 'lucide:align-horizontal-distribute-start'
+  | 'lucide:align-horizontal-justify-center'
+  | 'lucide:align-horizontal-justify-end'
+  | 'lucide:align-horizontal-justify-start'
+  | 'lucide:align-horizontal-space-around'
+  | 'lucide:align-horizontal-space-between'
+  | 'lucide:align-justify'
+  | 'lucide:align-left'
+  | 'lucide:align-right'
+  | 'lucide:align-start-horizontal'
+  | 'lucide:align-start-vertical'
+  | 'lucide:align-vertical-distribute-center'
+  | 'lucide:align-vertical-distribute-end'
+  | 'lucide:align-vertical-distribute-start'
+  | 'lucide:align-vertical-justify-center'
+  | 'lucide:align-vertical-justify-end'
+  | 'lucide:align-vertical-justify-start'
+  | 'lucide:align-vertical-space-around'
+  | 'lucide:align-vertical-space-between'
+  | 'lucide:ambulance'
+  | 'lucide:ampersand'
+  | 'lucide:ampersands'
+  | 'lucide:amphora'
+  | 'lucide:anchor'
+  | 'lucide:angry'
+  | 'lucide:annoyed'
+  | 'lucide:antenna'
+  | 'lucide:anvil'
+  | 'lucide:aperture'
+  | 'lucide:app-window-mac'
+  | 'lucide:app-window'
+  | 'lucide:apple'
+  | 'lucide:archive-restore'
+  | 'lucide:archive-x'
+  | 'lucide:archive'
+  | 'lucide:armchair'
+  | 'lucide:arrow-big-down-dash'
+  | 'lucide:arrow-big-down'
+  | 'lucide:arrow-big-left-dash'
+  | 'lucide:arrow-big-left'
+  | 'lucide:arrow-big-right-dash'
+  | 'lucide:arrow-big-right'
+  | 'lucide:arrow-big-up-dash'
+  | 'lucide:arrow-big-up'
+  | 'lucide:arrow-down-0-1'
+  | 'lucide:arrow-down-1-0'
+  | 'lucide:arrow-down-a-z'
+  | 'lucide:arrow-down-from-line'
+  | 'lucide:arrow-down-left'
+  | 'lucide:arrow-down-narrow-wide'
+  | 'lucide:arrow-down-right'
+  | 'lucide:arrow-down-to-dot'
+  | 'lucide:arrow-down-to-line'
+  | 'lucide:arrow-down-up'
+  | 'lucide:arrow-down-wide-narrow'
+  | 'lucide:arrow-down-z-a'
+  | 'lucide:arrow-down'
+  | 'lucide:arrow-left-from-line'
+  | 'lucide:arrow-left-right'
+  | 'lucide:arrow-left-to-line'
+  | 'lucide:arrow-left'
+  | 'lucide:arrow-right-from-line'
+  | 'lucide:arrow-right-left'
+  | 'lucide:arrow-right-to-line'
+  | 'lucide:arrow-right'
+  | 'lucide:arrow-up-0-1'
+  | 'lucide:arrow-up-1-0'
+  | 'lucide:arrow-up-a-z'
+  | 'lucide:arrow-up-down'
+  | 'lucide:arrow-up-from-dot'
+  | 'lucide:arrow-up-from-line'
+  | 'lucide:arrow-up-left'
+  | 'lucide:arrow-up-narrow-wide'
+  | 'lucide:arrow-up-right'
+  | 'lucide:arrow-up-to-line'
+  | 'lucide:arrow-up-wide-narrow'
+  | 'lucide:arrow-up-z-a'
+  | 'lucide:arrow-up'
+  | 'lucide:arrows-up-from-line'
+  | 'lucide:asterisk'
+  | 'lucide:at-sign'
+  | 'lucide:atom'
+  | 'lucide:audio-lines'
+  | 'lucide:audio-waveform'
+  | 'lucide:award'
+  | 'lucide:axe'
+  | 'lucide:axis-3d'
+  | 'lucide:baby'
+  | 'lucide:backpack'
+  | 'lucide:badge-alert'
+  | 'lucide:badge-cent'
+  | 'lucide:badge-check'
+  | 'lucide:badge-dollar-sign'
+  | 'lucide:badge-euro'
+  | 'lucide:badge-help'
+  | 'lucide:badge-indian-rupee'
+  | 'lucide:badge-info'
+  | 'lucide:badge-japanese-yen'
+  | 'lucide:badge-minus'
+  | 'lucide:badge-percent'
+  | 'lucide:badge-plus'
+  | 'lucide:badge-pound-sterling'
+  | 'lucide:badge-russian-ruble'
+  | 'lucide:badge-swiss-franc'
+  | 'lucide:badge-x'
+  | 'lucide:badge'
+  | 'lucide:baggage-claim'
+  | 'lucide:ban'
+  | 'lucide:banana'
+  | 'lucide:bandage'
+  | 'lucide:banknote-arrow-down'
+  | 'lucide:banknote-arrow-up'
+  | 'lucide:banknote-x'
+  | 'lucide:banknote'
+  | 'lucide:barcode'
+  | 'lucide:baseline'
+  | 'lucide:bath'
+  | 'lucide:battery-charging'
+  | 'lucide:battery-full'
+  | 'lucide:battery-low'
+  | 'lucide:battery-medium'
+  | 'lucide:battery-plus'
+  | 'lucide:battery-warning'
+  | 'lucide:battery'
+  | 'lucide:beaker'
+  | 'lucide:bean-off'
+  | 'lucide:bean'
+  | 'lucide:bed-double'
+  | 'lucide:bed-single'
+  | 'lucide:bed'
+  | 'lucide:beef'
+  | 'lucide:beer-off'
+  | 'lucide:beer'
+  | 'lucide:bell-dot'
+  | 'lucide:bell-electric'
+  | 'lucide:bell-minus'
+  | 'lucide:bell-off'
+  | 'lucide:bell-plus'
+  | 'lucide:bell-ring'
+  | 'lucide:bell'
+  | 'lucide:between-horizontal-end'
+  | 'lucide:between-horizontal-start'
+  | 'lucide:between-vertical-end'
+  | 'lucide:between-vertical-start'
+  | 'lucide:biceps-flexed'
+  | 'lucide:bike'
+  | 'lucide:binary'
+  | 'lucide:binoculars'
+  | 'lucide:biohazard'
+  | 'lucide:bird'
+  | 'lucide:bitcoin'
+  | 'lucide:blend'
+  | 'lucide:blinds'
+  | 'lucide:blocks'
+  | 'lucide:bluetooth-connected'
+  | 'lucide:bluetooth-off'
+  | 'lucide:bluetooth-searching'
+  | 'lucide:bluetooth'
+  | 'lucide:bold'
+  | 'lucide:bolt'
+  | 'lucide:bomb'
+  | 'lucide:bone'
+  | 'lucide:book-a'
+  | 'lucide:book-audio'
+  | 'lucide:book-check'
+  | 'lucide:book-copy'
+  | 'lucide:book-dashed'
+  | 'lucide:book-down'
+  | 'lucide:book-headphones'
+  | 'lucide:book-heart'
+  | 'lucide:book-image'
+  | 'lucide:book-key'
+  | 'lucide:book-lock'
+  | 'lucide:book-marked'
+  | 'lucide:book-minus'
+  | 'lucide:book-open-check'
+  | 'lucide:book-open-text'
+  | 'lucide:book-open'
+  | 'lucide:book-plus'
+  | 'lucide:book-text'
+  | 'lucide:book-type'
+  | 'lucide:book-up-2'
+  | 'lucide:book-up'
+  | 'lucide:book-user'
+  | 'lucide:book-x'
+  | 'lucide:book'
+  | 'lucide:bookmark-check'
+  | 'lucide:bookmark-minus'
+  | 'lucide:bookmark-plus'
+  | 'lucide:bookmark-x'
+  | 'lucide:bookmark'
+  | 'lucide:boom-box'
+  | 'lucide:bot-message-square'
+  | 'lucide:bot-off'
+  | 'lucide:bot'
+  | 'lucide:bow-arrow'
+  | 'lucide:box'
+  | 'lucide:boxes'
+  | 'lucide:braces'
+  | 'lucide:brackets'
+  | 'lucide:brain-circuit'
+  | 'lucide:brain-cog'
+  | 'lucide:brain'
+  | 'lucide:brick-wall-fire'
+  | 'lucide:brick-wall'
+  | 'lucide:briefcase-business'
+  | 'lucide:briefcase-conveyor-belt'
+  | 'lucide:briefcase-medical'
+  | 'lucide:briefcase'
+  | 'lucide:bring-to-front'
+  | 'lucide:brush-cleaning'
+  | 'lucide:brush'
+  | 'lucide:bubbles'
+  | 'lucide:bug-off'
+  | 'lucide:bug-play'
+  | 'lucide:bug'
+  | 'lucide:building-2'
+  | 'lucide:building'
+  | 'lucide:bus-front'
+  | 'lucide:bus'
+  | 'lucide:cable-car'
+  | 'lucide:cable'
+  | 'lucide:cake-slice'
+  | 'lucide:cake'
+  | 'lucide:calculator'
+  | 'lucide:calendar-1'
+  | 'lucide:calendar-arrow-down'
+  | 'lucide:calendar-arrow-up'
+  | 'lucide:calendar-check-2'
+  | 'lucide:calendar-check'
+  | 'lucide:calendar-clock'
+  | 'lucide:calendar-cog'
+  | 'lucide:calendar-days'
+  | 'lucide:calendar-fold'
+  | 'lucide:calendar-heart'
+  | 'lucide:calendar-minus-2'
+  | 'lucide:calendar-minus'
+  | 'lucide:calendar-off'
+  | 'lucide:calendar-plus-2'
+  | 'lucide:calendar-plus'
+  | 'lucide:calendar-range'
+  | 'lucide:calendar-search'
+  | 'lucide:calendar-sync'
+  | 'lucide:calendar-x-2'
+  | 'lucide:calendar-x'
+  | 'lucide:calendar'
+  | 'lucide:camera-off'
+  | 'lucide:camera'
+  | 'lucide:candy-cane'
+  | 'lucide:candy-off'
+  | 'lucide:candy'
+  | 'lucide:cannabis'
+  | 'lucide:captions-off'
+  | 'lucide:captions'
+  | 'lucide:car-front'
+  | 'lucide:car-taxi-front'
+  | 'lucide:car'
+  | 'lucide:caravan'
+  | 'lucide:card-sim'
+  | 'lucide:carrot'
+  | 'lucide:case-lower'
+  | 'lucide:case-sensitive'
+  | 'lucide:case-upper'
+  | 'lucide:cassette-tape'
+  | 'lucide:cast'
+  | 'lucide:castle'
+  | 'lucide:cat'
+  | 'lucide:cctv'
+  | 'lucide:chart-area'
+  | 'lucide:chart-bar-big'
+  | 'lucide:chart-bar-decreasing'
+  | 'lucide:chart-bar-increasing'
+  | 'lucide:chart-bar-stacked'
+  | 'lucide:chart-bar'
+  | 'lucide:chart-candlestick'
+  | 'lucide:chart-column-big'
+  | 'lucide:chart-column-decreasing'
+  | 'lucide:chart-column-increasing'
+  | 'lucide:chart-column-stacked'
+  | 'lucide:chart-column'
+  | 'lucide:chart-gantt'
+  | 'lucide:chart-line'
+  | 'lucide:chart-network'
+  | 'lucide:chart-no-axes-column-decreasing'
+  | 'lucide:chart-no-axes-column-increasing'
+  | 'lucide:chart-no-axes-column'
+  | 'lucide:chart-no-axes-combined'
+  | 'lucide:chart-no-axes-gantt'
+  | 'lucide:chart-pie'
+  | 'lucide:chart-scatter'
+  | 'lucide:chart-spline'
+  | 'lucide:check-check'
+  | 'lucide:check-line'
+  | 'lucide:check'
+  | 'lucide:chef-hat'
+  | 'lucide:cherry'
+  | 'lucide:chevron-down'
+  | 'lucide:chevron-first'
+  | 'lucide:chevron-last'
+  | 'lucide:chevron-left'
+  | 'lucide:chevron-right'
+  | 'lucide:chevron-up'
+  | 'lucide:chevrons-down-up'
+  | 'lucide:chevrons-down'
+  | 'lucide:chevrons-left-right-ellipsis'
+  | 'lucide:chevrons-left-right'
+  | 'lucide:chevrons-left'
+  | 'lucide:chevrons-right-left'
+  | 'lucide:chevrons-right'
+  | 'lucide:chevrons-up-down'
+  | 'lucide:chevrons-up'
+  | 'lucide:chrome'
+  | 'lucide:church'
+  | 'lucide:cigarette-off'
+  | 'lucide:cigarette'
+  | 'lucide:circle-alert'
+  | 'lucide:circle-arrow-down'
+  | 'lucide:circle-arrow-left'
+  | 'lucide:circle-arrow-out-down-left'
+  | 'lucide:circle-arrow-out-down-right'
+  | 'lucide:circle-arrow-out-up-left'
+  | 'lucide:circle-arrow-out-up-right'
+  | 'lucide:circle-arrow-right'
+  | 'lucide:circle-arrow-up'
+  | 'lucide:circle-check-big'
+  | 'lucide:circle-check'
+  | 'lucide:circle-chevron-down'
+  | 'lucide:circle-chevron-left'
+  | 'lucide:circle-chevron-right'
+  | 'lucide:circle-chevron-up'
+  | 'lucide:circle-dashed'
+  | 'lucide:circle-divide'
+  | 'lucide:circle-dollar-sign'
+  | 'lucide:circle-dot-dashed'
+  | 'lucide:circle-dot'
+  | 'lucide:circle-ellipsis'
+  | 'lucide:circle-equal'
+  | 'lucide:circle-fading-arrow-up'
+  | 'lucide:circle-fading-plus'
+  | 'lucide:circle-gauge'
+  | 'lucide:circle-help'
+  | 'lucide:circle-minus'
+  | 'lucide:circle-off'
+  | 'lucide:circle-parking-off'
+  | 'lucide:circle-parking'
+  | 'lucide:circle-pause'
+  | 'lucide:circle-percent'
+  | 'lucide:circle-play'
+  | 'lucide:circle-plus'
+  | 'lucide:circle-pound-sterling'
+  | 'lucide:circle-power'
+  | 'lucide:circle-slash-2'
+  | 'lucide:circle-slash'
+  | 'lucide:circle-small'
+  | 'lucide:circle-stop'
+  | 'lucide:circle-user-round'
+  | 'lucide:circle-user'
+  | 'lucide:circle-x'
+  | 'lucide:circle'
+  | 'lucide:circuit-board'
+  | 'lucide:citrus'
+  | 'lucide:clapperboard'
+  | 'lucide:clipboard-check'
+  | 'lucide:clipboard-copy'
+  | 'lucide:clipboard-list'
+  | 'lucide:clipboard-minus'
+  | 'lucide:clipboard-paste'
+  | 'lucide:clipboard-pen-line'
+  | 'lucide:clipboard-pen'
+  | 'lucide:clipboard-plus'
+  | 'lucide:clipboard-type'
+  | 'lucide:clipboard-x'
+  | 'lucide:clipboard'
+  | 'lucide:clock-1'
+  | 'lucide:clock-10'
+  | 'lucide:clock-11'
+  | 'lucide:clock-12'
+  | 'lucide:clock-2'
+  | 'lucide:clock-3'
+  | 'lucide:clock-4'
+  | 'lucide:clock-5'
+  | 'lucide:clock-6'
+  | 'lucide:clock-7'
+  | 'lucide:clock-8'
+  | 'lucide:clock-9'
+  | 'lucide:clock-alert'
+  | 'lucide:clock-arrow-down'
+  | 'lucide:clock-arrow-up'
+  | 'lucide:clock-fading'
+  | 'lucide:clock-plus'
+  | 'lucide:clock'
+  | 'lucide:cloud-alert'
+  | 'lucide:cloud-check'
+  | 'lucide:cloud-cog'
+  | 'lucide:cloud-download'
+  | 'lucide:cloud-drizzle'
+  | 'lucide:cloud-fog'
+  | 'lucide:cloud-hail'
+  | 'lucide:cloud-lightning'
+  | 'lucide:cloud-moon-rain'
+  | 'lucide:cloud-moon'
+  | 'lucide:cloud-off'
+  | 'lucide:cloud-rain-wind'
+  | 'lucide:cloud-rain'
+  | 'lucide:cloud-snow'
+  | 'lucide:cloud-sun-rain'
+  | 'lucide:cloud-sun'
+  | 'lucide:cloud-upload'
+  | 'lucide:cloud'
+  | 'lucide:cloudy'
+  | 'lucide:clover'
+  | 'lucide:club'
+  | 'lucide:code-xml'
+  | 'lucide:code'
+  | 'lucide:codepen'
+  | 'lucide:codesandbox'
+  | 'lucide:coffee'
+  | 'lucide:cog'
+  | 'lucide:coins'
+  | 'lucide:columns-2'
+  | 'lucide:columns-3-cog'
+  | 'lucide:columns-3'
+  | 'lucide:columns-4'
+  | 'lucide:combine'
+  | 'lucide:command'
+  | 'lucide:compass'
+  | 'lucide:component'
+  | 'lucide:computer'
+  | 'lucide:concierge-bell'
+  | 'lucide:cone'
+  | 'lucide:construction'
+  | 'lucide:contact-round'
+  | 'lucide:contact'
+  | 'lucide:container'
+  | 'lucide:contrast'
+  | 'lucide:cookie'
+  | 'lucide:cooking-pot'
+  | 'lucide:copy-check'
+  | 'lucide:copy-minus'
+  | 'lucide:copy-plus'
+  | 'lucide:copy-slash'
+  | 'lucide:copy-x'
+  | 'lucide:copy'
+  | 'lucide:copyleft'
+  | 'lucide:copyright'
+  | 'lucide:corner-down-left'
+  | 'lucide:corner-down-right'
+  | 'lucide:corner-left-down'
+  | 'lucide:corner-left-up'
+  | 'lucide:corner-right-down'
+  | 'lucide:corner-right-up'
+  | 'lucide:corner-up-left'
+  | 'lucide:corner-up-right'
+  | 'lucide:cpu'
+  | 'lucide:creative-commons'
+  | 'lucide:credit-card'
+  | 'lucide:croissant'
+  | 'lucide:crop'
+  | 'lucide:cross'
+  | 'lucide:crosshair'
+  | 'lucide:crown'
+  | 'lucide:cuboid'
+  | 'lucide:cup-soda'
+  | 'lucide:currency'
+  | 'lucide:cylinder'
+  | 'lucide:dam'
+  | 'lucide:database-backup'
+  | 'lucide:database-zap'
+  | 'lucide:database'
+  | 'lucide:decimals-arrow-left'
+  | 'lucide:decimals-arrow-right'
+  | 'lucide:delete'
+  | 'lucide:dessert'
+  | 'lucide:diameter'
+  | 'lucide:diamond-minus'
+  | 'lucide:diamond-percent'
+  | 'lucide:diamond-plus'
+  | 'lucide:diamond'
+  | 'lucide:dice-1'
+  | 'lucide:dice-2'
+  | 'lucide:dice-3'
+  | 'lucide:dice-4'
+  | 'lucide:dice-5'
+  | 'lucide:dice-6'
+  | 'lucide:dices'
+  | 'lucide:diff'
+  | 'lucide:disc-2'
+  | 'lucide:disc-3'
+  | 'lucide:disc-album'
+  | 'lucide:disc'
+  | 'lucide:divide'
+  | 'lucide:dna-off'
+  | 'lucide:dna'
+  | 'lucide:dock'
+  | 'lucide:dog'
+  | 'lucide:dollar-sign'
+  | 'lucide:donut'
+  | 'lucide:door-closed-locked'
+  | 'lucide:door-closed'
+  | 'lucide:door-open'
+  | 'lucide:dot'
+  | 'lucide:download'
+  | 'lucide:drafting-compass'
+  | 'lucide:drama'
+  | 'lucide:dribbble'
+  | 'lucide:drill'
+  | 'lucide:droplet-off'
+  | 'lucide:droplet'
+  | 'lucide:droplets'
+  | 'lucide:drum'
+  | 'lucide:drumstick'
+  | 'lucide:dumbbell'
+  | 'lucide:ear-off'
+  | 'lucide:ear'
+  | 'lucide:earth-lock'
+  | 'lucide:earth'
+  | 'lucide:eclipse'
+  | 'lucide:egg-fried'
+  | 'lucide:egg-off'
+  | 'lucide:egg'
+  | 'lucide:ellipsis-vertical'
+  | 'lucide:ellipsis'
+  | 'lucide:equal-approximately'
+  | 'lucide:equal-not'
+  | 'lucide:equal'
+  | 'lucide:eraser'
+  | 'lucide:ethernet-port'
+  | 'lucide:euro'
+  | 'lucide:expand'
+  | 'lucide:external-link'
+  | 'lucide:eye-closed'
+  | 'lucide:eye-off'
+  | 'lucide:eye'
+  | 'lucide:facebook'
+  | 'lucide:factory'
+  | 'lucide:fan'
+  | 'lucide:fast-forward'
+  | 'lucide:feather'
+  | 'lucide:fence'
+  | 'lucide:ferris-wheel'
+  | 'lucide:figma'
+  | 'lucide:file-archive'
+  | 'lucide:file-audio-2'
+  | 'lucide:file-audio'
+  | 'lucide:file-axis-3d'
+  | 'lucide:file-badge-2'
+  | 'lucide:file-badge'
+  | 'lucide:file-box'
+  | 'lucide:file-chart-column-increasing'
+  | 'lucide:file-chart-column'
+  | 'lucide:file-chart-line'
+  | 'lucide:file-chart-pie'
+  | 'lucide:file-check-2'
+  | 'lucide:file-check'
+  | 'lucide:file-clock'
+  | 'lucide:file-code-2'
+  | 'lucide:file-code'
+  | 'lucide:file-cog'
+  | 'lucide:file-diff'
+  | 'lucide:file-digit'
+  | 'lucide:file-down'
+  | 'lucide:file-heart'
+  | 'lucide:file-image'
+  | 'lucide:file-input'
+  | 'lucide:file-json-2'
+  | 'lucide:file-json'
+  | 'lucide:file-key-2'
+  | 'lucide:file-key'
+  | 'lucide:file-lock-2'
+  | 'lucide:file-lock'
+  | 'lucide:file-minus-2'
+  | 'lucide:file-minus'
+  | 'lucide:file-music'
+  | 'lucide:file-output'
+  | 'lucide:file-pen-line'
+  | 'lucide:file-pen'
+  | 'lucide:file-plus-2'
+  | 'lucide:file-plus'
+  | 'lucide:file-question'
+  | 'lucide:file-scan'
+  | 'lucide:file-search-2'
+  | 'lucide:file-search'
+  | 'lucide:file-sliders'
+  | 'lucide:file-spreadsheet'
+  | 'lucide:file-stack'
+  | 'lucide:file-symlink'
+  | 'lucide:file-terminal'
+  | 'lucide:file-text'
+  | 'lucide:file-type-2'
+  | 'lucide:file-type'
+  | 'lucide:file-up'
+  | 'lucide:file-user'
+  | 'lucide:file-video-2'
+  | 'lucide:file-video'
+  | 'lucide:file-volume-2'
+  | 'lucide:file-volume'
+  | 'lucide:file-warning'
+  | 'lucide:file-x-2'
+  | 'lucide:file-x'
+  | 'lucide:file'
+  | 'lucide:files'
+  | 'lucide:film'
+  | 'lucide:fingerprint'
+  | 'lucide:fire-extinguisher'
+  | 'lucide:fish-off'
+  | 'lucide:fish-symbol'
+  | 'lucide:fish'
+  | 'lucide:flag-off'
+  | 'lucide:flag-triangle-left'
+  | 'lucide:flag-triangle-right'
+  | 'lucide:flag'
+  | 'lucide:flame-kindling'
+  | 'lucide:flame'
+  | 'lucide:flashlight-off'
+  | 'lucide:flashlight'
+  | 'lucide:flask-conical-off'
+  | 'lucide:flask-conical'
+  | 'lucide:flask-round'
+  | 'lucide:flip-horizontal-2'
+  | 'lucide:flip-horizontal'
+  | 'lucide:flip-vertical-2'
+  | 'lucide:flip-vertical'
+  | 'lucide:flower-2'
+  | 'lucide:flower'
+  | 'lucide:focus'
+  | 'lucide:fold-horizontal'
+  | 'lucide:fold-vertical'
+  | 'lucide:folder-archive'
+  | 'lucide:folder-check'
+  | 'lucide:folder-clock'
+  | 'lucide:folder-closed'
+  | 'lucide:folder-code'
+  | 'lucide:folder-cog'
+  | 'lucide:folder-dot'
+  | 'lucide:folder-down'
+  | 'lucide:folder-git-2'
+  | 'lucide:folder-git'
+  | 'lucide:folder-heart'
+  | 'lucide:folder-input'
+  | 'lucide:folder-kanban'
+  | 'lucide:folder-key'
+  | 'lucide:folder-lock'
+  | 'lucide:folder-minus'
+  | 'lucide:folder-open-dot'
+  | 'lucide:folder-open'
+  | 'lucide:folder-output'
+  | 'lucide:folder-pen'
+  | 'lucide:folder-plus'
+  | 'lucide:folder-root'
+  | 'lucide:folder-search-2'
+  | 'lucide:folder-search'
+  | 'lucide:folder-symlink'
+  | 'lucide:folder-sync'
+  | 'lucide:folder-tree'
+  | 'lucide:folder-up'
+  | 'lucide:folder-x'
+  | 'lucide:folder'
+  | 'lucide:folders'
+  | 'lucide:footprints'
+  | 'lucide:forklift'
+  | 'lucide:forward'
+  | 'lucide:frame'
+  | 'lucide:framer'
+  | 'lucide:frown'
+  | 'lucide:fuel'
+  | 'lucide:fullscreen'
+  | 'lucide:funnel-plus'
+  | 'lucide:funnel-x'
+  | 'lucide:funnel'
+  | 'lucide:gallery-horizontal-end'
+  | 'lucide:gallery-horizontal'
+  | 'lucide:gallery-thumbnails'
+  | 'lucide:gallery-vertical-end'
+  | 'lucide:gallery-vertical'
+  | 'lucide:gamepad-2'
+  | 'lucide:gamepad'
+  | 'lucide:gauge'
+  | 'lucide:gavel'
+  | 'lucide:gem'
+  | 'lucide:ghost'
+  | 'lucide:gift'
+  | 'lucide:git-branch-plus'
+  | 'lucide:git-branch'
+  | 'lucide:git-commit-horizontal'
+  | 'lucide:git-commit-vertical'
+  | 'lucide:git-compare-arrows'
+  | 'lucide:git-compare'
+  | 'lucide:git-fork'
+  | 'lucide:git-graph'
+  | 'lucide:git-merge'
+  | 'lucide:git-pull-request-arrow'
+  | 'lucide:git-pull-request-closed'
+  | 'lucide:git-pull-request-create-arrow'
+  | 'lucide:git-pull-request-create'
+  | 'lucide:git-pull-request-draft'
+  | 'lucide:git-pull-request'
+  | 'lucide:github'
+  | 'lucide:gitlab'
+  | 'lucide:glass-water'
+  | 'lucide:glasses'
+  | 'lucide:globe-lock'
+  | 'lucide:globe'
+  | 'lucide:goal'
+  | 'lucide:gpu'
+  | 'lucide:grab'
+  | 'lucide:graduation-cap'
+  | 'lucide:grape'
+  | 'lucide:grid-2x2-check'
+  | 'lucide:grid-2x2-plus'
+  | 'lucide:grid-2x2-x'
+  | 'lucide:grid-2x2'
+  | 'lucide:grid-3x2'
+  | 'lucide:grid-3x3'
+  | 'lucide:grip-horizontal'
+  | 'lucide:grip-vertical'
+  | 'lucide:grip'
+  | 'lucide:group'
+  | 'lucide:guitar'
+  | 'lucide:ham'
+  | 'lucide:hamburger'
+  | 'lucide:hammer'
+  | 'lucide:hand-coins'
+  | 'lucide:hand-heart'
+  | 'lucide:hand-helping'
+  | 'lucide:hand-metal'
+  | 'lucide:hand-platter'
+  | 'lucide:hand'
+  | 'lucide:handshake'
+  | 'lucide:hard-drive-download'
+  | 'lucide:hard-drive-upload'
+  | 'lucide:hard-drive'
+  | 'lucide:hard-hat'
+  | 'lucide:hash'
+  | 'lucide:haze'
+  | 'lucide:hdmi-port'
+  | 'lucide:heading-1'
+  | 'lucide:heading-2'
+  | 'lucide:heading-3'
+  | 'lucide:heading-4'
+  | 'lucide:heading-5'
+  | 'lucide:heading-6'
+  | 'lucide:heading'
+  | 'lucide:headphone-off'
+  | 'lucide:headphones'
+  | 'lucide:headset'
+  | 'lucide:heart-crack'
+  | 'lucide:heart-handshake'
+  | 'lucide:heart-minus'
+  | 'lucide:heart-off'
+  | 'lucide:heart-plus'
+  | 'lucide:heart-pulse'
+  | 'lucide:heart'
+  | 'lucide:heater'
+  | 'lucide:hexagon'
+  | 'lucide:highlighter'
+  | 'lucide:history'
+  | 'lucide:hop-off'
+  | 'lucide:hop'
+  | 'lucide:hospital'
+  | 'lucide:hotel'
+  | 'lucide:hourglass'
+  | 'lucide:house-plug'
+  | 'lucide:house-plus'
+  | 'lucide:house-wifi'
+  | 'lucide:house'
+  | 'lucide:ice-cream-bowl'
+  | 'lucide:ice-cream-cone'
+  | 'lucide:id-card-lanyard'
+  | 'lucide:id-card'
+  | 'lucide:image-down'
+  | 'lucide:image-minus'
+  | 'lucide:image-off'
+  | 'lucide:image-play'
+  | 'lucide:image-plus'
+  | 'lucide:image-up'
+  | 'lucide:image-upscale'
+  | 'lucide:image'
+  | 'lucide:images'
+  | 'lucide:import'
+  | 'lucide:inbox'
+  | 'lucide:indent-decrease'
+  | 'lucide:indent-increase'
+  | 'lucide:indian-rupee'
+  | 'lucide:infinity'
+  | 'lucide:info'
+  | 'lucide:inspection-panel'
+  | 'lucide:instagram'
+  | 'lucide:italic'
+  | 'lucide:iteration-ccw'
+  | 'lucide:iteration-cw'
+  | 'lucide:japanese-yen'
+  | 'lucide:joystick'
+  | 'lucide:kanban'
+  | 'lucide:key-round'
+  | 'lucide:key-square'
+  | 'lucide:key'
+  | 'lucide:keyboard-music'
+  | 'lucide:keyboard-off'
+  | 'lucide:keyboard'
+  | 'lucide:lamp-ceiling'
+  | 'lucide:lamp-desk'
+  | 'lucide:lamp-floor'
+  | 'lucide:lamp-wall-down'
+  | 'lucide:lamp-wall-up'
+  | 'lucide:lamp'
+  | 'lucide:land-plot'
+  | 'lucide:landmark'
+  | 'lucide:languages'
+  | 'lucide:laptop-minimal-check'
+  | 'lucide:laptop-minimal'
+  | 'lucide:laptop'
+  | 'lucide:lasso-select'
+  | 'lucide:lasso'
+  | 'lucide:laugh'
+  | 'lucide:layers-2'
+  | 'lucide:layers'
+  | 'lucide:layout-dashboard'
+  | 'lucide:layout-grid'
+  | 'lucide:layout-list'
+  | 'lucide:layout-panel-left'
+  | 'lucide:layout-panel-top'
+  | 'lucide:layout-template'
+  | 'lucide:leaf'
+  | 'lucide:leafy-green'
+  | 'lucide:lectern'
+  | 'lucide:letter-text'
+  | 'lucide:library-big'
+  | 'lucide:library'
+  | 'lucide:life-buoy'
+  | 'lucide:ligature'
+  | 'lucide:lightbulb-off'
+  | 'lucide:lightbulb'
+  | 'lucide:link-2-off'
+  | 'lucide:link-2'
+  | 'lucide:link'
+  | 'lucide:linkedin'
+  | 'lucide:list-check'
+  | 'lucide:list-checks'
+  | 'lucide:list-collapse'
+  | 'lucide:list-end'
+  | 'lucide:list-filter-plus'
+  | 'lucide:list-filter'
+  | 'lucide:list-minus'
+  | 'lucide:list-music'
+  | 'lucide:list-ordered'
+  | 'lucide:list-plus'
+  | 'lucide:list-restart'
+  | 'lucide:list-start'
+  | 'lucide:list-todo'
+  | 'lucide:list-tree'
+  | 'lucide:list-video'
+  | 'lucide:list-x'
+  | 'lucide:list'
+  | 'lucide:loader-circle'
+  | 'lucide:loader-pinwheel'
+  | 'lucide:loader'
+  | 'lucide:locate-fixed'
+  | 'lucide:locate-off'
+  | 'lucide:locate'
+  | 'lucide:location-edit'
+  | 'lucide:lock-keyhole-open'
+  | 'lucide:lock-keyhole'
+  | 'lucide:lock-open'
+  | 'lucide:lock'
+  | 'lucide:log-in'
+  | 'lucide:log-out'
+  | 'lucide:logs'
+  | 'lucide:lollipop'
+  | 'lucide:luggage'
+  | 'lucide:magnet'
+  | 'lucide:mail-check'
+  | 'lucide:mail-minus'
+  | 'lucide:mail-open'
+  | 'lucide:mail-plus'
+  | 'lucide:mail-question'
+  | 'lucide:mail-search'
+  | 'lucide:mail-warning'
+  | 'lucide:mail-x'
+  | 'lucide:mail'
+  | 'lucide:mailbox'
+  | 'lucide:mails'
+  | 'lucide:map-pin-check-inside'
+  | 'lucide:map-pin-check'
+  | 'lucide:map-pin-house'
+  | 'lucide:map-pin-minus-inside'
+  | 'lucide:map-pin-minus'
+  | 'lucide:map-pin-off'
+  | 'lucide:map-pin-plus-inside'
+  | 'lucide:map-pin-plus'
+  | 'lucide:map-pin-x-inside'
+  | 'lucide:map-pin-x'
+  | 'lucide:map-pin'
+  | 'lucide:map-pinned'
+  | 'lucide:map-plus'
+  | 'lucide:map'
+  | 'lucide:mars-stroke'
+  | 'lucide:mars'
+  | 'lucide:martini'
+  | 'lucide:maximize-2'
+  | 'lucide:maximize'
+  | 'lucide:medal'
+  | 'lucide:megaphone-off'
+  | 'lucide:megaphone'
+  | 'lucide:meh'
+  | 'lucide:memory-stick'
+  | 'lucide:menu'
+  | 'lucide:merge'
+  | 'lucide:message-circle-code'
+  | 'lucide:message-circle-dashed'
+  | 'lucide:message-circle-heart'
+  | 'lucide:message-circle-more'
+  | 'lucide:message-circle-off'
+  | 'lucide:message-circle-plus'
+  | 'lucide:message-circle-question'
+  | 'lucide:message-circle-reply'
+  | 'lucide:message-circle-warning'
+  | 'lucide:message-circle-x'
+  | 'lucide:message-circle'
+  | 'lucide:message-square-code'
+  | 'lucide:message-square-dashed'
+  | 'lucide:message-square-diff'
+  | 'lucide:message-square-dot'
+  | 'lucide:message-square-heart'
+  | 'lucide:message-square-lock'
+  | 'lucide:message-square-more'
+  | 'lucide:message-square-off'
+  | 'lucide:message-square-plus'
+  | 'lucide:message-square-quote'
+  | 'lucide:message-square-reply'
+  | 'lucide:message-square-share'
+  | 'lucide:message-square-text'
+  | 'lucide:message-square-warning'
+  | 'lucide:message-square-x'
+  | 'lucide:message-square'
+  | 'lucide:messages-square'
+  | 'lucide:mic-off'
+  | 'lucide:mic-vocal'
+  | 'lucide:mic'
+  | 'lucide:microchip'
+  | 'lucide:microscope'
+  | 'lucide:microwave'
+  | 'lucide:milestone'
+  | 'lucide:milk-off'
+  | 'lucide:milk'
+  | 'lucide:minimize-2'
+  | 'lucide:minimize'
+  | 'lucide:minus'
+  | 'lucide:monitor-check'
+  | 'lucide:monitor-cog'
+  | 'lucide:monitor-dot'
+  | 'lucide:monitor-down'
+  | 'lucide:monitor-off'
+  | 'lucide:monitor-pause'
+  | 'lucide:monitor-play'
+  | 'lucide:monitor-smartphone'
+  | 'lucide:monitor-speaker'
+  | 'lucide:monitor-stop'
+  | 'lucide:monitor-up'
+  | 'lucide:monitor-x'
+  | 'lucide:monitor'
+  | 'lucide:moon-star'
+  | 'lucide:moon'
+  | 'lucide:mountain-snow'
+  | 'lucide:mountain'
+  | 'lucide:mouse-off'
+  | 'lucide:mouse-pointer-2'
+  | 'lucide:mouse-pointer-ban'
+  | 'lucide:mouse-pointer-click'
+  | 'lucide:mouse-pointer'
+  | 'lucide:mouse'
+  | 'lucide:move-3d'
+  | 'lucide:move-diagonal-2'
+  | 'lucide:move-diagonal'
+  | 'lucide:move-down-left'
+  | 'lucide:move-down-right'
+  | 'lucide:move-down'
+  | 'lucide:move-horizontal'
+  | 'lucide:move-left'
+  | 'lucide:move-right'
+  | 'lucide:move-up-left'
+  | 'lucide:move-up-right'
+  | 'lucide:move-up'
+  | 'lucide:move-vertical'
+  | 'lucide:move'
+  | 'lucide:music-2'
+  | 'lucide:music-3'
+  | 'lucide:music-4'
+  | 'lucide:music'
+  | 'lucide:navigation-2-off'
+  | 'lucide:navigation-2'
+  | 'lucide:navigation-off'
+  | 'lucide:navigation'
+  | 'lucide:network'
+  | 'lucide:newspaper'
+  | 'lucide:nfc'
+  | 'lucide:non-binary'
+  | 'lucide:notebook-pen'
+  | 'lucide:notebook-tabs'
+  | 'lucide:notebook-text'
+  | 'lucide:notebook'
+  | 'lucide:notepad-text-dashed'
+  | 'lucide:notepad-text'
+  | 'lucide:nut-off'
+  | 'lucide:nut'
+  | 'lucide:octagon-alert'
+  | 'lucide:octagon-minus'
+  | 'lucide:octagon-pause'
+  | 'lucide:octagon-x'
+  | 'lucide:octagon'
+  | 'lucide:omega'
+  | 'lucide:option'
+  | 'lucide:orbit'
+  | 'lucide:origami'
+  | 'lucide:package-2'
+  | 'lucide:package-check'
+  | 'lucide:package-minus'
+  | 'lucide:package-open'
+  | 'lucide:package-plus'
+  | 'lucide:package-search'
+  | 'lucide:package-x'
+  | 'lucide:package'
+  | 'lucide:paint-bucket'
+  | 'lucide:paint-roller'
+  | 'lucide:paintbrush-vertical'
+  | 'lucide:paintbrush'
+  | 'lucide:palette'
+  | 'lucide:panda'
+  | 'lucide:panel-bottom-close'
+  | 'lucide:panel-bottom-dashed'
+  | 'lucide:panel-bottom-open'
+  | 'lucide:panel-bottom'
+  | 'lucide:panel-left-close'
+  | 'lucide:panel-left-dashed'
+  | 'lucide:panel-left-open'
+  | 'lucide:panel-left'
+  | 'lucide:panel-right-close'
+  | 'lucide:panel-right-dashed'
+  | 'lucide:panel-right-open'
+  | 'lucide:panel-right'
+  | 'lucide:panel-top-close'
+  | 'lucide:panel-top-dashed'
+  | 'lucide:panel-top-open'
+  | 'lucide:panel-top'
+  | 'lucide:panels-left-bottom'
+  | 'lucide:panels-right-bottom'
+  | 'lucide:panels-top-left'
+  | 'lucide:paperclip'
+  | 'lucide:parentheses'
+  | 'lucide:parking-meter'
+  | 'lucide:party-popper'
+  | 'lucide:pause'
+  | 'lucide:paw-print'
+  | 'lucide:pc-case'
+  | 'lucide:pen-line'
+  | 'lucide:pen-off'
+  | 'lucide:pen-tool'
+  | 'lucide:pen'
+  | 'lucide:pencil-line'
+  | 'lucide:pencil-off'
+  | 'lucide:pencil-ruler'
+  | 'lucide:pencil'
+  | 'lucide:pentagon'
+  | 'lucide:percent'
+  | 'lucide:person-standing'
+  | 'lucide:philippine-peso'
+  | 'lucide:phone-call'
+  | 'lucide:phone-forwarded'
+  | 'lucide:phone-incoming'
+  | 'lucide:phone-missed'
+  | 'lucide:phone-off'
+  | 'lucide:phone-outgoing'
+  | 'lucide:phone'
+  | 'lucide:pi'
+  | 'lucide:piano'
+  | 'lucide:pickaxe'
+  | 'lucide:picture-in-picture-2'
+  | 'lucide:picture-in-picture'
+  | 'lucide:piggy-bank'
+  | 'lucide:pilcrow-left'
+  | 'lucide:pilcrow-right'
+  | 'lucide:pilcrow'
+  | 'lucide:pill-bottle'
+  | 'lucide:pill'
+  | 'lucide:pin-off'
+  | 'lucide:pin'
+  | 'lucide:pipette'
+  | 'lucide:pizza'
+  | 'lucide:plane-landing'
+  | 'lucide:plane-takeoff'
+  | 'lucide:plane'
+  | 'lucide:play'
+  | 'lucide:plug-2'
+  | 'lucide:plug-zap'
+  | 'lucide:plug'
+  | 'lucide:plus'
+  | 'lucide:pocket-knife'
+  | 'lucide:pocket'
+  | 'lucide:podcast'
+  | 'lucide:pointer-off'
+  | 'lucide:pointer'
+  | 'lucide:popcorn'
+  | 'lucide:popsicle'
+  | 'lucide:pound-sterling'
+  | 'lucide:power-off'
+  | 'lucide:power'
+  | 'lucide:presentation'
+  | 'lucide:printer-check'
+  | 'lucide:printer'
+  | 'lucide:projector'
+  | 'lucide:proportions'
+  | 'lucide:puzzle'
+  | 'lucide:pyramid'
+  | 'lucide:qr-code'
+  | 'lucide:quote'
+  | 'lucide:rabbit'
+  | 'lucide:radar'
+  | 'lucide:radiation'
+  | 'lucide:radical'
+  | 'lucide:radio-receiver'
+  | 'lucide:radio-tower'
+  | 'lucide:radio'
+  | 'lucide:radius'
+  | 'lucide:rail-symbol'
+  | 'lucide:rainbow'
+  | 'lucide:rat'
+  | 'lucide:ratio'
+  | 'lucide:receipt-cent'
+  | 'lucide:receipt-euro'
+  | 'lucide:receipt-indian-rupee'
+  | 'lucide:receipt-japanese-yen'
+  | 'lucide:receipt-pound-sterling'
+  | 'lucide:receipt-russian-ruble'
+  | 'lucide:receipt-swiss-franc'
+  | 'lucide:receipt-text'
+  | 'lucide:receipt'
+  | 'lucide:rectangle-ellipsis'
+  | 'lucide:rectangle-goggles'
+  | 'lucide:rectangle-horizontal'
+  | 'lucide:rectangle-vertical'
+  | 'lucide:recycle'
+  | 'lucide:redo-2'
+  | 'lucide:redo-dot'
+  | 'lucide:redo'
+  | 'lucide:refresh-ccw-dot'
+  | 'lucide:refresh-ccw'
+  | 'lucide:refresh-cw-off'
+  | 'lucide:refresh-cw'
+  | 'lucide:refrigerator'
+  | 'lucide:regex'
+  | 'lucide:remove-formatting'
+  | 'lucide:repeat-1'
+  | 'lucide:repeat-2'
+  | 'lucide:repeat'
+  | 'lucide:replace-all'
+  | 'lucide:replace'
+  | 'lucide:reply-all'
+  | 'lucide:reply'
+  | 'lucide:rewind'
+  | 'lucide:ribbon'
+  | 'lucide:rocket'
+  | 'lucide:rocking-chair'
+  | 'lucide:roller-coaster'
+  | 'lucide:rotate-3d'
+  | 'lucide:rotate-ccw-key'
+  | 'lucide:rotate-ccw-square'
+  | 'lucide:rotate-ccw'
+  | 'lucide:rotate-cw-square'
+  | 'lucide:rotate-cw'
+  | 'lucide:route-off'
+  | 'lucide:route'
+  | 'lucide:router'
+  | 'lucide:rows-2'
+  | 'lucide:rows-3'
+  | 'lucide:rows-4'
+  | 'lucide:rss'
+  | 'lucide:ruler-dimension-line'
+  | 'lucide:ruler'
+  | 'lucide:russian-ruble'
+  | 'lucide:sailboat'
+  | 'lucide:salad'
+  | 'lucide:sandwich'
+  | 'lucide:satellite-dish'
+  | 'lucide:satellite'
+  | 'lucide:saudi-riyal'
+  | 'lucide:save-all'
+  | 'lucide:save-off'
+  | 'lucide:save'
+  | 'lucide:scale-3d'
+  | 'lucide:scale'
+  | 'lucide:scaling'
+  | 'lucide:scan-barcode'
+  | 'lucide:scan-eye'
+  | 'lucide:scan-face'
+  | 'lucide:scan-heart'
+  | 'lucide:scan-line'
+  | 'lucide:scan-qr-code'
+  | 'lucide:scan-search'
+  | 'lucide:scan-text'
+  | 'lucide:scan'
+  | 'lucide:school'
+  | 'lucide:scissors-line-dashed'
+  | 'lucide:scissors'
+  | 'lucide:screen-share-off'
+  | 'lucide:screen-share'
+  | 'lucide:scroll-text'
+  | 'lucide:scroll'
+  | 'lucide:search-check'
+  | 'lucide:search-code'
+  | 'lucide:search-slash'
+  | 'lucide:search-x'
+  | 'lucide:search'
+  | 'lucide:section'
+  | 'lucide:send-horizontal'
+  | 'lucide:send-to-back'
+  | 'lucide:send'
+  | 'lucide:separator-horizontal'
+  | 'lucide:separator-vertical'
+  | 'lucide:server-cog'
+  | 'lucide:server-crash'
+  | 'lucide:server-off'
+  | 'lucide:server'
+  | 'lucide:settings-2'
+  | 'lucide:settings'
+  | 'lucide:shapes'
+  | 'lucide:share-2'
+  | 'lucide:share'
+  | 'lucide:sheet'
+  | 'lucide:shell'
+  | 'lucide:shield-alert'
+  | 'lucide:shield-ban'
+  | 'lucide:shield-check'
+  | 'lucide:shield-ellipsis'
+  | 'lucide:shield-half'
+  | 'lucide:shield-minus'
+  | 'lucide:shield-off'
+  | 'lucide:shield-plus'
+  | 'lucide:shield-question'
+  | 'lucide:shield-user'
+  | 'lucide:shield-x'
+  | 'lucide:shield'
+  | 'lucide:ship-wheel'
+  | 'lucide:ship'
+  | 'lucide:shirt'
+  | 'lucide:shopping-bag'
+  | 'lucide:shopping-basket'
+  | 'lucide:shopping-cart'
+  | 'lucide:shovel'
+  | 'lucide:shower-head'
+  | 'lucide:shredder'
+  | 'lucide:shrimp'
+  | 'lucide:shrink'
+  | 'lucide:shrub'
+  | 'lucide:shuffle'
+  | 'lucide:sigma'
+  | 'lucide:signal-high'
+  | 'lucide:signal-low'
+  | 'lucide:signal-medium'
+  | 'lucide:signal-zero'
+  | 'lucide:signal'
+  | 'lucide:signature'
+  | 'lucide:signpost-big'
+  | 'lucide:signpost'
+  | 'lucide:siren'
+  | 'lucide:skip-back'
+  | 'lucide:skip-forward'
+  | 'lucide:skull'
+  | 'lucide:slack'
+  | 'lucide:slash'
+  | 'lucide:slice'
+  | 'lucide:sliders-horizontal'
+  | 'lucide:sliders-vertical'
+  | 'lucide:smartphone-charging'
+  | 'lucide:smartphone-nfc'
+  | 'lucide:smartphone'
+  | 'lucide:smile-plus'
+  | 'lucide:smile'
+  | 'lucide:snail'
+  | 'lucide:snowflake'
+  | 'lucide:soap-dispenser-droplet'
+  | 'lucide:sofa'
+  | 'lucide:soup'
+  | 'lucide:space'
+  | 'lucide:spade'
+  | 'lucide:sparkle'
+  | 'lucide:sparkles'
+  | 'lucide:speaker'
+  | 'lucide:speech'
+  | 'lucide:spell-check-2'
+  | 'lucide:spell-check'
+  | 'lucide:spline-pointer'
+  | 'lucide:spline'
+  | 'lucide:split'
+  | 'lucide:spray-can'
+  | 'lucide:sprout'
+  | 'lucide:square-activity'
+  | 'lucide:square-arrow-down-left'
+  | 'lucide:square-arrow-down-right'
+  | 'lucide:square-arrow-down'
+  | 'lucide:square-arrow-left'
+  | 'lucide:square-arrow-out-down-left'
+  | 'lucide:square-arrow-out-down-right'
+  | 'lucide:square-arrow-out-up-left'
+  | 'lucide:square-arrow-out-up-right'
+  | 'lucide:square-arrow-right'
+  | 'lucide:square-arrow-up-left'
+  | 'lucide:square-arrow-up-right'
+  | 'lucide:square-arrow-up'
+  | 'lucide:square-asterisk'
+  | 'lucide:square-bottom-dashed-scissors'
+  | 'lucide:square-chart-gantt'
+  | 'lucide:square-check-big'
+  | 'lucide:square-check'
+  | 'lucide:square-chevron-down'
+  | 'lucide:square-chevron-left'
+  | 'lucide:square-chevron-right'
+  | 'lucide:square-chevron-up'
+  | 'lucide:square-code'
+  | 'lucide:square-dashed-bottom-code'
+  | 'lucide:square-dashed-bottom'
+  | 'lucide:square-dashed-kanban'
+  | 'lucide:square-dashed-mouse-pointer'
+  | 'lucide:square-dashed-top-solid'
+  | 'lucide:square-dashed'
+  | 'lucide:square-divide'
+  | 'lucide:square-dot'
+  | 'lucide:square-equal'
+  | 'lucide:square-function'
+  | 'lucide:square-kanban'
+  | 'lucide:square-library'
+  | 'lucide:square-m'
+  | 'lucide:square-menu'
+  | 'lucide:square-minus'
+  | 'lucide:square-mouse-pointer'
+  | 'lucide:square-parking-off'
+  | 'lucide:square-parking'
+  | 'lucide:square-pen'
+  | 'lucide:square-percent'
+  | 'lucide:square-pi'
+  | 'lucide:square-pilcrow'
+  | 'lucide:square-play'
+  | 'lucide:square-plus'
+  | 'lucide:square-power'
+  | 'lucide:square-radical'
+  | 'lucide:square-round-corner'
+  | 'lucide:square-scissors'
+  | 'lucide:square-sigma'
+  | 'lucide:square-slash'
+  | 'lucide:square-split-horizontal'
+  | 'lucide:square-split-vertical'
+  | 'lucide:square-square'
+  | 'lucide:square-stack'
+  | 'lucide:square-terminal'
+  | 'lucide:square-user-round'
+  | 'lucide:square-user'
+  | 'lucide:square-x'
+  | 'lucide:square'
+  | 'lucide:squares-exclude'
+  | 'lucide:squares-intersect'
+  | 'lucide:squares-subtract'
+  | 'lucide:squares-unite'
+  | 'lucide:squircle'
+  | 'lucide:squirrel'
+  | 'lucide:stamp'
+  | 'lucide:star-half'
+  | 'lucide:star-off'
+  | 'lucide:star'
+  | 'lucide:step-back'
+  | 'lucide:step-forward'
+  | 'lucide:stethoscope'
+  | 'lucide:sticker'
+  | 'lucide:sticky-note'
+  | 'lucide:store'
+  | 'lucide:stretch-horizontal'
+  | 'lucide:stretch-vertical'
+  | 'lucide:strikethrough'
+  | 'lucide:subscript'
+  | 'lucide:sun-dim'
+  | 'lucide:sun-medium'
+  | 'lucide:sun-moon'
+  | 'lucide:sun-snow'
+  | 'lucide:sun'
+  | 'lucide:sunrise'
+  | 'lucide:sunset'
+  | 'lucide:superscript'
+  | 'lucide:swatch-book'
+  | 'lucide:swiss-franc'
+  | 'lucide:switch-camera'
+  | 'lucide:sword'
+  | 'lucide:swords'
+  | 'lucide:syringe'
+  | 'lucide:table-2'
+  | 'lucide:table-cells-merge'
+  | 'lucide:table-cells-split'
+  | 'lucide:table-columns-split'
+  | 'lucide:table-of-contents'
+  | 'lucide:table-properties'
+  | 'lucide:table-rows-split'
+  | 'lucide:table'
+  | 'lucide:tablet-smartphone'
+  | 'lucide:tablet'
+  | 'lucide:tablets'
+  | 'lucide:tag'
+  | 'lucide:tags'
+  | 'lucide:tally-1'
+  | 'lucide:tally-2'
+  | 'lucide:tally-3'
+  | 'lucide:tally-4'
+  | 'lucide:tally-5'
+  | 'lucide:tangent'
+  | 'lucide:target'
+  | 'lucide:telescope'
+  | 'lucide:tent-tree'
+  | 'lucide:tent'
+  | 'lucide:terminal'
+  | 'lucide:test-tube-diagonal'
+  | 'lucide:test-tube'
+  | 'lucide:test-tubes'
+  | 'lucide:text-cursor-input'
+  | 'lucide:text-cursor'
+  | 'lucide:text-quote'
+  | 'lucide:text-search'
+  | 'lucide:text-select'
+  | 'lucide:text'
+  | 'lucide:theater'
+  | 'lucide:thermometer-snowflake'
+  | 'lucide:thermometer-sun'
+  | 'lucide:thermometer'
+  | 'lucide:thumbs-down'
+  | 'lucide:thumbs-up'
+  | 'lucide:ticket-check'
+  | 'lucide:ticket-minus'
+  | 'lucide:ticket-percent'
+  | 'lucide:ticket-plus'
+  | 'lucide:ticket-slash'
+  | 'lucide:ticket-x'
+  | 'lucide:ticket'
+  | 'lucide:tickets-plane'
+  | 'lucide:tickets'
+  | 'lucide:timer-off'
+  | 'lucide:timer-reset'
+  | 'lucide:timer'
+  | 'lucide:toggle-left'
+  | 'lucide:toggle-right'
+  | 'lucide:toilet'
+  | 'lucide:tornado'
+  | 'lucide:torus'
+  | 'lucide:touchpad-off'
+  | 'lucide:touchpad'
+  | 'lucide:tower-control'
+  | 'lucide:toy-brick'
+  | 'lucide:tractor'
+  | 'lucide:traffic-cone'
+  | 'lucide:train-front-tunnel'
+  | 'lucide:train-front'
+  | 'lucide:train-track'
+  | 'lucide:tram-front'
+  | 'lucide:transgender'
+  | 'lucide:trash-2'
+  | 'lucide:trash'
+  | 'lucide:tree-deciduous'
+  | 'lucide:tree-palm'
+  | 'lucide:tree-pine'
+  | 'lucide:trees'
+  | 'lucide:trello'
+  | 'lucide:trending-down'
+  | 'lucide:trending-up-down'
+  | 'lucide:trending-up'
+  | 'lucide:triangle-alert'
+  | 'lucide:triangle-dashed'
+  | 'lucide:triangle-right'
+  | 'lucide:triangle'
+  | 'lucide:trophy'
+  | 'lucide:truck-electric'
+  | 'lucide:truck'
+  | 'lucide:turtle'
+  | 'lucide:tv-minimal-play'
+  | 'lucide:tv-minimal'
+  | 'lucide:tv'
+  | 'lucide:twitch'
+  | 'lucide:twitter'
+  | 'lucide:type-outline'
+  | 'lucide:type'
+  | 'lucide:umbrella-off'
+  | 'lucide:umbrella'
+  | 'lucide:underline'
+  | 'lucide:undo-2'
+  | 'lucide:undo-dot'
+  | 'lucide:undo'
+  | 'lucide:unfold-horizontal'
+  | 'lucide:unfold-vertical'
+  | 'lucide:ungroup'
+  | 'lucide:university'
+  | 'lucide:unlink-2'
+  | 'lucide:unlink'
+  | 'lucide:unplug'
+  | 'lucide:upload'
+  | 'lucide:usb'
+  | 'lucide:user-check'
+  | 'lucide:user-cog'
+  | 'lucide:user-lock'
+  | 'lucide:user-minus'
+  | 'lucide:user-pen'
+  | 'lucide:user-plus'
+  | 'lucide:user-round-check'
+  | 'lucide:user-round-cog'
+  | 'lucide:user-round-minus'
+  | 'lucide:user-round-pen'
+  | 'lucide:user-round-plus'
+  | 'lucide:user-round-search'
+  | 'lucide:user-round-x'
+  | 'lucide:user-round'
+  | 'lucide:user-search'
+  | 'lucide:user-x'
+  | 'lucide:user'
+  | 'lucide:users-round'
+  | 'lucide:users'
+  | 'lucide:utensils-crossed'
+  | 'lucide:utensils'
+  | 'lucide:utility-pole'
+  | 'lucide:variable'
+  | 'lucide:vault'
+  | 'lucide:vegan'
+  | 'lucide:venetian-mask'
+  | 'lucide:venus-and-mars'
+  | 'lucide:venus'
+  | 'lucide:vibrate-off'
+  | 'lucide:vibrate'
+  | 'lucide:video-off'
+  | 'lucide:video'
+  | 'lucide:videotape'
+  | 'lucide:view'
+  | 'lucide:voicemail'
+  | 'lucide:volleyball'
+  | 'lucide:volume-1'
+  | 'lucide:volume-2'
+  | 'lucide:volume-off'
+  | 'lucide:volume-x'
+  | 'lucide:volume'
+  | 'lucide:vote'
+  | 'lucide:wallet-cards'
+  | 'lucide:wallet-minimal'
+  | 'lucide:wallet'
+  | 'lucide:wallpaper'
+  | 'lucide:wand-sparkles'
+  | 'lucide:wand'
+  | 'lucide:warehouse'
+  | 'lucide:washing-machine'
+  | 'lucide:watch'
+  | 'lucide:waves-ladder'
+  | 'lucide:waves'
+  | 'lucide:waypoints'
+  | 'lucide:webcam'
+  | 'lucide:webhook-off'
+  | 'lucide:webhook'
+  | 'lucide:weight'
+  | 'lucide:wheat-off'
+  | 'lucide:wheat'
+  | 'lucide:whole-word'
+  | 'lucide:wifi-high'
+  | 'lucide:wifi-low'
+  | 'lucide:wifi-off'
+  | 'lucide:wifi-pen'
+  | 'lucide:wifi-zero'
+  | 'lucide:wifi'
+  | 'lucide:wind-arrow-down'
+  | 'lucide:wind'
+  | 'lucide:wine-off'
+  | 'lucide:wine'
+  | 'lucide:workflow'
+  | 'lucide:worm'
+  | 'lucide:wrap-text'
+  | 'lucide:wrench'
+  | 'lucide:x'
+  | 'lucide:youtube'
+  | 'lucide:zap-off'
+  | 'lucide:zap'
+  | 'lucide:zoom-in'
+  | 'lucide:zoom-out';
+/**
+ * Click the button to generate the power points
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SolarPanelPowerPoints".
+ */
+export type SolarPanelPowerPoints =
   | {
-      title: string;
-      description: string;
-      iconName?: string | null;
+      pmax?: number | null;
+      efficiency?: number | null;
+      vmp: number;
+      imp: number;
+      voc: number;
+      isc: number;
       id?: string | null;
     }[]
   | null;
@@ -35,23 +1644,6 @@ export type ProductVariants = {
     | null;
   id?: string | null;
 }[];
-/**
- * Click the button to generate the power points
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "SolarPanelPowerPoints".
- */
-export type SolarPanelPowerPoints =
-  | {
-      pmax?: number | null;
-      efficiency?: number | null;
-      vmp: number;
-      imp: number;
-      voc: number;
-      isc: number;
-      id?: string | null;
-    }[]
-  | null;
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "MenuItems".
@@ -100,7 +1692,7 @@ export type MegaMenuItems =
  */
 export type LinkItems =
   | {
-      icon?: string | null;
+      icon?: IconName;
       title: string;
       description?: string | null;
       link?: LinkType;
@@ -198,14 +1790,7 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {
-    'solar-panels': {
-      relatedInquires: 'inquiries';
-    };
-    'pump-controllers': {
-      relatedInquires: 'inquiries';
-    };
-  };
+  collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     faqs: FaqsSelect<false> | FaqsSelect<true>;
@@ -345,12 +1930,12 @@ export interface Page {
     | ContentBlockType
     | CallToActionBlockType
     | MediaBlockType
-    | FeatureBlockType
+    | FeaturesBlockType
     | TimelineBlockType
     | FAQBlockType
   )[];
   publishedAt?: string | null;
-  type?: ('static' | 'archive') | null;
+  showLastUpdated?: boolean | null;
   slug: string;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -479,6 +2064,16 @@ export interface Image {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -501,14 +2096,6 @@ export interface SolarPanel {
    * Auto generated from gallery images, if no gallery images are present, the first image in the variants will be used as cover image
    */
   coverImage: string | Image;
-  /**
-   * Related inquiries
-   */
-  relatedInquires?: {
-    docs?: (string | Inquiry)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
   three?: {
     enabled?: boolean | null;
     /**
@@ -535,7 +2122,10 @@ export interface SolarPanel {
     };
     [k: string]: unknown;
   };
-  features?: ProductFeatures;
+  /**
+   * Showcased features of the product, min. 2, max. 6
+   */
+  features?: FeatureBlockType[] | null;
   /**
    * Upload images for the product
    */
@@ -671,6 +2261,634 @@ export interface SolarPanelCategory {
    * The hero image will be displayed on the product category page
    */
   heroImage?: (string | null) | Image;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "models".
+ */
+export interface Model {
+  id: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeatureBlockType".
+ */
+export interface FeatureBlockType {
+  type: 'text' | 'number';
+  title?: string | null;
+  number?: number | null;
+  description?: string | null;
+  icon: IconName;
+  /**
+   * Delay in seconds before the feature content starts to animate
+   */
+  delay?: number | null;
+  /**
+   * If checked, the number will be appended with a plus sign
+   */
+  withPlus?: boolean | null;
+  /**
+   * If checked, the number will be displayed as a percentage
+   */
+  isPercentage?: boolean | null;
+  /**
+   * Ticker will start from this value
+   */
+  startValue?: number | null;
+  /**
+   * Number of decimal places to display
+   */
+  decimalPlaces?: number | null;
+  /**
+   * Direction of the number ticker
+   */
+  direction?: ('up' | 'down') | null;
+  /**
+   * Alignment of the icon and content
+   */
+  alignment?: ('default' | 'reverse' | 'between' | 'between-reverse' | 'center') | null;
+  /**
+   * Opacity of the background
+   */
+  opacity?: number | null;
+  /**
+   * If checked, the icon will have a background
+   */
+  iconBackground?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featureBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "drawings".
+ */
+export interface Drawing {
+  id: string;
+  title: string;
+  description?: string | null;
+  file: string | Image;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "warranties".
+ */
+export interface Warranty {
+  id: string;
+  title: string;
+  productWarranty?: boolean | null;
+  descProduct?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  durationProduct?: {
+    value?: number | null;
+    unit?: ('days' | 'weeks' | 'months' | 'years') | null;
+  };
+  powerWarranty?: boolean | null;
+  descPower?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  durationPower?: {
+    value?: number | null;
+    unit?: ('days' | 'weeks' | 'months' | 'years') | null;
+  };
+  powerDegradation?: {
+    initialGuarantee: number;
+    annual: number;
+    endYearGuarantee: number;
+    compareWithIndustry?: boolean | null;
+    industryStd?: {
+      initialValue?: number | null;
+      annualDegradation?: number | null;
+      endYearValue?: number | null;
+    };
+  };
+  /**
+   * File of the warranty
+   */
+  file?: (string | null) | Document;
+  fileDesc?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents".
+ */
+export interface Document {
+  id: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "datasheets".
+ */
+export interface Datasheet {
+  id: string;
+  title: string;
+  desc?: string | null;
+  /**
+   * Upload a PDF file for the datasheet
+   */
+  file?: (string | null) | Document;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "certifications".
+ */
+export interface Certification {
+  id: string;
+  name: string;
+  desc?: string | null;
+  /**
+   * The logo of the certification
+   */
+  logo: string | Image;
+  file?: (string | null) | Document;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "instructions".
+ */
+export interface Instruction {
+  id: string;
+  title: string;
+  description?: string | null;
+  /**
+   * Upload a PDF file for the instructions
+   */
+  file?: (string | null) | Document;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "packaging-configs".
+ */
+export interface PackagingConfig {
+  id: string;
+  title: string;
+  /**
+   * Description of the packaging configuration
+   */
+  description?: string | null;
+  /**
+   * How the product is packaged individually (e.g., pieces, sets)
+   */
+  unitQty?: {
+    value?: number | null;
+    unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
+  };
+  /**
+   * Dimensions of a single package
+   */
+  unitDimensions?: {
+    h?: number | null;
+    w?: number | null;
+    d?: number | null;
+    unit?: ('mm' | 'cm' | 'm') | null;
+  };
+  /**
+   * Weight of a single packaged unit
+   */
+  unitWeight?: {
+    value?: number | null;
+    unit?: ('g' | 'kg') | null;
+  };
+  /**
+   * Number of pieces that can fit on one pallet
+   */
+  qtyPerPallet?: number | null;
+  /**
+   * Dimensions of a fully loaded pallet
+   */
+  palletDimensions?: {
+    h?: number | null;
+    w?: number | null;
+    d?: number | null;
+    unit?: ('mm' | 'cm' | 'm') | null;
+  };
+  /**
+   * Total weight of a fully loaded pallet (including pallet weight)
+   */
+  palletWeight?: {
+    value?: number | null;
+    unit?: ('g' | 'kg') | null;
+  };
+  /**
+   * Standard shipping container type
+   */
+  containerType?: ('20GP' | '40GP' | '40HQ') | null;
+  /**
+   * Number of pallets that can fit in the container
+   */
+  pltsPerContainer?: number | null;
+  /**
+   * Total number of pieces in the container (Pallets × Units per Pallet)
+   */
+  totalQty?: number | null;
+  /**
+   * Total weight of all pallets in the container (kg)
+   */
+  totalWeight?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pump-controllers".
+ */
+export interface PumpController {
+  id: string;
+  title: string;
+  slug: string;
+  slugLock?: boolean | null;
+  visible?: boolean | null;
+  industry: string | Industry;
+  productCategory: string | PumpControllerCategory;
+  excerpt: string;
+  /**
+   * Will be used as the hero image on the product page
+   */
+  heroImage?: (string | null) | Image;
+  /**
+   * Auto generated from gallery images, if no gallery images are present, the first image in the variants will be used as cover image
+   */
+  coverImage: string | Image;
+  three?: {
+    enabled?: boolean | null;
+    /**
+     * Upload a 3D model file
+     */
+    model?: (string | null) | Model;
+  };
+  category: 'smart' | 'standard';
+  modelName?: string | null;
+  /**
+   * Comprehensive description of the product
+   */
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Showcased features of the product, min. 2, max. 6
+   */
+  features?: FeatureBlockType[] | null;
+  /**
+   * Upload images for the product
+   */
+  gallery?: (string | Image)[] | null;
+  wideAmplitudeVoltage: {
+    min: number;
+    max: number;
+  };
+  maxCurrent: number;
+  maxPower: number;
+  startingPressureRange: {
+    min: number;
+    max: number;
+  };
+  maxPressure: number;
+  tempRange: {
+    min: number;
+    max: number;
+  };
+  frequencyRange: {
+    min: number;
+    max: number;
+  };
+  protectionGrade: string;
+  threadInterface?: string | null;
+  maxWorkingPressure: number;
+  variants: ProductVariants;
+  drawing?: (string | null) | Drawing;
+  /**
+   * Select the warranty for the product
+   */
+  warranty?: (string | null) | Warranty;
+  datasheet?: (string | null) | Datasheet;
+  certifications?: (string | Certification)[] | null;
+  instructions?: (string | Instruction)[] | null;
+  /**
+   * OEM description
+   */
+  oem?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  moq?: {
+    value?: number | null;
+    unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
+  };
+  /**
+   * Specify lead times for different quantity ranges
+   */
+  leadTime?:
+    | {
+        /**
+         * Lower bound of the range. Leave empty for no lower limit.
+         */
+        min?: {
+          value?: number | null;
+          unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
+        };
+        /**
+         * Upper bound of the range. Leave empty for no upper limit.
+         */
+        max?: {
+          value?: number | null;
+          unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
+        };
+        duration?: {
+          value?: number | null;
+          unit?: ('days' | 'weeks' | 'months' | 'years') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  packagingConfig?: (string | null) | PackagingConfig;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pump-controller-categories".
+ */
+export interface PumpControllerCategory {
+  id: string;
+  title?: ('smart' | 'standard') | null;
+  slug: string;
+  slugLock?: boolean | null;
+  description?: string | null;
+  /**
+   * The hero image will be displayed on the product category page
+   */
+  heroImage?: (string | null) | Image;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "videos".
+ */
+export interface Video {
+  id: string;
+  caption?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentBlockType".
+ */
+export interface ContentBlockType {
+  columns?:
+    | {
+        size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
+        richText?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        enableLink?: boolean | null;
+        link?: LinkType;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contentBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CallToActionBlockType".
+ */
+export interface CallToActionBlockType {
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  links?:
+    | {
+        link?: LinkType;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'callToActionBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaBlockType".
+ */
+export interface MediaBlockType {
+  /**
+   * Select a media item to display
+   */
+  media:
+    | {
+        relationTo: 'images';
+        value: string | Image;
+      }
+    | {
+        relationTo: 'videos';
+        value: string | Video;
+      };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'mediaBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturesBlockType".
+ */
+export interface FeaturesBlockType {
+  /**
+   * Showcased features of the product, min. 2, max. 6
+   */
+  features?: FeatureBlockType[] | null;
+  /**
+   * Number of columns to display the features on desktop
+   */
+  columns?: ('2' | '3' | '1') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featuresBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TimelineBlockType".
+ */
+export interface TimelineBlockType {
+  items?:
+    | {
+        title: string;
+        icon?: IconName;
+        date: string;
+        datePrecision?: ('year' | 'month' | 'day') | null;
+        content: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'timelineBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FAQBlockType".
+ */
+export interface FAQBlockType {
+  title?: string | null;
+  description?: string | null;
+  type: 'general' | 'solar-panel' | 'pump-controller';
+  style: 'accordion' | 'card';
+  content: (string | Faq)[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'faqBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notifications".
+ */
+export interface Notification {
+  id: string;
+  title: string;
+  link?:
+    | ({
+        relationTo: 'pages';
+        value: string | Page;
+      } | null)
+    | ({
+        relationTo: 'solar-panels';
+        value: string | SolarPanel;
+      } | null)
+    | ({
+        relationTo: 'pump-controllers';
+        value: string | PumpController;
+      } | null);
+  state?: ('active' | 'inactive') | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1243,399 +3461,6 @@ export interface Inquiry {
   createdAt: string;
 }
 /**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pump-controllers".
- */
-export interface PumpController {
-  id: string;
-  title: string;
-  slug: string;
-  slugLock?: boolean | null;
-  visible?: boolean | null;
-  industry: string | Industry;
-  productCategory: string | PumpControllerCategory;
-  excerpt: string;
-  /**
-   * Will be used as the hero image on the product page
-   */
-  heroImage?: (string | null) | Image;
-  /**
-   * Auto generated from gallery images, if no gallery images are present, the first image in the variants will be used as cover image
-   */
-  coverImage: string | Image;
-  /**
-   * Related inquiries
-   */
-  relatedInquires?: {
-    docs?: (string | Inquiry)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  three?: {
-    enabled?: boolean | null;
-    /**
-     * Upload a 3D model file
-     */
-    model?: (string | null) | Model;
-  };
-  category: 'smart' | 'standard';
-  modelName?: string | null;
-  /**
-   * Comprehensive description of the product
-   */
-  description: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  features?: ProductFeatures;
-  /**
-   * Upload images for the product
-   */
-  gallery?: (string | Image)[] | null;
-  wideAmplitudeVoltage: {
-    min: number;
-    max: number;
-  };
-  maxCurrent: number;
-  maxPower: number;
-  startingPressureRange: {
-    min: number;
-    max: number;
-  };
-  maxPressure: number;
-  tempRange: {
-    min: number;
-    max: number;
-  };
-  frequencyRange: {
-    min: number;
-    max: number;
-  };
-  protectionGrade: string;
-  threadInterface?: string | null;
-  maxWorkingPressure: number;
-  variants: ProductVariants;
-  drawing?: (string | null) | Drawing;
-  /**
-   * Select the warranty for the product
-   */
-  warranty?: (string | null) | Warranty;
-  datasheet?: (string | null) | Datasheet;
-  certifications?: (string | Certification)[] | null;
-  instructions?: (string | Instruction)[] | null;
-  /**
-   * OEM description
-   */
-  oem?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  moq?: {
-    value?: number | null;
-    unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
-  };
-  /**
-   * Specify lead times for different quantity ranges
-   */
-  leadTime?:
-    | {
-        /**
-         * Lower bound of the range. Leave empty for no lower limit.
-         */
-        min?: {
-          value?: number | null;
-          unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
-        };
-        /**
-         * Upper bound of the range. Leave empty for no upper limit.
-         */
-        max?: {
-          value?: number | null;
-          unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
-        };
-        duration?: {
-          value?: number | null;
-          unit?: ('days' | 'weeks' | 'months' | 'years') | null;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  packagingConfig?: (string | null) | PackagingConfig;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pump-controller-categories".
- */
-export interface PumpControllerCategory {
-  id: string;
-  title?: ('smart' | 'standard') | null;
-  slug: string;
-  slugLock?: boolean | null;
-  description?: string | null;
-  /**
-   * The hero image will be displayed on the product category page
-   */
-  heroImage?: (string | null) | Image;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "models".
- */
-export interface Model {
-  id: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "drawings".
- */
-export interface Drawing {
-  id: string;
-  title: string;
-  description?: string | null;
-  file: string | Image;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "warranties".
- */
-export interface Warranty {
-  id: string;
-  title: string;
-  productWarranty?: boolean | null;
-  descProduct?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  durationProduct?: {
-    value?: number | null;
-    unit?: ('days' | 'weeks' | 'months' | 'years') | null;
-  };
-  powerWarranty?: boolean | null;
-  descPower?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  durationPower?: {
-    value?: number | null;
-    unit?: ('days' | 'weeks' | 'months' | 'years') | null;
-  };
-  powerDegradation?: {
-    initialGuarantee: number;
-    annual: number;
-    endYearGuarantee: number;
-    compareWithIndustry?: boolean | null;
-    industryStd?: {
-      initialValue?: number | null;
-      annualDegradation?: number | null;
-      endYearValue?: number | null;
-    };
-  };
-  /**
-   * File of the warranty
-   */
-  file?: (string | null) | Document;
-  fileDesc?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "documents".
- */
-export interface Document {
-  id: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "datasheets".
- */
-export interface Datasheet {
-  id: string;
-  title: string;
-  desc?: string | null;
-  /**
-   * Upload a PDF file for the datasheet
-   */
-  file?: (string | null) | Document;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "certifications".
- */
-export interface Certification {
-  id: string;
-  name: string;
-  desc?: string | null;
-  /**
-   * The logo of the certification
-   */
-  logo: string | Image;
-  file?: (string | null) | Document;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "instructions".
- */
-export interface Instruction {
-  id: string;
-  title: string;
-  description?: string | null;
-  /**
-   * Upload a PDF file for the instructions
-   */
-  file?: (string | null) | Document;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "packaging-configs".
- */
-export interface PackagingConfig {
-  id: string;
-  title: string;
-  /**
-   * Description of the packaging configuration
-   */
-  description?: string | null;
-  /**
-   * How the product is packaged individually (e.g., pieces, sets)
-   */
-  unitQty?: {
-    value?: number | null;
-    unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
-  };
-  /**
-   * Dimensions of a single package
-   */
-  unitDimensions?: {
-    h?: number | null;
-    w?: number | null;
-    d?: number | null;
-    unit?: ('mm' | 'cm' | 'm') | null;
-  };
-  /**
-   * Weight of a single packaged unit
-   */
-  unitWeight?: {
-    value?: number | null;
-    unit?: ('g' | 'kg') | null;
-  };
-  /**
-   * Number of pieces that can fit on one pallet
-   */
-  qtyPerPallet?: number | null;
-  /**
-   * Dimensions of a fully loaded pallet
-   */
-  palletDimensions?: {
-    h?: number | null;
-    w?: number | null;
-    d?: number | null;
-    unit?: ('mm' | 'cm' | 'm') | null;
-  };
-  /**
-   * Total weight of a fully loaded pallet (including pallet weight)
-   */
-  palletWeight?: {
-    value?: number | null;
-    unit?: ('g' | 'kg') | null;
-  };
-  /**
-   * Standard shipping container type
-   */
-  containerType?: ('20GP' | '40GP' | '40HQ') | null;
-  /**
-   * Number of pallets that can fit in the container
-   */
-  pltsPerContainer?: number | null;
-  /**
-   * Total number of pieces in the container (Pallets × Units per Pallet)
-   */
-  totalQty?: number | null;
-  /**
-   * Total weight of all pallets in the container (kg)
-   */
-  totalWeight?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
  * Customer uploaded files
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1654,217 +3479,6 @@ export interface Attachment {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "videos".
- */
-export interface Video {
-  id: string;
-  duration?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ContentBlockType".
- */
-export interface ContentBlockType {
-  columns?:
-    | {
-        size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
-        richText?: {
-          root: {
-            type: string;
-            children: {
-              type: string;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
-        enableLink?: boolean | null;
-        link?: LinkType;
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'contentBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CallToActionBlockType".
- */
-export interface CallToActionBlockType {
-  richText?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  links?:
-    | {
-        link?: LinkType;
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'callToActionBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MediaBlockType".
- */
-export interface MediaBlockType {
-  /**
-   * Select a media item to display
-   */
-  media:
-    | {
-        relationTo: 'images';
-        value: string | Image;
-      }
-    | {
-        relationTo: 'videos';
-        value: string | Video;
-      }
-    | {
-        relationTo: 'models';
-        value: string | Model;
-      };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'mediaBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FeatureBlockType".
- */
-export interface FeatureBlockType {
-  /**
-   * A short, optional heading above the main title.
-   */
-  eyebrow?: string | null;
-  title: string;
-  /**
-   * Secondary heading under the main title.
-   */
-  subtitle?: string | null;
-  desc?: string | null;
-  ctaPrimary?: LinkType;
-  ctaSecondary?: LinkType;
-  features: {
-    image?: (string | null) | Image;
-    title: string;
-    desc?: string | null;
-    id?: string | null;
-  }[];
-  /**
-   * Select if text is on the top or the bottom.
-   */
-  textPlacement?: ('top' | 'bottom') | null;
-  /**
-   * Align text within its column (left, center, or right).
-   */
-  textAlignment?: ('start' | 'center' | 'end') | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'featureBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TimelineBlockType".
- */
-export interface TimelineBlockType {
-  items?:
-    | {
-        title: string;
-        icon?: string | null;
-        date: string;
-        content: {
-          root: {
-            type: string;
-            children: {
-              type: string;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'timelineBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FAQBlockType".
- */
-export interface FAQBlockType {
-  title?: string | null;
-  description?: string | null;
-  type: 'general' | 'solar-panel' | 'pump-controller';
-  style: 'accordion' | 'card';
-  content: (string | Faq)[];
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'faqBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "notifications".
- */
-export interface Notification {
-  id: string;
-  title: string;
-  link?:
-    | ({
-        relationTo: 'pages';
-        value: string | Page;
-      } | null)
-    | ({
-        relationTo: 'solar-panels';
-        value: string | SolarPanel;
-      } | null)
-    | ({
-        relationTo: 'pump-controllers';
-        value: string | PumpController;
-      } | null);
-  state?: ('active' | 'inactive') | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * Users who have subscribed to the newsletter
@@ -1927,6 +3541,7 @@ export interface Post {
   slugLock?: boolean | null;
   authors?: (string | User)[] | null;
   publishedAt?: string | null;
+  tags?: string[] | null;
   coverImage: string | Image;
   content: {
     root: {
@@ -2269,12 +3884,12 @@ export interface PagesSelect<T extends boolean = true> {
         contentBlock?: T | ContentBlockTypeSelect<T>;
         callToActionBlock?: T | CallToActionBlockTypeSelect<T>;
         mediaBlock?: T | MediaBlockTypeSelect<T>;
-        featureBlock?: T | FeatureBlockTypeSelect<T>;
+        featuresBlock?: T | FeaturesBlockTypeSelect<T>;
         timelineBlock?: T | TimelineBlockTypeSelect<T>;
         faqBlock?: T | FAQBlockTypeSelect<T>;
       };
   publishedAt?: T;
-  type?: T;
+  showLastUpdated?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -2353,25 +3968,37 @@ export interface MediaBlockTypeSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FeatureBlockType_select".
+ * via the `definition` "FeaturesBlockType_select".
  */
-export interface FeatureBlockTypeSelect<T extends boolean = true> {
-  eyebrow?: T;
-  title?: T;
-  subtitle?: T;
-  desc?: T;
-  ctaPrimary?: T | LinkTypeSelect<T>;
-  ctaSecondary?: T | LinkTypeSelect<T>;
+export interface FeaturesBlockTypeSelect<T extends boolean = true> {
   features?:
     | T
     | {
-        image?: T;
-        title?: T;
-        desc?: T;
-        id?: T;
+        featureBlock?: T | FeatureBlockTypeSelect<T>;
       };
-  textPlacement?: T;
-  textAlignment?: T;
+  columns?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeatureBlockType_select".
+ */
+export interface FeatureBlockTypeSelect<T extends boolean = true> {
+  type?: T;
+  title?: T;
+  number?: T;
+  description?: T;
+  icon?: T;
+  delay?: T;
+  withPlus?: T;
+  isPercentage?: T;
+  startValue?: T;
+  decimalPlaces?: T;
+  direction?: T;
+  alignment?: T;
+  opacity?: T;
+  iconBackground?: T;
   id?: T;
   blockName?: T;
 }
@@ -2386,6 +4013,7 @@ export interface TimelineBlockTypeSelect<T extends boolean = true> {
         title?: T;
         icon?: T;
         date?: T;
+        datePrecision?: T;
         content?: T;
         id?: T;
       };
@@ -2512,13 +4140,27 @@ export interface ImagesSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "videos_select".
  */
 export interface VideosSelect<T extends boolean = true> {
-  duration?: T;
+  caption?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -2738,6 +4380,7 @@ export interface PostsSelect<T extends boolean = true> {
   slugLock?: T;
   authors?: T;
   publishedAt?: T;
+  tags?: T;
   coverImage?: T;
   content?: T;
   updatedAt?: T;
@@ -2758,7 +4401,6 @@ export interface SolarPanelsSelect<T extends boolean = true> {
   excerpt?: T;
   heroImage?: T;
   coverImage?: T;
-  relatedInquires?: T;
   three?:
     | T
     | {
@@ -2767,7 +4409,11 @@ export interface SolarPanelsSelect<T extends boolean = true> {
       };
   modelName?: T;
   description?: T;
-  features?: T | ProductFeaturesSelect<T>;
+  features?:
+    | T
+    | {
+        featureBlock?: T | FeatureBlockTypeSelect<T>;
+      };
   gallery?: T;
   dimensions?:
     | T
@@ -2875,16 +4521,6 @@ export interface SolarPanelsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ProductFeatures_select".
- */
-export interface ProductFeaturesSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
-  iconName?: T;
-  id?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "SolarPanelPowerPoints_select".
  */
 export interface SolarPanelPowerPointsSelect<T extends boolean = true> {
@@ -2927,7 +4563,6 @@ export interface PumpControllersSelect<T extends boolean = true> {
   excerpt?: T;
   heroImage?: T;
   coverImage?: T;
-  relatedInquires?: T;
   three?:
     | T
     | {
@@ -2937,7 +4572,11 @@ export interface PumpControllersSelect<T extends boolean = true> {
   category?: T;
   modelName?: T;
   description?: T;
-  features?: T | ProductFeaturesSelect<T>;
+  features?:
+    | T
+    | {
+        featureBlock?: T | FeatureBlockTypeSelect<T>;
+      };
   gallery?: T;
   wideAmplitudeVoltage?:
     | T
@@ -3133,14 +4772,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface Footer {
   id: string;
   /**
-   * Company Section for the footer
-   */
-  companySection?: {
-    logo?: ('withSlogan' | 'withoutSlogan') | null;
-    useCompanyDescription?: ('yes' | 'no') | null;
-    companyDescription?: ('shortDescription' | 'longDescription') | null;
-  };
-  /**
    * Add multiple columns to organize footer content
    */
   columns?:
@@ -3267,13 +4898,6 @@ export interface Header {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
-  companySection?:
-    | T
-    | {
-        logo?: T;
-        useCompanyDescription?: T;
-        companyDescription?: T;
-      };
   columns?:
     | T
     | {

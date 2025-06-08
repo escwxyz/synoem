@@ -49,7 +49,7 @@ export const LanguageSwitcher = ({ onLocaleChange }: LanguageSwitcherProps) => {
 
   return (
     <div
-      className="inline-flex items-center rounded-full border p-1 shadow-sm relative"
+      className="inline-flex items-center rounded-full border h-12 shadow-sm relative"
       role="radiogroup"
       aria-label="Select language"
     >
@@ -88,7 +88,7 @@ function LanguageOption({ label, isActive, onClick }: LanguageOptionProps) {
       aria-checked={isActive}
       disabled={isActive}
       className={cn(
-        "relative z-10 flex-1 px-3 py-1.5 text-sm font-medium transition-colors rounded-full",
+        "relative z-10 flex-1 px-3 text-sm font-medium transition-colors rounded-full",
         isActive ? "text-primary-foreground" : "text-foreground cursor-pointer",
       )}
       onClick={onClick}

@@ -113,6 +113,7 @@
     "overview": "Overview",
     "gallery": "Gallery",
     "specifications": "Specifications",
+    "packaging": "Packaging",
     "warranty": "Warranty",
     "documents": "Documents"
   },
@@ -383,5 +384,75 @@
   },
   "FormStepIndicator": {
     "step": "Step {step} of {total}"
+  },
+  "LastUpdated": {
+    "lastUpdated": "Last updated"
+  },
+  "ContactUsForm": {
+    "title": "Contact Us",
+    "description": "Wherever you are, we're here to help you within 24 hours.",
+    "button": "Contact Us"
+  },
+  "PackageQuantityCalculator": {
+    "title": "Package Config & Calculation",
+    "projectParameters": "Project Parameters",
+    "projectParametersDescription": "Enter your project specifications to calculate panel requirements",
+    "projectCapacity": "Project Capacity (MW)",
+    "panelWattage": "Panel Wattage (Wp)",
+    "packagingInformation": "Packaging Information",
+    "piecesPerPallet": "Pieces per Pallet",
+
+    "piecesPerContainer": "Pieces per Container",
+    "palletDimensions": "Pallet Dimensions (m³)",
+    "palletWeight": "Pallet Weight (kg)",
+
+    "calculationResults": "Calculation Results",
+    "panelsNeeded": "Solar Panels Needed",
+    "containersNeeded": "CTNs",
+    "palletsNeeded": "Pallets",
+    "totalPallets": "Total Pallets",
+    "pallets": "pallets",
+    "remainingPanels": "Remaining Panels",
+    "totalWeight": "Total Weight",
+    "totalArea": "Total Area",
+    "detailedBreakdown": "Detailed Breakdown",
+    "totalWeightUnit": "kg",
+    "totalAreaUnit": "m²",
+    "overallOutputPower": "Overall Output Power"
+  },
+  "CarbonReductionCalculator": {
+    "title": "Carbon Reduction Calculator",
+    "description": "Estimate the environmental impact and carbon footprint reduction of your solar project",
+    "projectCapacity": "Project Capacity (MW)",
+    "effectiveHours": "Effective Hours per Year",
+    "hours": "hours",
+    "trees": "trees",
+    "cars": "cars / year",
+    "emissionIntensity": "Emission Intensity",
+    "emissionIntensityUnit": "tonnes CO₂/MWh",
+    "projectLifespan": "Project Lifespan (years)",
+    "annualImpact": "Annual Impact",
+    "lifetimeEnvironmentalImpact": "Lifetime Environmental Impact",
+    "totalCarbonReduction": "tonnes CO₂ saved over {years} years",
+    "annualPowerGeneration": "Annual Power Generation",
+    "annualCarbonReduction": "Annual CO₂ Reduction",
+    "cleanEnergy": "Clean Energy",
+    "equivalentToPlanting": "Equivalent to planting",
+    "removingCarsFromRoad": "Removing Cars from Road",
+    "note": "Note: These calculations are estimates and may vary based on regional differences in energy production and consumption.",
+    "low": "Low",
+    "average": "Average",
+    "high": "High",
+    "globalAverage": "Global Average",
+    "china": "China",
+    "india": "India",
+    "usa": "USA",
+    "euAverage": "EU Average",
+    "australia": "Australia"
+  },
+  "NotFound": {
+    "title": "Resource Not Found",
+    "description": "The requested resource could not be found, or the function is still being developed. Subscribe to our newsletter to get notified when it's ready.",
+    "returnHome": "Return Home"
   }
 }

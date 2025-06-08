@@ -5,6 +5,8 @@ import { getPayloadClient } from "@synoem/payload/client";
 import { notFound } from "next/navigation";
 import { LivePreviewListener } from "~/components/live-preview-listener.client";
 import { RenderBlocks } from "~/components/blocks/render-blocks.server";
+import { LastUpdated } from "@/app/components/last-updated.server";
+import { getPageMetadata } from "@/app/data/get-page-metadata";
 
 export async function generateStaticParams() {
   const payload = await getPayloadClient();
@@ -28,13 +30,23 @@ export async function generateStaticParams() {
   return params;
 }
 
-// export async function generateMetadata({ params }: { params: Promise<{ slug: string; locale: string }> }) {
-//   const { slug, locale } = await params;
+export async function generateMetadata({
+  params,
+}: { params: Promise<{ slug: string; locale: string }> }) {
+  const { slug, locale } = await params;
 
-//   if (!isValidLocale(locale)) {
-//     return notFound();
-//   }
-// }
+  if (!isValidLocale(locale)) {
+    return;
+  }
+
+  const pageResponse = await getPageCached(locale as Locale, slug)();
+
+  if (pageResponse.status === "error" || !pageResponse.data) {
+    return;
+  }
+
+  return getPageMetadata({ locale, pageTitle: pageResponse.data.title });
+}
 
 export default async function Page({
   params,
@@ -51,11 +63,15 @@ export default async function Page({
     return notFound();
   }
 
+  const lastUpdated = pageResponse.data.showLastUpdated
+    ? pageResponse.data.updatedAt
+    : pageResponse.data.publishedAt;
+
   return (
-    <div>
-      <h1>{pageResponse.data.title}</h1>
+    <>
       <LivePreviewListener />
       <RenderBlocks blocks={pageResponse.data.layout} />
-    </div>
+      {lastUpdated && <LastUpdated date={lastUpdated} locale={locale} />}
+    </>
   );
 }

@@ -7,11 +7,18 @@ import {
   lexicalEditor,
 } from "@payloadcms/richtext-lexical";
 import { MediaBlock } from "./media";
-import { createIconSelectField } from "../fields/icon-select";
+import { iconField } from "../fields";
 
 export const TimelineBlock: Block = {
   slug: "timelineBlock",
   interfaceName: "TimelineBlockType",
+  admin: {
+    group: "Content",
+  },
+  labels: {
+    singular: "Timeline Block",
+    plural: "Timeline Blocks",
+  },
   fields: [
     {
       name: "items",
@@ -24,16 +31,23 @@ export const TimelineBlock: Block = {
           label: "Title",
           required: true,
         },
-        createIconSelectField({
-          name: "icon",
-          label: "Icon",
-          required: false,
-        }),
+        iconField(),
         {
           name: "date",
           type: "date",
           label: "Date",
           required: true,
+        },
+        {
+          name: "datePrecision",
+          type: "select",
+          label: "Date Precision",
+          options: [
+            { label: "Year", value: "year" },
+            { label: "Month", value: "month" },
+            { label: "Day", value: "day" },
+          ],
+          defaultValue: "year",
         },
         {
           name: "content",

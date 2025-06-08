@@ -1,12 +1,18 @@
 "use client";
 
 import { useScroll, useTransform, motion } from "motion/react";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useMemo } from "react";
 import type { TimelineBlockType } from "@synoem/types";
 import { RichText } from "../rich-text.client";
-// import { Card } from "@synoem/ui/components/card";
+import { Calendar } from "lucide-react";
+import { useIsMobile } from "@synoem/ui/hooks/use-mobile";
+import { useLocale } from "next-intl";
+import { cn } from "@synoem/ui/lib/utils";
+import { convertDateString } from "@/app/utils/convert-datestring";
+import { isValidLocale } from "@/app/utils/is-valid-locale";
+import { defaultLocale } from "@synoem/config";
 
-export const Timeline: React.FC<TimelineBlockType> = ({ items }) => {
+export const Timeline = ({ items }: TimelineBlockType) => {
   const ref = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
@@ -26,6 +32,8 @@ export const Timeline: React.FC<TimelineBlockType> = ({ items }) => {
   const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height]);
   const opacityTransform = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
 
+  const isMobile = useIsMobile();
+
   if (!items || items.length === 0) {
     return null;
   }
@@ -36,18 +44,30 @@ export const Timeline: React.FC<TimelineBlockType> = ({ items }) => {
         {items.map((item) => (
           <div key={item.id || item.title} className="flex justify-start pt-10 md:pt-40 md:gap-10">
             <div className="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
-              <div className="h-10 absolute left-3 md:left-3 w-10 rounded-full flex items-center justify-center">
+              {/** Dot */}
+              <div className="h-10 absolute left-3 w-10 rounded-full flex items-center justify-center">
                 <div className="h-4 w-4 rounded-full p-2 bg-muted" />
               </div>
-              <h3 className="hidden md:block md:pl-20 md:text-3xl font-bold ">{item.title}</h3>
+              {!isMobile && (
+                <div className="pl-20 flex flex-col gap-4">
+                  <h3 className="block  text-3xl font-bold ">{item.title}</h3>
+                  <DateIndicator date={item.date} precision={item.datePrecision || "year"} />
+                </div>
+              )}
             </div>
 
-            <div className="relative pl-20 pr-4 md:pl-4 w-full">
-              <h3 className="md:hidden block text-xl mb-4 text-left font-bold">{item.title}</h3>
-              <RichText data={item.content} />
+            <div className="relative pl-20 pr-4 w-full">
+              {isMobile && (
+                <div className="flex flex-col">
+                  <h3 className="block text-xl mb-4 text-left font-bold">{item.title}</h3>
+                  <DateIndicator date={item.date} precision={item.datePrecision || "year"} />
+                </div>
+              )}
+              <RichText data={item.content} className={cn(isMobile && "mt-4")} />
             </div>
           </div>
         ))}
+        {/** Line Indicator */}
         <div
           style={{
             height: `${height}px`,
@@ -66,3 +86,24 @@ export const Timeline: React.FC<TimelineBlockType> = ({ items }) => {
     </div>
   );
 };
+
+const DateIndicator = ({
+  date,
+  precision,
+}: { date: string; precision: "year" | "month" | "day" }) => {
+  const locale = useLocale();
+
+  const formattedDate = useMemo(() => {
+    const effectiveLocale = isValidLocale(locale) ? locale : defaultLocale;
+    return convertDateString(date, effectiveLocale, precision);
+  }, [date, precision, locale]);
+
+  return (
+    <div className="flex items-center gap-2 text-muted-foreground">
+      <Calendar className="w-4 h-4" />
+      {formattedDate && <span className="text-md text-muted-foreground">{formattedDate}</span>}
+    </div>
+  );
+};
+
+DateIndicator.displayName = "DateIndicator";
