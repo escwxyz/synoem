@@ -46,7 +46,10 @@ export const LocalizedNumberInput = ({
   }, [value, locale, decimalPlaces]);
 
   const parseValue = (str: string, locale: string) => {
-    const normalized = locale === "de" ? str.replace(",", ".") : str;
+    const formatter = new Intl.NumberFormat(locale);
+    const parts = formatter.formatToParts(1.1);
+    const decimalSeparator = parts.find((part) => part.type === "decimal")?.value || ".";
+    const normalized = str.replace(decimalSeparator, ".");
     const num = Number.parseFloat(normalized);
     return Number.isNaN(num) ? min : num;
   };

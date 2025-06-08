@@ -276,7 +276,7 @@ export const CarbonReductionCalculator = () => {
               <div className="grid gap-3 grid-cols-1 md:grid-cols-2">
                 <Feature
                   type="text"
-                  title={`${results.equivalentTrees.toLocaleString(locale)} trees`}
+                  title={`${results.equivalentTrees.toLocaleString(locale)} ${t("trees")}`}
                   description={t("equivalentToPlanting")}
                   icon="lucide:tree-pine"
                   blockType="featureBlock"
@@ -284,7 +284,7 @@ export const CarbonReductionCalculator = () => {
 
                 <Feature
                   type="text"
-                  title={`${results.equivalentCars.toLocaleString(locale)} cars / year`}
+                  title={`${results.equivalentCars.toLocaleString(locale)} ${t("cars")}`}
                   description={t("removingCarsFromRoad")}
                   icon="lucide:car"
                   blockType="featureBlock"
