@@ -447,5 +447,10 @@
     "usa": "USA",
     "euAverage": "EU Average",
     "australia": "Australia"
+  },
+  "NotFound": {
+    "title": "Resource Not Found",
+    "description": "The requested resource could not be found, or the function is still being developed. Subscribe to our newsletter to get notified when it's ready.",
+    "returnHome": "Return Home"
   }
 }

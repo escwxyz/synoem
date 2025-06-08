@@ -434,5 +434,10 @@
     "usa": "USA",
     "euAverage": "EU Durchschnitt",
     "australia": "Australien"
+  },
+  "NotFound": {
+    "title": "Ressource nicht gefunden",
+    "description": "Die angeforderte Ressource konnte nicht gefunden werden oder die Funktion wird noch entwickelt. Abonnieren Sie unseren Newsletter, um benachrichtigt zu werden, wenn sie fertig ist.",
+    "returnHome": "Zurück zur Startseite"
   }
 }
