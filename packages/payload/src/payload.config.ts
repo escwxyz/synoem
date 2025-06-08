@@ -77,6 +77,7 @@ export default buildConfig({
       },
     },
     components: {
+      beforeDashboard: ["@/components/before-dashboard#default"],
       views: {},
       graphics: {
         Logo: {
