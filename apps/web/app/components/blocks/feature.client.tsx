@@ -23,8 +23,10 @@ export const Feature = ({
   iconBackground,
   alignment,
   className,
+  locale,
 }: FeatureBlockType & {
   className?: string;
+  locale?: string;
 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
@@ -83,6 +85,7 @@ export const Feature = ({
                 startValue={startValue || 0}
                 direction={direction || "up"}
                 className="tabular-nums"
+                locale={locale}
               />
             )}
             {type === "text" && title}
