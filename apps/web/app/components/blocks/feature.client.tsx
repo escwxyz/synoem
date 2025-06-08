@@ -24,12 +24,15 @@ export const Feature = ({
   alignment,
   className,
   locale,
+  opacity,
 }: FeatureBlockType & {
   className?: string;
   locale?: string;
 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
+
+  const backgroundOpacity = !opacity || opacity === 100 ? "bg-card" : `bg-card/${100 - opacity}`;
 
   return (
     <motion.div
@@ -38,7 +41,8 @@ export const Feature = ({
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{ duration: 0.6, delay: delay || 0, ease: "easeOut" }}
       className={cn(
-        "group relative overflow-hidden rounded-xl border border-border/30 bg-card p-6 shadow-lg shadow-black/[0.03] hover:cursor-pointer hover:scale-103 transition-all duration-300",
+        "group relative overflow-hidden rounded-xl border border-border/30 p-6 shadow-lg shadow-black/[0.03] backdrop-blur-md",
+        backgroundOpacity,
         className,
       )}
     >

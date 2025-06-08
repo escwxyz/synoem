@@ -9,7 +9,6 @@ import {
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { formatSku } from "../../hooks";
 import { getVariantOptionTypes, type ProductTypeId } from "@synoem/config";
-import { createInquiryJoinField } from "../../fields";
 import { FeatureBlock } from "../../blocks/feature";
 
 export const createSharedFields = (productTypeId: ProductTypeId): Field[] => {
@@ -84,7 +83,6 @@ export const createSharedFields = (productTypeId: ProductTypeId): Field[] => {
           "Auto generated from gallery images, if no gallery images are present, the first image in the variants will be used as cover image",
       },
     },
-    createInquiryJoinField(),
     create3dModelField(),
   ];
 };

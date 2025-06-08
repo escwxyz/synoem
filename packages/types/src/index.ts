@@ -1611,23 +1611,6 @@ export type IconName =
   | 'lucide:zoom-in'
   | 'lucide:zoom-out';
 /**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ProductVariants".
- */
-export type ProductVariants = {
-  sku: string;
-  gallery?: (string | Image)[] | null;
-  options?:
-    | {
-        label: string;
-        value: string;
-        type: 'text' | 'color';
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-}[];
-/**
  * Click the button to generate the power points
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1644,6 +1627,23 @@ export type SolarPanelPowerPoints =
       id?: string | null;
     }[]
   | null;
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProductVariants".
+ */
+export type ProductVariants = {
+  sku: string;
+  gallery?: (string | Image)[] | null;
+  options?:
+    | {
+        label: string;
+        value: string;
+        type: 'text' | 'color';
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+}[];
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "MenuItems".
@@ -1790,14 +1790,7 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {
-    'solar-panels': {
-      relatedInquires: 'inquiries';
-    };
-    'pump-controllers': {
-      relatedInquires: 'inquiries';
-    };
-  };
+  collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     faqs: FaqsSelect<false> | FaqsSelect<true>;
@@ -2103,14 +2096,6 @@ export interface SolarPanel {
    * Auto generated from gallery images, if no gallery images are present, the first image in the variants will be used as cover image
    */
   coverImage: string | Image;
-  /**
-   * Related inquiries
-   */
-  relatedInquires?: {
-    docs?: (string | Inquiry)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
   three?: {
     enabled?: boolean | null;
     /**
@@ -2276,6 +2261,634 @@ export interface SolarPanelCategory {
    * The hero image will be displayed on the product category page
    */
   heroImage?: (string | null) | Image;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "models".
+ */
+export interface Model {
+  id: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeatureBlockType".
+ */
+export interface FeatureBlockType {
+  type: 'text' | 'number';
+  title?: string | null;
+  number?: number | null;
+  description?: string | null;
+  icon: IconName;
+  /**
+   * Delay in seconds before the feature content starts to animate
+   */
+  delay?: number | null;
+  /**
+   * If checked, the number will be appended with a plus sign
+   */
+  withPlus?: boolean | null;
+  /**
+   * If checked, the number will be displayed as a percentage
+   */
+  isPercentage?: boolean | null;
+  /**
+   * Ticker will start from this value
+   */
+  startValue?: number | null;
+  /**
+   * Number of decimal places to display
+   */
+  decimalPlaces?: number | null;
+  /**
+   * Direction of the number ticker
+   */
+  direction?: ('up' | 'down') | null;
+  /**
+   * Alignment of the icon and content
+   */
+  alignment?: ('default' | 'reverse' | 'between' | 'between-reverse' | 'center') | null;
+  /**
+   * Opacity of the background
+   */
+  opacity?: number | null;
+  /**
+   * If checked, the icon will have a background
+   */
+  iconBackground?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featureBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "drawings".
+ */
+export interface Drawing {
+  id: string;
+  title: string;
+  description?: string | null;
+  file: string | Image;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "warranties".
+ */
+export interface Warranty {
+  id: string;
+  title: string;
+  productWarranty?: boolean | null;
+  descProduct?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  durationProduct?: {
+    value?: number | null;
+    unit?: ('days' | 'weeks' | 'months' | 'years') | null;
+  };
+  powerWarranty?: boolean | null;
+  descPower?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  durationPower?: {
+    value?: number | null;
+    unit?: ('days' | 'weeks' | 'months' | 'years') | null;
+  };
+  powerDegradation?: {
+    initialGuarantee: number;
+    annual: number;
+    endYearGuarantee: number;
+    compareWithIndustry?: boolean | null;
+    industryStd?: {
+      initialValue?: number | null;
+      annualDegradation?: number | null;
+      endYearValue?: number | null;
+    };
+  };
+  /**
+   * File of the warranty
+   */
+  file?: (string | null) | Document;
+  fileDesc?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents".
+ */
+export interface Document {
+  id: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "datasheets".
+ */
+export interface Datasheet {
+  id: string;
+  title: string;
+  desc?: string | null;
+  /**
+   * Upload a PDF file for the datasheet
+   */
+  file?: (string | null) | Document;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "certifications".
+ */
+export interface Certification {
+  id: string;
+  name: string;
+  desc?: string | null;
+  /**
+   * The logo of the certification
+   */
+  logo: string | Image;
+  file?: (string | null) | Document;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "instructions".
+ */
+export interface Instruction {
+  id: string;
+  title: string;
+  description?: string | null;
+  /**
+   * Upload a PDF file for the instructions
+   */
+  file?: (string | null) | Document;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "packaging-configs".
+ */
+export interface PackagingConfig {
+  id: string;
+  title: string;
+  /**
+   * Description of the packaging configuration
+   */
+  description?: string | null;
+  /**
+   * How the product is packaged individually (e.g., pieces, sets)
+   */
+  unitQty?: {
+    value?: number | null;
+    unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
+  };
+  /**
+   * Dimensions of a single package
+   */
+  unitDimensions?: {
+    h?: number | null;
+    w?: number | null;
+    d?: number | null;
+    unit?: ('mm' | 'cm' | 'm') | null;
+  };
+  /**
+   * Weight of a single packaged unit
+   */
+  unitWeight?: {
+    value?: number | null;
+    unit?: ('g' | 'kg') | null;
+  };
+  /**
+   * Number of pieces that can fit on one pallet
+   */
+  qtyPerPallet?: number | null;
+  /**
+   * Dimensions of a fully loaded pallet
+   */
+  palletDimensions?: {
+    h?: number | null;
+    w?: number | null;
+    d?: number | null;
+    unit?: ('mm' | 'cm' | 'm') | null;
+  };
+  /**
+   * Total weight of a fully loaded pallet (including pallet weight)
+   */
+  palletWeight?: {
+    value?: number | null;
+    unit?: ('g' | 'kg') | null;
+  };
+  /**
+   * Standard shipping container type
+   */
+  containerType?: ('20GP' | '40GP' | '40HQ') | null;
+  /**
+   * Number of pallets that can fit in the container
+   */
+  pltsPerContainer?: number | null;
+  /**
+   * Total number of pieces in the container (Pallets × Units per Pallet)
+   */
+  totalQty?: number | null;
+  /**
+   * Total weight of all pallets in the container (kg)
+   */
+  totalWeight?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pump-controllers".
+ */
+export interface PumpController {
+  id: string;
+  title: string;
+  slug: string;
+  slugLock?: boolean | null;
+  visible?: boolean | null;
+  industry: string | Industry;
+  productCategory: string | PumpControllerCategory;
+  excerpt: string;
+  /**
+   * Will be used as the hero image on the product page
+   */
+  heroImage?: (string | null) | Image;
+  /**
+   * Auto generated from gallery images, if no gallery images are present, the first image in the variants will be used as cover image
+   */
+  coverImage: string | Image;
+  three?: {
+    enabled?: boolean | null;
+    /**
+     * Upload a 3D model file
+     */
+    model?: (string | null) | Model;
+  };
+  category: 'smart' | 'standard';
+  modelName?: string | null;
+  /**
+   * Comprehensive description of the product
+   */
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Showcased features of the product, min. 2, max. 6
+   */
+  features?: FeatureBlockType[] | null;
+  /**
+   * Upload images for the product
+   */
+  gallery?: (string | Image)[] | null;
+  wideAmplitudeVoltage: {
+    min: number;
+    max: number;
+  };
+  maxCurrent: number;
+  maxPower: number;
+  startingPressureRange: {
+    min: number;
+    max: number;
+  };
+  maxPressure: number;
+  tempRange: {
+    min: number;
+    max: number;
+  };
+  frequencyRange: {
+    min: number;
+    max: number;
+  };
+  protectionGrade: string;
+  threadInterface?: string | null;
+  maxWorkingPressure: number;
+  variants: ProductVariants;
+  drawing?: (string | null) | Drawing;
+  /**
+   * Select the warranty for the product
+   */
+  warranty?: (string | null) | Warranty;
+  datasheet?: (string | null) | Datasheet;
+  certifications?: (string | Certification)[] | null;
+  instructions?: (string | Instruction)[] | null;
+  /**
+   * OEM description
+   */
+  oem?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  moq?: {
+    value?: number | null;
+    unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
+  };
+  /**
+   * Specify lead times for different quantity ranges
+   */
+  leadTime?:
+    | {
+        /**
+         * Lower bound of the range. Leave empty for no lower limit.
+         */
+        min?: {
+          value?: number | null;
+          unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
+        };
+        /**
+         * Upper bound of the range. Leave empty for no upper limit.
+         */
+        max?: {
+          value?: number | null;
+          unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
+        };
+        duration?: {
+          value?: number | null;
+          unit?: ('days' | 'weeks' | 'months' | 'years') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  packagingConfig?: (string | null) | PackagingConfig;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pump-controller-categories".
+ */
+export interface PumpControllerCategory {
+  id: string;
+  title?: ('smart' | 'standard') | null;
+  slug: string;
+  slugLock?: boolean | null;
+  description?: string | null;
+  /**
+   * The hero image will be displayed on the product category page
+   */
+  heroImage?: (string | null) | Image;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "videos".
+ */
+export interface Video {
+  id: string;
+  caption?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentBlockType".
+ */
+export interface ContentBlockType {
+  columns?:
+    | {
+        size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
+        richText?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        enableLink?: boolean | null;
+        link?: LinkType;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contentBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CallToActionBlockType".
+ */
+export interface CallToActionBlockType {
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  links?:
+    | {
+        link?: LinkType;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'callToActionBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaBlockType".
+ */
+export interface MediaBlockType {
+  /**
+   * Select a media item to display
+   */
+  media:
+    | {
+        relationTo: 'images';
+        value: string | Image;
+      }
+    | {
+        relationTo: 'videos';
+        value: string | Video;
+      };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'mediaBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturesBlockType".
+ */
+export interface FeaturesBlockType {
+  /**
+   * Showcased features of the product, min. 2, max. 6
+   */
+  features?: FeatureBlockType[] | null;
+  /**
+   * Number of columns to display the features on desktop
+   */
+  columns?: ('2' | '3' | '1') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featuresBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TimelineBlockType".
+ */
+export interface TimelineBlockType {
+  items?:
+    | {
+        title: string;
+        icon?: IconName;
+        date: string;
+        datePrecision?: ('year' | 'month' | 'day') | null;
+        content: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'timelineBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FAQBlockType".
+ */
+export interface FAQBlockType {
+  title?: string | null;
+  description?: string | null;
+  type: 'general' | 'solar-panel' | 'pump-controller';
+  style: 'accordion' | 'card';
+  content: (string | Faq)[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'faqBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notifications".
+ */
+export interface Notification {
+  id: string;
+  title: string;
+  link?:
+    | ({
+        relationTo: 'pages';
+        value: string | Page;
+      } | null)
+    | ({
+        relationTo: 'solar-panels';
+        value: string | SolarPanel;
+      } | null)
+    | ({
+        relationTo: 'pump-controllers';
+        value: string | PumpController;
+      } | null);
+  state?: ('active' | 'inactive') | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -2848,448 +3461,6 @@ export interface Inquiry {
   createdAt: string;
 }
 /**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pump-controllers".
- */
-export interface PumpController {
-  id: string;
-  title: string;
-  slug: string;
-  slugLock?: boolean | null;
-  visible?: boolean | null;
-  industry: string | Industry;
-  productCategory: string | PumpControllerCategory;
-  excerpt: string;
-  /**
-   * Will be used as the hero image on the product page
-   */
-  heroImage?: (string | null) | Image;
-  /**
-   * Auto generated from gallery images, if no gallery images are present, the first image in the variants will be used as cover image
-   */
-  coverImage: string | Image;
-  /**
-   * Related inquiries
-   */
-  relatedInquires?: {
-    docs?: (string | Inquiry)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  three?: {
-    enabled?: boolean | null;
-    /**
-     * Upload a 3D model file
-     */
-    model?: (string | null) | Model;
-  };
-  category: 'smart' | 'standard';
-  modelName?: string | null;
-  /**
-   * Comprehensive description of the product
-   */
-  description: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  /**
-   * Showcased features of the product, min. 2, max. 6
-   */
-  features?: FeatureBlockType[] | null;
-  /**
-   * Upload images for the product
-   */
-  gallery?: (string | Image)[] | null;
-  wideAmplitudeVoltage: {
-    min: number;
-    max: number;
-  };
-  maxCurrent: number;
-  maxPower: number;
-  startingPressureRange: {
-    min: number;
-    max: number;
-  };
-  maxPressure: number;
-  tempRange: {
-    min: number;
-    max: number;
-  };
-  frequencyRange: {
-    min: number;
-    max: number;
-  };
-  protectionGrade: string;
-  threadInterface?: string | null;
-  maxWorkingPressure: number;
-  variants: ProductVariants;
-  drawing?: (string | null) | Drawing;
-  /**
-   * Select the warranty for the product
-   */
-  warranty?: (string | null) | Warranty;
-  datasheet?: (string | null) | Datasheet;
-  certifications?: (string | Certification)[] | null;
-  instructions?: (string | Instruction)[] | null;
-  /**
-   * OEM description
-   */
-  oem?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  moq?: {
-    value?: number | null;
-    unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
-  };
-  /**
-   * Specify lead times for different quantity ranges
-   */
-  leadTime?:
-    | {
-        /**
-         * Lower bound of the range. Leave empty for no lower limit.
-         */
-        min?: {
-          value?: number | null;
-          unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
-        };
-        /**
-         * Upper bound of the range. Leave empty for no upper limit.
-         */
-        max?: {
-          value?: number | null;
-          unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
-        };
-        duration?: {
-          value?: number | null;
-          unit?: ('days' | 'weeks' | 'months' | 'years') | null;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  packagingConfig?: (string | null) | PackagingConfig;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pump-controller-categories".
- */
-export interface PumpControllerCategory {
-  id: string;
-  title?: ('smart' | 'standard') | null;
-  slug: string;
-  slugLock?: boolean | null;
-  description?: string | null;
-  /**
-   * The hero image will be displayed on the product category page
-   */
-  heroImage?: (string | null) | Image;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "models".
- */
-export interface Model {
-  id: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FeatureBlockType".
- */
-export interface FeatureBlockType {
-  type: 'text' | 'number';
-  title?: string | null;
-  number?: number | null;
-  description?: string | null;
-  icon: IconName;
-  /**
-   * Delay in seconds before the feature content starts to animate
-   */
-  delay?: number | null;
-  /**
-   * If checked, the number will be appended with a plus sign
-   */
-  withPlus?: boolean | null;
-  /**
-   * If checked, the number will be displayed as a percentage
-   */
-  isPercentage?: boolean | null;
-  /**
-   * Ticker will start from this value
-   */
-  startValue?: number | null;
-  /**
-   * Number of decimal places to display
-   */
-  decimalPlaces?: number | null;
-  /**
-   * Direction of the number ticker
-   */
-  direction?: ('up' | 'down') | null;
-  /**
-   * If checked, the icon will have a background
-   */
-  iconBackground?: boolean | null;
-  /**
-   * Alignment of the icon and content
-   */
-  alignment?: ('default' | 'reverse' | 'between' | 'between-reverse' | 'center') | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'featureBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "drawings".
- */
-export interface Drawing {
-  id: string;
-  title: string;
-  description?: string | null;
-  file: string | Image;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "warranties".
- */
-export interface Warranty {
-  id: string;
-  title: string;
-  productWarranty?: boolean | null;
-  descProduct?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  durationProduct?: {
-    value?: number | null;
-    unit?: ('days' | 'weeks' | 'months' | 'years') | null;
-  };
-  powerWarranty?: boolean | null;
-  descPower?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  durationPower?: {
-    value?: number | null;
-    unit?: ('days' | 'weeks' | 'months' | 'years') | null;
-  };
-  powerDegradation?: {
-    initialGuarantee: number;
-    annual: number;
-    endYearGuarantee: number;
-    compareWithIndustry?: boolean | null;
-    industryStd?: {
-      initialValue?: number | null;
-      annualDegradation?: number | null;
-      endYearValue?: number | null;
-    };
-  };
-  /**
-   * File of the warranty
-   */
-  file?: (string | null) | Document;
-  fileDesc?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "documents".
- */
-export interface Document {
-  id: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "datasheets".
- */
-export interface Datasheet {
-  id: string;
-  title: string;
-  desc?: string | null;
-  /**
-   * Upload a PDF file for the datasheet
-   */
-  file?: (string | null) | Document;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "certifications".
- */
-export interface Certification {
-  id: string;
-  name: string;
-  desc?: string | null;
-  /**
-   * The logo of the certification
-   */
-  logo: string | Image;
-  file?: (string | null) | Document;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "instructions".
- */
-export interface Instruction {
-  id: string;
-  title: string;
-  description?: string | null;
-  /**
-   * Upload a PDF file for the instructions
-   */
-  file?: (string | null) | Document;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "packaging-configs".
- */
-export interface PackagingConfig {
-  id: string;
-  title: string;
-  /**
-   * Description of the packaging configuration
-   */
-  description?: string | null;
-  /**
-   * How the product is packaged individually (e.g., pieces, sets)
-   */
-  unitQty?: {
-    value?: number | null;
-    unit?: ('pcs' | 'sets' | 'plts' | 'ctns') | null;
-  };
-  /**
-   * Dimensions of a single package
-   */
-  unitDimensions?: {
-    h?: number | null;
-    w?: number | null;
-    d?: number | null;
-    unit?: ('mm' | 'cm' | 'm') | null;
-  };
-  /**
-   * Weight of a single packaged unit
-   */
-  unitWeight?: {
-    value?: number | null;
-    unit?: ('g' | 'kg') | null;
-  };
-  /**
-   * Number of pieces that can fit on one pallet
-   */
-  qtyPerPallet?: number | null;
-  /**
-   * Dimensions of a fully loaded pallet
-   */
-  palletDimensions?: {
-    h?: number | null;
-    w?: number | null;
-    d?: number | null;
-    unit?: ('mm' | 'cm' | 'm') | null;
-  };
-  /**
-   * Total weight of a fully loaded pallet (including pallet weight)
-   */
-  palletWeight?: {
-    value?: number | null;
-    unit?: ('g' | 'kg') | null;
-  };
-  /**
-   * Standard shipping container type
-   */
-  containerType?: ('20GP' | '40GP' | '40HQ') | null;
-  /**
-   * Number of pallets that can fit in the container
-   */
-  pltsPerContainer?: number | null;
-  /**
-   * Total number of pieces in the container (Pallets × Units per Pallet)
-   */
-  totalQty?: number | null;
-  /**
-   * Total weight of all pallets in the container (kg)
-   */
-  totalWeight?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
  * Customer uploaded files
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3308,196 +3479,6 @@ export interface Attachment {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "videos".
- */
-export interface Video {
-  id: string;
-  caption?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ContentBlockType".
- */
-export interface ContentBlockType {
-  columns?:
-    | {
-        size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
-        richText?: {
-          root: {
-            type: string;
-            children: {
-              type: string;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
-        enableLink?: boolean | null;
-        link?: LinkType;
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'contentBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CallToActionBlockType".
- */
-export interface CallToActionBlockType {
-  richText?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  links?:
-    | {
-        link?: LinkType;
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'callToActionBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MediaBlockType".
- */
-export interface MediaBlockType {
-  /**
-   * Select a media item to display
-   */
-  media:
-    | {
-        relationTo: 'images';
-        value: string | Image;
-      }
-    | {
-        relationTo: 'videos';
-        value: string | Video;
-      };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'mediaBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FeaturesBlockType".
- */
-export interface FeaturesBlockType {
-  /**
-   * Showcased features of the product, min. 2, max. 6
-   */
-  features?: FeatureBlockType[] | null;
-  /**
-   * Number of columns to display the features on desktop
-   */
-  columns?: ('2' | '3' | '1') | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'featuresBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TimelineBlockType".
- */
-export interface TimelineBlockType {
-  items?:
-    | {
-        title: string;
-        icon?: IconName;
-        date: string;
-        datePrecision?: ('year' | 'month' | 'day') | null;
-        content: {
-          root: {
-            type: string;
-            children: {
-              type: string;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'timelineBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FAQBlockType".
- */
-export interface FAQBlockType {
-  title?: string | null;
-  description?: string | null;
-  type: 'general' | 'solar-panel' | 'pump-controller';
-  style: 'accordion' | 'card';
-  content: (string | Faq)[];
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'faqBlock';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "notifications".
- */
-export interface Notification {
-  id: string;
-  title: string;
-  link?:
-    | ({
-        relationTo: 'pages';
-        value: string | Page;
-      } | null)
-    | ({
-        relationTo: 'solar-panels';
-        value: string | SolarPanel;
-      } | null)
-    | ({
-        relationTo: 'pump-controllers';
-        value: string | PumpController;
-      } | null);
-  state?: ('active' | 'inactive') | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * Users who have subscribed to the newsletter
@@ -4015,8 +3996,9 @@ export interface FeatureBlockTypeSelect<T extends boolean = true> {
   startValue?: T;
   decimalPlaces?: T;
   direction?: T;
-  iconBackground?: T;
   alignment?: T;
+  opacity?: T;
+  iconBackground?: T;
   id?: T;
   blockName?: T;
 }
@@ -4419,7 +4401,6 @@ export interface SolarPanelsSelect<T extends boolean = true> {
   excerpt?: T;
   heroImage?: T;
   coverImage?: T;
-  relatedInquires?: T;
   three?:
     | T
     | {
@@ -4582,7 +4563,6 @@ export interface PumpControllersSelect<T extends boolean = true> {
   excerpt?: T;
   heroImage?: T;
   coverImage?: T;
-  relatedInquires?: T;
   three?:
     | T
     | {
