@@ -1,5 +1,7 @@
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
+// TODO:GenerateMetadata
+
 export default async function ({
   children,
 }: {

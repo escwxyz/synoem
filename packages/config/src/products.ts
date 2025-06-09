@@ -61,7 +61,7 @@ export interface VariantOptionConfig {
 }
 
 export interface ProductCategoryValue {
-  label: string;
+  label: string; // TODO: localized text
   value: string;
   children?: ProductCategoryValue[]; // TODO nested categories in the future
 }
@@ -159,7 +159,7 @@ export const PRODUCT_TYPES: Record<ProductTypeId, ProductTypeConfig> = {
   },
 };
 
-export const isValidProductType = (slug: string) => {
+export const isValidProductType = (slug: string): slug is ProductTypeId => {
   return Object.values(PRODUCT_TYPES).some((type) => type.id === slug);
 };
 
