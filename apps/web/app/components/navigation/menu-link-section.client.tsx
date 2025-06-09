@@ -3,7 +3,7 @@
 import { useIsMobile } from "@synoem/ui/hooks/use-mobile";
 import type { LinksSectionProps } from "./types";
 import { cn } from "@synoem/ui/lib/utils";
-import { getMenuLinkConfig } from "@/app/utils";
+import { getLinkConfig } from "@/app/utils";
 import { MenuLink } from "./menu-link.client";
 import { Icon } from "~/components/icon.client";
 
@@ -26,7 +26,7 @@ export const MenuLinkSection = ({ title, items, isExtended }: LinksSectionProps)
       )}
       <ul className={cn("flex flex-col gap-4", isMobile ? "mt-2" : "mt-4")}>
         {items?.map((item) => {
-          const linkConfig = getMenuLinkConfig(item.link);
+          const linkConfig = getLinkConfig(item.link);
 
           if (!linkConfig || typeof item.id !== "string") return null;
 

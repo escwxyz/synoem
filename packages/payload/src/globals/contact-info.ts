@@ -31,6 +31,7 @@ export const ContactInfo: GlobalConfig = {
       },
       required: true,
       localized: true,
+      interfaceName: "Addresses",
       fields: [
         {
           name: "line1",

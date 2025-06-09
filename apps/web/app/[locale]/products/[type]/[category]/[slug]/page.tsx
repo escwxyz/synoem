@@ -1,4 +1,9 @@
-import { defaultLocale, type Locale, isValidProductType } from "@synoem/config";
+import {
+  defaultLocale,
+  type Locale,
+  isValidProductType,
+  isValidProductCategory,
+} from "@synoem/config";
 import { isValidLocale } from "~/utils/is-valid-locale";
 import { ProductDetailPage } from "~/layouts/product-detail-layout.server";
 import { notFound } from "next/navigation";
@@ -11,7 +16,7 @@ export const dynamicParams = true;
 export const dynamic = "force-static";
 
 interface PageProps {
-  params: Promise<{ locale: string; slug: string; type: string }>;
+  params: Promise<{ locale: string; slug: string; type: string; category: string }>;
 }
 
 export const generateStaticParams = async () => {
@@ -19,9 +24,9 @@ export const generateStaticParams = async () => {
 };
 
 export async function generateMetadata({ params }: PageProps) {
-  const { locale, slug, type } = await params;
+  const { locale, slug, type, category } = await params;
 
-  if (!isValidProductType(type) || !isValidLocale(locale)) {
+  if (!isValidProductType(type) || !isValidProductCategory(category) || !isValidLocale(locale)) {
     return;
   }
 
@@ -45,9 +50,9 @@ export async function generateMetadata({ params }: PageProps) {
 }
 
 export default async function Page({ params }: PageProps) {
-  const { locale, slug, type } = await params;
+  const { locale, slug, type, category } = await params;
 
-  if (!isValidProductType(type)) {
+  if (!isValidProductType(type) || !isValidProductCategory(category)) {
     notFound();
   }
 

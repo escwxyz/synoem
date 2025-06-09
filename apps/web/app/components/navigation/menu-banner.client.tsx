@@ -2,13 +2,13 @@
 
 import { MenuLink } from "./menu-link.client";
 import type { MenuBannerProps } from "./types";
-import { getMenuLinkConfig, getUrl, isImageType, isVideoType } from "~/utils";
+import { getLinkConfig, getUrl, isImageType, isVideoType } from "~/utils";
 import Image from "next/image";
 
 export const MenuBanner = ({ banner }: MenuBannerProps) => {
   const media = banner.media;
   const hasMedia = typeof media === "object" && typeof media?.value === "object";
-  const linkConfig = getMenuLinkConfig(banner.link);
+  const linkConfig = getLinkConfig(banner.link);
 
   return (
     // NOTE: for multiple banners, there might be scaling issues, need to check in detail

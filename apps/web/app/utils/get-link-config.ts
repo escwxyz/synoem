@@ -1,6 +1,6 @@
 import type { LinkType } from "@synoem/types";
 
-export const getMenuLinkConfig = (
+export const getLinkConfig = (
   link?: LinkType | null,
 ): {
   href: string;
@@ -31,7 +31,7 @@ export const getMenuLinkConfig = (
       return null;
     }
 
-    const href = link.internal.value.slug;
+    const href = `/${link.internal.value.slug}`;
 
     return {
       href,

@@ -96,7 +96,7 @@ export const Feature = ({
             {withPlus && <span className="ml-1 text-sm font-medium opacity-70">+</span>}
             {isPercentage && <span className="ml-1 text-sm font-medium opacity-70">%</span>}
           </h3>
-          <p className="text-sm font-medium text-muted-foreground">{description}</p>
+          <p className="text-sm font-medium">{description}</p>
         </div>
       </div>
     </motion.div>

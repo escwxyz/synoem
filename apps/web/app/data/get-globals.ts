@@ -73,7 +73,7 @@ export const getFooterCached = (locale: Locale) => {
 
   return unstable_cache(
     async () => {
-      return await getGlobalHelper({ locale, slug: "footer" });
+      return await getGlobalHelper({ locale, slug: "footer", depth: 1 });
     },
     [tag],
     {
@@ -104,6 +104,21 @@ export const getCompanyInfoCached = (locale: Locale) => {
   return unstable_cache(
     async () => {
       return await getGlobalHelper({ locale, slug: "company-info", depth: 1 });
+    },
+    [tag],
+    {
+      tags: [tag],
+      revalidate: process.env.WEB_APP_ENV === "production" ? false : 30,
+    },
+  );
+};
+
+export const getContactInfoCached = () => {
+  const tag: RevalidateGlobalTagName<undefined> = "global-contact-info";
+
+  return unstable_cache(
+    async () => {
+      return await getGlobalHelper({ slug: "contact-info", depth: 0 });
     },
     [tag],
     {

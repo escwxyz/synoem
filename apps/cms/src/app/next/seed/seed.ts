@@ -3,6 +3,9 @@ import { faqs } from "./data/faqs";
 import { getAboutUsData } from "./data/pages";
 import { getHeaderData } from "./data/header";
 import { getHJTSolarPanelData, getTOPConSolarPanelData } from "./data/solar-panel";
+import { termsData } from "./data/terms";
+import { privacyPolicyData } from "./data/privacy-policy";
+import { getFooterData } from "./data/footer";
 
 const IMAGE_BASE_URL = `${process.env.NEXT_PUBLIC_S3_ENDPOINT}/object/public/${process.env.NEXT_PUBLIC_S3_BUCKET_NAME}/images/seed`;
 
@@ -224,12 +227,12 @@ export const seed = async ({
     await payload.updateGlobal({
       slug: "company-info",
       data: {
-        name: "Synoem",
+        name: "SYNOEM",
         logo: createdLogo.id,
         openGraphImage: createdOpenGraphImage.id,
         shortDescription: "Where Synergy Flows",
         longDescription:
-          "Synoem is a professional renewable energy products manufacturer and supplier, specializing in the production of high-quality solar panels, inverters, storage systems, and other renewable energy products for both residential and commercial applications.",
+          "SYNOEM is a professional renewable energy products manufacturer and supplier, specializing in the production of high-quality solar panels, inverters, storage systems, and other renewable energy products for both residential and commercial applications.",
       },
       locale: "en",
       context: {
@@ -305,18 +308,6 @@ export const seed = async ({
     });
 
     payload.logger.info("Header updated");
-
-    // await payload.updateGlobal({
-    //   slug: "footer",
-    //   data: {
-    //     copyright: "All rights reserved.",
-    //     links: [],
-    //   },
-    //   locale: "en",
-    //   context: {
-    //     skipRevalidation: true,
-    //   },
-    // });
 
     const industry = await payload.create({
       collection: "industries",
@@ -402,7 +393,46 @@ export const seed = async ({
       },
     });
 
+    const [termsPage, privacyPolicyPage] = await Promise.all([
+      payload.create({
+        collection: "pages",
+        data: {
+          ...termsData,
+          _status: "published",
+        },
+        locale: "en",
+        context: {
+          skipRevalidation: true,
+        },
+      }),
+      payload.create({
+        collection: "pages",
+        data: {
+          ...privacyPolicyData,
+          _status: "published",
+        },
+        locale: "en",
+        context: {
+          skipRevalidation: true,
+        },
+      }),
+    ]);
+
     payload.logger.info("Pages created");
+
+    await payload.updateGlobal({
+      slug: "footer",
+      data: getFooterData({
+        termsPageId: termsPage.id,
+        privacyPageId: privacyPolicyPage.id,
+      }),
+      locale: "en",
+      context: {
+        skipRevalidation: true,
+      },
+    });
+
+    payload.logger.info("Footer updated");
 
     // TODO: posts
 

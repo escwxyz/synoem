@@ -1648,6 +1648,21 @@ export type ProductVariants = {
   id?: string | null;
 }[];
 /**
+ * The first address will be used as the headquarters address.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Addresses".
+ */
+export type Addresses = {
+  line1: string;
+  line2?: string | null;
+  city: string;
+  state?: string | null;
+  zip?: string | null;
+  country: string;
+  id?: string | null;
+}[];
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "MenuItems".
  */
@@ -4828,18 +4843,7 @@ export interface ContactInfo {
   id: string;
   email: string;
   phone: string;
-  /**
-   * The first address will be used as the headquarters address.
-   */
-  addresses: {
-    line1: string;
-    line2?: string | null;
-    city: string;
-    state?: string | null;
-    zip?: string | null;
-    country: string;
-    id?: string | null;
-  }[];
+  addresses: Addresses;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -4933,20 +4937,23 @@ export interface CompanyInfoSelect<T extends boolean = true> {
 export interface ContactInfoSelect<T extends boolean = true> {
   email?: T;
   phone?: T;
-  addresses?:
-    | T
-    | {
-        line1?: T;
-        line2?: T;
-        city?: T;
-        state?: T;
-        zip?: T;
-        country?: T;
-        id?: T;
-      };
+  addresses?: T | AddressesSelect<T>;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Addresses_select".
+ */
+export interface AddressesSelect<T extends boolean = true> {
+  line1?: T;
+  line2?: T;
+  city?: T;
+  state?: T;
+  zip?: T;
+  country?: T;
+  id?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

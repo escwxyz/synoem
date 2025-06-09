@@ -14,11 +14,7 @@ interface ProductDetailPageProps {
   product: SolarPanel | PumpController;
 }
 
-export const ProductDetailPage = async ({
-  product,
-  productTypeId,
-  locale,
-}: ProductDetailPageProps) => {
+export const ProductDetailPage = ({ product, productTypeId, locale }: ProductDetailPageProps) => {
   return (
     <>
       <ProductHero

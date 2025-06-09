@@ -4,7 +4,7 @@
 
 import type { MegaMenuItems, MenuItems } from "@synoem/types";
 import { cn } from "@synoem/ui/lib/utils";
-import { getMenuLinkConfig } from "~/utils";
+import { getLinkConfig } from "~/utils";
 import { type Dispatch, type SetStateAction, useMemo, useState } from "react";
 import { motion } from "motion/react";
 import { ChevronDownIcon } from "lucide-react";
@@ -60,7 +60,7 @@ function DesktopMenuItem({ item, active, setActive }: MenuItemProps) {
   }, []);
 
   if (item.type === "link") {
-    const linkConfig = getMenuLinkConfig(item.link);
+    const linkConfig = getLinkConfig(item.link);
     content = (
       <>
         <MenuLink

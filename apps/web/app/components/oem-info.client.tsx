@@ -1,5 +1,7 @@
 "use client";
 
+// TODO: seed real data for this component
+
 import type { SolarPanel } from "@synoem/types";
 import { Boxes, CheckCircle, Clock } from "lucide-react";
 import { RichText } from "./rich-text.server";
@@ -19,11 +21,10 @@ interface Props {
 export const OemInfo = ({ oemInfo, productTypeId }: Props) => {
   const { oem, moq, leadTime, packagingConfig, power, weight, dimensions } = oemInfo;
 
-  const powerNumber = (power.max - power.min) / power.step + 1;
+  const powerNumber = power?.step > 0 ? Math.floor((power.max - power.min) / power.step) + 1 : 0;
 
-  const panelWattageOptions = new Array(powerNumber)
-    .fill(0)
-    .map((_, i) => power.min + i * power.step);
+  const panelWattageOptions =
+    powerNumber > 0 ? new Array(powerNumber).fill(0).map((_, i) => power.min + i * power.step) : [];
 
   const panelWeight = weight?.value;
   const panelArea =
@@ -53,7 +54,10 @@ export const OemInfo = ({ oemInfo, productTypeId }: Props) => {
                     min &&
                     max &&
                     duration && (
-                      <li className="flex items-center gap-2">
+                      <li
+                        key={`${min.value}-${max.value}-${duration.value}`}
+                        className="flex items-center gap-2"
+                      >
                         <Clock size="16" color="var(--color-emerald-600)" />
                         <span>
                           For {min.value} {min.unit} ~ {max.value} {max.unit}, it takes{" "}
@@ -73,11 +77,11 @@ export const OemInfo = ({ oemInfo, productTypeId }: Props) => {
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2">
-                  <li className="flex items-start">
-                    <i className="fas fa-box text-emerald-600 mt-1 mr-2" />
+                  <li className="flex items-start gap-2">
+                    <Boxes size="16" color="var(--color-emerald-600)" />
                     <span>Sample Order: 1-2 pieces (MOQ)</span>
                   </li>
-                  <li className="flex items-center gap-2">
+                  <li className="flex items-start gap-2">
                     <Boxes size="16" color="var(--color-emerald-600)" />
                     <span>
                       Mass Production: {moq.value} {moq.unit}

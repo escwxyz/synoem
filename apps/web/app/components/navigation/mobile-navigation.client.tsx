@@ -12,7 +12,7 @@ import type { MenuItemProps, MenuLinkProps, NavigationProps } from "./types";
 import { ChevronDown, ExternalLinkIcon } from "lucide-react";
 import { cn } from "@synoem/ui/lib/utils";
 import { Link } from "@/i18n/navigation";
-import { getMenuLinkConfig } from "~/utils";
+import { getLinkConfig } from "~/utils";
 import { MenuBanner } from "./menu-banner.client";
 import { MenuLinkSection } from "./menu-link-section.client";
 
@@ -250,7 +250,7 @@ function MenuExpandable({ title, icon, children }: MenuExpandableProps) {
 
 function MobileMenuItem({ item }: MenuItemProps) {
   if (item.type === "link") {
-    const linkConfig = getMenuLinkConfig(item.link);
+    const linkConfig = getLinkConfig(item.link);
     return (
       <div className="border-b border-muted space-y-2 p-2 w-full">
         <MenuLink href={linkConfig?.href || "#"} openInNewTab={linkConfig?.openInNewTab}>
