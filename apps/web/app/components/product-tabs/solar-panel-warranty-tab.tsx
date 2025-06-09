@@ -11,7 +11,7 @@ import {
   CardTitle,
 } from "@synoem/ui/components/card";
 import { RichText } from "~/components/rich-text.client";
-import { NumberTicker } from "@synoem/ui/components/number-ticker";
+import { Feature } from "~/components/blocks/feature.client";
 
 import { useTranslations } from "next-intl";
 
@@ -175,49 +175,45 @@ export const SolarPanelWarrantyTab = ({ solarPanel }: Props) => {
               />
             </CardContent>
             <CardFooter className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-muted dark:bg-background p-4 rounded-lg">
-                <h4 className="font-semibold text-muted-foreground mb-2">
-                  {t("initialYearGuarantee")}
-                </h4>
-                <p className="text-2xl font-bold text-primary">
-                  <NumberTicker
-                    value={powerDegradation.initialGuarantee}
-                    startValue={90.0}
-                    decimalPlaces={1}
-                    className="text-2xl font-bold text-primary dark:text-primary"
-                  />
-                  %
-                </p>
-              </div>
-              <div className="bg-muted dark:bg-background p-4 rounded-lg">
-                <h4 className="font-semibold text-muted-foreground mb-2">
-                  {t("annualDegradation")}
-                </h4>
-                <p className="text-2xl font-bold text-primary">
-                  <NumberTicker
-                    value={powerDegradation.annual}
-                    startValue={0.0}
-                    decimalPlaces={1}
-                    className="text-2xl font-bold text-primary dark:text-primary"
-                  />
-                  %
-                </p>
-              </div>
-              <div className="bg-muted dark:bg-background p-4 rounded-lg">
-                <h4 className="font-semibold text-muted-foreground mb-2">
-                  {t("endYearGuarantee")}
-                </h4>
-
-                <p className="text-2xl font-bold text-primary">
-                  <NumberTicker
-                    value={powerDegradation.endYearGuarantee}
-                    startValue={80.0}
-                    decimalPlaces={1}
-                    className="text-2xl font-bold text-primary dark:text-primary"
-                  />
-                  %
-                </p>
-              </div>
+              <Feature
+                type="number"
+                blockType="featureBlock"
+                number={powerDegradation.initialGuarantee}
+                icon="lucide:trending-up"
+                description={t("initialYearGuarantee")}
+                withPlus={false}
+                isPercentage={true}
+                startValue={90.0}
+                decimalPlaces={1}
+                opacity={100}
+                className="bg-muted dark:bg-background p-4 rounded-lg"
+              />
+              <Feature
+                type="number"
+                blockType="featureBlock"
+                number={powerDegradation.annual}
+                icon="lucide:trending-down"
+                description={t("annualDegradation")}
+                withPlus={false}
+                isPercentage={true}
+                startValue={0.0}
+                decimalPlaces={1}
+                opacity={100}
+                className="bg-muted dark:bg-background p-4 rounded-lg"
+              />
+              <Feature
+                type="number"
+                blockType="featureBlock"
+                number={powerDegradation.endYearGuarantee}
+                icon="lucide:shield-check"
+                description={t("endYearGuarantee")}
+                withPlus={false}
+                isPercentage={true}
+                startValue={80.0}
+                decimalPlaces={1}
+                opacity={100}
+                className="bg-muted dark:bg-background p-4 rounded-lg"
+              />
             </CardFooter>
           </Card>
         </div>
