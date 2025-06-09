@@ -135,7 +135,7 @@ export const getHeaderData = (
               },
               link: {
                 type: "relative",
-                relative: "/solutions/commercial",
+                relative: "/solutions#commercial",
               },
             },
           },
@@ -213,7 +213,7 @@ export const getHeaderData = (
               },
               link: {
                 type: "relative",
-                relative: "/about-us",
+                relative: "/company/about-us",
               },
             },
           },
@@ -226,7 +226,7 @@ export const getHeaderData = (
                   title: "Job Openings",
                   link: {
                     type: "relative",
-                    relative: "/company/about-us",
+                    relative: "/company/careers",
                   },
                 },
               ],

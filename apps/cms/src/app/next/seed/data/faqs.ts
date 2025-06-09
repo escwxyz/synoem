@@ -67,7 +67,7 @@ export const faqs: RequiredDataFromCollectionSlug<"faqs">[] = [
   },
   {
     type: "general",
-    question: "How is your payment terms?",
+    question: "What are your payment terms?",
     answer: {
       root: {
         type: "root",
@@ -212,6 +212,38 @@ export const faqs: RequiredDataFromCollectionSlug<"faqs">[] = [
               {
                 mode: "normal",
                 text: "Solar panels require very little maintenance. It is recommended to keep them clean and free of debris to ensure optimal performance.",
+                type: "text",
+                style: "",
+                detail: 0,
+                format: 0,
+                version: 1,
+              },
+            ],
+          },
+        ],
+        direction: "ltr",
+      },
+    },
+  },
+  {
+    type: "solar-panel",
+    question: "What is your MOQ for solar panels?",
+    answer: {
+      root: {
+        type: "root",
+        format: "",
+        indent: 0,
+        version: 1,
+        children: [
+          {
+            type: "paragraph",
+            format: "",
+            indent: 0,
+            version: 1,
+            children: [
+              {
+                mode: "normal",
+                text: "Generally we accept 2 pallets for EU stock products and 1 container for made-to-order products. You can check the details in the product page, or contact us for more information.",
                 type: "text",
                 style: "",
                 detail: 0,

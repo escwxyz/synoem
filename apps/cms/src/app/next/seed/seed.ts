@@ -1,7 +1,8 @@
 import type { CollectionSlug, Payload, PayloadRequest, File, GlobalSlug } from "payload";
 import { faqs } from "./data/faqs";
-import { pages } from "./data/pages";
+import { getAboutUsData } from "./data/pages";
 import { getHeaderData } from "./data/header";
+import { getHJTSolarPanelData, getTOPConSolarPanelData } from "./data/solar-panel";
 
 const IMAGE_BASE_URL = `${process.env.NEXT_PUBLIC_S3_ENDPOINT}/object/public/${process.env.NEXT_PUBLIC_S3_BUCKET_NAME}/images/seed`;
 
@@ -11,6 +12,8 @@ const globals: GlobalSlug[] = ["company-info", "contact-info", "social-links", "
 const collections: CollectionSlug[] = [
   "faqs",
   "pages",
+  "packaging-configs",
+  "warranties",
   "solar-panels",
   "solar-panel-categories",
   "industries",
@@ -42,6 +45,8 @@ export const seed = async ({
 
     payload.logger.info("Database cleared");
 
+    payload.logger.info("Fetching images...");
+
     const [
       industryCoverImage,
       hjtHeroImage,
@@ -50,6 +55,11 @@ export const seed = async ({
       solarPanel2HeroImage,
       logo,
       openGraphImage,
+      factoryImage,
+      solarPanel1ProductImage,
+      solarPanel2ProductImage,
+      solarPanel3ProductImage,
+      solarPanel4ProductImage,
     ] = await Promise.all([
       fetchFileByURL(`${IMAGE_BASE_URL}/industry-cover-image.jpg`),
       fetchFileByURL(`${IMAGE_BASE_URL}/hjt-hero.jpg`),
@@ -58,6 +68,12 @@ export const seed = async ({
       fetchFileByURL(`${IMAGE_BASE_URL}/solar-panel-2-hero.jpg`),
       fetchFileByURL(`${IMAGE_BASE_URL}/logo-transparent.svg`),
       fetchFileByURL(`${IMAGE_BASE_URL}/open-graph.png`),
+      fetchFileByURL(`${IMAGE_BASE_URL}/factory.jpg`),
+      // solar panel product images
+      fetchFileByURL(`${IMAGE_BASE_URL}/solar-panel_1.png`),
+      fetchFileByURL(`${IMAGE_BASE_URL}/solar-panel_2.png`),
+      fetchFileByURL(`${IMAGE_BASE_URL}/solar-panel_3.png`),
+      fetchFileByURL(`${IMAGE_BASE_URL}/solar-panel_4.png`),
     ]);
 
     payload.logger.info("Images fetched");
@@ -71,6 +87,11 @@ export const seed = async ({
       createdSolarPanel2HeroImage,
       createdLogo,
       createdOpenGraphImage,
+      createdFactoryImage,
+      createdSolarPanel1ProductImage,
+      createdSolarPanel2ProductImage,
+      createdSolarPanel3ProductImage,
+      createdSolarPanel4ProductImage,
     ] = await Promise.all([
       payload.create({
         collection: "images",
@@ -138,6 +159,58 @@ export const seed = async ({
           alt: "Open Graph Image",
         },
         file: openGraphImage,
+        context: {
+          skipRevalidation: true,
+        },
+      }),
+      payload.create({
+        collection: "images",
+        data: {
+          alt: "Factory",
+        },
+        file: factoryImage,
+        context: {
+          skipRevalidation: true,
+        },
+      }),
+
+      // solar panel product images
+      payload.create({
+        collection: "images",
+        data: {
+          alt: "Solar Panel 1 Product",
+        },
+        file: solarPanel1ProductImage,
+        context: {
+          skipRevalidation: true,
+        },
+      }),
+      payload.create({
+        collection: "images",
+        data: {
+          alt: "Solar Panel 2 Product",
+        },
+        file: solarPanel2ProductImage,
+        context: {
+          skipRevalidation: true,
+        },
+      }),
+      payload.create({
+        collection: "images",
+        data: {
+          alt: "Solar Panel 3 Product",
+        },
+        file: solarPanel3ProductImage,
+        context: {
+          skipRevalidation: true,
+        },
+      }),
+      payload.create({
+        collection: "images",
+        data: {
+          alt: "Solar Panel 4 Product",
+        },
+        file: solarPanel4ProductImage,
         context: {
           skipRevalidation: true,
         },
@@ -245,7 +318,7 @@ export const seed = async ({
     //   },
     // });
 
-    await payload.create({
+    const industry = await payload.create({
       collection: "industries",
       data: {
         title: "Renewable Energy Test",
@@ -262,7 +335,78 @@ export const seed = async ({
 
     payload.logger.info("Industry created");
 
-    await Promise.all([
+    for (const faq of faqs) {
+      await payload.create({
+        collection: "faqs",
+        data: faq,
+        locale: "en",
+        context: {
+          skipRevalidation: true,
+        },
+      });
+    }
+
+    payload.logger.info("Faqs created");
+
+    const companyPage = await payload.create({
+      collection: "pages",
+      data: {
+        title: "Company",
+        slug: "company",
+        layout: [
+          {
+            blockType: "contentBlock",
+            columns: [
+              {
+                size: "full",
+                richText: {
+                  root: {
+                    type: "root",
+                    children: [
+                      {
+                        type: "paragraph",
+                        version: 1,
+                        children: [
+                          {
+                            type: "text",
+                            text: "Company description",
+                          },
+                        ],
+                      },
+                    ],
+                    direction: "ltr",
+                    format: "left",
+                    indent: 0,
+                    version: 1,
+                  },
+                },
+              },
+            ],
+          },
+        ],
+      },
+      locale: "en",
+      context: {
+        skipRevalidation: true,
+      },
+    });
+
+    payload.logger.info("Company page created");
+
+    await payload.create({
+      collection: "pages",
+      data: getAboutUsData(companyPage.id),
+      locale: "en",
+      context: {
+        skipRevalidation: true,
+      },
+    });
+
+    payload.logger.info("Pages created");
+
+    // TODO: posts
+
+    const [hjtCategory, topconCategory] = await Promise.all([
       payload.create({
         collection: "solar-panel-categories",
         data: {
@@ -295,31 +439,154 @@ export const seed = async ({
 
     payload.logger.info("Solar panel categories created");
 
-    for (const faq of faqs) {
-      await payload.create({
-        collection: "faqs",
-        data: faq,
+    const [created936PackingConfig, created888PackingConfig] = await Promise.all([
+      payload.create({
+        collection: "packaging-configs",
+        data: {
+          title: "Solar Panel 936 Packing Config",
+          unitQty: {
+            value: 1,
+            unit: "pcs",
+          },
+          qtyPerPallet: 37,
+          containerType: "40HQ",
+          pltsPerContainer: 26,
+          totalQty: 962,
+        },
         locale: "en",
         context: {
           skipRevalidation: true,
         },
-      });
-    }
+      }),
 
-    payload.logger.info("Faqs created");
-
-    for (const page of pages) {
-      await payload.create({
-        collection: "pages",
-        data: page,
+      payload.create({
+        collection: "packaging-configs",
+        data: {
+          title: "Solar Panel 888 Packing Config",
+          unitQty: {
+            value: 1,
+            unit: "pcs",
+          },
+          qtyPerPallet: 37,
+          containerType: "40HQ",
+          pltsPerContainer: 24,
+          totalQty: 888,
+        },
         locale: "en",
         context: {
           skipRevalidation: true,
         },
-      });
-    }
+      }),
+    ]);
 
-    payload.logger.info("Pages created");
+    payload.logger.info("Packaging configs created");
+
+    const warranty = await payload.create({
+      collection: "warranties",
+      data: {
+        title: "Solar Panel Warranty",
+        productWarranty: true,
+        descProduct: {
+          root: {
+            type: "root",
+            children: [
+              {
+                type: "paragraph",
+                children: [{ type: "text", text: "25-year Product Warranty" }],
+                version: 1,
+              },
+            ],
+            direction: "ltr",
+            format: "left",
+            indent: 0,
+            version: 1,
+          },
+        },
+        durationProduct: {
+          value: 25,
+          unit: "years",
+        },
+        powerWarranty: true,
+        descPower: {
+          root: {
+            type: "root",
+            children: [
+              {
+                type: "paragraph",
+                children: [{ type: "text", text: "30-year Power Guarantee" }],
+                version: 1,
+              },
+            ],
+            direction: "ltr",
+            format: "left",
+            indent: 0,
+            version: 1,
+          },
+        },
+        durationPower: {
+          value: 30,
+          unit: "years",
+        },
+      },
+    });
+
+    payload.logger.info("Warranty created");
+
+    await payload.create({
+      collection: "solar-panels",
+      data: {
+        _status: "published",
+        ...getTOPConSolarPanelData({
+          industryId: industry.id,
+          productCategoryId: topconCategory.id,
+          heroImageId: createdSolarPanel1HeroImage.id,
+          coverImageId: createdSolarPanel2HeroImage.id,
+          variants: {
+            gallery: [
+              createdSolarPanel1ProductImage.id,
+              createdSolarPanel2ProductImage.id,
+              createdSolarPanel3ProductImage.id,
+              createdSolarPanel4ProductImage.id,
+            ],
+          },
+        }),
+        packagingConfig: created936PackingConfig.id,
+        warranty: warranty.id,
+      },
+      locale: "en",
+      context: {
+        skipRevalidation: true,
+      },
+    });
+
+    await payload.create({
+      collection: "solar-panels",
+      data: {
+        _status: "published",
+        ...getHJTSolarPanelData({
+          industryId: industry.id,
+          productCategoryId: hjtCategory.id,
+          heroImageId: createdSolarPanel1HeroImage.id,
+          coverImageId: createdSolarPanel2HeroImage.id,
+          variants: {
+            gallery: [
+              createdSolarPanel1ProductImage.id,
+              createdSolarPanel2ProductImage.id,
+              createdSolarPanel3ProductImage.id,
+              createdSolarPanel4ProductImage.id,
+            ],
+          },
+        }),
+        packagingConfig: created888PackingConfig.id,
+        warranty: warranty.id,
+      },
+      locale: "en",
+      context: {
+        skipRevalidation: true,
+      },
+    });
+
+    payload.logger.info("Solar panels created");
 
     await payload.db.commitTransaction(transactionID);
 
@@ -339,7 +606,7 @@ function getMimeType(filename: string): string {
   if (ext === "svg") return "image/svg+xml";
   if (ext === "jpg" || ext === "jpeg") return "image/jpeg";
   if (ext === "png") return "image/png";
-  // Add more types as needed
+
   return `image/${ext}`;
 }
 
