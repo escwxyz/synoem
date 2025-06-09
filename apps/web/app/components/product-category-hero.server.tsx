@@ -6,6 +6,8 @@ import { ProductBreadcrumbs } from "./product-breadcrumbs.server";
 import { getTranslations } from "next-intl/server";
 import { SocialShareButtons } from "./social-share-buttons.client";
 
+const BASE_IMAGE_URL = `${process.env.NEXT_PUBLIC_S3_ENDPOINT}/object/public/${process.env.NEXT_PUBLIC_S3_BUCKET_NAME}/images/seed`;
+
 export const ProductCategoryHero = async ({
   productCategory,
   productTypeId,
@@ -27,7 +29,9 @@ export const ProductCategoryHero = async ({
     description = t(`${productTypeId}.description`);
 
     imageUrl =
-      productTypeId === "solar-panel" ? "/solar-panel-hero.jpg" : "/pump-controller-hero.jpg";
+      productTypeId === "solar-panel"
+        ? `${BASE_IMAGE_URL}/solar-panel-hero.jpg`
+        : `${BASE_IMAGE_URL}/pump-controller-hero.jpg`;
   } else {
     const { heroImage } = productCategory;
 
@@ -41,7 +45,7 @@ export const ProductCategoryHero = async ({
   }
 
   return (
-    <div className="relative h-[600px] md:h-[600px] overflow-hidden text-white rounded-xl mb-4">
+    <div className="relative h-[600px] md:h-[600px] overflow-hidden text-primary-foreground rounded-xl mb-4">
       {imageUrl && (
         <Image
           height={600}
