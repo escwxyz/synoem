@@ -220,6 +220,8 @@ export const seed = async ({
       }),
     ]);
 
+    console.log("createdFactoryImage to be used", createdFactoryImage);
+
     payload.logger.info("Images created");
 
     payload.logger.info("Seeding globals...");

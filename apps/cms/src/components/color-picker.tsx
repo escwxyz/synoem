@@ -22,7 +22,7 @@ const ColorPicker = ({
     if (typeof value === "string" && value !== localValue) {
       setLocalValue(value);
     }
-  }, [value]);
+  }, [value, localValue]);
 
   useDebouncedEffect(
     () => {

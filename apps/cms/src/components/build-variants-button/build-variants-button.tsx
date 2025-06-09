@@ -8,7 +8,6 @@ import {
   PRODUCT_TYPES,
   type VariantOptionConfig,
   type VariantOptionValue,
-  isValidLocale,
   type Locale,
   getLocalizedString,
 } from "@synoem/config";
@@ -22,11 +21,6 @@ export const BuildVariantsButton = ({
   productTypeId: ProductTypeId;
 }) => {
   const locale = useLocale();
-
-  if (!isValidLocale(locale.code)) {
-    toast.error(`Invalid locale: ${locale.code}`);
-    return null;
-  }
 
   const [status, setStatus] = useState<"generating" | "clearing" | "idle">("idle");
 
@@ -166,7 +160,7 @@ interface OptionCombination {
 
 function generateVariantCombinations(
   options: VariantOptionConfig[],
-  locale: Locale,
+  locale: Locale = "en",
 ): ProductVariants {
   if (options.length === 0) return [];
 

@@ -1,33 +1,22 @@
 "use client";
 
-// biome-ignore lint/style/useImportType: <explanation>
 import React from "react";
 import { type RowLabelProps, useRowLabel } from "@payloadcms/ui";
+import { MenuItems, MegaMenuItems, LinkItems } from "@synoem/types";
+import { IconPreview } from "../icon";
 
 export const MenuItemLabel: React.FC<RowLabelProps> = () => {
-  const { data } = useRowLabel<{
-    text?: string;
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    sections?: any[];
-  }>();
+  const { data } = useRowLabel<NonNullable<NonNullable<MenuItems>[number]>>();
 
   if (!data) return <div>New Menu Item</div>;
 
-  const { text, sections } = data;
-  const hasDropdown = sections && sections.length > 0;
+  const { text, type } = data;
+  const hasDropdown = type === "mega";
 
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-      <span
-        style={{
-          padding: "2px 6px",
-          backgroundColor: hasDropdown ? "#4338ca" : "#030303",
-          color: "#ffffff",
-          borderRadius: "4px",
-          fontSize: "12px",
-        }}
-      >
-        {hasDropdown ? "Dropdown" : "Link"}
+    <div className="flex items-center gap-2">
+      <span className="px-2 py-1 rounded-md text-md bg-primary text-primary-foreground">
+        {hasDropdown ? "Mega Menu" : "Menu Link"}
       </span>
       <span>{text || "Untitled"}</span>
     </div>
@@ -35,121 +24,49 @@ export const MenuItemLabel: React.FC<RowLabelProps> = () => {
 };
 
 export const MenuSectionLabel: React.FC<RowLabelProps> = () => {
-  const { data } = useRowLabel<{
-    type: "links" | "banner";
-    linksSection?: {
-      title?: string;
-      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-      items?: any[];
-    };
-    banner?: {
-      title?: string;
-      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-      media?: any;
-    };
-  }>();
+  const { data } = useRowLabel<NonNullable<NonNullable<MegaMenuItems>[number]>>();
 
-  if (!data) return <div>New Section</div>;
+  if (!data) return <div>New Mega Menu Section</div>;
 
   const { type, linksSection, banner } = data;
-
-  const badgeStyle = {
-    padding: "2px 6px",
-    color: "#fff",
-    borderRadius: "4px",
-    fontSize: "12px",
-  };
 
   if (type === "banner" && banner) {
     const hasMedia = Boolean(banner.media);
     return (
-      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-        <span
-          style={{
-            ...badgeStyle,
-            backgroundColor: "#4338ca",
-          }}
-        >
-          Banner
-        </span>
+      <div className="flex items-center gap-2">
+        <span className="px-2 py-1 rounded-md bg-primary text-primary-foreground">Banner</span>
         <span>{banner.title || "Untitled Banner"}</span>
-        {hasMedia && (
-          <span
-            style={{
-              fontSize: "12px",
-              color: "#666",
-              backgroundColor: "#f5f5f5",
-              padding: "2px 6px",
-              borderRadius: "4px",
-            }}
-          >
-            with media
-          </span>
-        )}
+        {hasMedia && <span className="text-sm px-2 py-1 rounded-md">with media</span>}
       </div>
     );
   }
 
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-      <span
-        style={{
-          ...badgeStyle,
-          backgroundColor: "#030303",
-        }}
-      >
-        Links
-      </span>
+      <span className="px-2 py-1 rounded-md bg-primary text-primary-foreground">Links</span>
       <span>{linksSection?.title || "Untitled Section"}</span>
       {linksSection?.items && (
-        <span
-          style={{
-            fontSize: "12px",
-            color: "#666",
-            backgroundColor: "#f5f5f5",
-            padding: "2px 6px",
-            borderRadius: "4px",
-          }}
-        >
-          {linksSection.items.length} items
-        </span>
+        <span className="text-xs px-2 py-1 rounded-md">{linksSection.items.length} items</span>
       )}
     </div>
   );
 };
 
 export const LinkItemLabel: React.FC<RowLabelProps> = () => {
-  const { data } = useRowLabel<{
-    title?: string;
-    desc?: string;
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    icon?: any;
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    iconGradient?: any;
-  }>();
+  const { data } = useRowLabel<NonNullable<NonNullable<LinkItems>[number]>>();
 
   if (!data) return <div>New Link Item</div>;
 
-  const { title, desc, icon, iconGradient } = data;
-  const hasIcon = Boolean(icon || iconGradient);
+  const { title, description, icon } = data;
+  const hasIcon = Boolean(icon);
 
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+    <div className="flex items-center gap-2">
       <span>{title || "Untitled Link"}</span>
-      {(desc || hasIcon) && (
-        <span
-          style={{
-            fontSize: "12px",
-            color: "#666",
-            backgroundColor: "#f5f5f5",
-            padding: "2px 6px",
-            borderRadius: "4px",
-          }}
-        >
-          with{" "}
-          {[desc && "description", hasIcon && "icon"]
-            .filter(Boolean)
-            .join(" & ")}
+      {(description || hasIcon) && (
+        <span className="text-xs px-2 py-1 rounded-md">
+          {hasIcon && <IconPreview name={icon!} />}
+          {description && <span>{description}</span>}
         </span>
       )}
     </div>
