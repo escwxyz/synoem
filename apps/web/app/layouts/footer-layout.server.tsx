@@ -16,17 +16,20 @@ interface Props {
 export const Footer = async ({ locale }: Props) => {
   const companyInfoResponse = await getCompanyInfoCached(locale)();
 
-  const hasLongDescription =
-    companyInfoResponse.data?.longDescription &&
-    companyInfoResponse.data.longDescription.length > 0;
-
   const footerDataResponse = await getFooterCached(locale)();
+
+  if (footerDataResponse.status === "error") {
+    console.warn("Failed to fetch footer data:", footerDataResponse.error);
+  }
 
   const contactInfoResponse = await getContactInfoCached()();
 
+  if (contactInfoResponse.status === "error") {
+    console.warn("Failed to fetch contact info:", contactInfoResponse.error);
+  }
+
   if (companyInfoResponse.status === "error") {
     console.warn("Failed to fetch company info:", companyInfoResponse.error);
-    return null;
   }
 
   return (
@@ -47,11 +50,8 @@ export const Footer = async ({ locale }: Props) => {
               </span>
             </div>
             <p className="mb-6 text-muted-foreground">
-              {hasLongDescription &&
-              companyInfoResponse?.data?.longDescription?.length &&
-              companyInfoResponse?.data?.longDescription.length <= 100
-                ? companyInfoResponse?.data?.longDescription
-                : companyInfoResponse?.data?.shortDescription}
+              {companyInfoResponse?.data?.longDescription ??
+                companyInfoResponse?.data?.shortDescription}
             </p>
             <div className="flex space-x-3">
               <SocialLinks />
@@ -157,7 +157,7 @@ export const Footer = async ({ locale }: Props) => {
               </div>
             )}
 
-            <div className="hidden mt-4 md:flex items-center space-x-1 md:mt-0">
+            <div className="hidden md:flex items-center space-x-1">
               <LanguageSwitcher />
             </div>
           </div>

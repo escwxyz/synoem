@@ -20,6 +20,10 @@ const generateRandomString = (length = 20): string => {
     .slice(0, length);
 };
 
+// const generateRandomString = (length = 20): string => {
+//   return Array.from({ length }, () => Math.floor(Math.random() * 36).toString(36)).join("");
+// };
+
 export type WillPathConflictParams = {
   payload: Payload;
   path: string;

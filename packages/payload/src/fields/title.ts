@@ -24,10 +24,10 @@ export const createTitleField = (options: TitleFieldOptions = {}): Field => ({
   validate: (value: string | string[] | undefined | null) => {
     if (!value) return true;
 
-    if (value.length < 2) {
+    if (value?.length < 2) {
       return "Title must be at least 2 characters long";
     }
-    if (value.length > 100) {
+    if (value?.length > 100) {
       return "Title must be less than 100 characters long";
     }
 
