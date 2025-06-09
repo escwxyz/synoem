@@ -433,7 +433,7 @@ const ImageCarousel_Basic: React.FC<ImageCarousel_BasicProps> = ({
               >
                 {images?.map((image, index) => (
                   <Thumb
-                    key={image.url}
+                    key={`${image.url}-${index}`}
                     onClick={() => onThumbClick(index)}
                     selected={index === currentIndex}
                     index={index}

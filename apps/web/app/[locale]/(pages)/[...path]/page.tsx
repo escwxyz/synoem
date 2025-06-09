@@ -7,8 +7,6 @@ import { isValidLocale } from "@synoem/config";
 import { notFound } from "next/navigation";
 import { normalizePath } from "~/utils";
 
-export const revalidate = 86400;
-
 interface PageProps {
   params: Promise<{
     path: string[];

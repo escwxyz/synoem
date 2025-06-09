@@ -4,6 +4,7 @@ import { getParents } from "@payloadcms/plugin-nested-docs";
 import type { GenerateURL } from "@payloadcms/plugin-nested-docs/types";
 import type { CollectionSlug, FieldHook, Payload, PayloadRequest, TextField, Where } from "payload";
 import { APIError, ValidationError } from "payload";
+import { randomBytes } from "node:crypto";
 
 export const UNIQUE_PATH_COLLECTIONS = ["pages", "posts"] as const satisfies CollectionSlug[];
 export const DEFAULT_FIELD_TO_USE_FOR_PATH = "slug" as const;
@@ -14,7 +15,9 @@ export const generateBreadcrumbsUrl: GenerateURL = (docs, _currentDoc) => {
 };
 
 const generateRandomString = (length = 20): string => {
-  return Array.from({ length }, () => Math.floor(Math.random() * 36).toString(36)).join("");
+  return randomBytes(Math.ceil(length / 2))
+    .toString("hex")
+    .slice(0, length);
 };
 
 export type WillPathConflictParams = {
@@ -51,11 +54,7 @@ export const willPathConflict = async ({
   });
 
   const results = await Promise.allSettled(queries);
-  return results.some(
-    (result) =>
-      result.status === "fulfilled" &&
-      (result as PromiseFulfilledResult<{ docs: { id: string }[] }>).value.docs.length > 0,
-  );
+  return results.some((result) => result.status === "fulfilled" && result.value.docs.length > 0);
 };
 
 export type GenerateDocumentPathParams = {

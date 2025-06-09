@@ -69,7 +69,7 @@ export async function findDocumentByPathUncached(path: string, locale: Locale, d
   return (
     settled.find(
       (r): r is PromiseFulfilledResult<APIResponse<PathDocuments>> =>
-        r.status === "fulfilled" && r.value !== null,
+        r.status === "fulfilled" && r.value.status === "success" && r.value.data !== null,
     )?.value ?? null
   );
 }
@@ -95,10 +95,8 @@ export const getDocumentByPathCached = (locale: Locale, path: string, depth = 1)
 export const getUniquePaths = async (excludedPaths: string[] = []) => {
   const payload = await getPayloadClient();
 
-  const allPaths: string[] = [];
-
-  for (const collection of UNIQUE_PATH_COLLECTIONS) {
-    const { docs } = await payload.find({
+  const pathPromises = UNIQUE_PATH_COLLECTIONS.map((collection) =>
+    payload.find({
       collection,
       depth: 0,
       pagination: false,
@@ -106,17 +104,19 @@ export const getUniquePaths = async (excludedPaths: string[] = []) => {
       select: {
         path: true,
       },
-    });
+    }),
+  );
 
-    const paths = docs
+  const results = await Promise.all(pathPromises);
+
+  const allPaths = results.flatMap(({ docs }) =>
+    docs
       .map((doc) => doc.path)
       .filter(
         (path): path is string =>
           typeof path === "string" && path.length > 0 && !excludedPaths.includes(path),
-      );
-
-    allPaths.push(...paths);
-  }
+      ),
+  );
 
   return allPaths;
 };
