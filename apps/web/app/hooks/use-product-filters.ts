@@ -1,4 +1,4 @@
-import { useCallback, useTransition } from "react";
+import { useCallback, useMemo, useTransition } from "react";
 import { useProductPagination } from "@/app/hooks/use-product-pagination";
 import {
   convertMetadataToValues,
@@ -13,6 +13,7 @@ import type {
 import { useQueryStates } from "nuqs";
 import { useSidebar } from "~/hooks/useSidebar";
 import type { ProductTypeId } from "@synoem/config";
+import { useState } from "react";
 
 export const useProductFilters = <T extends ProductTypeId>(
   initialMetadata: SolarPanelFilterMetadata | PumpControllerFilterMetadata | undefined,
@@ -23,6 +24,7 @@ export const useProductFilters = <T extends ProductTypeId>(
   urlFilters: T extends "solar-panel" ? SolarPanelFilterValues : PumpControllerFilterValues;
   handleResetFilters: () => void;
   handleChangeFilters: (changes: Partial<typeof urlFilters>) => void;
+  handleApplyChanges: () => void;
 } => {
   const [isPending, startTransition] = useTransition();
   const { setCurrentPage } = useProductPagination();
@@ -35,14 +37,23 @@ export const useProductFilters = <T extends ProductTypeId>(
         : PumpControllerFilterValues,
       handleResetFilters: () => {},
       handleChangeFilters: () => {},
+      handleApplyChanges: () => {},
     };
   }
+
+  const defaultValues = convertMetadataToValues<T>(initialMetadata, productTypeId);
 
   const filterSchema = createFilterSchema(initialMetadata, productTypeId);
 
   const [urlFilters, setUrlFilters] = useQueryStates(filterSchema, {
     startTransition,
   });
+
+  const [localFilters, setLocalFilters] = useState<Partial<typeof urlFilters>>(defaultValues);
+
+  const hasChanges = useMemo(() => {
+    return JSON.stringify(localFilters) !== JSON.stringify(urlFilters);
+  }, [localFilters, urlFilters]);
 
   const { isMobile, setIsOpen, setOpenMobile } = useSidebar();
 
@@ -54,25 +65,39 @@ export const useProductFilters = <T extends ProductTypeId>(
     }
   }, [isMobile, setIsOpen, setOpenMobile]);
 
-  const handleChangeFilters = useCallback(
-    (changes: Partial<typeof urlFilters>) => {
-      if (JSON.stringify(urlFilters) === JSON.stringify(changes)) {
-        return;
-      }
+  const handleChangeFilters = useCallback((changes: Partial<typeof urlFilters>) => {
+    setLocalFilters((prev) => ({ ...prev, ...changes }));
+  }, []);
 
+  const handleApplyChanges = useCallback(() => {
+    if (hasChanges && localFilters) {
       startTransition(() => {
-        setUrlFilters(changes).then(() => {
+        setUrlFilters(localFilters).then(() => {
           setCurrentPage(1);
         });
       });
-    },
-    [setUrlFilters, setCurrentPage, urlFilters],
-  );
+    }
+  }, [hasChanges, localFilters, setUrlFilters, setCurrentPage]);
+
+  // const handleChangeFilters = useCallback(
+  //   (changes: Partial<typeof urlFilters>) => {
+  //     if (JSON.stringify(urlFilters) === JSON.stringify(changes)) {
+
+  //       return;
+  //     }
+
+  //     startTransition(() => {
+  //       setUrlFilters(changes).then(() => {
+  //         setCurrentPage(1);
+  //       });
+  //     });
+  //   },
+  //   [setUrlFilters, setCurrentPage, urlFilters],
+  // );
 
   const handleResetFilters = useCallback(() => {
-    const defaultValues = convertMetadataToValues<T>(initialMetadata, productTypeId);
-
     startTransition(() => {
+      setLocalFilters(defaultValues);
       setUrlFilters(defaultValues).then(() => {
         setCurrentPage(1);
         if (autoCloseSidebar) {
@@ -80,14 +105,7 @@ export const useProductFilters = <T extends ProductTypeId>(
         }
       });
     });
-  }, [
-    setUrlFilters,
-    closeSidebar,
-    autoCloseSidebar,
-    setCurrentPage,
-    initialMetadata,
-    productTypeId,
-  ]);
+  }, [setUrlFilters, closeSidebar, autoCloseSidebar, setCurrentPage, defaultValues]);
 
   return {
     isPending,
@@ -96,5 +114,6 @@ export const useProductFilters = <T extends ProductTypeId>(
       : PumpControllerFilterValues,
     handleResetFilters,
     handleChangeFilters,
+    handleApplyChanges,
   };
 };

@@ -1,31 +1,58 @@
-import { defaultLocale, type ProductTypeId, type Locale, isValidProductType } from "@synoem/config";
+import {
+  defaultLocale,
+  type Locale,
+  isValidProductType,
+  isValidProductCategory,
+} from "@synoem/config";
 import { isValidLocale } from "~/utils/is-valid-locale";
 import { ProductDetailPage } from "~/layouts/product-detail-layout.server";
 import { notFound } from "next/navigation";
 import { getProductCached } from "~/data/get-product";
 import { generateProductPath } from "~/data/generate-product-path";
+import { getPageMetadata } from "@/app/data/get-page-metadata";
 
 export const dynamicParams = true;
 
 export const dynamic = "force-static";
 
+interface PageProps {
+  params: Promise<{ locale: string; slug: string; type: string; category: string }>;
+}
+
 export const generateStaticParams = async () => {
   return await generateProductPath();
 };
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{
-    locale: Locale;
-    category: string;
-    slug: string;
-    type: ProductTypeId;
-  }>;
-}) {
-  const { locale, slug, type } = await params;
+export async function generateMetadata({ params }: PageProps) {
+  const { locale, slug, type, category } = await params;
 
-  if (!isValidProductType(type)) {
+  if (!isValidProductType(type) || !isValidProductCategory(category) || !isValidLocale(locale)) {
+    return;
+  }
+
+  const productResponse = await getProductCached({
+    locale,
+    slug,
+    productTypeId: type,
+  })();
+
+  if (productResponse.error) {
+    return;
+  }
+
+  const product = productResponse.data;
+
+  if (!product) {
+    return;
+  }
+
+  return getPageMetadata({ locale, pageTitle: product.title });
+}
+
+export default async function Page({ params }: PageProps) {
+  const { locale, slug, type, category } = await params;
+
+  if (!isValidProductType(type) || !isValidProductCategory(category)) {
     notFound();
   }
 
@@ -37,12 +64,7 @@ export default async function Page({
     productTypeId: type,
   })();
 
-  if (productResponse.error) {
-    // TODO: handle error
-    return <div>Error</div>;
-  }
-
-  if (!productResponse.data) {
+  if (productResponse.error || !productResponse.data) {
     return notFound();
   }
 

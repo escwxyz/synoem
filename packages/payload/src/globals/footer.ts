@@ -24,7 +24,7 @@ export const Footer: GlobalConfig = {
         },
       },
       minRows: 1,
-      maxRows: 3,
+      maxRows: 4,
       fields: [
         {
           name: "size",

@@ -13,6 +13,7 @@ const menuItemFields: Field[] = [
     required: true,
     label: "Menu Text",
     localized: true,
+    defaultValue: "Menu Text",
   },
 
   {
@@ -29,6 +30,7 @@ const menuItemFields: Field[] = [
         value: "link",
       },
     ],
+    defaultValue: "link",
   },
 
   link({

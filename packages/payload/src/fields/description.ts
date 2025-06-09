@@ -12,9 +12,7 @@ type DescriptionOptions = {
   };
 };
 
-export const createDescriptionField = (
-  options: DescriptionOptions = {},
-): TextareaField => ({
+export const createDescriptionField = (options: DescriptionOptions = {}): TextareaField => ({
   type: "textarea",
   name: options.name || "desc",
   label: options.label || "Description",
@@ -27,9 +25,8 @@ export const createDescriptionField = (
   },
   validate: (value) => {
     if (!value) return true;
-    if (value.length < 10) return "Description must be at least 10 characters";
-    if (value.length > 500)
-      return "Description must be less than 500 characters";
+    if (value?.length < 10) return "Description must be at least 10 characters";
+    if (value?.length > 500) return "Description must be less than 500 characters";
     return true;
   },
 });

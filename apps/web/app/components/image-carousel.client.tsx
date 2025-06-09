@@ -341,7 +341,7 @@ const ImageCarousel_Basic: React.FC<ImageCarousel_BasicProps> = ({
             <div className="thumbs-horizontal group -ml-3 flex">
               {images?.map((image, index) => (
                 <Thumb
-                  key={image.url}
+                  key={`${image.url}-${index}`}
                   onClick={() => onThumbClick(index)}
                   selected={index === currentIndex}
                   index={index}
@@ -433,7 +433,7 @@ const ImageCarousel_Basic: React.FC<ImageCarousel_BasicProps> = ({
               >
                 {images?.map((image, index) => (
                   <Thumb
-                    key={image.url}
+                    key={`${image.url}-${index}`}
                     onClick={() => onThumbClick(index)}
                     selected={index === currentIndex}
                     index={index}

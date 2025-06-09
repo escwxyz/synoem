@@ -13,12 +13,28 @@ export const FeaturesBlock: Block = {
   },
   fields: [
     {
+      name: "title",
+      type: "text",
+      admin: {
+        description: "Title of the features block",
+      },
+      localized: true,
+    },
+    {
+      name: "description",
+      type: "text",
+      admin: {
+        description: "Description of the features block",
+      },
+      localized: true,
+    },
+    {
       name: "features",
       type: "blocks",
       minRows: 2,
       maxRows: 6,
       admin: {
-        description: "Showcased features of the product, min. 2, max. 6",
+        description: "Showcased features, min. 2, max. 6",
       },
       blocks: [FeatureBlock],
     },

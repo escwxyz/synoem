@@ -1609,7 +1609,10 @@ export type IconName =
   | 'lucide:zap-off'
   | 'lucide:zap'
   | 'lucide:zoom-in'
-  | 'lucide:zoom-out';
+  | 'lucide:zoom-out'
+  | 'custom:ce'
+  | 'custom:ul'
+  | 'custom:mcs';
 /**
  * Click the button to generate the power points
  *
@@ -1642,6 +1645,21 @@ export type ProductVariants = {
         id?: string | null;
       }[]
     | null;
+  id?: string | null;
+}[];
+/**
+ * The first address will be used as the headquarters address.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Addresses".
+ */
+export type Addresses = {
+  line1: string;
+  line2?: string | null;
+  city: string;
+  state?: string | null;
+  zip?: string | null;
+  country: string;
   id?: string | null;
 }[];
 /**
@@ -1784,7 +1802,6 @@ export interface Config {
     'pump-controllers': PumpController;
     'solar-panel-categories': SolarPanelCategory;
     'pump-controller-categories': PumpControllerCategory;
-    exports: Export;
     'payload-jobs': PayloadJob;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -1816,7 +1833,6 @@ export interface Config {
     'pump-controllers': PumpControllersSelect<false> | PumpControllersSelect<true>;
     'solar-panel-categories': SolarPanelCategoriesSelect<false> | SolarPanelCategoriesSelect<true>;
     'pump-controller-categories': PumpControllerCategoriesSelect<false> | PumpControllerCategoriesSelect<true>;
-    exports: ExportsSelect<false> | ExportsSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -1938,6 +1954,17 @@ export interface Page {
   showLastUpdated?: boolean | null;
   slug: string;
   slugLock?: boolean | null;
+  _collection?: string | null;
+  path?: string | null;
+  parent?: (string | null) | Page;
+  breadcrumbs?:
+    | {
+        doc?: (string | null) | Page;
+        url?: string | null;
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -2053,6 +2080,7 @@ export interface Image {
   id: string;
   alt: string;
   blurDataUrl?: string | null;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -2064,16 +2092,6 @@ export interface Image {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
-  sizes?: {
-    thumbnail?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2810,7 +2828,15 @@ export interface MediaBlockType {
  */
 export interface FeaturesBlockType {
   /**
-   * Showcased features of the product, min. 2, max. 6
+   * Title of the features block
+   */
+  title?: string | null;
+  /**
+   * Description of the features block
+   */
+  description?: string | null;
+  /**
+   * Showcased features, min. 2, max. 6
    */
   features?: FeatureBlockType[] | null;
   /**
@@ -2826,6 +2852,14 @@ export interface FeaturesBlockType {
  * via the `definition` "TimelineBlockType".
  */
 export interface TimelineBlockType {
+  /**
+   * Title of the timeline block
+   */
+  title?: string | null;
+  /**
+   * Description of the timeline block
+   */
+  description?: string | null;
   items?:
     | {
         title: string;
@@ -3539,6 +3573,8 @@ export interface Post {
   title: string;
   slug: string;
   slugLock?: boolean | null;
+  _collection?: string | null;
+  path?: string | null;
   authors?: (string | User)[] | null;
   publishedAt?: string | null;
   tags?: string[] | null;
@@ -3558,45 +3594,18 @@ export interface Post {
     };
     [k: string]: unknown;
   };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "exports".
- */
-export interface Export {
-  id: string;
-  name?: string | null;
-  format: 'csv' | 'json';
-  limit?: number | null;
-  sort?: string | null;
-  locale?: ('all' | 'en' | 'de') | null;
-  drafts?: ('yes' | 'no') | null;
-  selectionToUse?: ('currentSelection' | 'currentFilters' | 'all') | null;
-  fields?: string[] | null;
-  collectionSlug: string;
-  where?:
+  parent?: (string | null) | Post;
+  breadcrumbs?:
     | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
+        doc?: (string | null) | Post;
+        url?: string | null;
+        label?: string | null;
+        id?: string | null;
+      }[]
     | null;
   updatedAt: string;
   createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3794,10 +3803,6 @@ export interface PayloadLockedDocument {
         value: string | PumpControllerCategory;
       } | null)
     | ({
-        relationTo: 'exports';
-        value: string | Export;
-      } | null)
-    | ({
         relationTo: 'payload-jobs';
         value: string | PayloadJob;
       } | null);
@@ -3892,6 +3897,17 @@ export interface PagesSelect<T extends boolean = true> {
   showLastUpdated?: T;
   slug?: T;
   slugLock?: T;
+  _collection?: T;
+  path?: T;
+  parent?: T;
+  breadcrumbs?:
+    | T
+    | {
+        doc?: T;
+        url?: T;
+        label?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -3971,6 +3987,8 @@ export interface MediaBlockTypeSelect<T extends boolean = true> {
  * via the `definition` "FeaturesBlockType_select".
  */
 export interface FeaturesBlockTypeSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
   features?:
     | T
     | {
@@ -4007,6 +4025,8 @@ export interface FeatureBlockTypeSelect<T extends boolean = true> {
  * via the `definition` "TimelineBlockType_select".
  */
 export interface TimelineBlockTypeSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
   items?:
     | T
     | {
@@ -4129,6 +4149,7 @@ export interface NewsletterSubscribersSelect<T extends boolean = true> {
 export interface ImagesSelect<T extends boolean = true> {
   alt?: T;
   blurDataUrl?: T;
+  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -4140,20 +4161,6 @@ export interface ImagesSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
-  sizes?:
-    | T
-    | {
-        thumbnail?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -4378,11 +4385,22 @@ export interface PostsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   slugLock?: T;
+  _collection?: T;
+  path?: T;
   authors?: T;
   publishedAt?: T;
   tags?: T;
   coverImage?: T;
   content?: T;
+  parent?: T;
+  breadcrumbs?:
+    | T
+    | {
+        doc?: T;
+        url?: T;
+        label?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -4677,33 +4695,6 @@ export interface PumpControllerCategoriesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "exports_select".
- */
-export interface ExportsSelect<T extends boolean = true> {
-  name?: T;
-  format?: T;
-  limit?: T;
-  sort?: T;
-  locale?: T;
-  drafts?: T;
-  selectionToUse?: T;
-  fields?: T;
-  collectionSlug?: T;
-  where?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-jobs_select".
  */
 export interface PayloadJobsSelect<T extends boolean = true> {
@@ -4828,7 +4819,7 @@ export interface CompanyInfo {
   /**
    * The logo of the company
    */
-  logo: string | Image;
+  logo?: (string | null) | Image;
   /**
    * The logo of the company in dark mode
    */
@@ -4852,18 +4843,7 @@ export interface ContactInfo {
   id: string;
   email: string;
   phone: string;
-  /**
-   * The first address will be used as the headquarters address.
-   */
-  addresses: {
-    line1: string;
-    line2?: string | null;
-    city: string;
-    state?: string | null;
-    zip?: string | null;
-    country: string;
-    id?: string | null;
-  }[];
+  addresses: Addresses;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -4957,20 +4937,23 @@ export interface CompanyInfoSelect<T extends boolean = true> {
 export interface ContactInfoSelect<T extends boolean = true> {
   email?: T;
   phone?: T;
-  addresses?:
-    | T
-    | {
-        line1?: T;
-        line2?: T;
-        city?: T;
-        state?: T;
-        zip?: T;
-        country?: T;
-        id?: T;
-      };
+  addresses?: T | AddressesSelect<T>;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Addresses_select".
+ */
+export interface AddressesSelect<T extends boolean = true> {
+  line1?: T;
+  line2?: T;
+  city?: T;
+  state?: T;
+  zip?: T;
+  country?: T;
+  id?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

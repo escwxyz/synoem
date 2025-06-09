@@ -16,6 +16,7 @@ export const CompanyInfo: GlobalConfig = {
       label: "Company Name",
       type: "text",
       required: true,
+      defaultValue: "Company Name",
     },
     {
       name: "logo",
@@ -23,7 +24,6 @@ export const CompanyInfo: GlobalConfig = {
       type: "upload",
       relationTo: "images",
       hasMany: false,
-      required: true,
       admin: {
         description: "The logo of the company",
       },
@@ -34,7 +34,6 @@ export const CompanyInfo: GlobalConfig = {
       type: "upload",
       relationTo: "images",
       hasMany: false,
-      required: false,
       admin: {
         description: "The logo of the company in dark mode",
       },
@@ -45,7 +44,6 @@ export const CompanyInfo: GlobalConfig = {
       type: "upload",
       relationTo: "images",
       hasMany: false,
-      required: false,
       admin: {
         description: "The image used for the open graph image (preferably 1200x630)",
       },
@@ -56,6 +54,7 @@ export const CompanyInfo: GlobalConfig = {
       type: "text",
       required: true,
       localized: true,
+      defaultValue: "Company Description",
     },
     {
       name: "longDescription",
@@ -63,6 +62,7 @@ export const CompanyInfo: GlobalConfig = {
       type: "textarea",
       required: true,
       localized: true,
+      defaultValue: "Company Description",
     },
     {
       name: "vat",

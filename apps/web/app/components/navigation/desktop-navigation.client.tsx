@@ -4,11 +4,10 @@
 
 import type { MegaMenuItems, MenuItems } from "@synoem/types";
 import { cn } from "@synoem/ui/lib/utils";
-import { getMenuLinkConfig } from "~/utils";
+import { getLinkConfig } from "~/utils";
 import { type Dispatch, type SetStateAction, useMemo, useState } from "react";
 import { motion } from "motion/react";
 import { ChevronDownIcon } from "lucide-react";
-import { useIsMobile } from "@synoem/ui/hooks/use-mobile";
 import { MenuLinkSection } from "./menu-link-section.client";
 import { MenuBanner } from "./menu-banner.client";
 import { MenuLink } from "./menu-link.client";
@@ -29,17 +28,11 @@ interface Props {
 export const DesktopNavigation = ({ items }: Props) => {
   const [active, setActive] = useState<string | null>(null);
 
-  const isMobile = useIsMobile();
-
-  if (isMobile) {
-    return null;
-  }
-
   return (
     <nav
       aria-label="Primary"
       onMouseLeave={() => setActive(null)}
-      className="flex justify-center space-x-4 px-8 py-6"
+      className={cn("hidden justify-center space-x-4 px-8 py-6 md:flex")}
     >
       {items.map((item) => {
         return <DesktopMenuItem key={item.id} item={item} setActive={setActive} active={active} />;
@@ -67,7 +60,7 @@ function DesktopMenuItem({ item, active, setActive }: MenuItemProps) {
   }, []);
 
   if (item.type === "link") {
-    const linkConfig = getMenuLinkConfig(item.link);
+    const linkConfig = getLinkConfig(item.link);
     content = (
       <>
         <MenuLink
@@ -102,45 +95,52 @@ function DesktopMenuItem({ item, active, setActive }: MenuItemProps) {
 
         {active !== null && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.85, y: 10 }}
+            initial={{ opacity: 0, scale: 0.9, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={transition}
           >
             {active === item.id && (
-              <div className="absolute top-[calc(100%_+_1.2rem)] left-1/2 transform -translate-x-1/2 pt-4">
-                <motion.div
-                  transition={transition}
-                  layoutId="active"
-                  className="bg-muted backdrop-blur-2xl rounded-xl p-4"
-                >
-                  <div className="absolute bottom-0 left-0 h-48 w-48 rounded-full bg-primary/30 blur-3xl dark:bg-primary/10" />
-                  <motion.div layout className="w-max h-full p-4">
-                    <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                      {item.megaItems?.map((section) => {
-                        if (section.type === "links" && section.linksSection) {
-                          return (
-                            <li key={section.id}>
-                              <MenuLinkSection
-                                title={section.linksSection.title}
-                                items={section.linksSection.items}
-                                isExtended={section.linksSection.isExtended}
-                              />
-                            </li>
-                          );
-                        }
-                        if (section.type === "banner" && section.banner) {
-                          return (
-                            <li key={section.id} className="row-span-3">
-                              <MenuBanner banner={section.banner} />
-                            </li>
-                          );
-                        }
-                        return null;
-                      })}
-                    </ul>
+              <div className="absolute top-[calc(100%_+_1.2rem)] left-1/2 transform -translate-x-1/2">
+                <div className="relative">
+                  {/* TODO: This border indicator is keeping rerendering after the animation */}
+                  <div
+                    className={cn(
+                      "absolute left-1/2 top-0 h-px w-1/2 -translate-x-1/2 bg-gradient-to-r from-transparent via-primary/70 to-transparent dark:via-primary/30 transition-opacity duration-200",
+                      active === item.id ? "opacity-100" : "opacity-0 pointer-events-none",
+                    )}
+                  />
+                  <motion.div
+                    transition={transition}
+                    layoutId="active"
+                    className="bg-muted/99 backdrop-blur-4xl rounded-xl w-max border"
+                  >
+                    <motion.div layout className="w-max h-full p-4">
+                      <ul className="relative grid grid-cols-[repeat(2,minmax(0,auto))] gap-x-8 gap-y-6 p-2">
+                        {item.megaItems?.map((section) => {
+                          if (section.type === "links" && section.linksSection) {
+                            return (
+                              <li key={section.id}>
+                                <MenuLinkSection
+                                  title={section.linksSection.title}
+                                  items={section.linksSection.items}
+                                  isExtended={section.linksSection.isExtended}
+                                />
+                              </li>
+                            );
+                          }
+                          if (section.type === "banner" && section.banner) {
+                            return (
+                              <li key={section.id} className="row-span-3 mt-1 md:-order-1 md:mt-0">
+                                <MenuBanner banner={section.banner} />
+                              </li>
+                            );
+                          }
+                          return null;
+                        })}
+                      </ul>
+                    </motion.div>
                   </motion.div>
-                  <div className="absolute left-1/2 top-0 h-px w-1/2 -translate-x-1/2 bg-gradient-to-r from-transparent via-primary/70 to-transparent dark:via-primary/30" />
-                </motion.div>
+                </div>
               </div>
             )}
           </motion.div>

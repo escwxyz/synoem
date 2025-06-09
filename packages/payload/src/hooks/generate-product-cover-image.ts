@@ -9,11 +9,11 @@ export const generateProductCoverImage: CollectionBeforeValidateHook = async ({ 
 
   const { gallery, variants } = data;
 
-  if (gallery && gallery.length > 0) {
+  if (gallery && gallery?.length > 0) {
     coverImage = gallery[0];
-  } else if (variants && variants.length > 0) {
+  } else if (variants && variants?.length > 0) {
     const images = variants[0]?.gallery;
-    if (images && images.length > 0) {
+    if (images && images?.length > 0) {
       coverImage = images[0];
     }
   }

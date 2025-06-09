@@ -7,7 +7,7 @@ export const revalidateCollection: CollectionAfterChangeHook = async ({
   doc,
   context,
 }) => {
-  if (context.skipRevalidation) {
+  if (context.skipRevalidation || process.env.NODE_ENV === "development") {
     return;
   }
 

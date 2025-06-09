@@ -1,8 +1,7 @@
 import { nestedDocsPlugin } from "@payloadcms/plugin-nested-docs";
+import { generateBreadcrumbsUrl, UNIQUE_PATH_COLLECTIONS } from "../fields/path";
 
 export const nestedDocs = nestedDocsPlugin({
-  collections: [],
-  generateURL: (docs, currentDoc) => {
-    return docs.reduce((url, doc) => `${url}/${doc.slug}`, "");
-  },
+  collections: UNIQUE_PATH_COLLECTIONS,
+  generateURL: generateBreadcrumbsUrl,
 });

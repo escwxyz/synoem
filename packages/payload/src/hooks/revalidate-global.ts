@@ -6,7 +6,7 @@ export const revalidateGlobal: GlobalAfterChangeHook = async ({
   req: { locale },
   context,
 }) => {
-  if (context.skipRevalidation) {
+  if (context.skipRevalidation || process.env.NODE_ENV === "development") {
     return;
   }
 

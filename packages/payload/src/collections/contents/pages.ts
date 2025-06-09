@@ -1,5 +1,5 @@
 import type { CollectionConfig } from "payload";
-import { slug } from "../../fields";
+import { slug, pathField, UNIQUE_PATH_COLLECTIONS } from "../../fields";
 import { HeroBlock } from "../../blocks/hero";
 import { ContentBlock } from "../../blocks/content";
 import { title } from "../../fields/title";
@@ -75,6 +75,7 @@ export const Pages: CollectionConfig<"pages"> = {
       },
     },
     ...slug(),
+    ...pathField({}),
   ],
   versions: {
     drafts: {

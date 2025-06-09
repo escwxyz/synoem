@@ -1,21 +1,18 @@
 "use client";
 
 import React, { type CSSProperties, useCallback, useMemo } from "react";
-import { FieldLabel, ReactSelect, type ReactSelectOption, useField } from "@payloadcms/ui";
+import { FieldLabel, ReactSelect, useField } from "@payloadcms/ui";
 import type { SelectFieldClientComponent } from "payload";
 import type { Option } from "@payloadcms/ui/elements/ReactSelect";
 import { FixedSizeList as List, areEqual } from "react-window";
+import Image from "next/image";
 
 const ICON_URLS = {
   lucide: "https://cdn.jsdelivr.net/npm/lucide-static@0.508.0/icons/",
-  ...(process.env.NEXT_PUBLIC_S3_ENDPOINT && process.env.CMS_APP_ENV === "production"
-    ? {
-        custom: `${process.env.NEXT_PUBLIC_S3_ENDPOINT}/object/public/${process.env.NEXT_PUBLIC_S3_BUCKET_NAME}/icons/`,
-      }
-    : {}),
+  custom: `${process.env.NEXT_PUBLIC_S3_ENDPOINT}/object/public/${process.env.NEXT_PUBLIC_S3_BUCKET_NAME}/icons/`,
 };
 
-const IconPreview: React.FC<{ name: string }> = React.memo(({ name }) => {
+export const IconPreview: React.FC<{ name: string }> = React.memo(({ name }) => {
   const source = name.split(":")[0] || "lucide";
 
   const src =
@@ -24,7 +21,7 @@ const IconPreview: React.FC<{ name: string }> = React.memo(({ name }) => {
       : `${ICON_URLS.lucide}${name.split(":")[1]}.svg`;
 
   return (
-    <img
+    <Image
       src={src}
       alt={name}
       width={20}
@@ -35,6 +32,7 @@ const IconPreview: React.FC<{ name: string }> = React.memo(({ name }) => {
         console.log("error", e);
         e.currentTarget.style.display = "none";
       }}
+      unoptimized
     />
   );
 });

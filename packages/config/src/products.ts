@@ -61,7 +61,7 @@ export interface VariantOptionConfig {
 }
 
 export interface ProductCategoryValue {
-  label: string;
+  label: string; // TODO: localized text
   value: string;
   children?: ProductCategoryValue[]; // TODO nested categories in the future
 }
@@ -159,7 +159,7 @@ export const PRODUCT_TYPES: Record<ProductTypeId, ProductTypeConfig> = {
   },
 };
 
-export const isValidProductType = (slug: string) => {
+export const isValidProductType = (slug: string): slug is ProductTypeId => {
   return Object.values(PRODUCT_TYPES).some((type) => type.id === slug);
 };
 
@@ -175,34 +175,6 @@ export const getProductTypeOptions = () => {
     value: typeId,
   }));
 };
-
-// // Helper function to get all possible category values including their path
-// export function getProductCategoryOptions(productTypeId: ProductTypeId): SelectField['options'] {
-//   const productConfig = PRODUCT_TYPES[productTypeId];
-
-//   // This recursive function builds flattened options with proper indentation
-//   function buildOptions(categories: ProductCategoryValue[], depth = 0): SelectField['options'] {
-//     return categories.flatMap(category => {
-//       // Create the current category option
-//       const option = {
-//         label: `${' '.repeat(depth * 2)}${category.label}`, // Indent based on depth
-//         value: category.value,
-//       };
-
-//       // If there are children, recursively add them too
-//       if (category.children?.length) {
-//         return [
-//           option,
-//           ...buildOptions(category.children, depth + 1)
-//         ];
-//       }
-
-//       return [option];
-//     });
-//   }
-
-//   return buildOptions(productConfig.categories);
-// }
 
 export const getProductCategoryOptions = (productTypeId: ProductTypeId) => {
   return PRODUCT_TYPES[productTypeId].categories.map((category) => ({

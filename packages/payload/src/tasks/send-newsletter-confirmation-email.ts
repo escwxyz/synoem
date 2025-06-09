@@ -30,7 +30,7 @@ export const sendNewsletterConfirmationEmail: TaskHandler<
       },
     });
 
-    if (typeof response.logo !== "object" || !response.logo.url) {
+    if (typeof response.logo !== "object" || !response.logo?.url) {
       payload.logger.error("No logo found for company info global");
       throw new APIError("No logo found for company info global");
     }

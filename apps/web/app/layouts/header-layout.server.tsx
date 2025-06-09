@@ -36,7 +36,7 @@ export const Header = async ({ locale }: { locale: Locale }) => {
       className="sticky top-0 z-100 flex w-full max-h-[calc(var(--header-height)+1.5rem)] flex-col border-b border-border bg-background/50 backdrop-blur-xl transition-all duration-500"
     >
       <div className="flex justify-between items-center h-(--header-height) w-full px-4">
-        <div className="flex w-full md:w-1/2 justify-between gap-4 items-center">
+        <div className="grid grid-cols-[1fr_2fr_1fr] w-full items-center">
           <div className="flex items-center gap-2">
             <Suspense fallback={<LogoSkeleton size={40} />}>
               <Logo locale={locale} size={40} />
@@ -46,8 +46,11 @@ export const Header = async ({ locale }: { locale: Locale }) => {
             </span>
           </div>
           {hasNavigation && <DesktopNavigation items={items} />}
+          <div className="flex justify-end">
+            <HeaderButtons locale={locale} />
+          </div>
         </div>
-        <HeaderButtons locale={locale} />
+
         {hasNavigation && <MobileNavigation items={items} />}
       </div>
     </header>

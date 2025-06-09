@@ -1,5 +1,7 @@
 "use client";
 
+// TODO: better way to avoid scroll lock conflict with mobile menu (open => body shall be locked, menu shall be scrollable)
+
 import type { MenuItems } from "@synoem/types";
 import { AnimatePresence, motion, type Variants } from "motion/react";
 import { useEffect, useState } from "react";
@@ -10,8 +12,7 @@ import type { MenuItemProps, MenuLinkProps, NavigationProps } from "./types";
 import { ChevronDown, ExternalLinkIcon } from "lucide-react";
 import { cn } from "@synoem/ui/lib/utils";
 import { Link } from "@/i18n/navigation";
-import { getMenuLinkConfig } from "~/utils";
-import { useIsMobile } from "@synoem/ui/hooks/use-mobile";
+import { getLinkConfig } from "~/utils";
 import { MenuBanner } from "./menu-banner.client";
 import { MenuLinkSection } from "./menu-link-section.client";
 
@@ -21,6 +22,7 @@ import { mobileNavigationOpenAtom, scrollLockAtom } from "~/atoms";
 import { useAtom, useSetAtom } from "jotai";
 import { useScrollLock } from "~/hooks";
 import dynamic from "next/dynamic";
+import { ThemeSwitcher } from "~/components/theme-switcher.client";
 
 const RequestQuoteButton = dynamic(
   () => import("~/components/request-quote-button").then((mod) => mod.RequestQuoteButton),
@@ -30,8 +32,6 @@ const RequestQuoteButton = dynamic(
 );
 
 export const MobileNavigation = ({ items }: NavigationProps) => {
-  const isMobile = useIsMobile();
-
   const [isOpen, setIsOpen] = useAtom(mobileNavigationOpenAtom);
   const setScrollLock = useSetAtom(scrollLockAtom);
 
@@ -61,12 +61,9 @@ export const MobileNavigation = ({ items }: NavigationProps) => {
     },
   };
 
-  if (!isMobile) {
-    return null;
-  }
-
   return (
-    <>
+    <div className="md:hidden flex justify-between items-center">
+      <ThemeSwitcher />
       <button
         type="button"
         onClick={toggle}
@@ -116,7 +113,7 @@ export const MobileNavigation = ({ items }: NavigationProps) => {
         />
       </button>
       <MobileMenu items={items} isOpen={isOpen} />
-    </>
+    </div>
   );
 };
 
@@ -148,18 +145,18 @@ const MobileMenu = (props: {
   const menuContent = isOpen ? (
     <motion.div
       // TODO: need to add notification bar height if there is notification
-      className="fixed inset-x-0 top-[var(--header-height)] bottom-0 z-40 bg-muted/50 backdrop-blur-2xl shadow-xl overflow-auto p-4"
+      className="fixed inset-x-0 top-[var(--header-height)] h-[calc(100vh-var(--header-height))] bottom-0 z-40 bg-muted/50 backdrop-blur-2xl shadow-xl flex flex-col"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
       transition={{ type: "spring", damping: 30, stiffness: 300 }}
     >
-      <div className="pb-20 overflow-y-auto">
+      <div className="pb-20 overflow-y-auto flex-1 p-4">
         {items.map((item) => (
           <MobileMenuItem key={item.id} item={item} />
         ))}
       </div>
-      <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-primary/20 flex justify-between items-center">
+      <div className="sticky bottom-0 left-0 right-0 p-4 border-t border-primary/20 flex justify-between items-center">
         <LanguageSwitcher />
         <RequestQuoteButton locale={effectiveLocale} />
       </div>
@@ -199,11 +196,18 @@ type MenuExpandableProps = {
 
 function MenuExpandable({ title, icon, children }: MenuExpandableProps) {
   const [expanded, setExpanded] = useState(false);
+
+  const setScrollLock = useSetAtom(scrollLockAtom);
+
+  const handleExpanded = () => {
+    setExpanded((e) => !e);
+    setScrollLock(expanded);
+  };
   return (
     <>
       <button
         type="button"
-        onClick={() => setExpanded((e) => !e)}
+        onClick={handleExpanded}
         className="flex w-full items-center justify-between gap-4"
         aria-expanded={expanded}
       >
@@ -234,7 +238,7 @@ function MenuExpandable({ title, icon, children }: MenuExpandableProps) {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="overflow-hidden"
+            className="grid gap-4"
           >
             {children}
           </motion.div>
@@ -246,7 +250,7 @@ function MenuExpandable({ title, icon, children }: MenuExpandableProps) {
 
 function MobileMenuItem({ item }: MenuItemProps) {
   if (item.type === "link") {
-    const linkConfig = getMenuLinkConfig(item.link);
+    const linkConfig = getLinkConfig(item.link);
     return (
       <div className="border-b border-muted space-y-2 p-2 w-full">
         <MenuLink href={linkConfig?.href || "#"} openInNewTab={linkConfig?.openInNewTab}>

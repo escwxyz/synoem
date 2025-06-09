@@ -32,7 +32,7 @@ export const Feature = ({
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
 
-  const backgroundOpacity = !opacity || opacity === 100 ? "bg-card" : `bg-card/${100 - opacity}`;
+  const backgroundOpacity = !opacity || opacity === 100 ? "bg-card" : `bg-card/${opacity}`;
 
   return (
     <motion.div
@@ -96,7 +96,7 @@ export const Feature = ({
             {withPlus && <span className="ml-1 text-sm font-medium opacity-70">+</span>}
             {isPercentage && <span className="ml-1 text-sm font-medium opacity-70">%</span>}
           </h3>
-          <p className="text-sm font-medium text-muted-foreground">{description}</p>
+          <p className="text-sm font-medium">{description}</p>
         </div>
       </div>
     </motion.div>

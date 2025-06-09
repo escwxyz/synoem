@@ -5,5 +5,6 @@ export * from "./get-product-link";
 export * from "./get-url";
 export * from "./filter-products";
 export * from "./product-filters-nuqs-state";
-export * from "./get-menu-link-config";
+export * from "./get-link-config";
 export * from "./check-media-type";
+export * from "./normalize-path";

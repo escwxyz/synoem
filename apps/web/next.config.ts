@@ -23,9 +23,9 @@ const nextConfig: NextConfig = {
     "pino-pretty",
     "graphql",
   ],
-  webpack: (config, { dev, isServer }) => {
-    // config.module.rules.push({})
-  },
+  // webpack: (config, { dev, isServer }) => {
+  //   // config.module.rules.push({})
+  // },
   experimental: {
     serverActions: {
       bodySizeLimit: "10mb",
@@ -49,7 +49,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**",
+        hostname: "*",
       },
       {
         protocol: "http",
@@ -57,6 +57,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  devIndicators: false,
 };
 
 export default withNextIntl(withBundleAnalyzer(nextConfig));
