@@ -38,7 +38,7 @@ export const MenuLinkSection = ({ title, items, isExtended }: LinksSectionProps)
                 className={cn("flex items-center gap-2")}
               >
                 {item.icon && (
-                  <div className="z-10 flex size-9 shrink-0 items-center justify-center rounded-lg border">
+                  <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border">
                     <Icon
                       name={item.icon}
                       className="size-4 text-muted-foreground dark:[&_stop:not([stop-opacity])]:gradient-stop-opacity-40 dark:[&_stop[stop-opacity=&quot;0.6&quot;]]:gradient-stop-opacity-100"
@@ -46,7 +46,7 @@ export const MenuLinkSection = ({ title, items, isExtended }: LinksSectionProps)
                   </div>
                 )}
 
-                <div className="z-10">
+                <div>
                   <span className="block text-sm leading-none tracking-snug transition-colors duration-200 text-muted-foreground">
                     {item.title}
                   </span>

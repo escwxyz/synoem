@@ -39,7 +39,7 @@ export default async function Page({
 
   if (productResponse.error) {
     // TODO: handle error
-    return <div>Error</div>;
+    return notFound();
   }
 
   if (!productResponse.data) {

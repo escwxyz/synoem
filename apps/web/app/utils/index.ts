@@ -7,3 +7,4 @@ export * from "./filter-products";
 export * from "./product-filters-nuqs-state";
 export * from "./get-menu-link-config";
 export * from "./check-media-type";
+export * from "./normalize-path";

@@ -27,12 +27,21 @@ const iconField: IconField = (overrides = {}) => {
     };
   });
 
+  // Add more custom icons here
   const customIconOptions =
-    process.env.S3_ENDPOINT && process.env.CMS_APP_ENV === "production"
+    process.env.S3_ENDPOINT && process.env.S3_BUCKET_NAME
       ? [
           {
             value: "custom:ce",
             label: "CE (Custom)",
+          },
+          {
+            value: "custom:ul",
+            label: "UL (Custom)",
+          },
+          {
+            value: "custom:mcs",
+            label: "MCS (Custom)",
           },
         ]
       : [];

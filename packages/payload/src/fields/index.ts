@@ -8,3 +8,4 @@ export * from "./product-gallery";
 export * from "./inquiry-join";
 export * from "./color";
 export * from "./icon";
+export * from "./path";

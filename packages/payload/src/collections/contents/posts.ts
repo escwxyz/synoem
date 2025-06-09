@@ -1,5 +1,5 @@
 import type { CollectionConfig } from "payload";
-import { slug } from "../../fields";
+import { pathField, slug } from "../../fields";
 import {
   BlocksFeature,
   FixedToolbarFeature,
@@ -32,6 +32,7 @@ export const Posts: CollectionConfig = {
       localized: true,
     },
     ...slug(),
+    ...pathField({}),
     {
       name: "authors",
       type: "relationship",

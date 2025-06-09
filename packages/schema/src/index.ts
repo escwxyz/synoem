@@ -142,3 +142,10 @@ export const pageSchema = z
     slug: z.string(),
   })
   .merge(localeSchema);
+
+export const pathSchema = z
+  .object({
+    path: z.string(),
+    depth: z.number().optional().default(2),
+  })
+  .merge(localeSchema);

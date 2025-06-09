@@ -4,7 +4,7 @@ import { locales, type Locale } from "@synoem/config";
 import { getCompanyInfoCached } from "./get-globals";
 import { getUrl } from "../utils/get-url";
 import type { Metadata } from "next";
-
+// TODO: improve this function
 export const getPageMetadata = async ({
   locale,
   pageTitle,

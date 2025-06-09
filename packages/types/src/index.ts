@@ -1609,7 +1609,10 @@ export type IconName =
   | 'lucide:zap-off'
   | 'lucide:zap'
   | 'lucide:zoom-in'
-  | 'lucide:zoom-out';
+  | 'lucide:zoom-out'
+  | 'custom:ce'
+  | 'custom:ul'
+  | 'custom:mcs';
 /**
  * Click the button to generate the power points
  *
@@ -1936,6 +1939,17 @@ export interface Page {
   showLastUpdated?: boolean | null;
   slug: string;
   slugLock?: boolean | null;
+  _collection?: string | null;
+  path?: string | null;
+  parent?: (string | null) | Page;
+  breadcrumbs?:
+    | {
+        doc?: (string | null) | Page;
+        url?: string | null;
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -3544,6 +3558,8 @@ export interface Post {
   title: string;
   slug: string;
   slugLock?: boolean | null;
+  _collection?: string | null;
+  path?: string | null;
   authors?: (string | User)[] | null;
   publishedAt?: string | null;
   tags?: string[] | null;
@@ -3563,6 +3579,15 @@ export interface Post {
     };
     [k: string]: unknown;
   };
+  parent?: (string | null) | Post;
+  breadcrumbs?:
+    | {
+        doc?: (string | null) | Post;
+        url?: string | null;
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -3857,6 +3882,17 @@ export interface PagesSelect<T extends boolean = true> {
   showLastUpdated?: T;
   slug?: T;
   slugLock?: T;
+  _collection?: T;
+  path?: T;
+  parent?: T;
+  breadcrumbs?:
+    | T
+    | {
+        doc?: T;
+        url?: T;
+        label?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -4334,11 +4370,22 @@ export interface PostsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   slugLock?: T;
+  _collection?: T;
+  path?: T;
   authors?: T;
   publishedAt?: T;
   tags?: T;
   coverImage?: T;
   content?: T;
+  parent?: T;
+  breadcrumbs?:
+    | T
+    | {
+        doc?: T;
+        url?: T;
+        label?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

@@ -34,6 +34,7 @@ import {
 } from "./collections";
 import sharp from "sharp";
 import { sendNewsletterConfirmationEmail } from "./tasks/send-newsletter-confirmation-email";
+import { UNIQUE_PATH_COLLECTIONS } from "./fields";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -98,13 +99,10 @@ export default buildConfig({
     suppressHydrationWarning: process.env.CMS_APP_ENV === "production",
     livePreview: {
       url: ({ collectionConfig, locale, data }) => {
-        if (collectionConfig?.slug === "pages") {
-          const slug = data.slug === "home" ? "" : `/${data.slug}`;
-          return `${process.env.NEXT_PUBLIC_WEB_SITE_URL}/${locale.code}${slug}` || "";
-        }
-        return process.env.NEXT_PUBLIC_WEB_SITE_URL || "";
+        const slug = data.slug === "home" ? "" : data.path;
+        return `${process.env.NEXT_PUBLIC_WEB_SITE_URL}/${locale.code}${slug}` || "";
       },
-      collections: ["pages"],
+      collections: UNIQUE_PATH_COLLECTIONS,
       breakpoints: [
         {
           label: "Mobile",
