@@ -21,7 +21,7 @@ import {
   SelectValue,
 } from "@synoem/ui/components/select";
 import type { ProductTypeId } from "@synoem/config";
-import { Feature } from "./blocks/feature.client";
+import { FeatureCard } from "./blocks/feature-card";
 import { useLocale, useTranslations } from "next-intl";
 import { LocalizedNumberInput } from "~/components/localized-number-input.client";
 
@@ -304,7 +304,7 @@ export const PackageQuantityCalculator = ({
             </CardHeader>
             <CardContent>
               <div className="grid gap-4">
-                <Feature
+                <FeatureCard
                   type="text"
                   title={results.panelsNeeded.toLocaleString(locale)}
                   description={t("panelsNeeded")}
@@ -315,7 +315,7 @@ export const PackageQuantityCalculator = ({
                 />
 
                 <div className="grid gap-4 grid-cols-2">
-                  <Feature
+                  <FeatureCard
                     type="text"
                     title={results.containersNeeded.toLocaleString(locale)}
                     description={t("containersNeeded")}
@@ -325,7 +325,7 @@ export const PackageQuantityCalculator = ({
                     alignment="between"
                   />
 
-                  <Feature
+                  <FeatureCard
                     type="text"
                     title={results.palletsNeeded.toLocaleString(locale)}
                     description={t("palletsNeeded")}

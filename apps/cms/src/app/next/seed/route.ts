@@ -21,7 +21,6 @@ export async function POST(): Promise<Response> {
     // At this point you should pass in a user, locale, and any other context you need for the Local API
     const payloadReq = await createLocalReq({ user }, payload);
 
-    // TODO: uncomment this when we want to seed data
     await seed({ payload, req: payloadReq });
 
     return Response.json({ success: true });

@@ -17,7 +17,7 @@ export const LogoCloud = ({
   className,
 }: LogoCloudBlockType & { gap?: number; className?: string }) => {
   return (
-    <section className={cn("bg-background overflow-hidden py-16", className)}>
+    <div className={cn("bg-background overflow-hidden", className)}>
       <div className="group relative m-auto max-w-7xl px-6">
         <div className="flex flex-col items-center md:flex-row">
           <div className="md:max-w-44 md:border-r md:pr-6">
@@ -62,6 +62,6 @@ export const LogoCloud = ({
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };

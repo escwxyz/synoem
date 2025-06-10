@@ -23,7 +23,7 @@ export const FaqsSection = ({
   }
 
   return (
-    <section className="relative w-full overflow-hidden bg-background/50 py-16 rounded-2xl">
+    <div className="relative w-full overflow-hidden bg-background/50 py-16 rounded-2xl">
       <div className="absolute -left-20 top-0 h-64 w-64 rounded-full bg-primary/5 blur-3xl" />
       <div className="absolute -right-20 bottom-0 h-64 w-64 rounded-full bg-primary/5 blur-3xl" />
 
@@ -56,7 +56,7 @@ export const FaqsSection = ({
         </div>
         {type === "general" && <GeneralFaqCallout />}
       </div>
-    </section>
+    </div>
   );
 };
 

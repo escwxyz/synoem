@@ -1951,6 +1951,7 @@ export interface Page {
     | FAQBlockType
     | LogoCloudBlockType
     | CarbonCalculatorBlockType
+    | InquiryBlockType
   )[];
   publishedAt?: string | null;
   showLastUpdated?: boolean | null;
@@ -1991,32 +1992,53 @@ export interface HeroBlockType {
   /**
    * Longer body text or paragraph content.
    */
-  desc?: string | null;
+  description?: string | null;
+  /**
+   * Add 2 to 3 rows of content
+   */
+  rows: {
+    /**
+     * Add content for each row
+     */
+    contents: {
+      title: string;
+      description?: string | null;
+      image: string | Image;
+      link?: LinkType;
+      id?: string | null;
+    }[];
+    id?: string | null;
+  }[];
+  /**
+   * Use the request quote button as the primary CTA
+   */
+  quoteButton?: boolean | null;
   ctaPrimary?: LinkType;
   ctaSecondary?: LinkType;
-  /**
-   * Select an image or video to display in the hero section.
-   */
-  media:
-    | {
-        relationTo: 'images';
-        value: string | Image;
-      }
-    | {
-        relationTo: 'videos';
-        value: string | Video;
-      };
-  /**
-   * Select if text is on the left or the right.
-   */
-  textPlacement?: ('left' | 'right') | null;
-  /**
-   * Align text within its column (left, center, or right).
-   */
-  textAlignment?: ('start' | 'center' | 'end') | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'heroBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "images".
+ */
+export interface Image {
+  id: string;
+  alt: string;
+  blurDataUrl?: string | null;
+  prefix?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2073,27 +2095,6 @@ export interface Industry {
   slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "images".
- */
-export interface Image {
-  id: string;
-  alt: string;
-  blurDataUrl?: string | null;
-  prefix?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2724,25 +2725,6 @@ export interface PumpControllerCategory {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "videos".
- */
-export interface Video {
-  id: string;
-  caption?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ContentBlockType".
  */
 export interface ContentBlockType {
@@ -2823,6 +2805,25 @@ export interface MediaBlockType {
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "videos".
+ */
+export interface Video {
+  id: string;
+  caption?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2946,6 +2947,19 @@ export interface CarbonCalculatorBlockType {
   id?: string | null;
   blockName?: string | null;
   blockType: 'carbonCalculatorBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InquiryBlockType".
+ */
+export interface InquiryBlockType {
+  title: string;
+  description: string;
+  ctaPrimary?: LinkType;
+  ctaSecondary?: LinkType;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'inquiryBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3939,6 +3953,7 @@ export interface PagesSelect<T extends boolean = true> {
         faqBlock?: T | FAQBlockTypeSelect<T>;
         logoCloudBlock?: T | LogoCloudBlockTypeSelect<T>;
         carbonCalculatorBlock?: T | CarbonCalculatorBlockTypeSelect<T>;
+        inquiryBlock?: T | InquiryBlockTypeSelect<T>;
       };
   publishedAt?: T;
   showLastUpdated?: T;
@@ -3967,12 +3982,24 @@ export interface HeroBlockTypeSelect<T extends boolean = true> {
   eyebrow?: T;
   title?: T;
   subtitle?: T;
-  desc?: T;
+  description?: T;
+  rows?:
+    | T
+    | {
+        contents?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              image?: T;
+              link?: T | LinkTypeSelect<T>;
+              id?: T;
+            };
+        id?: T;
+      };
+  quoteButton?: T;
   ctaPrimary?: T | LinkTypeSelect<T>;
   ctaSecondary?: T | LinkTypeSelect<T>;
-  media?: T;
-  textPlacement?: T;
-  textAlignment?: T;
   id?: T;
   blockName?: T;
 }
@@ -4140,6 +4167,18 @@ export interface CarbonCalculatorBlockTypeSelect<T extends boolean = true> {
         id?: T;
       };
   note?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "InquiryBlockType_select".
+ */
+export interface InquiryBlockTypeSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  ctaPrimary?: T | LinkTypeSelect<T>;
+  ctaSecondary?: T | LinkTypeSelect<T>;
   id?: T;
   blockName?: T;
 }

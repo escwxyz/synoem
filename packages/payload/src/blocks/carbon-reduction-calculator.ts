@@ -1,6 +1,25 @@
 import type { Block } from "payload";
 import { validateRange } from "../validation";
 
+const emissionTranslations = {
+  en: {
+    globalAverage: "Global Average",
+    china: "China",
+    india: "India",
+    usa: "USA",
+    euAverage: "EU Average",
+    australia: "Australia",
+  },
+  de: {
+    globalAverage: "Global Durchschnitt",
+    china: "China",
+    india: "Indien",
+    usa: "USA",
+    euAverage: "EU Durchschnitt",
+    australia: "Australien",
+  },
+};
+
 export const CarbonCalculatorBlock: Block = {
   slug: "carbonCalculatorBlock",
   interfaceName: "CarbonCalculatorBlockType",
@@ -48,7 +67,7 @@ export const CarbonCalculatorBlock: Block = {
       min: 0.1,
       max: 1000,
       required: true,
-      defaultValue: 1.0,
+      defaultValue: 1,
     },
     {
       type: "collapsible",
@@ -110,32 +129,19 @@ export const CarbonCalculatorBlock: Block = {
           type: "array",
           minRows: 3,
           maxRows: 10,
-          defaultValue: [
-            {
-              name: "Global Average",
-              value: 0.5,
-            },
-            {
-              name: "China",
-              value: 0.65,
-            },
-            {
-              name: "India",
-              value: 0.82,
-            },
-            {
-              name: "USA",
-              value: 0.4,
-            },
-            {
-              name: "EU Average",
-              value: 0.3,
-            },
-            {
-              name: "Australia",
-              value: 0.7,
-            },
-          ],
+          // TODO: localization not working as expected, need to fix it
+          defaultValue: ({ locale }) => {
+            const effectiveLocale = locale ?? "en";
+            const t = emissionTranslations[effectiveLocale] || emissionTranslations.en;
+            return [
+              { name: t.globalAverage, value: 0.5 },
+              { name: t.china, value: 0.65 },
+              { name: t.india, value: 0.82 },
+              { name: t.usa, value: 0.4 },
+              { name: t.euAverage, value: 0.3 },
+              { name: t.australia, value: 0.7 },
+            ];
+          },
           fields: [
             {
               name: "name",

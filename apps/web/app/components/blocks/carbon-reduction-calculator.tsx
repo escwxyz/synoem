@@ -14,7 +14,7 @@ import { Label } from "@synoem/ui/components/label";
 import { Badge } from "@synoem/ui/components/badge";
 import { Slider } from "@synoem/ui/components/slider";
 import { Leaf, Calendar, Sun, Globe } from "lucide-react";
-import { Feature } from "./feature.client";
+import { FeatureCard } from "./feature-card";
 import { useLocale, useTranslations } from "next-intl";
 import { LocalizedNumberInput } from "../localized-number-input.client";
 
@@ -107,7 +107,7 @@ export const CarbonReductionCalculator = (props: CarbonCalculatorBlockType) => {
   const totalCleanEnergy = results.annualPowerGeneration * projectLifespan;
 
   return (
-    <section className="relative w-full overflow-hidden bg-background/50 py-16 rounded-2xl">
+    <div className="relative w-full overflow-hidden bg-background/50 py-16 rounded-2xl">
       <div className="absolute -left-20 top-0 -translate-y-1/2 h-64 w-64 rounded-full bg-primary/5 blur-3xl" />
       <div className="absolute -right-20 bottom-0 -translate-y-1/2 h-64 w-64 rounded-full bg-primary/5 blur-3xl" />
       <div className="container px-4 md:px-6 mx-auto">
@@ -254,7 +254,7 @@ export const CarbonReductionCalculator = (props: CarbonCalculatorBlockType) => {
                 </CardHeader>
                 <CardContent>
                   <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
-                    <Feature
+                    <FeatureCard
                       type="text"
                       title={`${results.annualPowerGeneration.toLocaleString(locale)} MWh`}
                       description={t("annualPowerGeneration")}
@@ -262,7 +262,7 @@ export const CarbonReductionCalculator = (props: CarbonCalculatorBlockType) => {
                       blockType="featureBlock"
                       alignment="between-reverse"
                     />
-                    <Feature
+                    <FeatureCard
                       type="text"
                       title={`${results.annualCarbonReduction.toLocaleString(locale)} tonnes`}
                       description={t("annualCarbonReduction")}
@@ -282,7 +282,7 @@ export const CarbonReductionCalculator = (props: CarbonCalculatorBlockType) => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <Feature
+                  <FeatureCard
                     type="number"
                     number={results.totalCarbonReduction}
                     description={t("totalCarbonReduction", { years: projectLifespan })}
@@ -291,7 +291,7 @@ export const CarbonReductionCalculator = (props: CarbonCalculatorBlockType) => {
                     alignment="center"
                     locale={locale}
                   />
-                  <Feature
+                  <FeatureCard
                     type="text"
                     title={`${totalCleanEnergy.toLocaleString(locale)} MWh`}
                     description={t("cleanEnergy")}
@@ -301,7 +301,7 @@ export const CarbonReductionCalculator = (props: CarbonCalculatorBlockType) => {
                   />
 
                   <div className="grid gap-3 grid-cols-1 md:grid-cols-2">
-                    <Feature
+                    <FeatureCard
                       type="text"
                       title={`${results.equivalentTrees.toLocaleString(locale)} ${t("trees")}`}
                       description={t("equivalentToPlanting")}
@@ -309,7 +309,7 @@ export const CarbonReductionCalculator = (props: CarbonCalculatorBlockType) => {
                       blockType="featureBlock"
                     />
 
-                    <Feature
+                    <FeatureCard
                       type="text"
                       title={`${results.equivalentCars.toLocaleString(locale)} ${t("cars")}`}
                       description={t("removingCarsFromRoad")}
@@ -326,6 +326,6 @@ export const CarbonReductionCalculator = (props: CarbonCalculatorBlockType) => {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };

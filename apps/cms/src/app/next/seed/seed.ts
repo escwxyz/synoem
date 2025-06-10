@@ -64,9 +64,17 @@ export const seed = async ({
       solarPanel2ProductImage,
       solarPanel3ProductImage,
       solarPanel4ProductImage,
+      // logos
       ceLogo,
       ulLogo,
       mcsLogo,
+      // hero images
+      heroContent1,
+      heroContent2,
+      heroContent3,
+      heroContent4,
+      heroContent5,
+      heroContent6,
     ] = await Promise.all([
       fetchFileByURL(`${IMAGE_BASE_URL}/industry-cover-image.jpg`),
       fetchFileByURL(`${IMAGE_BASE_URL}/hjt-hero.jpg`),
@@ -86,6 +94,14 @@ export const seed = async ({
       fetchFileByURL(`${LOGO_BASE_URL}/ce.svg`),
       fetchFileByURL(`${LOGO_BASE_URL}/ul.svg`),
       fetchFileByURL(`${LOGO_BASE_URL}/mcs.svg`),
+
+      // Hero images
+      fetchFileByURL(`${IMAGE_BASE_URL}/hero-content-1.jpg`),
+      fetchFileByURL(`${IMAGE_BASE_URL}/hero-content-2.jpg`),
+      fetchFileByURL(`${IMAGE_BASE_URL}/hero-content-3.jpg`),
+      fetchFileByURL(`${IMAGE_BASE_URL}/hero-content-4.png`),
+      fetchFileByURL(`${IMAGE_BASE_URL}/hero-content-5.png`),
+      fetchFileByURL(`${IMAGE_BASE_URL}/hero-content-6.png`),
     ]);
 
     payload.logger.info("Images fetched");
@@ -107,6 +123,12 @@ export const seed = async ({
       createdCeLogo,
       createdUlLogo,
       createdMcsLogo,
+      createdHeroContent1,
+      createdHeroContent2,
+      createdHeroContent3,
+      createdHeroContent4,
+      createdHeroContent5,
+      createdHeroContent6,
     ] = await Promise.all([
       payload.create({
         collection: "images",
@@ -258,6 +280,71 @@ export const seed = async ({
           alt: "MCS Logo",
         },
         file: mcsLogo,
+        context: {
+          skipRevalidation: true,
+        },
+      }),
+
+      // hero images
+      payload.create({
+        collection: "images",
+        data: {
+          alt: "Hero Content 1",
+        },
+        file: heroContent1,
+        context: {
+          skipRevalidation: true,
+        },
+      }),
+      payload.create({
+        collection: "images",
+        data: {
+          alt: "Hero Content 2",
+        },
+        file: heroContent2,
+        context: {
+          skipRevalidation: true,
+        },
+      }),
+      payload.create({
+        collection: "images",
+        data: {
+          alt: "Hero Content 3",
+        },
+        file: heroContent3,
+        context: {
+          skipRevalidation: true,
+        },
+      }),
+
+      payload.create({
+        collection: "images",
+        data: {
+          alt: "Hero Content 4",
+        },
+        file: heroContent4,
+        context: {
+          skipRevalidation: true,
+        },
+      }),
+
+      payload.create({
+        collection: "images",
+        data: {
+          alt: "Hero Content 5",
+        },
+        file: heroContent5,
+        context: {
+          skipRevalidation: true,
+        },
+      }),
+
+      payload.create({
+        collection: "images",
+        data: {
+          alt: "Hero Content 6",
+        },
+        file: heroContent6,
         context: {
           skipRevalidation: true,
         },
@@ -441,6 +528,8 @@ export const seed = async ({
       },
     });
 
+    payload.logger.info("About us page created");
+
     const [termsPage, privacyPolicyPage] = await Promise.all([
       payload.create({
         collection: "pages",
@@ -466,15 +555,32 @@ export const seed = async ({
       }),
     ]);
 
+    payload.logger.info("Terms and privacy policy pages created");
+
+    const images = {
+      hero: [
+        createdHeroContent1.id,
+        createdHeroContent2.id,
+        createdHeroContent3.id,
+        createdHeroContent4.id,
+        createdHeroContent5.id,
+        createdHeroContent6.id,
+      ],
+      logos: {
+        ce: createdCeLogo.id,
+        mcs: createdMcsLogo.id,
+        ul: createdUlLogo.id,
+      },
+    };
+
     await payload.create({
       collection: "pages",
       data: {
-        ...getHomeData(
-          createdCeLogo.id,
-          createdMcsLogo.id,
-          createdUlLogo.id,
-          createdFaqs.map((faq) => faq.id),
-        ),
+        ...getHomeData({
+          logos: images.logos,
+          heros: images.hero,
+          faqs: createdFaqs.map((faq) => faq.id),
+        }),
         _status: "published",
       },
       locale: "en",
@@ -482,6 +588,8 @@ export const seed = async ({
         skipRevalidation: true,
       },
     });
+
+    payload.logger.info("Home page created");
 
     payload.logger.info("Pages created");
 
@@ -692,7 +800,7 @@ export const seed = async ({
 
     await payload.db.rollbackTransaction(transactionID);
 
-    return;
+    throw error;
   }
 };
 

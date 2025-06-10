@@ -9,3 +9,4 @@ export * from "./inquiry-join";
 export * from "./color";
 export * from "./icon";
 export * from "./path";
+export * from "./link";

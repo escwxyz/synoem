@@ -9,33 +9,23 @@ type CMSLinkType = LinkType & {
   children?: React.ReactNode;
   className?: string;
   label?: string | null;
-  newTab?: boolean | null;
-  size?: ButtonProps["size"] | null;
-  url?: string | null;
-};
+} & Omit<ButtonProps, "href" | "type">;
 
 export const CMSLink = (props: CMSLinkType) => {
-  const {
-    appearance = "inline",
-    children,
-    className,
-    label,
-    newTab,
-    size: sizeFromProps,
-    url,
-  } = props;
+  const { appearance = "inline", children, className, label, type, ...rest } = props;
 
-  const href = getLinkConfig(props);
+  const linkConfig = getLinkConfig(props);
 
-  if (!href) return null;
+  if (!linkConfig) return null;
 
-  const size = appearance === "default" ? null : sizeFromProps;
-  const newTabProps = newTab ? { rel: "noopener noreferrer", target: "_blank" } : {};
+  const { href, openInNewTab } = linkConfig;
+
+  const newTabProps = openInNewTab ? { rel: "noopener noreferrer", target: "_blank" } : {};
 
   /* Ensure we don't break any styles set by richText */
   if (appearance === "inline") {
     return (
-      <Link className={cn(className)} href={href || url || ""} {...newTabProps}>
+      <Link className={cn(className)} href={href || ""} {...newTabProps}>
         {label && label}
         {children && children}
       </Link>
@@ -43,8 +33,8 @@ export const CMSLink = (props: CMSLinkType) => {
   }
 
   return (
-    <Button asChild className={className} size={size} variant={appearance}>
-      <Link className={cn(className)} href={href || url || ""} {...newTabProps}>
+    <Button asChild className={className} variant={appearance} {...rest}>
+      <Link className={cn(className)} href={href || ""} {...newTabProps}>
         {label && label}
         {children && children}
       </Link>
