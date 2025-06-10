@@ -125,7 +125,7 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || "",
     },
-    push: process.env.CMS_APP_ENV === "development",
+    push: false,
   }),
   collections: [
     Users,
