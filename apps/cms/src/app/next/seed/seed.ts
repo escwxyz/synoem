@@ -1,6 +1,6 @@
 import type { CollectionSlug, Payload, PayloadRequest, File, GlobalSlug } from "payload";
 import { faqs } from "./data/faqs";
-import { getAboutUsData } from "./data/pages";
+import { getAboutUsData, getHomeData } from "./data/pages";
 import { getHeaderData } from "./data/header";
 import { getHJTSolarPanelData, getTOPConSolarPanelData } from "./data/solar-panel";
 import { termsData } from "./data/terms";
@@ -8,6 +8,7 @@ import { privacyPolicyData } from "./data/privacy-policy";
 import { getFooterData } from "./data/footer";
 
 const IMAGE_BASE_URL = `${process.env.NEXT_PUBLIC_S3_ENDPOINT}/object/public/${process.env.NEXT_PUBLIC_S3_BUCKET_NAME}/images/seed`;
+const LOGO_BASE_URL = `${process.env.NEXT_PUBLIC_S3_ENDPOINT}/object/public/${process.env.NEXT_PUBLIC_S3_BUCKET_NAME}/icons`;
 
 const globals: GlobalSlug[] = ["company-info", "contact-info", "social-links", "header"];
 
@@ -63,6 +64,9 @@ export const seed = async ({
       solarPanel2ProductImage,
       solarPanel3ProductImage,
       solarPanel4ProductImage,
+      ceLogo,
+      ulLogo,
+      mcsLogo,
     ] = await Promise.all([
       fetchFileByURL(`${IMAGE_BASE_URL}/industry-cover-image.jpg`),
       fetchFileByURL(`${IMAGE_BASE_URL}/hjt-hero.jpg`),
@@ -77,6 +81,11 @@ export const seed = async ({
       fetchFileByURL(`${IMAGE_BASE_URL}/solar-panel_2.png`),
       fetchFileByURL(`${IMAGE_BASE_URL}/solar-panel_3.png`),
       fetchFileByURL(`${IMAGE_BASE_URL}/solar-panel_4.png`),
+
+      // logos
+      fetchFileByURL(`${LOGO_BASE_URL}/ce.svg`),
+      fetchFileByURL(`${LOGO_BASE_URL}/ul.svg`),
+      fetchFileByURL(`${LOGO_BASE_URL}/mcs.svg`),
     ]);
 
     payload.logger.info("Images fetched");
@@ -95,6 +104,9 @@ export const seed = async ({
       createdSolarPanel2ProductImage,
       createdSolarPanel3ProductImage,
       createdSolarPanel4ProductImage,
+      createdCeLogo,
+      createdUlLogo,
+      createdMcsLogo,
     ] = await Promise.all([
       payload.create({
         collection: "images",
@@ -214,6 +226,38 @@ export const seed = async ({
           alt: "Solar Panel 4 Product",
         },
         file: solarPanel4ProductImage,
+        context: {
+          skipRevalidation: true,
+        },
+      }),
+
+      // logos
+      payload.create({
+        collection: "images",
+        data: {
+          alt: "CE Logo",
+        },
+        file: ceLogo,
+        context: {
+          skipRevalidation: true,
+        },
+      }),
+      payload.create({
+        collection: "images",
+        data: {
+          alt: "UL Logo",
+        },
+        file: ulLogo,
+        context: {
+          skipRevalidation: true,
+        },
+      }),
+      payload.create({
+        collection: "images",
+        data: {
+          alt: "MCS Logo",
+        },
+        file: mcsLogo,
         context: {
           skipRevalidation: true,
         },
@@ -419,6 +463,18 @@ export const seed = async ({
         },
       }),
     ]);
+
+    await payload.create({
+      collection: "pages",
+      data: {
+        ...getHomeData(createdCeLogo.id, createdUlLogo.id, createdMcsLogo.id),
+        _status: "published",
+      },
+      locale: "en",
+      context: {
+        skipRevalidation: true,
+      },
+    });
 
     payload.logger.info("Pages created");
 
@@ -645,7 +701,7 @@ function getMimeType(filename: string): string {
 }
 
 async function fetchFileByURL(url: string): Promise<File> {
-  if (!url.startsWith(IMAGE_BASE_URL)) {
+  if (!url.startsWith(IMAGE_BASE_URL) && !url.startsWith(LOGO_BASE_URL)) {
     throw new Error(`Invalid URL: ${url}`);
   }
 

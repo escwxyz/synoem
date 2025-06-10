@@ -19,9 +19,11 @@ export default async function HomePage({ params }: HomePageProps) {
 
   return (
     <>
-      {industriesResponse.status === "success" && industriesResponse.data && (
-        <HeroParallex industries={industriesResponse.data} locale={effectiveLocale} />
-      )}
+      {industriesResponse.status === "success" &&
+        industriesResponse.data &&
+        industriesResponse.data.length > 0 && (
+          <HeroParallex industries={industriesResponse.data} locale={effectiveLocale} />
+        )}
       <section className="py-20 grid place-items-center">
         {/* <Suspense fallback={<div>Loading</div>}>
           <Testimonials limit={4} />

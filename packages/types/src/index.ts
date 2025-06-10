@@ -1949,6 +1949,7 @@ export interface Page {
     | FeaturesBlockType
     | TimelineBlockType
     | FAQBlockType
+    | LogoCloudBlockType
   )[];
   publishedAt?: string | null;
   showLastUpdated?: boolean | null;
@@ -2901,6 +2902,20 @@ export interface FAQBlockType {
   id?: string | null;
   blockName?: string | null;
   blockType: 'faqBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LogoCloudBlockType".
+ */
+export interface LogoCloudBlockType {
+  title: string;
+  logos: (string | Image)[];
+  size?: number | null;
+  speed?: number | null;
+  speedOnHover?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'logoCloudBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3892,6 +3907,7 @@ export interface PagesSelect<T extends boolean = true> {
         featuresBlock?: T | FeaturesBlockTypeSelect<T>;
         timelineBlock?: T | TimelineBlockTypeSelect<T>;
         faqBlock?: T | FAQBlockTypeSelect<T>;
+        logoCloudBlock?: T | LogoCloudBlockTypeSelect<T>;
       };
   publishedAt?: T;
   showLastUpdated?: T;
@@ -4050,6 +4066,19 @@ export interface FAQBlockTypeSelect<T extends boolean = true> {
   type?: T;
   style?: T;
   content?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LogoCloudBlockType_select".
+ */
+export interface LogoCloudBlockTypeSelect<T extends boolean = true> {
+  title?: T;
+  logos?: T;
+  size?: T;
+  speed?: T;
+  speedOnHover?: T;
   id?: T;
   blockName?: T;
 }

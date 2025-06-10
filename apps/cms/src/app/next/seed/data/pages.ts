@@ -1,5 +1,21 @@
 import type { Page } from "@synoem/types";
 
+export const getHomeData = (
+  ceLogoId: string,
+  ulLogoId: string,
+  mcsLogoId: string,
+): Omit<Page, "createdAt" | "id" | "sizes" | "updatedAt"> => ({
+  title: "Home",
+  slug: "home",
+  layout: [
+    {
+      blockType: "logoCloudBlock",
+      title: "Certified by",
+      logos: [ceLogoId, mcsLogoId, ulLogoId],
+    },
+  ],
+});
+
 export const getAboutUsData = (
   companyPageId: string,
 ): Omit<Page, "createdAt" | "id" | "sizes" | "updatedAt"> => ({

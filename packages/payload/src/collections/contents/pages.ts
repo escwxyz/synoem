@@ -5,6 +5,7 @@ import { ContentBlock } from "../../blocks/content";
 import { title } from "../../fields/title";
 import { CallToActionBlock } from "../../blocks/call-to-action";
 import { MediaBlock } from "../../blocks/media";
+import { LogoCloudBlock } from "../../blocks/logo-cloud";
 import { FeaturesBlock } from "../../blocks/features";
 import { TimelineBlock } from "../../blocks/timeline";
 import { FAQBlock } from "../../blocks/faq";
@@ -45,6 +46,7 @@ export const Pages: CollectionConfig<"pages"> = {
                 FeaturesBlock,
                 TimelineBlock,
                 FAQBlock,
+                LogoCloudBlock,
               ],
               required: true,
               admin: {

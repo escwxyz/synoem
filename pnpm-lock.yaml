@@ -156,6 +156,9 @@ importers:
       '@types/react-window':
         specifier: ^1.8.8
         version: 1.8.8
+      cross-env:
+        specifier: ^7.0.3
+        version: 7.0.3
 
   apps/web:
     dependencies:

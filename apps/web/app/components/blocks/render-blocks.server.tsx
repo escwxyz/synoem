@@ -4,6 +4,8 @@ import { Hero } from "./hero.client";
 import { Faq } from "./faq.client";
 import { Feature } from "./feature.client";
 import { Features } from "./features.server";
+import { Content } from "./content.server";
+import { LogoCloud } from "./logo-cloud.client";
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const blockComponents: Record<string, React.FC<any>> = {
@@ -12,6 +14,8 @@ const blockComponents: Record<string, React.FC<any>> = {
   faqBlock: Faq,
   featureBlock: Feature,
   featuresBlock: Features,
+  contentBlock: Content,
+  logoCloudBlock: LogoCloud,
 };
 
 export const RenderBlocks: React.FC<{
