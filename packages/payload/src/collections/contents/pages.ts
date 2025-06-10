@@ -11,6 +11,7 @@ import { TimelineBlock } from "../../blocks/timeline";
 import { FAQBlock } from "../../blocks/faq";
 import { admin, authenticatedOrPublished } from "../../access";
 import { revalidateCollection } from "../../hooks";
+import { CarbonCalculatorBlock } from "../../blocks/carbon-reduction-calculator";
 
 export const Pages: CollectionConfig<"pages"> = {
   slug: "pages",
@@ -47,6 +48,7 @@ export const Pages: CollectionConfig<"pages"> = {
                 TimelineBlock,
                 FAQBlock,
                 LogoCloudBlock,
+                CarbonCalculatorBlock,
               ],
               required: true,
               admin: {

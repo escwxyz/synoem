@@ -408,8 +408,6 @@
     "overallOutputPower": "Gesamtleistung"
   },
   "CarbonReductionCalculator": {
-    "title": "Kohlenstoffreduktionsrechner",
-    "description": "Schätzen Sie den Umwelt- und Kohlenstofffußabdruck Ihres Solarpakets",
     "projectCapacity": "Projektkapazität (MW)",
     "effectiveHours": "Effektive Stunden pro Jahr",
     "hours": "Stunden",
@@ -429,13 +427,7 @@
     "note": "Hinweis: Diese Berechnungen sind Schätzungen und können aufgrund regionaler Unterschiede in der Energieproduktion und -verwendung variieren.",
     "low": "Niedrig",
     "average": "Durchschnittlich",
-    "high": "Hoch",
-    "globalAverage": "Globaler Durchschnitt",
-    "china": "China",
-    "india": "Indien",
-    "usa": "USA",
-    "euAverage": "EU Durchschnitt",
-    "australia": "Australien"
+    "high": "Hoch"
   },
   "NotFound": {
     "title": "Ressource nicht gefunden",

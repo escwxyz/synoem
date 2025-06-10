@@ -1950,6 +1950,7 @@ export interface Page {
     | TimelineBlockType
     | FAQBlockType
     | LogoCloudBlockType
+    | CarbonCalculatorBlockType
   )[];
   publishedAt?: string | null;
   showLastUpdated?: boolean | null;
@@ -2916,6 +2917,35 @@ export interface LogoCloudBlockType {
   id?: string | null;
   blockName?: string | null;
   blockType: 'logoCloudBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CarbonCalculatorBlockType".
+ */
+export interface CarbonCalculatorBlockType {
+  title: string;
+  description: string;
+  subtitle: string;
+  subDescription: string;
+  projectCapacity: number;
+  treeEmission: number;
+  treeLifetime: number;
+  carEmission: number;
+  effectiveHours?: {
+    min?: number | null;
+    max?: number | null;
+  };
+  emissionIntensity?:
+    | {
+        name: string;
+        value: number;
+        id?: string | null;
+      }[]
+    | null;
+  note?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'carbonCalculatorBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3908,6 +3938,7 @@ export interface PagesSelect<T extends boolean = true> {
         timelineBlock?: T | TimelineBlockTypeSelect<T>;
         faqBlock?: T | FAQBlockTypeSelect<T>;
         logoCloudBlock?: T | LogoCloudBlockTypeSelect<T>;
+        carbonCalculatorBlock?: T | CarbonCalculatorBlockTypeSelect<T>;
       };
   publishedAt?: T;
   showLastUpdated?: T;
@@ -4079,6 +4110,36 @@ export interface LogoCloudBlockTypeSelect<T extends boolean = true> {
   size?: T;
   speed?: T;
   speedOnHover?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CarbonCalculatorBlockType_select".
+ */
+export interface CarbonCalculatorBlockTypeSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  subtitle?: T;
+  subDescription?: T;
+  projectCapacity?: T;
+  treeEmission?: T;
+  treeLifetime?: T;
+  carEmission?: T;
+  effectiveHours?:
+    | T
+    | {
+        min?: T;
+        max?: T;
+      };
+  emissionIntensity?:
+    | T
+    | {
+        name?: T;
+        value?: T;
+        id?: T;
+      };
+  note?: T;
   id?: T;
   blockName?: T;
 }

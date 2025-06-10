@@ -7,11 +7,17 @@ import type { ContentBlockType } from "@synoem/types";
 import { CMSLink } from "./cms-link";
 
 export const Content = ({ columns }: ContentBlockType) => {
-  const colsSpanClasses = {
-    full: "12",
-    half: "6",
-    oneThird: "4",
-    twoThirds: "8",
+  const getColSpanClass = (size?: "full" | "half" | "oneThird" | "twoThirds") => {
+    switch (size) {
+      case "half":
+        return "lg:col-span-6";
+      case "oneThird":
+        return "lg:col-span-4";
+      case "twoThirds":
+        return "lg:col-span-8";
+      default:
+        return "lg:col-span-12";
+    }
   };
 
   return (
@@ -23,7 +29,7 @@ export const Content = ({ columns }: ContentBlockType) => {
 
           return (
             <div
-              className={cn(`col-span-4 lg:col-span-${colsSpanClasses[size ?? "full"]}`, {
+              className={cn(`col-span-4 ${getColSpanClass(size ?? "full")}`, {
                 "md:col-span-2": size !== "full",
               })}
               key={col.id}

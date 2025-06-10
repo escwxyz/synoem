@@ -1,21 +1,23 @@
 import type { Page } from "@synoem/types";
 import { Timeline } from "./timeline.client";
 import { Hero } from "./hero.client";
-import { Faq } from "./faq.client";
+import { FaqsSection } from "./faqs-section";
 import { Feature } from "./feature.client";
 import { Features } from "./features.server";
 import { Content } from "./content.server";
 import { LogoCloud } from "./logo-cloud.client";
+import { CarbonReductionCalculator } from "./carbon-reduction-calculator";
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const blockComponents: Record<string, React.FC<any>> = {
   timelineBlock: Timeline,
   heroBlock: Hero,
-  faqBlock: Faq,
+  faqBlock: FaqsSection,
   featureBlock: Feature,
   featuresBlock: Features,
   contentBlock: Content,
   logoCloudBlock: LogoCloud,
+  carbonCalculatorBlock: CarbonReductionCalculator,
 };
 
 export const RenderBlocks: React.FC<{
@@ -36,7 +38,7 @@ export const RenderBlocks: React.FC<{
 
             if (Block) {
               return (
-                <div className="my-16" key={block.id}>
+                <div className="my-8 md:my-16" key={block.id}>
                   <Block {...block} disableInnerContainer />
                 </div>
               );
