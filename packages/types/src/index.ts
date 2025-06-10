@@ -2936,7 +2936,10 @@ export interface CarbonCalculatorBlockType {
     min?: number | null;
     max?: number | null;
   };
-  emissionIntensity?:
+  /**
+   * Global Average: 0.5, China: 0.65, India: 0.82, USA: 0.4, EU Average: 0.3, Australia: 0.7
+   */
+  presets?:
     | {
         name: string;
         value: number;
@@ -4159,7 +4162,7 @@ export interface CarbonCalculatorBlockTypeSelect<T extends boolean = true> {
         min?: T;
         max?: T;
       };
-  emissionIntensity?:
+  presets?:
     | T
     | {
         name?: T;

@@ -1,25 +1,6 @@
 import type { Block } from "payload";
 import { validateRange } from "../validation";
 
-const emissionTranslations = {
-  en: {
-    globalAverage: "Global Average",
-    china: "China",
-    india: "India",
-    usa: "USA",
-    euAverage: "EU Average",
-    australia: "Australia",
-  },
-  de: {
-    globalAverage: "Global Durchschnitt",
-    china: "China",
-    india: "Indien",
-    usa: "USA",
-    euAverage: "EU Durchschnitt",
-    australia: "Australien",
-  },
-};
-
 export const CarbonCalculatorBlock: Block = {
   slug: "carbonCalculatorBlock",
   interfaceName: "CarbonCalculatorBlockType",
@@ -124,23 +105,15 @@ export const CarbonCalculatorBlock: Block = {
           ],
         },
         {
-          name: "emissionIntensity",
+          name: "presets",
           label: "Emission Intensity Presets",
           type: "array",
           minRows: 3,
           maxRows: 10,
           // TODO: localization not working as expected, need to fix it
-          defaultValue: ({ locale }) => {
-            const effectiveLocale = locale ?? "en";
-            const t = emissionTranslations[effectiveLocale] || emissionTranslations.en;
-            return [
-              { name: t.globalAverage, value: 0.5 },
-              { name: t.china, value: 0.65 },
-              { name: t.india, value: 0.82 },
-              { name: t.usa, value: 0.4 },
-              { name: t.euAverage, value: 0.3 },
-              { name: t.australia, value: 0.7 },
-            ];
+          admin: {
+            description:
+              "Global Average: 0.5, China: 0.65, India: 0.82, USA: 0.4, EU Average: 0.3, Australia: 0.7",
           },
           fields: [
             {

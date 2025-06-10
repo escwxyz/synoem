@@ -106,7 +106,7 @@ export const getHomeData = ({
       treeEmission: 22,
       treeLifetime: 25,
       carEmission: 4.6,
-      emissionIntensity: [
+      presets: [
         {
           name: "Global Average",
           value: 0.5,

@@ -20,7 +20,7 @@ const RequestQuoteButton = dynamic(
   },
 );
 
-export const HeroParallex = ({
+export const HeroParallax = ({
   locale,
   ...props
 }: HeroBlockType & {
@@ -62,10 +62,10 @@ export const HeroParallex = ({
   return (
     <div
       ref={ref}
-      className={cn(
-        "py-10 overflow-hidden flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]",
-        `h-[${(rows.length + 1) * 100}vh]`,
-      )}
+      className="py-10 overflow-hidden flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      style={{
+        height: `${(rows.length + 1) * 100}vh`,
+      }}
     >
       <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full left-0 top-0 z-10">
         <h1 className="text-2xl md:text-7xl font-bold max-w-2xl">{title}</h1>

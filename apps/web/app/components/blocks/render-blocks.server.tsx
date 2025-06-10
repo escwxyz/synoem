@@ -6,13 +6,13 @@ import { FeaturesSection } from "./features-section";
 import { Content } from "./content.server";
 import { LogoCloud } from "./logo-cloud";
 import { CarbonReductionCalculator } from "./carbon-reduction-calculator";
-import { HeroParallex } from "../hero-parallex";
+import { HeroParallax } from "../hero-parallax";
 import { InquirySection } from "../inquiry-section";
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const blockComponents: Record<string, React.FC<any>> = {
   timelineBlock: Timeline,
-  heroBlock: HeroParallex,
+  heroBlock: HeroParallax,
   faqBlock: FaqsSection,
   featureBlock: FeatureCard,
   featuresBlock: FeaturesSection,

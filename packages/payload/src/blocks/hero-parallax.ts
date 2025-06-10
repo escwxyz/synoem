@@ -1,7 +1,7 @@
 import type { Block } from "payload";
 import { link } from "../fields";
 
-export const HeroParallexBlock: Block = {
+export const HeroParallaxBlock: Block = {
   slug: "heroBlock",
   interfaceName: "HeroBlockType",
   admin: {

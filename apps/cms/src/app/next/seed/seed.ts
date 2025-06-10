@@ -820,49 +820,84 @@ async function fetchFileByURL(url: string): Promise<File> {
     throw new Error(`Invalid URL: ${url}`);
   }
 
-  const res = await fetch(url, {
-    credentials: "include",
-    method: "GET",
-  });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 60000);
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch file from ${url}, status: ${res.status}`);
+  try {
+    const res = await fetch(url, {
+      credentials: "include",
+      method: "GET",
+      signal: controller.signal,
+    });
+    clearTimeout(timeout);
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch file from ${url}, status: ${res.status}`);
+    }
+    const data = await res.arrayBuffer();
+    const name = url.split("/").pop() || `file-${Date.now()}`;
+
+    console.log("File fetched", name);
+
+    return {
+      name,
+      data: Buffer.from(data),
+      mimetype: getMimeType(name),
+      size: data.byteLength,
+    };
+  } catch (error) {
+    clearTimeout(timeout);
+    console.log("Fetching file from", url, "failed", error);
+    throw error;
   }
-
-  const data = await res.arrayBuffer();
-  const name = url.split("/").pop() || `file-${Date.now()}`;
-
-  return {
-    name,
-    data: Buffer.from(data),
-    mimetype: getMimeType(name),
-    size: data.byteLength,
-  };
 }
 
 async function resetDatabase(payload: Payload, req: PayloadRequest) {
   try {
     await Promise.all(
-      globals.map((global) =>
-        payload.updateGlobal({
-          slug: global,
-          data: {},
-          depth: 0,
-          context: {
-            skipRevalidation: true,
-          },
-        }),
-      ),
+      globals.map(async (global) => {
+        try {
+          await payload.updateGlobal({
+            slug: global,
+            data: {},
+            depth: 0,
+            context: {
+              skipRevalidation: true,
+            },
+          });
+          payload.logger.info(`Global ${global} reset`);
+        } catch (error) {
+          payload.logger.error(`Failed to reset global ${global}:`, error);
+          throw new Error(`Failed to reset global ${global}, skipping...`, { cause: error });
+        }
+      }),
     );
+
+    payload.logger.info("Globals reset");
 
     for (const collection of collections) {
       await payload.db.deleteMany({ collection, req, where: {} });
     }
+
+    payload.logger.info("Collections reset");
+
     await Promise.all(
       collections
         .filter((collection) => Boolean(payload.collections[collection].config.versions))
-        .map((collection) => payload.db.deleteVersions({ collection, req, where: {} })),
+        .map(async (collection) => {
+          try {
+            await payload.db.deleteVersions({ collection, req, where: {} });
+            payload.logger.info(`Versions for ${collection} reset`);
+          } catch (error) {
+            payload.logger.error(`Failed to reset versions for ${collection}:`, error);
+            throw new Error(`Failed to reset versions for ${collection}, skipping...`, {
+              cause: error,
+            });
+          }
+        }),
     );
+
+    payload.logger.info("Versions reset");
   } catch (error) {
     payload.logger.error("Resetting database failed:", error);
     throw error;

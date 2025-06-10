@@ -40,7 +40,7 @@ export const CarbonReductionCalculator = (props: CarbonCalculatorBlockType) => {
     treeLifetime,
     carEmission,
     effectiveHours: effectiveHoursRange,
-    emissionIntensity: emissionIntensityPresets,
+    presets: emissionIntensityPresets,
   } = props;
 
   const tonnesPerTree = treeEmission * treeLifetime * KG_TO_TONNE;

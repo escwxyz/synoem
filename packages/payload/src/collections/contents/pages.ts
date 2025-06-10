@@ -11,7 +11,7 @@ import { FAQBlock } from "../../blocks/faq";
 import { admin, authenticatedOrPublished } from "../../access";
 import { revalidateCollection } from "../../hooks";
 import { CarbonCalculatorBlock } from "../../blocks/carbon-reduction-calculator";
-import { HeroParallexBlock } from "../../blocks/hero-parallex";
+import { HeroParallaxBlock } from "../../blocks/hero-parallax";
 import { InquiryBlock } from "../../blocks/inquiry-section";
 
 export const Pages: CollectionConfig<"pages"> = {
@@ -41,7 +41,7 @@ export const Pages: CollectionConfig<"pages"> = {
               name: "layout",
               type: "blocks",
               blocks: [
-                HeroParallexBlock,
+                HeroParallaxBlock,
                 ContentBlock,
                 CallToActionBlock,
                 MediaBlock,

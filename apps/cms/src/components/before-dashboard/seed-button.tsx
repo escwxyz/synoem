@@ -31,7 +31,10 @@ export const SeedButton = () => {
         toast.promise(
           new Promise((resolve, reject) => {
             try {
-              fetch("/next/seed", { method: "POST", credentials: "include" })
+              fetch("/next/seed", {
+                method: "POST",
+                credentials: "include",
+              })
                 .then((res) => {
                   if (res.ok) {
                     resolve(true);
