@@ -8,17 +8,22 @@ import { useMemo, useState } from "react";
 import { RichText } from "../rich-text.client";
 import { Button } from "@synoem/ui/components/button";
 import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
 
-export const Faq = ({ title, description, type, style = "accordion", content }: FAQBlockType) => {
+export const FaqsSection = ({
+  title,
+  description,
+  type,
+  style = "accordion",
+  content,
+}: FAQBlockType) => {
   if (content.length === 0 || content.some((item) => typeof item === "string")) {
     console.log("FAQ content is not populated");
     return null;
   }
 
-  const t = useTranslations("FaqSection");
-
   return (
-    <section className="relative w-full overflow-hidden bg-background/50 py-16 rounded-2xl">
+    <div className="relative w-full overflow-hidden bg-background/50 py-16 rounded-2xl">
       <div className="absolute -left-20 top-0 h-64 w-64 rounded-full bg-primary/5 blur-3xl" />
       <div className="absolute -right-20 bottom-0 h-64 w-64 rounded-full bg-primary/5 blur-3xl" />
 
@@ -51,12 +56,14 @@ export const Faq = ({ title, description, type, style = "accordion", content }: 
         </div>
         {type === "general" && <GeneralFaqCallout />}
       </div>
-    </section>
+    </div>
   );
 };
 
 function GeneralFaqCallout() {
   const t = useTranslations("FaqSection");
+
+  const router = useRouter();
 
   return (
     <motion.div
@@ -91,8 +98,7 @@ function GeneralFaqCallout() {
           "font-medium",
         )}
         onClick={() => {
-          console.log("contact support");
-          // TODO: either navigate to simple inquiry form or open contact form
+          router.push("/contact");
         }}
       >
         {t("contactSupport")}

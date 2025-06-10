@@ -30,7 +30,7 @@ type Position = {
   endLat: number;
   endLng: number;
   arcAlt: number;
-  color: string;
+  color: string | undefined;
 };
 
 export type GlobeConfig = {

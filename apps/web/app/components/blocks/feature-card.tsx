@@ -8,7 +8,7 @@ import { Icon } from "~/components/icon.client";
 import { useRef } from "react";
 import { cn } from "@synoem/ui/lib/utils";
 
-export const Feature = ({
+export const FeatureCard = ({
   type,
   title,
   number,

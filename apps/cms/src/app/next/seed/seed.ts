@@ -1,6 +1,6 @@
 import type { CollectionSlug, Payload, PayloadRequest, File, GlobalSlug } from "payload";
 import { faqs } from "./data/faqs";
-import { getAboutUsData } from "./data/pages";
+import { getAboutUsData, getHomeData } from "./data/pages";
 import { getHeaderData } from "./data/header";
 import { getHJTSolarPanelData, getTOPConSolarPanelData } from "./data/solar-panel";
 import { termsData } from "./data/terms";
@@ -8,6 +8,7 @@ import { privacyPolicyData } from "./data/privacy-policy";
 import { getFooterData } from "./data/footer";
 
 const IMAGE_BASE_URL = `${process.env.NEXT_PUBLIC_S3_ENDPOINT}/object/public/${process.env.NEXT_PUBLIC_S3_BUCKET_NAME}/images/seed`;
+const LOGO_BASE_URL = `${process.env.NEXT_PUBLIC_S3_ENDPOINT}/object/public/${process.env.NEXT_PUBLIC_S3_BUCKET_NAME}/icons`;
 
 const globals: GlobalSlug[] = ["company-info", "contact-info", "social-links", "header"];
 
@@ -63,6 +64,17 @@ export const seed = async ({
       solarPanel2ProductImage,
       solarPanel3ProductImage,
       solarPanel4ProductImage,
+      // logos
+      ceLogo,
+      ulLogo,
+      mcsLogo,
+      // hero images
+      heroContent1,
+      heroContent2,
+      heroContent3,
+      heroContent4,
+      heroContent5,
+      heroContent6,
     ] = await Promise.all([
       fetchFileByURL(`${IMAGE_BASE_URL}/industry-cover-image.jpg`),
       fetchFileByURL(`${IMAGE_BASE_URL}/hjt-hero.jpg`),
@@ -77,6 +89,19 @@ export const seed = async ({
       fetchFileByURL(`${IMAGE_BASE_URL}/solar-panel_2.png`),
       fetchFileByURL(`${IMAGE_BASE_URL}/solar-panel_3.png`),
       fetchFileByURL(`${IMAGE_BASE_URL}/solar-panel_4.png`),
+
+      // logos
+      fetchFileByURL(`${LOGO_BASE_URL}/ce.svg`),
+      fetchFileByURL(`${LOGO_BASE_URL}/ul.svg`),
+      fetchFileByURL(`${LOGO_BASE_URL}/mcs.svg`),
+
+      // Hero images
+      fetchFileByURL(`${IMAGE_BASE_URL}/hero-content-1.jpg`),
+      fetchFileByURL(`${IMAGE_BASE_URL}/hero-content-2.jpg`),
+      fetchFileByURL(`${IMAGE_BASE_URL}/hero-content-3.jpg`),
+      fetchFileByURL(`${IMAGE_BASE_URL}/hero-content-4.png`),
+      fetchFileByURL(`${IMAGE_BASE_URL}/hero-content-5.png`),
+      fetchFileByURL(`${IMAGE_BASE_URL}/hero-content-6.png`),
     ]);
 
     payload.logger.info("Images fetched");
@@ -95,6 +120,15 @@ export const seed = async ({
       createdSolarPanel2ProductImage,
       createdSolarPanel3ProductImage,
       createdSolarPanel4ProductImage,
+      createdCeLogo,
+      createdUlLogo,
+      createdMcsLogo,
+      createdHeroContent1,
+      createdHeroContent2,
+      createdHeroContent3,
+      createdHeroContent4,
+      createdHeroContent5,
+      createdHeroContent6,
     ] = await Promise.all([
       payload.create({
         collection: "images",
@@ -218,6 +252,103 @@ export const seed = async ({
           skipRevalidation: true,
         },
       }),
+
+      // logos
+      payload.create({
+        collection: "images",
+        data: {
+          alt: "CE Logo",
+        },
+        file: ceLogo,
+        context: {
+          skipRevalidation: true,
+        },
+      }),
+      payload.create({
+        collection: "images",
+        data: {
+          alt: "UL Logo",
+        },
+        file: ulLogo,
+        context: {
+          skipRevalidation: true,
+        },
+      }),
+      payload.create({
+        collection: "images",
+        data: {
+          alt: "MCS Logo",
+        },
+        file: mcsLogo,
+        context: {
+          skipRevalidation: true,
+        },
+      }),
+
+      // hero images
+      payload.create({
+        collection: "images",
+        data: {
+          alt: "Hero Content 1",
+        },
+        file: heroContent1,
+        context: {
+          skipRevalidation: true,
+        },
+      }),
+      payload.create({
+        collection: "images",
+        data: {
+          alt: "Hero Content 2",
+        },
+        file: heroContent2,
+        context: {
+          skipRevalidation: true,
+        },
+      }),
+      payload.create({
+        collection: "images",
+        data: {
+          alt: "Hero Content 3",
+        },
+        file: heroContent3,
+        context: {
+          skipRevalidation: true,
+        },
+      }),
+
+      payload.create({
+        collection: "images",
+        data: {
+          alt: "Hero Content 4",
+        },
+        file: heroContent4,
+        context: {
+          skipRevalidation: true,
+        },
+      }),
+
+      payload.create({
+        collection: "images",
+        data: {
+          alt: "Hero Content 5",
+        },
+        file: heroContent5,
+        context: {
+          skipRevalidation: true,
+        },
+      }),
+
+      payload.create({
+        collection: "images",
+        data: {
+          alt: "Hero Content 6",
+        },
+        file: heroContent6,
+        context: {
+          skipRevalidation: true,
+        },
+      }),
     ]);
 
     console.log("createdFactoryImage to be used", createdFactoryImage);
@@ -328,16 +459,18 @@ export const seed = async ({
 
     payload.logger.info("Industry created");
 
-    for (const faq of faqs) {
-      await payload.create({
+    const createFaqs = faqs.map((faq) =>
+      payload.create({
         collection: "faqs",
         data: faq,
         locale: "en",
         context: {
           skipRevalidation: true,
         },
-      });
-    }
+      }),
+    );
+
+    const createdFaqs = await Promise.all(createFaqs);
 
     payload.logger.info("Faqs created");
 
@@ -395,6 +528,8 @@ export const seed = async ({
       },
     });
 
+    payload.logger.info("About us page created");
+
     const [termsPage, privacyPolicyPage] = await Promise.all([
       payload.create({
         collection: "pages",
@@ -419,6 +554,42 @@ export const seed = async ({
         },
       }),
     ]);
+
+    payload.logger.info("Terms and privacy policy pages created");
+
+    const images = {
+      hero: [
+        createdHeroContent1.id,
+        createdHeroContent2.id,
+        createdHeroContent3.id,
+        createdHeroContent4.id,
+        createdHeroContent5.id,
+        createdHeroContent6.id,
+      ],
+      logos: {
+        ce: createdCeLogo.id,
+        mcs: createdMcsLogo.id,
+        ul: createdUlLogo.id,
+      },
+    };
+
+    await payload.create({
+      collection: "pages",
+      data: {
+        ...getHomeData({
+          logos: images.logos,
+          heros: images.hero,
+          faqs: createdFaqs.map((faq) => faq.id),
+        }),
+        _status: "published",
+      },
+      locale: "en",
+      context: {
+        skipRevalidation: true,
+      },
+    });
+
+    payload.logger.info("Home page created");
 
     payload.logger.info("Pages created");
 
@@ -629,7 +800,7 @@ export const seed = async ({
 
     await payload.db.rollbackTransaction(transactionID);
 
-    return;
+    throw error;
   }
 };
 
@@ -645,53 +816,88 @@ function getMimeType(filename: string): string {
 }
 
 async function fetchFileByURL(url: string): Promise<File> {
-  if (!url.startsWith(IMAGE_BASE_URL)) {
+  if (!url.startsWith(IMAGE_BASE_URL) && !url.startsWith(LOGO_BASE_URL)) {
     throw new Error(`Invalid URL: ${url}`);
   }
 
-  const res = await fetch(url, {
-    credentials: "include",
-    method: "GET",
-  });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 60000);
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch file from ${url}, status: ${res.status}`);
+  try {
+    const res = await fetch(url, {
+      credentials: "include",
+      method: "GET",
+      signal: controller.signal,
+    });
+    clearTimeout(timeout);
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch file from ${url}, status: ${res.status}`);
+    }
+    const data = await res.arrayBuffer();
+    const name = url.split("/").pop() || `file-${Date.now()}`;
+
+    console.log("File fetched", name);
+
+    return {
+      name,
+      data: Buffer.from(data),
+      mimetype: getMimeType(name),
+      size: data.byteLength,
+    };
+  } catch (error) {
+    clearTimeout(timeout);
+    console.log("Fetching file from", url, "failed", error);
+    throw error;
   }
-
-  const data = await res.arrayBuffer();
-  const name = url.split("/").pop() || `file-${Date.now()}`;
-
-  return {
-    name,
-    data: Buffer.from(data),
-    mimetype: getMimeType(name),
-    size: data.byteLength,
-  };
 }
 
 async function resetDatabase(payload: Payload, req: PayloadRequest) {
   try {
     await Promise.all(
-      globals.map((global) =>
-        payload.updateGlobal({
-          slug: global,
-          data: {},
-          depth: 0,
-          context: {
-            skipRevalidation: true,
-          },
-        }),
-      ),
+      globals.map(async (global) => {
+        try {
+          await payload.updateGlobal({
+            slug: global,
+            data: {},
+            depth: 0,
+            context: {
+              skipRevalidation: true,
+            },
+          });
+          payload.logger.info(`Global ${global} reset`);
+        } catch (error) {
+          payload.logger.error(`Failed to reset global ${global}:`, error);
+          throw new Error(`Failed to reset global ${global}, skipping...`, { cause: error });
+        }
+      }),
     );
+
+    payload.logger.info("Globals reset");
 
     for (const collection of collections) {
       await payload.db.deleteMany({ collection, req, where: {} });
     }
+
+    payload.logger.info("Collections reset");
+
     await Promise.all(
       collections
         .filter((collection) => Boolean(payload.collections[collection].config.versions))
-        .map((collection) => payload.db.deleteVersions({ collection, req, where: {} })),
+        .map(async (collection) => {
+          try {
+            await payload.db.deleteVersions({ collection, req, where: {} });
+            payload.logger.info(`Versions for ${collection} reset`);
+          } catch (error) {
+            payload.logger.error(`Failed to reset versions for ${collection}:`, error);
+            throw new Error(`Failed to reset versions for ${collection}, skipping...`, {
+              cause: error,
+            });
+          }
+        }),
     );
+
+    payload.logger.info("Versions reset");
   } catch (error) {
     payload.logger.error("Resetting database failed:", error);
     throw error;

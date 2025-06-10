@@ -1,15 +1,18 @@
 import type { CollectionConfig } from "payload";
-import { slug, pathField, UNIQUE_PATH_COLLECTIONS } from "../../fields";
-import { HeroBlock } from "../../blocks/hero";
+import { slug, pathField } from "../../fields";
 import { ContentBlock } from "../../blocks/content";
 import { title } from "../../fields/title";
 import { CallToActionBlock } from "../../blocks/call-to-action";
 import { MediaBlock } from "../../blocks/media";
+import { LogoCloudBlock } from "../../blocks/logo-cloud";
 import { FeaturesBlock } from "../../blocks/features";
 import { TimelineBlock } from "../../blocks/timeline";
 import { FAQBlock } from "../../blocks/faq";
 import { admin, authenticatedOrPublished } from "../../access";
 import { revalidateCollection } from "../../hooks";
+import { CarbonCalculatorBlock } from "../../blocks/carbon-reduction-calculator";
+import { HeroParallaxBlock } from "../../blocks/hero-parallax";
+import { InquiryBlock } from "../../blocks/inquiry-section";
 
 export const Pages: CollectionConfig<"pages"> = {
   slug: "pages",
@@ -38,13 +41,16 @@ export const Pages: CollectionConfig<"pages"> = {
               name: "layout",
               type: "blocks",
               blocks: [
-                HeroBlock,
+                HeroParallaxBlock,
                 ContentBlock,
                 CallToActionBlock,
                 MediaBlock,
                 FeaturesBlock,
                 TimelineBlock,
                 FAQBlock,
+                LogoCloudBlock,
+                CarbonCalculatorBlock,
+                InquiryBlock,
               ],
               required: true,
               admin: {

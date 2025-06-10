@@ -1,17 +1,25 @@
 import type { Page } from "@synoem/types";
 import { Timeline } from "./timeline.client";
-import { Hero } from "./hero.client";
-import { Faq } from "./faq.client";
-import { Feature } from "./feature.client";
-import { Features } from "./features.server";
+import { FaqsSection } from "./faqs-section";
+import { FeatureCard } from "./feature-card";
+import { FeaturesSection } from "./features-section";
+import { Content } from "./content.server";
+import { LogoCloud } from "./logo-cloud";
+import { CarbonReductionCalculator } from "./carbon-reduction-calculator";
+import { HeroParallax } from "../hero-parallax";
+import { InquirySection } from "../inquiry-section";
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const blockComponents: Record<string, React.FC<any>> = {
   timelineBlock: Timeline,
-  heroBlock: Hero,
-  faqBlock: Faq,
-  featureBlock: Feature,
-  featuresBlock: Features,
+  heroBlock: HeroParallax,
+  faqBlock: FaqsSection,
+  featureBlock: FeatureCard,
+  featuresBlock: FeaturesSection,
+  contentBlock: Content,
+  logoCloudBlock: LogoCloud,
+  carbonCalculatorBlock: CarbonReductionCalculator,
+  inquiryBlock: InquirySection,
 };
 
 export const RenderBlocks: React.FC<{
@@ -32,9 +40,9 @@ export const RenderBlocks: React.FC<{
 
             if (Block) {
               return (
-                <div className="my-16" key={block.id}>
-                  <Block {...block} disableInnerContainer />
-                </div>
+                <section key={block.id} className="my-4 md:my-8">
+                  <Block {...block} />
+                </section>
               );
             }
           }

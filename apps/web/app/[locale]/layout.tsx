@@ -6,6 +6,7 @@ import { ThemeProvider } from "~/components/theme-provider.client";
 import { SidebarInset, SidebarProvider } from "~/components/sidebar.client";
 import { Header } from "~/layouts/header-layout.server";
 import { Footer } from "~/layouts/footer-layout.server";
+import { MainLayout } from "~/layouts/main-layout";
 // import { WebVitals } from "~/components/web-vitals.client";
 import GoogleAnalytics from "~/components/google-analytics.client";
 
@@ -55,9 +56,7 @@ export default async function RootLayout({
                 <SidebarProvider className="flex flex-col">
                   <NotificationBar locale={locale} />
                   <Header locale={locale} />
-                  <SidebarInset className="w-full max-w-none flex-1 mx-auto p-4 md:p-8">
-                    {children}
-                  </SidebarInset>
+                  <MainLayout>{children}</MainLayout>
                   <CookieConsent />
                   <Footer locale={locale} />
                 </SidebarProvider>

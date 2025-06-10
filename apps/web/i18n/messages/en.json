@@ -421,8 +421,6 @@
     "overallOutputPower": "Overall Output Power"
   },
   "CarbonReductionCalculator": {
-    "title": "Carbon Reduction Calculator",
-    "description": "Estimate the environmental impact and carbon footprint reduction of your solar project",
     "projectCapacity": "Project Capacity (MW)",
     "effectiveHours": "Effective Hours per Year",
     "hours": "hours",
@@ -442,13 +440,7 @@
     "note": "Note: These calculations are estimates and may vary based on regional differences in energy production and consumption.",
     "low": "Low",
     "average": "Average",
-    "high": "High",
-    "globalAverage": "Global Average",
-    "china": "China",
-    "india": "India",
-    "usa": "USA",
-    "euAverage": "EU Average",
-    "australia": "Australia"
+    "high": "High"
   },
   "NotFound": {
     "title": "Resource Not Found",

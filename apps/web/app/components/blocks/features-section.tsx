@@ -1,8 +1,8 @@
 import type { FeaturesBlockType } from "@synoem/types";
-import { Feature } from "./feature.client";
+import { FeatureCard } from "./feature-card";
 import { cn } from "@synoem/ui/lib/utils";
 
-export const Features = ({ features, columns, title, description }: FeaturesBlockType) => {
+export const FeaturesSection = ({ features, columns, title, description }: FeaturesBlockType) => {
   if (!features?.length) {
     return null;
   }
@@ -22,7 +22,7 @@ export const Features = ({ features, columns, title, description }: FeaturesBloc
         )}
       >
         {features.map((feature) => (
-          <Feature key={feature.id} {...feature} />
+          <FeatureCard key={feature.id} {...feature} />
         ))}
       </div>
     </div>

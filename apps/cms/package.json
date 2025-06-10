@@ -4,15 +4,16 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "pnpm generate:importmap && next build",
+    "build": "pnpm run migrate && pnpm generate:importmap && next build",
     "dev": "next dev",
     "devsafe": "rm -rf .next && next dev",
     "pregenerate:importmap": "touch \"src/app/(payload)/admin/importMap.js\"",
     "generate:importmap": "pnpm pregenerate:importmap && payload generate:importmap",
     "generate:types": "payload generate:types",
+    "generate:migrations": "payload migrate:create",
     "migrate": "payload migrate",
     "lint": "next lint",
-    "payload": "payload",
+    "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "start": "next start",
     "fresh": "payload migrate:fresh",
     "preview": "npx vercel deploy --target=preview",
@@ -35,6 +36,7 @@
   "devDependencies": {
     "@synoem/typescript-config": "workspace:*",
     "@types/react": "catalog:",
-    "@types/react-window": "^1.8.8"
+    "@types/react-window": "^1.8.8",
+    "cross-env": "^7.0.3"
   }
 }

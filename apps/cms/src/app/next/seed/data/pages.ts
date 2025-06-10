@@ -1,5 +1,170 @@
 import type { Page } from "@synoem/types";
 
+interface GetHomeDataProps {
+  logos: {
+    ce: string;
+    mcs: string;
+    ul: string;
+  };
+  heros: string[];
+  faqs: string[];
+}
+
+export const getHomeData = ({
+  logos,
+  heros,
+  faqs,
+}: GetHomeDataProps): Omit<Page, "createdAt" | "id" | "sizes" | "updatedAt"> => ({
+  title: "Home",
+  slug: "home",
+  layout: [
+    {
+      blockType: "heroBlock",
+      title: "Synergize for a better future",
+      subtitle: "Your trusted provider in sustainable energy solutions",
+      description: "Get a quote today or explore our products",
+      rows: [
+        {
+          contents: [
+            {
+              title: "Solar Panels",
+              description: "Residential, Commercial and Industrial, BIPV and Agricultural PV",
+              image: heros[0] || "",
+              link: {
+                type: "relative",
+                relative: "/products/solar-panel",
+              },
+            },
+            {
+              title: "Inverters",
+              description: "3-phase and single-phase inverters",
+              image: heros[1] || "",
+              link: {
+                type: "relative",
+                relative: "/products/inverter",
+              },
+            },
+            {
+              title: "Batteries",
+              description: "LFP and NMC batteries",
+              image: heros[2] || "",
+              link: {
+                type: "relative",
+                relative: "/products/battery",
+              },
+            },
+          ],
+        },
+        {
+          contents: [
+            {
+              title: "Solar Farm Projects",
+              description: "Large-scale solar farms",
+              image: heros[3] || "",
+              link: {
+                type: "relative",
+                relative: "/projects",
+              },
+            },
+            {
+              title: "BIPV Projects",
+              description: "Innovative BIPV solutions",
+              image: heros[4] || "",
+              link: {
+                type: "relative",
+                relative: "/projects",
+              },
+            },
+            {
+              title: "Agricultural PV",
+              description: "Sustainable energy for agriculture",
+              image: heros[5] || "",
+              link: {
+                type: "relative",
+                relative: "/projects",
+              },
+            },
+          ],
+        },
+      ],
+      quoteButton: true,
+      ctaSecondary: {
+        type: "relative",
+        relative: "/products",
+        label: "Explore Products",
+      },
+    },
+    {
+      blockType: "carbonCalculatorBlock",
+      title: "Learn How Much You Can Contribute",
+      description:
+        "Discover how much you can contribute to the environment with our solar energy calculator.",
+      subtitle: "Calculate Your Carbon Footprint",
+      subDescription:
+        "Enter your energy usage to see how much you can reduce your carbon emissions.",
+      projectCapacity: 1,
+      treeEmission: 22,
+      treeLifetime: 25,
+      carEmission: 4.6,
+      presets: [
+        {
+          name: "Global Average",
+          value: 0.5,
+        },
+        {
+          name: "China",
+          value: 0.65,
+        },
+        {
+          name: "India",
+          value: 0.82,
+        },
+        {
+          name: "USA",
+          value: 0.4,
+        },
+        {
+          name: "EU Average",
+          value: 0.3,
+        },
+        {
+          name: "Australia",
+          value: 0.7,
+        },
+      ],
+    },
+    {
+      blockType: "inquiryBlock",
+      title: "Ready to Transform Your Energy Future?",
+      description:
+        "Join thousands of business entities who have revolutionized their energy consumption with our innovative solar solutions. Our team of experts is ready to design a custom solution for your specific needs.",
+      ctaPrimary: {
+        type: "relative",
+        relative: "/contact",
+        label: "Get a Quote",
+      },
+      ctaSecondary: {
+        type: "relative",
+        relative: "/products",
+        label: "Learn More",
+      },
+    },
+    {
+      blockType: "faqBlock",
+      title: "Frequently Asked Questions",
+      description: "Find answers to common questions about our products and services.",
+      type: "general",
+      style: "accordion",
+      content: [faqs[0] || "", faqs[1] || "", faqs[2] || ""],
+    },
+    {
+      blockType: "logoCloudBlock",
+      title: "Certified by",
+      logos: [logos.ce, logos.mcs, logos.ul],
+    },
+  ],
+});
+
 export const getAboutUsData = (
   companyPageId: string,
 ): Omit<Page, "createdAt" | "id" | "sizes" | "updatedAt"> => ({

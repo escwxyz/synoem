@@ -11,7 +11,7 @@ import {
   CardTitle,
 } from "@synoem/ui/components/card";
 import { RichText } from "~/components/rich-text.client";
-import { Feature } from "~/components/blocks/feature.client";
+import { FeatureCard } from "~/components/blocks/feature-card";
 
 import { useTranslations } from "next-intl";
 
@@ -175,7 +175,7 @@ export const SolarPanelWarrantyTab = ({ solarPanel }: Props) => {
               />
             </CardContent>
             <CardFooter className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Feature
+              <FeatureCard
                 type="number"
                 blockType="featureBlock"
                 number={powerDegradation.initialGuarantee}
@@ -188,7 +188,7 @@ export const SolarPanelWarrantyTab = ({ solarPanel }: Props) => {
                 opacity={100}
                 className="bg-muted dark:bg-background p-4 rounded-lg"
               />
-              <Feature
+              <FeatureCard
                 type="number"
                 blockType="featureBlock"
                 number={powerDegradation.annual}
@@ -201,7 +201,7 @@ export const SolarPanelWarrantyTab = ({ solarPanel }: Props) => {
                 opacity={100}
                 className="bg-muted dark:bg-background p-4 rounded-lg"
               />
-              <Feature
+              <FeatureCard
                 type="number"
                 blockType="featureBlock"
                 number={powerDegradation.endYearGuarantee}

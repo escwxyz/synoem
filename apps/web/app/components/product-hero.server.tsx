@@ -11,7 +11,7 @@ import { ImagePlaceholder } from "@synoem/ui/components/image-placeholder";
 import { ProductBreadcrumbs } from "./product-breadcrumbs.server";
 import type { Locale, ProductTypeId } from "@synoem/config";
 import dynamic from "next/dynamic";
-import { Feature } from "./blocks/feature.client";
+import { FeatureCard } from "./blocks/feature-card";
 
 const ProductHeroModel = dynamic(() =>
   import("./product-hero-model.client").then((mod) => mod.ProductHeroModel),
@@ -79,7 +79,7 @@ export const ProductHero = ({
                     <div className="max-w-4xl mx-auto">
                       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-12">
                         {features?.map((feature) => (
-                          <Feature key={feature.id} {...feature} />
+                          <FeatureCard key={feature.id} {...feature} />
                         ))}
                       </div>
                     </div>
