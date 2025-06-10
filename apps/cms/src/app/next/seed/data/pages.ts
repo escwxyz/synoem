@@ -2,12 +2,21 @@ import type { Page } from "@synoem/types";
 
 export const getHomeData = (
   ceLogoId: string,
-  ulLogoId: string,
   mcsLogoId: string,
+  ulLogoId: string,
+  faqIds: string[],
 ): Omit<Page, "createdAt" | "id" | "sizes" | "updatedAt"> => ({
   title: "Home",
   slug: "home",
   layout: [
+    {
+      blockType: "faqBlock",
+      title: "Frequently Asked Questions",
+      description: "Find answers to common questions about our products and services.",
+      type: "general",
+      style: "accordion",
+      content: faqIds,
+    },
     {
       blockType: "logoCloudBlock",
       title: "Certified by",

@@ -372,16 +372,18 @@ export const seed = async ({
 
     payload.logger.info("Industry created");
 
-    for (const faq of faqs) {
-      await payload.create({
+    const createFaqs = faqs.map((faq) =>
+      payload.create({
         collection: "faqs",
         data: faq,
         locale: "en",
         context: {
           skipRevalidation: true,
         },
-      });
-    }
+      }),
+    );
+
+    const createdFaqs = await Promise.all(createFaqs);
 
     payload.logger.info("Faqs created");
 
@@ -467,7 +469,12 @@ export const seed = async ({
     await payload.create({
       collection: "pages",
       data: {
-        ...getHomeData(createdCeLogo.id, createdUlLogo.id, createdMcsLogo.id),
+        ...getHomeData(
+          createdCeLogo.id,
+          createdMcsLogo.id,
+          createdUlLogo.id,
+          createdFaqs.map((faq) => faq.id),
+        ),
         _status: "published",
       },
       locale: "en",
