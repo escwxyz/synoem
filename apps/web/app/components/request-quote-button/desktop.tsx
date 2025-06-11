@@ -161,7 +161,7 @@ export const RequestQuoteDesktop = ({
                   <div className="mb-4 rounded bg-destructive/10 p-2 text-destructive">{error}</div>
                 )}
                 <div className="flex flex-col gap-4 p-4 pt-2 backdrop-blur-xl bg-background/50">
-                  {process.env.WEB_APP_ENV === "production" && (
+                  {process.env.NODE_ENV === "production" && (
                     <>
                       <input
                         type="hidden"

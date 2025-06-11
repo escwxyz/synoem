@@ -88,7 +88,7 @@ export const getDocumentByPathCached = (locale: Locale, path: string, depth = 1)
       return await findDocumentByPathUncached(path, locale, depth);
     },
     tags,
-    { tags, revalidate: process.env.WEB_APP_ENV === "production" ? false : 30 },
+    { tags, revalidate: process.env.NODE_ENV === "production" ? false : 30 },
   );
 };
 

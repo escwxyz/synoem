@@ -28,9 +28,9 @@ export const NewsletterInput = () => {
           setErrorMessage(null);
         },
 
-        onError: (_error) => {
+        onError: (error) => {
           setStatus("error");
-          setErrorMessage(t("newsletter.action.error"));
+          setErrorMessage(error.error.serverError ?? t("api.error"));
         },
 
         onSuccess: ({ data }) => {

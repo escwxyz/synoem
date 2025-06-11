@@ -139,7 +139,7 @@ export const RequestQuoteMobile = ({
                       {error}
                     </div>
                   )}
-                  {process.env.WEB_APP_ENV === "production" && (
+                  {process.env.NODE_ENV === "production" && (
                     <>
                       <input
                         type="hidden"

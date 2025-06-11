@@ -57,7 +57,7 @@ export const getPageCached = (locale: Locale, slug: string) => {
     [tag],
     {
       tags: [tag],
-      revalidate: process.env.WEB_APP_ENV === "production" ? false : 30,
+      revalidate: process.env.NODE_ENV === "production" ? false : 30,
     },
   );
 };

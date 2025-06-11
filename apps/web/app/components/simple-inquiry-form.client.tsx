@@ -112,7 +112,7 @@ export const SimpleInquiryForm = ({
           <EmailField name="email" />
           <PhoneField name="phone" />
           <MessageField name="message" />
-          {process.env.WEB_APP_ENV === "production" && (
+          {process.env.NODE_ENV === "production" && (
             <>
               <input
                 type="hidden"

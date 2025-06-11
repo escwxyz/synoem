@@ -36,7 +36,7 @@ export default async function RootLayout({
     <html
       lang={locale}
       // className={inter.className}
-      suppressHydrationWarning={process.env.WEB_APP_ENV === "production"}
+      suppressHydrationWarning={process.env.NODE_ENV === "production"}
     >
       <head>
         {/* <script src="https://cdn.jsdelivr.net/npm/react-scan/dist/auto.global.js" /> */}
@@ -63,8 +63,9 @@ export default async function RootLayout({
               </NextIntlClientProvider>
             </ReactLenis>
           </ThemeProvider>
-          {process.env.WEB_APP_ENV === "production" &&
-            process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID && <GoogleAnalytics />}
+          {process.env.NODE_ENV === "production" && process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID && (
+            <GoogleAnalytics />
+          )}
         </JotaiProvider>
       </body>
     </html>
