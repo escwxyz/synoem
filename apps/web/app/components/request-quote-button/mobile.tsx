@@ -139,17 +139,17 @@ export const RequestQuoteMobile = ({
                       {error}
                     </div>
                   )}
-                  {process.env.WEB_APP_ENV === "production" && (
-                    <>
-                      <input
-                        type="hidden"
-                        {...form.register("token", {
-                          required: t("cloudflareTokenRequired.message"),
-                        })}
-                      />
-                      <Turnstile />
-                    </>
-                  )}
+
+                  <>
+                    <input
+                      type="hidden"
+                      {...form.register("token", {
+                        required: t("cloudflareTokenRequired.message"),
+                      })}
+                    />
+                    <Turnstile id="request-quote-form-mobile" />
+                  </>
+
                   <TermsField name="terms" />
                   <div className="flex flex-col gap-2">
                     <Button
@@ -161,7 +161,7 @@ export const RequestQuoteMobile = ({
                     >
                       {t("buttons.back")}
                     </Button>
-                    <Button type="submit" className="w-full" disabled={isSubmitting}>
+                    <Button type="submit" disabled={isSubmitting || !form.formState.isValid}>
                       {step < steps.length - 1 ? (
                         <>{t("buttons.next")}</>
                       ) : (

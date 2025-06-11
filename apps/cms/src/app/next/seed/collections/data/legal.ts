@@ -125,7 +125,7 @@ export const termsData: Omit<Page, "id" | "updatedAt" | "createdAt"> = {
 
 export const privacyPolicyData: Omit<Page, "id" | "updatedAt" | "createdAt"> = {
   title: "Privacy Policy",
-  slug: "privacy-policy",
+  slug: "privacy",
   showLastUpdated: true,
   layout: [
     {

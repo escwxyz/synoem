@@ -73,7 +73,7 @@ export const getProductFilterMetadataCached = <T extends ProductTypeId>(
     [tag],
     {
       tags: [tag],
-      revalidate: process.env.WEB_APP_ENV === "production" ? 60 * 60 * 24 * 7 : 30, // Weekly update, instead of manual revalidation
+      revalidate: process.env.NODE_ENV === "production" ? 60 * 60 * 24 * 7 : 30, // Weekly update, instead of manual revalidation
     },
   );
 };

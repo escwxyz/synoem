@@ -27,9 +27,10 @@ export const sendInquiry = actionClient
     } = parsedInput;
 
     if (!terms) {
+      console.log("Missing terms");
       return {
         status: "error",
-        messageKey: "api.sendInquiry.acceptTerms",
+        messageKey: "action.sendInquiry.acceptTerms",
         error: {
           code: "BAD_REQUEST",
           details: "Terms and conditions must be accepted",
@@ -38,9 +39,10 @@ export const sendInquiry = actionClient
     }
 
     if (!token) {
+      console.log("Missing token");
       return {
         status: "error",
-        messageKey: "api.sendInquiry.tokenRequired",
+        messageKey: "action.sendInquiry.tokenRequired",
         error: {
           code: "BAD_REQUEST",
           details: "Token is required",
@@ -127,10 +129,10 @@ export const sendInquiry = actionClient
         data: response.id,
       };
     } catch (error) {
-      console.error(`Error sending inquiry: ${error}`);
+      console.log(`Error sending inquiry: ${error}`);
       return {
         status: "error",
-        messageKey: "api.sendInquiry.error",
+        messageKey: "action.sendInquiry.error",
         error: {
           code: "INTERNAL_SERVER_ERROR",
           details: error,

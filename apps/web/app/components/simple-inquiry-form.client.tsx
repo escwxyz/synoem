@@ -34,6 +34,8 @@ export const SimpleInquiryForm = ({
   buttonText,
 }: { className?: string; buttonText?: string }) => {
   const t = useTranslations("InquiryFormFields");
+  const tApiErrors = useTranslations("apiErrors");
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -48,13 +50,6 @@ export const SimpleInquiryForm = ({
         onExecute: () => {
           setIsSubmitting(true);
           setErrorMessage(null);
-
-          if (!token || !token.trim()) {
-            setIsSuccess(false);
-            setIsSubmitting(false);
-            setErrorMessage("cloudflareTokenRequired.message");
-            return;
-          }
         },
         onSuccess: (data) => {
           setIsSubmitting(false);
@@ -64,7 +59,15 @@ export const SimpleInquiryForm = ({
               resetFormAndAction();
             }, 1000);
           } else {
-            setErrorMessage(data.data?.messageKey ?? "An error occurred. Please try again."); // TODO: i18n
+            setErrorMessage(
+              data.data?.messageKey
+                ? tApiErrors(data.data.messageKey)
+                : tApiErrors("action.sendInquiry.error"),
+            );
+            setTimeout(() => {
+              setErrorMessage(null);
+              resetFormAndAction();
+            }, 3000);
           }
         },
       },
@@ -82,11 +85,13 @@ export const SimpleInquiryForm = ({
     },
   );
 
+  const { register, setValue } = form;
+
   useEffect(() => {
     if (token) {
-      form.setValue("token", token);
+      setValue("token", token, { shouldValidate: true });
     }
-  }, [token, form]);
+  }, [token, setValue]);
 
   const text = buttonText ?? t("buttons.submit");
 
@@ -112,24 +117,26 @@ export const SimpleInquiryForm = ({
           <EmailField name="email" />
           <PhoneField name="phone" />
           <MessageField name="message" />
-          {process.env.WEB_APP_ENV === "production" && (
-            <>
-              <input
-                type="hidden"
-                {...form.register("token", {
-                  required: t("cloudflareTokenRequired.message"),
-                })}
-              />
-              <Turnstile />
-            </>
-          )}
+
+          <>
+            <input
+              type="hidden"
+              {...register("token", { required: t("cloudflareTokenRequired.message") })}
+            />
+            <Turnstile id="simple-inquiry-form" />
+          </>
+
           <TermsField name="terms" />
           {errorMessage && (
             <div className="mb-4 rounded bg-destructive/10 p-2 text-destructive">
-              {t(errorMessage)}
+              {errorMessage}
             </div>
           )}
-          <Button type="submit" className="w-full" disabled={isSubmitting}>
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={isSubmitting || !form.formState.isValid || !token}
+          >
             {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : text}
           </Button>
         </form>

@@ -20,6 +20,8 @@ const extractPath = async ({ params }: PageProps): Promise<string> => {
   return normalizePath(path, false);
 };
 
+export const dynamic = "force-static";
+
 export async function generateMetadata({ params }: PageProps) {
   const { locale } = await params;
 

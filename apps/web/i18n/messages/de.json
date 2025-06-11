@@ -378,7 +378,7 @@
   "ContactUsForm": {
     "title": "Kontaktiere uns",
     "description": "Wo immer Sie sind, wir sind hier, um Ihnen innerhalb von 24 Stunden zu helfen.",
-    "button": "Kontaktiere uns"
+    "button": "Nachricht senden"
   },
   "PackageQuantityCalculator": {
     "title": "Verpackungskonfiguration & Berechnung",
@@ -433,5 +433,24 @@
     "title": "Ressource nicht gefunden",
     "description": "Die angeforderte Ressource konnte nicht gefunden werden oder die Funktion wird noch entwickelt. Abonnieren Sie unseren Newsletter, um benachrichtigt zu werden, wenn sie fertig ist.",
     "returnHome": "Zurück zur Startseite"
+  },
+  "apiErrors": {
+    "action": {
+      "sendInquiry": {
+        "acceptTerms": "Nutzungsbedingungen müssen akzeptiert werden",
+        "tokenRequired": "Token ist erforderlich",
+        "error": "Ein Fehler ist aufgetreten, während das Senden der Anfrage. Bitte versuchen Sie es erneut."
+      },
+      "subscribeNewsletter": {
+        "emailAlreadySubscribed": "Sie sind bereits abonniert.",
+        "error": "Ein Fehler ist aufgetreten, während das Abonnieren des Newsletters."
+      },
+      "unsubscribeNewsletter": {
+        "invalidToken": "Ungültiges Token",
+        "emailAlreadyUnsubscribed": "Sie sind bereits abbestellt.",
+        "error": "Ein Fehler ist aufgetreten, während das Abbestellen des Newsletters."
+      }
+    },
+    "api": {}
   }
 }
