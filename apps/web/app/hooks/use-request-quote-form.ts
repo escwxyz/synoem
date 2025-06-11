@@ -12,6 +12,7 @@ import type { FormStep } from "../components/inquiry-form/types";
 import type { ProductTypeId } from "@synoem/config";
 import { useAtomValue } from "jotai";
 import { cloudflareTurnstileTokenAtom } from "~/atoms";
+import { useTranslations } from "next-intl";
 
 type FormData = z.infer<typeof inquiryFormSchema>;
 
@@ -24,6 +25,9 @@ export const useRequestQuoteForm = ({
   steps: FormStep[];
   product?: Pick<SolarPanel | PumpController, "modelName" | "id">;
 }) => {
+  const t = useTranslations("InquiryFormFields");
+  const tApiErrors = useTranslations("apiErrors");
+
   if (steps.length === 0) {
     throw new Error("Steps array cannot be empty");
   }
@@ -69,12 +73,6 @@ export const useRequestQuoteForm = ({
 
         form.reset(updatedData as z.infer<typeof currentSchema>);
       } else {
-        if (!token || !token.trim()) {
-          setIsSuccess(false);
-          setIsSubmitting(false);
-          setError("cloudflareTokenRequired.message");
-          return;
-        }
         setIsSubmitting(true);
 
         const response = await action.executeAsync(updatedData as FormData);
@@ -84,8 +82,9 @@ export const useRequestQuoteForm = ({
           setIsSubmitting(false);
         } else {
           setError(
-            response.data?.messageKey ??
-              "An error occurred while submitting the form. Please try again.",
+            response.data?.messageKey
+              ? tApiErrors(response.data.messageKey)
+              : tApiErrors("action.sendInquiry.error"),
           );
           setIsSubmitting(false);
           setIsSuccess(false);

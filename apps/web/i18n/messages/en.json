@@ -446,5 +446,24 @@
     "title": "Resource Not Found",
     "description": "The requested resource could not be found, or the function is still being developed. Subscribe to our newsletter to get notified when it's ready.",
     "returnHome": "Return Home"
+  },
+  "apiErrors": {
+    "action": {
+      "sendInquiry": {
+        "acceptTerms": "Terms and conditions must be accepted",
+        "tokenRequired": "Token is required",
+        "error": "An error occurred while sending the inquiry. Please try again."
+      },
+      "subscribeNewsletter": {
+        "emailAlreadySubscribed": "You are already subscribed to our newsletter.",
+        "error": "An error occurred while subscribing to the newsletter."
+      },
+      "unsubscribeNewsletter": {
+        "invalidToken": "Invalid token",
+        "emailAlreadyUnsubscribed": "You are already unsubscribed from our newsletter.",
+        "error": "An error occurred while unsubscribing from the newsletter."
+      }
+    },
+    "api": {}
   }
 }

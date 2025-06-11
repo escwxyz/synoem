@@ -15,6 +15,8 @@ import { subscribeNewsletter } from "~/actions";
 export const NewsletterInput = () => {
   const t = useTranslations("NewsletterInput");
 
+  const tApiErrors = useTranslations("apiErrors");
+
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -30,13 +32,20 @@ export const NewsletterInput = () => {
 
         onError: (error) => {
           setStatus("error");
-          setErrorMessage(error.error.serverError ?? t("api.error"));
+          setErrorMessage(
+            error.error.serverError ?? tApiErrors("action.subscribeNewsletter.error"),
+          );
+          setTimeout(() => {
+            setErrorMessage(null);
+            setStatus("idle");
+            resetFormAndAction();
+          }, 3000);
         },
 
         onSuccess: ({ data }) => {
           if (data?.status === "error") {
             setStatus("error");
-            setErrorMessage(t(`${data.messageKey}`));
+            setErrorMessage(tApiErrors(`${data.messageKey}`));
             return;
           }
 

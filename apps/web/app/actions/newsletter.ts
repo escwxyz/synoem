@@ -28,7 +28,7 @@ export const subscribeNewsletter = actionClient
       if (existingSubscriber.docs.length > 0) {
         return {
           status: "error",
-          messageKey: "api.createNewsletter.emailAlreadySubscribed",
+          messageKey: "action.subscribeNewsletter.emailAlreadySubscribed",
           error: {
             code: "BAD_REQUEST",
             details: "Email already subscribed",
@@ -56,7 +56,7 @@ export const subscribeNewsletter = actionClient
       console.warn(error);
       return {
         status: "error",
-        messageKey: "api.createNewsletter.error",
+        messageKey: "action.subscribeNewsletter.error",
         error: {
           code: "INTERNAL_SERVER_ERROR",
           details: error,
@@ -66,7 +66,7 @@ export const subscribeNewsletter = actionClient
   });
 
 export const unsubscribeNewsletter = actionClient
-  .schema(unsubscribeNewsletterFormSchema)
+  .inputSchema(unsubscribeNewsletterFormSchema)
   .action(async ({ parsedInput }): Promise<APIResponse<true>> => {
     const { email, token } = parsedInput;
 
@@ -90,7 +90,7 @@ export const unsubscribeNewsletter = actionClient
       if (subscriber.docs.length === 0) {
         return {
           status: "error",
-          messageKey: "api.unsubscribeNewsletter.invalidToken",
+          messageKey: "action.unsubscribeNewsletter.invalidToken",
           error: {
             code: "BAD_REQUEST",
             details: "Invalid token",
@@ -101,7 +101,7 @@ export const unsubscribeNewsletter = actionClient
       if (subscriber.docs.length > 0 && subscriber.docs[0]?.status === "unsubscribed") {
         return {
           status: "error",
-          messageKey: "api.unsubscribeNewsletter.alreadyUnsubscribed",
+          messageKey: "action.unsubscribeNewsletter.emailAlreadyUnsubscribed",
           error: {
             code: "BAD_REQUEST",
             details: "Email already unsubscribed",
@@ -132,7 +132,7 @@ export const unsubscribeNewsletter = actionClient
       console.warn(error);
       return {
         status: "error",
-        messageKey: "api.unsubscribeNewsletter.error",
+        messageKey: "action.unsubscribeNewsletter.error",
         error: {
           code: "INTERNAL_SERVER_ERROR",
           details: error,

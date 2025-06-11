@@ -141,6 +141,7 @@ export const RequestQuoteDesktop = ({
             ) : (
               <form
                 onSubmit={form.handleSubmit(handleNextStep, (errors) => {
+                  // TODO
                   console.log("Form validation errors:", errors);
                 })}
                 className="flex flex-col h-full overflow-y-auto"
@@ -161,17 +162,16 @@ export const RequestQuoteDesktop = ({
                   <div className="mb-4 rounded bg-destructive/10 p-2 text-destructive">{error}</div>
                 )}
                 <div className="flex flex-col gap-4 p-4 pt-2 backdrop-blur-xl bg-background/50">
-                  {process.env.NODE_ENV === "production" && (
-                    <>
-                      <input
-                        type="hidden"
-                        {...form.register("token", {
-                          required: t("cloudflareTokenRequired.message"),
-                        })}
-                      />
-                      <Turnstile />
-                    </>
-                  )}
+                  <>
+                    <input
+                      type="hidden"
+                      {...form.register("token", {
+                        required: t("cloudflareTokenRequired.message"),
+                      })}
+                    />
+                    <Turnstile id="request-quote-form-desktop" />
+                  </>
+
                   <TermsField name="terms" />
                   <div className="flex justify-between border-t pt-4">
                     <Button
@@ -182,7 +182,7 @@ export const RequestQuoteDesktop = ({
                     >
                       <ArrowLeft className="mr-2 h-4 w-4" /> {t("buttons.back")}
                     </Button>
-                    <Button type="submit" disabled={isSubmitting}>
+                    <Button type="submit" disabled={isSubmitting || !form.formState.isValid}>
                       {step < steps.length - 1 ? (
                         <>
                           {t("buttons.next")} <ArrowRight className="ml-2 h-4 w-4" />
