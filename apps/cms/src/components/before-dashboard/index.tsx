@@ -22,6 +22,7 @@ export default function BeforeDashboard() {
             fetch("/next/seed/reset", {
               method: "POST",
               credentials: "include",
+              headers: { "Content-Type": "application/json" },
             }).then((res) => {
               if (!res.ok) throw new Error("An error occurred while resetting database.");
             }),
@@ -32,8 +33,10 @@ export default function BeforeDashboard() {
             },
           );
           setCurrentStep((step) => step + 1);
-        } catch (err: any) {
-          setError(err.message || "An error occurred while resetting database.");
+        } catch (err) {
+          setError(
+            err instanceof Error ? err.message : "An error occurred while resetting database.",
+          );
         } finally {
           setLoading(false);
         }
@@ -50,6 +53,7 @@ export default function BeforeDashboard() {
             fetch("/next/seed/images", {
               method: "POST",
               credentials: "include",
+              headers: { "Content-Type": "application/json" },
             }).then(async (res) => {
               if (!res.ok) throw new Error("An error occurred while seeding images.");
               const data = await res.json();
@@ -62,8 +66,8 @@ export default function BeforeDashboard() {
             },
           );
           setCurrentStep((step) => step + 1);
-        } catch (err: any) {
-          setError(err.message || "An error occurred while seeding images.");
+        } catch (err) {
+          setError(err instanceof Error ? err.message : "An error occurred while seeding images.");
         } finally {
           setLoading(false);
         }
@@ -92,8 +96,10 @@ export default function BeforeDashboard() {
             },
           );
           setCurrentStep((step) => step + 1);
-        } catch (err: any) {
-          setError(err.message || "An error occurred while seeding collections.");
+        } catch (err) {
+          setError(
+            err instanceof Error ? err.message : "An error occurred while seeding collections.",
+          );
         } finally {
           setLoading(false);
         }
@@ -110,6 +116,7 @@ export default function BeforeDashboard() {
             fetch("/next/seed/globals", {
               method: "POST",
               credentials: "include",
+              headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ images }),
             }).then((res) => {
               if (!res.ok) throw new Error("An error occurred while seeding globals.");
@@ -121,8 +128,8 @@ export default function BeforeDashboard() {
             },
           );
           setCurrentStep((step) => step + 1);
-        } catch (err: any) {
-          setError(err.message || "An error occurred while seeding globals.");
+        } catch (err) {
+          setError(err instanceof Error ? err.message : "An error occurred while seeding globals.");
         } finally {
           setLoading(false);
         }
@@ -160,7 +167,6 @@ export default function BeforeDashboard() {
             Reset Steps
           </Button>
         )}
-        {!current && <div className="text-green-600 font-bold">All steps completed!</div>}
       </div>
     </div>
   );

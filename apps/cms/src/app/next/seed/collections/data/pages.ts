@@ -1,4 +1,4 @@
-import { Page } from "@synoem/types";
+import type { Page } from "@synoem/types";
 
 interface GetHomeDataProps {
   logos: {
