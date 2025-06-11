@@ -71,6 +71,8 @@ export async function POST(): Promise<Response> {
     // At this point you should pass in a user, locale, and any other context you need for the Local API
     // const payloadReq = await createLocalReq({ user }, payload);
 
+    const startTime = Date.now();
+
     const [
       industryCoverImage,
       hjtHeroImage,
@@ -370,6 +372,10 @@ export async function POST(): Promise<Response> {
         },
       }),
     ]);
+
+    const endTime = Date.now();
+    const duration = endTime - startTime;
+    console.log(`Images created in ${duration}ms`);
 
     console.log("createdFactoryImage to be used", createdFactoryImage);
 

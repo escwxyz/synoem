@@ -85,7 +85,13 @@ export async function POST(): Promise<Response> {
     // At this point you should pass in a user, locale, and any other context you need for the Local API
     const payloadReq = await createLocalReq({ user }, payload);
 
+    const startTime = Date.now();
+
     await resetDatabase(payload, payloadReq);
+
+    const endTime = Date.now();
+    const duration = endTime - startTime;
+    payload.logger.info(`Database reset in ${duration}ms`);
 
     return Response.json({ success: true });
   } catch (e) {
