@@ -129,7 +129,7 @@ export const SimpleInquiryForm = ({
           <TermsField name="terms" />
           {errorMessage && (
             <div className="mb-4 rounded bg-destructive/10 p-2 text-destructive">
-              {t(errorMessage)}
+              {errorMessage}
             </div>
           )}
           <Button

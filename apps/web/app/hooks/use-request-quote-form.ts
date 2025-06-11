@@ -25,7 +25,6 @@ export const useRequestQuoteForm = ({
   steps: FormStep[];
   product?: Pick<SolarPanel | PumpController, "modelName" | "id">;
 }) => {
-  const t = useTranslations("InquiryFormFields");
   const tApiErrors = useTranslations("apiErrors");
 
   if (steps.length === 0) {

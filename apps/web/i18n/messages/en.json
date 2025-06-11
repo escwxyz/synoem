@@ -391,7 +391,7 @@
   "ContactUsForm": {
     "title": "Contact Us",
     "description": "Wherever you are, we're here to help you within 24 hours.",
-    "button": "Contact Us"
+    "button": "Send Message"
   },
   "PackageQuantityCalculator": {
     "title": "Package Config & Calculation",
