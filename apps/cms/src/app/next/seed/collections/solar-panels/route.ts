@@ -1,16 +1,8 @@
 import { getPayloadClient } from "@synoem/payload/client";
+import { seedImagesRequestSchema } from "../../types";
 import { NextRequest } from "next/server";
 import { headers } from "next/headers";
-import {
-  faqs,
-  getAboutUsData,
-  getHJTSolarPanelData,
-  getHomeData,
-  getTOPConSolarPanelData,
-  privacyPolicyData,
-  termsData,
-} from "./data";
-import { seedImagesRequestSchema } from "../types";
+import { getHJTSolarPanelData, getTOPConSolarPanelData } from "../data";
 
 export async function POST(req: NextRequest): Promise<Response> {
   const payload = await getPayloadClient();
@@ -20,34 +12,26 @@ export async function POST(req: NextRequest): Promise<Response> {
   const { user } = await payload.auth({ headers: requestHeaders });
 
   if (!user) {
-    return new Response("Action forbidden.", { status: 403 });
+    return Response.json({ message: "Action forbidden." }, { status: 403 });
   }
 
   let body: unknown;
   try {
     body = await req.json();
   } catch {
-    return new Response(JSON.stringify({ message: "Invalid JSON" }), { status: 400 });
+    return Response.json({ message: "Invalid JSON" }, { status: 400 });
   }
 
   const validationResult = seedImagesRequestSchema.safeParse(body);
   if (!validationResult.success) {
-    return new Response(
-      JSON.stringify({ message: "Invalid request body", errors: validationResult.error }),
+    return Response.json(
+      { message: "Invalid request body", errors: validationResult.error },
       { status: 400 },
     );
   }
   const { images } = validationResult.data;
 
   try {
-    // Create a Payload request object to pass to the Local API for transactions
-    // At this point you should pass in a user, locale, and any other context you need for the Local API
-    //   const payloadReq = await createLocalReq({ user }, payload);
-
-    //   await resetDatabase(payload, payloadReq);
-
-    const startTime = Date.now();
-
     const industry = await payload.create({
       collection: "industries",
       data: {
@@ -62,138 +46,6 @@ export async function POST(req: NextRequest): Promise<Response> {
       },
       locale: "en",
     });
-
-    payload.logger.info("Industry created");
-
-    const createFaqs = faqs.map((faq) =>
-      payload.create({
-        collection: "faqs",
-        data: faq,
-        locale: "en",
-        context: {
-          skipRevalidation: true,
-        },
-      }),
-    );
-
-    const createdFaqs = await Promise.all(createFaqs);
-
-    payload.logger.info("Faqs created");
-
-    const companyPage = await payload.create({
-      collection: "pages",
-      data: {
-        title: "Company",
-        slug: "company",
-        layout: [
-          {
-            blockType: "contentBlock",
-            columns: [
-              {
-                size: "full",
-                richText: {
-                  root: {
-                    type: "root",
-                    children: [
-                      {
-                        type: "paragraph",
-                        version: 1,
-                        children: [
-                          {
-                            type: "text",
-                            text: "Company description",
-                          },
-                        ],
-                      },
-                    ],
-                    direction: "ltr",
-                    format: "left",
-                    indent: 0,
-                    version: 1,
-                  },
-                },
-              },
-            ],
-          },
-        ],
-      },
-      locale: "en",
-      context: {
-        skipRevalidation: true,
-      },
-    });
-
-    payload.logger.info("Company page created");
-
-    await payload.create({
-      collection: "pages",
-      data: getAboutUsData(companyPage.id),
-      locale: "en",
-      context: {
-        skipRevalidation: true,
-      },
-    });
-
-    payload.logger.info("About us page created");
-
-    const [termsPage, privacyPolicyPage] = await Promise.all([
-      payload.create({
-        collection: "pages",
-        data: {
-          ...termsData,
-          _status: "published",
-        },
-        locale: "en",
-        context: {
-          skipRevalidation: true,
-        },
-      }),
-      payload.create({
-        collection: "pages",
-        data: {
-          ...privacyPolicyData,
-          _status: "published",
-        },
-        locale: "en",
-        context: {
-          skipRevalidation: true,
-        },
-      }),
-    ]);
-
-    payload.logger.info("Terms and privacy policy pages created");
-
-    await payload.create({
-      collection: "pages",
-      data: {
-        ...getHomeData({
-          logos: {
-            ce: images.createdCeLogo,
-            mcs: images.createdMcsLogo,
-            ul: images.createdUlLogo,
-          },
-          heros: [
-            images.createdHeroContent1,
-            images.createdHeroContent2,
-            images.createdHeroContent3,
-            images.createdHeroContent4,
-            images.createdHeroContent5,
-            images.createdHeroContent6,
-          ],
-          faqs: createdFaqs.map((faq) => faq.id),
-        }),
-        _status: "published",
-      },
-      locale: "en",
-      context: {
-        skipRevalidation: true,
-      },
-    });
-
-    payload.logger.info("Home page created");
-
-    payload.logger.info("Pages created");
-
     const [hjtCategory, topconCategory] = await Promise.all([
       payload.create({
         collection: "solar-panel-categories",
@@ -224,9 +76,6 @@ export async function POST(req: NextRequest): Promise<Response> {
         locale: "en",
       }),
     ]);
-
-    payload.logger.info("Solar panel categories created");
-
     const [created962PackingConfig, created888PackingConfig] = await Promise.all([
       payload.create({
         collection: "packaging-configs",
@@ -266,9 +115,6 @@ export async function POST(req: NextRequest): Promise<Response> {
         },
       }),
     ]);
-
-    payload.logger.info("Packaging configs created");
-
     const warranty = await payload.create({
       collection: "warranties",
       data: {
@@ -317,9 +163,6 @@ export async function POST(req: NextRequest): Promise<Response> {
         },
       },
     });
-
-    payload.logger.info("Warranty created");
-
     await payload.create({
       collection: "solar-panels",
       data: {
@@ -373,16 +216,11 @@ export async function POST(req: NextRequest): Promise<Response> {
         skipRevalidation: true,
       },
     });
-
     payload.logger.info("Solar panels created");
-
-    const endTime = Date.now();
-    const duration = endTime - startTime;
-    payload.logger.info(`Collections created in ${duration}ms`);
 
     return Response.json({ success: true });
   } catch (e) {
     payload.logger.error({ err: e, message: "Error seeding data" });
-    return new Response("Error seeding data.", { status: 500 });
+    return Response.json({ message: "Error seeding data." }, { status: 500 });
   }
 }

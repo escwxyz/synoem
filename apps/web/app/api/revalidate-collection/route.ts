@@ -11,14 +11,14 @@ export async function POST(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const secret = searchParams.get("secret");
   if (secret !== process.env.REVALIDATE_SECRET) {
-    return new Response(JSON.stringify({ message: "Invalid secret" }), { status: 401 });
+    return Response.json({ message: "Invalid secret" }, { status: 401 });
   }
 
   let body: unknown;
   try {
     body = await req.json();
   } catch {
-    return new Response(JSON.stringify({ message: "Invalid JSON" }), { status: 400 });
+    return Response.json({ message: "Invalid JSON" }, { status: 400 });
   }
 
   if (
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
     !("type" in body) ||
     !("slug" in body)
   ) {
-    return new Response(JSON.stringify({ message: "Invalid body" }), { status: 400 });
+    return Response.json({ message: "Invalid body" }, { status: 400 });
   }
 
   const { locale, type, slug } = body as unknown as RevalidateCollectionBody;
@@ -49,11 +49,11 @@ export async function POST(req: NextRequest) {
   try {
     await Promise.all([revalidateTag(collectionTag), revalidateTag(collectionsListTag)]);
 
-    return new Response(
-      JSON.stringify({ revalidated: true, tags: [collectionTag, collectionsListTag] }),
+    return Response.json(
+      { revalidated: true, tags: [collectionTag, collectionsListTag] },
       { status: 200 },
     );
-  } catch (error) {
-    return new Response(JSON.stringify({ message: "Error revalidating" }), { status: 500 });
+  } catch {
+    return Response.json({ message: "Error revalidating" }, { status: 500 });
   }
 }

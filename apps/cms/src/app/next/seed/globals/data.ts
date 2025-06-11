@@ -360,7 +360,7 @@ export const footerData: Omit<Footer, "id" | "updatedAt" | "createdAt"> = {
           {
             link: {
               type: "relative",
-              label: "Downlaods",
+              label: "Downloads",
               relative: "/downloads",
             },
           },

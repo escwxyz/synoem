@@ -85,8 +85,8 @@ export default function BeforeDashboard() {
       },
     },
     {
-      label: "Seed Collections",
-      loadingLabel: "Seeding collections...",
+      label: "Seed Pages",
+      loadingLabel: "Seeding pages...",
       handler: async () => {
         setLoading(true);
         setError(null);
@@ -97,24 +97,59 @@ export default function BeforeDashboard() {
         }
         try {
           toast.promise(
-            fetch("/next/seed/collections", {
+            fetch("/next/seed/collections/pages", {
               method: "POST",
               credentials: "include",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ images }),
             }).then((res) => {
-              if (!res.ok) throw new Error("An error occurred while seeding collections.");
+              if (!res.ok) throw new Error("An error occurred while seeding pages.");
             }),
             {
-              loading: "Seeding collections...",
-              success: "Collections seeded successfully.",
-              error: "An error occurred while seeding collections.",
+              loading: "Seeding pages...",
+              success: "Pages seeded successfully.",
+              error: "An error occurred while seeding pages.",
+            },
+          );
+          setCurrentStep((step) => step + 1);
+        } catch (err) {
+          setError(err instanceof Error ? err.message : "An error occurred while seeding pages.");
+        } finally {
+          setLoading(false);
+        }
+      },
+    },
+    {
+      label: "Seed Solar Panels",
+      loadingLabel: "Seeding solar panels...",
+      handler: async () => {
+        setLoading(true);
+        setError(null);
+        if (!images) {
+          setError("Images not seeded yet.");
+          setLoading(false);
+          return;
+        }
+        try {
+          toast.promise(
+            fetch("/next/seed/collections/solar-panels", {
+              method: "POST",
+              credentials: "include",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ images }),
+            }).then((res) => {
+              if (!res.ok) throw new Error("An error occurred while seeding solar panels.");
+            }),
+            {
+              loading: "Seeding solar panels...",
+              success: "Solar panels seeded successfully.",
+              error: "An error occurred while seeding solar panels.",
             },
           );
           setCurrentStep((step) => step + 1);
         } catch (err) {
           setError(
-            err instanceof Error ? err.message : "An error occurred while seeding collections.",
+            err instanceof Error ? err.message : "An error occurred while seeding solar panels.",
           );
         } finally {
           setLoading(false);

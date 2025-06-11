@@ -41,8 +41,6 @@ async function fetchFileByURL(url: string): Promise<File> {
     const data = await res.arrayBuffer();
     const name = url.split("/").pop() || `file-${Date.now()}`;
 
-    console.log("File fetched", name);
-
     return {
       name,
       data: Buffer.from(data),
@@ -64,16 +62,10 @@ export async function POST(): Promise<Response> {
   const { user } = await payload.auth({ headers: requestHeaders });
 
   if (!user) {
-    return new Response("Action forbidden.", { status: 403 });
+    return Response.json({ message: "Action forbidden." }, { status: 403 });
   }
 
   try {
-    // Create a Payload request object to pass to the Local API for transactions
-    // At this point you should pass in a user, locale, and any other context you need for the Local API
-    // const payloadReq = await createLocalReq({ user }, payload);
-
-    const startTime = Date.now();
-
     const [
       industryCoverImage,
       hjtHeroImage,
@@ -374,12 +366,6 @@ export async function POST(): Promise<Response> {
       }),
     ]);
 
-    const endTime = Date.now();
-    const duration = endTime - startTime;
-    console.log(`Images created in ${duration}ms`);
-
-    console.log("createdFactoryImage to be used", createdFactoryImage);
-
     payload.logger.info("Images created");
 
     const responseBody: ResponseBody = {
@@ -412,6 +398,6 @@ export async function POST(): Promise<Response> {
     return Response.json(responseBody);
   } catch (e) {
     payload.logger.error({ err: e, message: "Error seeding data" });
-    return new Response("Error seeding data.", { status: 500 });
+    return Response.json({ message: "Error seeding data." }, { status: 500 });
   }
 }
