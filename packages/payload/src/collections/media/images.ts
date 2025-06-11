@@ -1,6 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { anyone } from "../../access";
-import { generateBlurDataUrl } from "../../hooks";
+// import { generateBlurDataUrl } from "../../hooks";
 
 export const Images: CollectionConfig = {
   slug: "images",
@@ -41,6 +41,6 @@ export const Images: CollectionConfig = {
     mimeTypes: ["image/*"],
   },
   hooks: {
-    beforeChange: [generateBlurDataUrl],
+    // beforeChange: [generateBlurDataUrl],
   },
 };
