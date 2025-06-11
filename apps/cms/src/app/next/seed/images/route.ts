@@ -1,6 +1,7 @@
 import type { File } from "payload";
 import { getPayloadClient } from "@synoem/payload/client";
 import { headers } from "next/headers";
+import { ResponseBody } from "../types";
 
 export const maxDuration = 60;
 
@@ -381,7 +382,7 @@ export async function POST(): Promise<Response> {
 
     payload.logger.info("Images created");
 
-    return Response.json({
+    const responseBody: ResponseBody = {
       success: true,
       images: {
         createdIndustryCoverImage: createdIndustryCoverImage.id,
@@ -406,7 +407,9 @@ export async function POST(): Promise<Response> {
         createdHeroContent5: createdHeroContent5.id,
         createdHeroContent6: createdHeroContent6.id,
       },
-    });
+    };
+
+    return Response.json(responseBody);
   } catch (e) {
     payload.logger.error({ err: e, message: "Error seeding data" });
     return new Response("Error seeding data.", { status: 500 });

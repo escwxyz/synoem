@@ -1,5 +1,6 @@
 "use client";
 
+import { ImageIds, responseBodySchema } from "@/app/next/seed/types";
 import { Button, toast } from "@payloadcms/ui";
 import { Banner } from "@payloadcms/ui/elements/Banner";
 import React, { useState } from "react";
@@ -8,7 +9,7 @@ export default function BeforeDashboard() {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<ImageIds | null>(null);
 
   const steps = [
     {
@@ -48,6 +49,11 @@ export default function BeforeDashboard() {
       handler: async () => {
         setLoading(true);
         setError(null);
+        if (images) {
+          setError("Images already seeded. Please reset steps.");
+          setLoading(false);
+          return;
+        }
         try {
           toast.promise(
             fetch("/next/seed/images", {
@@ -57,7 +63,12 @@ export default function BeforeDashboard() {
             }).then(async (res) => {
               if (!res.ok) throw new Error("An error occurred while seeding images.");
               const data = await res.json();
-              setImages(data.images);
+              const validationResult = responseBodySchema.safeParse(data);
+              const validData = validationResult.data;
+              if (!validData) {
+                throw new Error("Invalid response body");
+              }
+              setImages(validData.images);
             }),
             {
               loading: "Seeding images...",
@@ -79,6 +90,11 @@ export default function BeforeDashboard() {
       handler: async () => {
         setLoading(true);
         setError(null);
+        if (!images) {
+          setError("Images not seeded yet.");
+          setLoading(false);
+          return;
+        }
         try {
           toast.promise(
             fetch("/next/seed/collections", {
@@ -111,6 +127,11 @@ export default function BeforeDashboard() {
       handler: async () => {
         setLoading(true);
         setError(null);
+        if (!images) {
+          setError("Images not seeded yet.");
+          setLoading(false);
+          return;
+        }
         try {
           toast.promise(
             fetch("/next/seed/globals", {

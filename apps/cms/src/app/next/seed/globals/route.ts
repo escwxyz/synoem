@@ -2,12 +2,12 @@ import { getPayloadClient } from "@synoem/payload/client";
 import { headers } from "next/headers";
 import { NextRequest } from "next/server";
 import { footerData, getHeaderData } from "./data";
+import { seedImagesRequestSchema } from "../types";
 
 export async function POST(req: NextRequest): Promise<Response> {
   const payload = await getPayloadClient();
   const requestHeaders = await headers();
 
-  // Authenticate by passing request headers
   const { user } = await payload.auth({ headers: requestHeaders });
 
   if (!user) {
@@ -21,39 +21,16 @@ export async function POST(req: NextRequest): Promise<Response> {
     return new Response(JSON.stringify({ message: "Invalid JSON" }), { status: 400 });
   }
 
-  const { images } = body as {
-    images: {
-      createdIndustryCoverImage: string;
-      createdHjtHeroImage: string;
-      createdTopconHeroImage: string;
-      createdSolarPanel1HeroImage: string;
-      createdSolarPanel2HeroImage: string;
-      createdLogo: string;
-      createdOpenGraphImage: string;
-      createdFactoryImage: string;
-      createdSolarPanel1ProductImage: string;
-      createdSolarPanel2ProductImage: string;
-      createdSolarPanel3ProductImage: string;
-      createdSolarPanel4ProductImage: string;
-      createdCeLogo: string;
-      createdUlLogo: string;
-      createdMcsLogo: string;
-      createdHeroContent1: string;
-      createdHeroContent2: string;
-      createdHeroContent3: string;
-      createdHeroContent4: string;
-      createdHeroContent5: string;
-      createdHeroContent6: string;
-    };
-  };
+  const validationResult = seedImagesRequestSchema.safeParse(body);
+  if (!validationResult.success) {
+    return new Response(
+      JSON.stringify({ message: "Invalid request body", errors: validationResult.error }),
+      { status: 400 },
+    );
+  }
+  const { images } = validationResult.data;
 
   try {
-    // Create a Payload request object to pass to the Local API for transactions
-    // At this point you should pass in a user, locale, and any other context you need for the Local API
-    //   const payloadReq = await createLocalReq({ user }, payload);
-
-    //   await resetDatabase(payload, payloadReq);
-
     const startTime = Date.now();
     payload.logger.info("Seeding globals...");
 

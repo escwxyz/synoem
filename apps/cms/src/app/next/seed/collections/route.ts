@@ -10,6 +10,7 @@ import {
   privacyPolicyData,
   termsData,
 } from "./data";
+import { seedImagesRequestSchema } from "../types";
 
 export async function POST(req: NextRequest): Promise<Response> {
   const payload = await getPayloadClient();
@@ -29,31 +30,14 @@ export async function POST(req: NextRequest): Promise<Response> {
     return new Response(JSON.stringify({ message: "Invalid JSON" }), { status: 400 });
   }
 
-  const { images } = body as {
-    images: {
-      createdIndustryCoverImage: string;
-      createdHjtHeroImage: string;
-      createdTopconHeroImage: string;
-      createdSolarPanel1HeroImage: string;
-      createdSolarPanel2HeroImage: string;
-      createdLogo: string;
-      createdOpenGraphImage: string;
-      createdFactoryImage: string;
-      createdSolarPanel1ProductImage: string;
-      createdSolarPanel2ProductImage: string;
-      createdSolarPanel3ProductImage: string;
-      createdSolarPanel4ProductImage: string;
-      createdCeLogo: string;
-      createdUlLogo: string;
-      createdMcsLogo: string;
-      createdHeroContent1: string;
-      createdHeroContent2: string;
-      createdHeroContent3: string;
-      createdHeroContent4: string;
-      createdHeroContent5: string;
-      createdHeroContent6: string;
-    };
-  };
+  const validationResult = seedImagesRequestSchema.safeParse(body);
+  if (!validationResult.success) {
+    return new Response(
+      JSON.stringify({ message: "Invalid request body", errors: validationResult.error }),
+      { status: 400 },
+    );
+  }
+  const { images } = validationResult.data;
 
   try {
     // Create a Payload request object to pass to the Local API for transactions
@@ -67,8 +51,8 @@ export async function POST(req: NextRequest): Promise<Response> {
     const industry = await payload.create({
       collection: "industries",
       data: {
-        title: "Renewable Energy Test",
-        slug: "renewable-energy-test",
+        title: "Renewable Energy",
+        slug: "renewable-energy",
         description:
           "Renewable energy is a type of energy that is generated from natural resources that are replenished by the sun, wind, water, and geothermal heat.",
         coverImage: images.createdIndustryCoverImage,
