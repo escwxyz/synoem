@@ -64,7 +64,7 @@ export const HeroParallax = ({
       ref={ref}
       className="py-10 overflow-hidden flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
       style={{
-        height: `${(rows.length + 1) * 100}vh`,
+        height: `${rows.length * 100}vh`,
       }}
     >
       <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full left-0 top-0 z-10">

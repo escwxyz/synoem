@@ -1,142 +1,228 @@
 "use client";
 
+import { ImageIds, responseBodySchema } from "@/app/next/seed/types";
 import { Button, toast } from "@payloadcms/ui";
 import { Banner } from "@payloadcms/ui/elements/Banner";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 
 export default function BeforeDashboard() {
   const [currentStep, setCurrentStep] = useState<number>(0);
-  const [loadingStep, setLoadingStep] = useState<number | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [images, setImages] = useState<ImageIds | null>(null);
 
-  const [images, setImages] = useState<string[]>([]);
-
-  const steps: {
-    label: string;
-    endpoint: string;
-    success: string;
-    getBody?: () => Promise<any> | any;
-    onSuccess?: (data: any) => void;
-  }[] = [
+  const steps = [
     {
-      label: "Reset Database",
-      endpoint: "/next/seed/reset",
-      success: "Database reset successfully.",
+      label: "Start Seeding",
+      loadingLabel: "Resetting database...",
+      handler: async () => {
+        setLoading(true);
+        setError(null);
+        try {
+          toast.promise(
+            fetch("/next/seed/reset", {
+              method: "POST",
+              credentials: "include",
+              headers: { "Content-Type": "application/json" },
+            }).then((res) => {
+              if (!res.ok) throw new Error("An error occurred while resetting database.");
+            }),
+            {
+              loading: "Resetting database...",
+              success: "Database reset successfully.",
+              error: "An error occurred while resetting database.",
+            },
+          );
+          setCurrentStep((step) => step + 1);
+        } catch (err) {
+          setError(
+            err instanceof Error ? err.message : "An error occurred while resetting database.",
+          );
+        } finally {
+          setLoading(false);
+        }
+      },
     },
     {
       label: "Seed Images",
-      endpoint: "/next/seed/images",
-      success: "Images seeded successfully.",
-      onSuccess: setImages,
+      loadingLabel: "Seeding images...",
+      handler: async () => {
+        setLoading(true);
+        setError(null);
+        if (images) {
+          setError("Images already seeded. Please reset steps.");
+          setLoading(false);
+          return;
+        }
+        try {
+          toast.promise(
+            fetch("/next/seed/images", {
+              method: "POST",
+              credentials: "include",
+              headers: { "Content-Type": "application/json" },
+            }).then(async (res) => {
+              if (!res.ok) throw new Error("An error occurred while seeding images.");
+              const data = await res.json();
+              const validationResult = responseBodySchema.safeParse(data);
+              const validData = validationResult.data;
+              if (!validData) {
+                throw new Error("Invalid response body");
+              }
+              setImages(validData.images);
+            }),
+            {
+              loading: "Seeding images...",
+              success: "Images seeded successfully.",
+              error: "An error occurred while seeding images.",
+            },
+          );
+          setCurrentStep((step) => step + 1);
+        } catch (err) {
+          setError(err instanceof Error ? err.message : "An error occurred while seeding images.");
+        } finally {
+          setLoading(false);
+        }
+      },
     },
     {
       label: "Seed Pages",
-      endpoint: "/next/seed/pages",
-      success: "Pages seeded successfully.",
-      getBody: () => ({ images }),
+      loadingLabel: "Seeding pages...",
+      handler: async () => {
+        setLoading(true);
+        setError(null);
+        if (!images) {
+          setError("Images not seeded yet.");
+          setLoading(false);
+          return;
+        }
+        try {
+          toast.promise(
+            fetch("/next/seed/collections/pages", {
+              method: "POST",
+              credentials: "include",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ images }),
+            }).then((res) => {
+              if (!res.ok) throw new Error("An error occurred while seeding pages.");
+            }),
+            {
+              loading: "Seeding pages...",
+              success: "Pages seeded successfully.",
+              error: "An error occurred while seeding pages.",
+            },
+          );
+          setCurrentStep((step) => step + 1);
+        } catch (err) {
+          setError(err instanceof Error ? err.message : "An error occurred while seeding pages.");
+        } finally {
+          setLoading(false);
+        }
+      },
     },
-    // Add more steps as needed
+    {
+      label: "Seed Solar Panels",
+      loadingLabel: "Seeding solar panels...",
+      handler: async () => {
+        setLoading(true);
+        setError(null);
+        if (!images) {
+          setError("Images not seeded yet.");
+          setLoading(false);
+          return;
+        }
+        try {
+          toast.promise(
+            fetch("/next/seed/collections/solar-panels", {
+              method: "POST",
+              credentials: "include",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ images }),
+            }).then((res) => {
+              if (!res.ok) throw new Error("An error occurred while seeding solar panels.");
+            }),
+            {
+              loading: "Seeding solar panels...",
+              success: "Solar panels seeded successfully.",
+              error: "An error occurred while seeding solar panels.",
+            },
+          );
+          setCurrentStep((step) => step + 1);
+        } catch (err) {
+          setError(
+            err instanceof Error ? err.message : "An error occurred while seeding solar panels.",
+          );
+        } finally {
+          setLoading(false);
+        }
+      },
+    },
+    {
+      label: "Seed Globals",
+      loadingLabel: "Seeding global...",
+      handler: async () => {
+        setLoading(true);
+        setError(null);
+        if (!images) {
+          setError("Images not seeded yet.");
+          setLoading(false);
+          return;
+        }
+        try {
+          toast.promise(
+            fetch("/next/seed/globals", {
+              method: "POST",
+              credentials: "include",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ images }),
+            }).then((res) => {
+              if (!res.ok) throw new Error("An error occurred while seeding globals.");
+            }),
+            {
+              loading: "Seeding globals...",
+              success: "Globals seeded successfully.",
+              error: "An error occurred while seeding globals.",
+            },
+          );
+          setCurrentStep((step) => step + 1);
+        } catch (err) {
+          setError(err instanceof Error ? err.message : "An error occurred while seeding globals.");
+        } finally {
+          setLoading(false);
+        }
+      },
+    },
   ];
 
-  // const handleSeed = useCallback(
-  //   (index: number) => {
-  //     setLoadingStep(index);
-  //     setError(null);
-
-  //     if (!process.env.NEXT_PUBLIC_S3_ENDPOINT || !process.env.NEXT_PUBLIC_S3_BUCKET_NAME) {
-  //       setError("S3_ENDPOINT and S3_BUCKET_NAME must be set");
-  //       setLoadingStep(null);
-  //       return;
-  //     }
-
-  //     const { endpoint, success, getBody, onSuccess } = steps[index] || {};
-
-  //     if (!endpoint) {
-  //       setError("Invalid endpoint");
-  //       setLoadingStep(null);
-  //       return;
-  //     }
-
-  //     try {
-  //       const result = toast.promise(
-  //         fetch(endpoint, {
-  //           method: "POST",
-  //           credentials: "include",
-  //           headers: { "Content-Type": "application/json" },
-  //           ...(getBody && { body: JSON.stringify(getBody()) }),
-  //         }).then((res) => res.json()),
-  //         { loading: "Seeding...", success: "Success!", error: "Error!" },
-  //       );
-
-  //       if (onSuccess) onSuccess(result.images);
-
-  //       setCurrentStep(index + 1);
-
-  //       return true;
-  //     } catch (err) {}
-
-  //     try {
-  //       toast.promise(
-  //         fetch(endpoint, {
-  //           method: "POST",
-  //           credentials: "include",
-  //           headers: { "Content-Type": "application/json" },
-  //           ...(getBody && { body: JSON.stringify(getBody()) }),
-  //         }).then(async (res) => {
-  //           if (res.ok) {
-  //             setCurrentStep(index + 1);
-  //             return true;
-  //           } else {
-  //             // Try to extract error message from response
-  //             let msg = "An error occurred while seeding.";
-  //             try {
-  //               const data = await res.json();
-  //               if (data?.error) msg = data.error;
-  //             } catch {}
-  //             throw new Error(msg);
-  //           }
-  //         }),
-  //         {
-  //           loading: `Running: ${steps[index]?.label}...`,
-  //           success: success,
-  //           error: (err: any) => {
-  //             setError(err.message || "An error occurred while seeding.");
-  //             return err.message || "An error occurred while seeding.";
-  //           },
-  //         },
-  //       );
-  //     } catch (err) {
-  //       setError(typeof err === "string" ? err : "An error occurred while seeding.");
-  //     } finally {
-  //       setLoadingStep(null);
-  //     }
-  //   },
-  //   [steps],
-  // );
+  const current = steps[currentStep];
 
   return (
-    <div className="flex flex-col justify-between p-4 items-center gap-4">
-      <Banner type="info">
-        <h4>Welcome to your dashboard!</h4>
-        <span>
-          Use the following buttons to seed some predefined data. Each step must be completed in
-          order.
-        </span>
-      </Banner>
-      {error && (
-        <Banner type="error" className="my-4">
-          {error}
+    <div className="flex p-4 items-start justify-between gap-4">
+      <div className="flex flex-col gap-4">
+        <Banner type="info">
+          <h4 className="mb-4">Welcome to your dashboard!</h4>
+          <span className="text-sm">
+            Use the right button to seed some predefined data. Each step must be completed in order.
+          </span>
         </Banner>
-      )}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-        {steps.map((step, index) => (
+        {error && (
+          <Banner type="error" className="my-4">
+            {error}
+          </Banner>
+        )}
+      </div>
+      <div className="flex flex-col gap-4">
+        {current && (
           <SeedButton
-            key={index}
-            label={loadingStep === index ? "Seeding..." : step.label}
-            onClick={() => console.log(index)}
-            disabled={currentStep !== index || loadingStep !== null}
+            label={loading ? current.loadingLabel : current.label}
+            onClick={current.handler}
+            disabled={loading}
           />
-        ))}
+        )}
+        {!current && (
+          <Button buttonStyle="primary" onClick={() => setCurrentStep(0)}>
+            Reset Steps
+          </Button>
+        )}
       </div>
     </div>
   );
@@ -146,10 +232,8 @@ const SeedButton = ({
   label,
   onClick,
   disabled,
-}: { label: string; onClick: () => void; disabled: boolean }) => {
-  return (
-    <Button buttonStyle="primary" onClick={onClick} disabled={disabled}>
-      {label}
-    </Button>
-  );
-};
+}: { label: string; onClick: () => void; disabled: boolean }) => (
+  <Button buttonStyle="primary" onClick={onClick} disabled={disabled}>
+    {label}
+  </Button>
+);

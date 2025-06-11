@@ -32,7 +32,6 @@ import {
   Industries,
   Faqs,
 } from "./collections";
-import sharp from "sharp";
 import { sendNewsletterConfirmationEmail } from "./tasks/send-newsletter-confirmation-email";
 import { UNIQUE_PATH_COLLECTIONS } from "./fields";
 
@@ -216,7 +215,6 @@ export default buildConfig({
       return defaultJobsCollection;
     },
   },
-  sharp,
   telemetry: false,
   folders: {
     debug: process.env.CMS_APP_ENV === "development",

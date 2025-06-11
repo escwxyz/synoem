@@ -194,7 +194,7 @@ export const getTOPConSolarPanelData = (
     },
     variants: [
       {
-        sku: "SKT425M10-108D6-BLACK",
+        sku: "SKT425-460M10-108D6-BLACK",
         gallery: [props.variants.gallery[0] ?? "", props.variants.gallery[1] ?? ""],
         options: [
           {
@@ -205,7 +205,7 @@ export const getTOPConSolarPanelData = (
         ],
       },
       {
-        sku: "SKT425M10-108D6-SILVER",
+        sku: "SKT425-460M10-108D6-SILVER",
         gallery: [props.variants.gallery[2] ?? "", props.variants.gallery[3] ?? ""],
         options: [
           {
@@ -301,7 +301,7 @@ export const getHJTSolarPanelData = (
     cellDesc: "HJT 18BB 182×105mm (2×54pcs)",
     cellLength: 182,
     cellWidth: 105,
-    cellCount: 104,
+    cellCount: 108,
     glassType: "bifacial",
     bifaciality: 70,
     glassDesc: "AR Coated 1.6+1.6 mm tempered glass",
@@ -336,26 +336,26 @@ export const getHJTSolarPanelData = (
         {
           pmax: 505,
           efficiency: 22.72,
-          vmp: 34.28,
-          imp: 14.74,
-          voc: 38.5,
-          isc: 14.14,
+          vmp: 34.49,
+          imp: 14.65,
+          voc: 41.82,
+          isc: 15.47,
         },
         {
           pmax: 510,
           efficiency: 22.95,
-          vmp: 34.46,
-          imp: 14.82,
-          voc: 38.7,
-          isc: 14.23,
+          vmp: 34.61,
+          imp: 14.74,
+          voc: 41.97,
+          isc: 15.52,
         },
         {
           pmax: 515,
           efficiency: 23.17,
-          vmp: 34.64,
-          imp: 14.9,
-          voc: 38.9,
-          isc: 14.31,
+          vmp: 34.74,
+          imp: 14.83,
+          voc: 42.12,
+          isc: 15.57,
         },
       ],
     },
@@ -372,7 +372,7 @@ export const getHJTSolarPanelData = (
     },
     variants: [
       {
-        sku: "SKT500M10-108D4-BLACK",
+        sku: "SKT500-515M10-108D4-BLACK",
         gallery: [props.variants.gallery[0] ?? "", props.variants.gallery[1] ?? ""],
         options: [
           {
@@ -383,7 +383,7 @@ export const getHJTSolarPanelData = (
         ],
       },
       {
-        sku: "SKT500M10-108D4-SILVER",
+        sku: "SKT500-515M10-108D4-SILVER",
         gallery: [props.variants.gallery[2] ?? "", props.variants.gallery[3] ?? ""],
         options: [
           {

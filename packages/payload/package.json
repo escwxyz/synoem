@@ -27,8 +27,7 @@
     "@synoem/utils": "workspace:*",
     "lucide-static": "^0.513.0",
     "payload": "catalog:",
-    "react": "catalog:",
-    "sharp": "^0.34.2"
+    "react": "catalog:"
   },
   "devDependencies": {
     "@types/node": "catalog:",
