@@ -1,3 +1,5 @@
+// TODO: divide into multiple calls as Vercel free tier has only 60s execution time
+
 import type { CollectionSlug, Payload, PayloadRequest, File, GlobalSlug } from "payload";
 import { faqs } from "./data/faqs";
 import { getAboutUsData, getHomeData } from "./data/pages";
