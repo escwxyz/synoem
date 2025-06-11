@@ -64,6 +64,3 @@ export default withNextIntl(withBundleAnalyzer(nextConfig));
 
 import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 initOpenNextCloudflareForDev();
-
-// Just for debugging
-console.log("ENV DUMP", process.env);
