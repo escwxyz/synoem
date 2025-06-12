@@ -6,3 +6,4 @@ export * from "./mobile-navigation";
 export * from "./scroll-lock";
 export * from "./show-in-header";
 export * from "./request-quote-mobile-drawer";
+export * from "./desktop-navigation";

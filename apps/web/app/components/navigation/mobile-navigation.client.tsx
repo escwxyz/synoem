@@ -23,6 +23,7 @@ import { useAtom, useSetAtom } from "jotai";
 import { useScrollLock } from "~/hooks";
 import dynamic from "next/dynamic";
 import { ThemeSwitcher } from "~/components/theme-switcher.client";
+import { MenuLink } from "./menu-link.client";
 
 const RequestQuoteButton = dynamic(
   () => import("~/components/request-quote-button").then((mod) => mod.RequestQuoteButton),
@@ -166,28 +167,6 @@ const MobileMenu = (props: {
   return createPortal(<AnimatePresence>{menuContent}</AnimatePresence>, document.body);
 };
 
-function MenuLink({ href, openInNewTab, children, className }: MenuLinkProps) {
-  const isExternal = href.startsWith("http");
-  if (isExternal || openInNewTab) {
-    return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={cn("flex items-center justify-between", className)}
-      >
-        {children}
-        <ExternalLinkIcon className="size-4" />
-      </a>
-    );
-  }
-  return (
-    <Link href={href} className={className}>
-      {children}
-    </Link>
-  );
-}
-
 type MenuExpandableProps = {
   title: string;
   icon?: React.ReactNode;
@@ -253,7 +232,11 @@ function MobileMenuItem({ item }: MenuItemProps) {
     const linkConfig = getLinkConfig(item.link);
     return (
       <div className="border-b border-muted space-y-2 p-2 w-full">
-        <MenuLink href={linkConfig?.href || "#"} openInNewTab={linkConfig?.openInNewTab}>
+        <MenuLink
+          href={linkConfig?.href || "#"}
+          openInNewTab={linkConfig?.openInNewTab}
+          className="w-full"
+        >
           {item.text}
         </MenuLink>
       </div>
