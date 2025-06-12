@@ -110,7 +110,7 @@ export const RequestQuoteMobile = ({
             <DrawerTitle className="text-center">{t("requestQuote")}</DrawerTitle>
             <DrawerDescription>{t("description")}</DrawerDescription>
           </DrawerHeader>
-          <div className="p-4">
+          <div className="p-2">
             <FormStepIndicator
               style="progress"
               steps={steps.map((step) => ({ id: step.id, title: step.title ?? "" }))}

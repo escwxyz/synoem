@@ -5,7 +5,7 @@ import type { MenuLinkProps } from "./types";
 import { usePathname } from "@/i18n/navigation";
 import { cn } from "@synoem/ui/lib/utils";
 import { ExternalLinkIcon } from "lucide-react";
-import { Link } from "@/i18n/navigation";
+import { Link } from "~/components/link.client";
 import { useMemo } from "react";
 
 export const MenuLink = ({ href, openInNewTab, children, className }: MenuLinkProps) => {
@@ -20,21 +20,7 @@ export const MenuLink = ({ href, openInNewTab, children, className }: MenuLinkPr
     return pathname === href || pathname.startsWith(`${href}/`);
   }, [href, pathname]);
 
-  const isExternal = /^https?:\/\//i.test(href);
-
-  if (isExternal) {
-    return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={cn("flex items-center justify-between", className)}
-      >
-        {children}
-        <ExternalLinkIcon className={cn(isMobile ? "size-3" : "size-4")} />
-      </a>
-    );
-  }
+  const isExternal = /^(https?:)?\/\//i.test(href) || /^[a-z]+:/i.test(href);
 
   return (
     <Link
@@ -44,10 +30,11 @@ export const MenuLink = ({ href, openInNewTab, children, className }: MenuLinkPr
         isActive && !isMobile && "bg-muted/50 text-primary",
         className,
       )}
-      target={openInNewTab ? "_blank" : undefined}
-      rel={openInNewTab ? "noopener noreferrer" : undefined}
+      target={openInNewTab || isExternal ? "_blank" : undefined}
+      rel={openInNewTab || isExternal ? "noopener noreferrer" : undefined}
     >
       {children}
+      {isExternal && <ExternalLinkIcon className={cn(isMobile ? "size-3" : "size-4")} />}
     </Link>
   );
 };

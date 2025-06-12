@@ -22,12 +22,7 @@ export const ThemeSwitcher = ({ onThemeChange }: Props) => {
 
   return (
     <motion.div initial={false}>
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={toggleTheme}
-        className="relative overflow-hidden"
-      >
+      <Button variant={null} size="icon" onClick={toggleTheme} className="relative overflow-hidden">
         <AnimatePresence mode="wait" initial={false}>
           {theme === "system" && (
             <motion.div

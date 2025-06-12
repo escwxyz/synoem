@@ -2,7 +2,7 @@
 
 import type { HeroBlockType } from "@synoem/types";
 import { motion, type MotionValue, useScroll, useSpring, useTransform } from "motion/react";
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import Image from "next/image";
 import { getUrl } from "~/utils";
 import dynamic from "next/dynamic";
@@ -38,20 +38,39 @@ export const HeroParallax = ({
 
   const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
 
-  const translateX = useSpring(useTransform(scrollYProgress, [0, 1], [0, 500]), springConfig);
-  const translateXReverse = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, -500]),
-    springConfig,
-  );
-  const rotateX = useSpring(useTransform(scrollYProgress, [0, 0.4], [15, 0]), springConfig);
-  const opacity = useSpring(useTransform(scrollYProgress, [0, 0.4], [0.1, 1]), springConfig);
-  const rotateZ = useSpring(useTransform(scrollYProgress, [0, 0.4], [20, 0]), springConfig);
+  const { initialTranslateY, finalTranslateY } = useMemo(() => {
+    return {
+      initialTranslateY: (isMobile ? -250 : -300) * rows.length,
+      finalTranslateY: isMobile ? 100 : 120,
+    };
+  }, [isMobile, rows.length]);
 
-  const initialTranslateY = isMobile ? -250 * rows.length : -300 * rows.length;
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.4], [initialTranslateY, 125]),
+    useTransform(scrollYProgress, [0, 0.4], [initialTranslateY, finalTranslateY]),
     springConfig,
   );
+
+  const rotateX = useSpring(
+    useTransform(scrollYProgress, [0, 0.4], [isMobile ? 5 : 15, 0]),
+    springConfig,
+  );
+
+  const rotateZ = useSpring(
+    useTransform(scrollYProgress, [0, 0.4], [isMobile ? 5 : 20, 0]),
+    springConfig,
+  );
+
+  const translateX = useSpring(
+    useTransform(scrollYProgress, [0, 1], [0, isMobile ? 150 : 500]),
+    springConfig,
+  );
+
+  const translateXReverse = useSpring(
+    useTransform(scrollYProgress, [0, 1], [0, isMobile ? -150 : -500]),
+    springConfig,
+  );
+
+  const opacity = useSpring(useTransform(scrollYProgress, [0, 0.4], [0.1, 1]), springConfig);
 
   const pointerEvents = useTransform<number, string>(scrollYProgress, (v) =>
     v < 0.1 ? "none" : "auto",
@@ -59,29 +78,28 @@ export const HeroParallax = ({
 
   const showInHeader = useAtomValue(showInHeaderAtom);
 
+  const height = isMobile ? `${(rows.length + 1) * 50}vh` : `${rows.length * 100}vh`;
+
   return (
     <div
       ref={ref}
       className="py-10 overflow-hidden flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
       style={{
-        height: `${rows.length * 100}vh`,
+        height,
       }}
     >
-      <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full left-0 top-0 z-10">
-        <h1 className="text-2xl md:text-7xl font-bold max-w-2xl">{title}</h1>
-        {subtitle && <h2 className="text-xl md:text-3xl mt-4 max-w-2xl">{subtitle}</h2>}
-        {description && <p className="max-w-2xl text-base md:text-xl mt-4">{description}</p>}
-        <div className="flex gap-4 max-w-2xl mt-8">
-          {quoteButton && !showInHeader && (
-            <RequestQuoteButton
-              locale={locale}
-              buttonText="Request Quote"
-              // TODO: add some effects
-              // className="animate-pulse"
-            />
-          )}
-          {!quoteButton && ctaPrimary && <CMSLink {...ctaPrimary} />}
-          {ctaSecondary && <CMSLink {...ctaSecondary} variant="secondary" />}
+      <div className="h-[calc(75vh-var(--spacing)*10)] md:h-[calc(100vh-var(--spacing)*10)] flex items-center justify-center">
+        <div className="max-w-7xl relative mx-auto px-4 w-full left-0 top-0 z-10">
+          <h1 className="text-2xl md:text-7xl font-bold max-w-2xl">{title}</h1>
+          {subtitle && <h2 className="text-xl md:text-3xl mt-4 max-w-2xl">{subtitle}</h2>}
+          {description && <p className="max-w-2xl text-base md:text-xl mt-4">{description}</p>}
+          <div className="flex gap-4 max-w-2xl mt-8">
+            {quoteButton && !showInHeader && (
+              <RequestQuoteButton locale={locale} buttonText="Request Quote" />
+            )}
+            {!quoteButton && ctaPrimary && <CMSLink {...ctaPrimary} />}
+            {ctaSecondary && <CMSLink {...ctaSecondary} variant="secondary" />}
+          </div>
         </div>
       </div>
       {rows.map((row, rowsIndex) => (
@@ -148,12 +166,16 @@ const ContentCard = ({
         isMobile ? "h-64 w-full" : "h-96 w-[30rem]",
       )}
     >
-      <CMSLink {...link} className="block group-hover/content:shadow-2xl rounded-lg">
+      <CMSLink
+        {...link}
+        className="relative w-full h-full group-hover/content:shadow-2xl rounded-lg"
+      >
         <Image
           src={getUrl(image.url ?? "")}
           alt={content.title}
-          width={1200}
-          height={675}
+          fill
+          priority
+          sizes="(max-width: 768px) 100vw, 50vw"
           className="w-full h-full absolute inset-0 object-cover rounded-lg hover:brightness-75 transition-all duration-300"
           {...(image.blurDataUrl
             ? {

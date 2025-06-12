@@ -110,25 +110,34 @@ export const SimpleInquiryForm = ({
   }
 
   return (
-    <div className={cn("mx-auto w-full max-w-md rounded-lg bg-card/40 p-6 shadow-lg", className)}>
+    <div
+      className={cn(
+        "mx-auto w-full max-w-md min-w-[300px] rounded-lg bg-card/40 p-4 md:p-6 shadow-lg",
+        className,
+      )}
+    >
       <Form {...form}>
-        <form onSubmit={handleSubmitWithAction} className="space-y-4" autoComplete="on">
+        <form
+          onSubmit={handleSubmitWithAction}
+          className="space-y-3 md:space-y-4"
+          autoComplete="on"
+        >
           <NameField name="name" />
           <EmailField name="email" />
           <PhoneField name="phone" />
           <MessageField name="message" />
 
-          <>
+          <div className="w-full">
             <input
               type="hidden"
               {...register("token", { required: t("cloudflareTokenRequired.message") })}
             />
             <Turnstile id="simple-inquiry-form" />
-          </>
+          </div>
 
           <TermsField name="terms" />
           {errorMessage && (
-            <div className="mb-4 rounded bg-destructive/10 p-2 text-destructive">
+            <div className="mb-2 md:mb-4 rounded bg-destructive/10 p-2 text-destructive">
               {errorMessage}
             </div>
           )}

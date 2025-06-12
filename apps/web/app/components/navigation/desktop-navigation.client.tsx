@@ -5,12 +5,14 @@
 import type { MegaMenuItems, MenuItems } from "@synoem/types";
 import { cn } from "@synoem/ui/lib/utils";
 import { getLinkConfig } from "~/utils";
-import { type Dispatch, type SetStateAction, useMemo, useState } from "react";
+import { type Dispatch, type SetStateAction, useMemo } from "react";
 import { motion } from "motion/react";
 import { ChevronDownIcon } from "lucide-react";
 import { MenuLinkSection } from "./menu-link-section.client";
 import { MenuBanner } from "./menu-banner.client";
 import { MenuLink } from "./menu-link.client";
+import { useAtom } from "jotai";
+import { desktopNavigationActiveAtom } from "@/app/atoms/desktop-navigation";
 
 const transition = {
   type: "spring",
@@ -26,12 +28,16 @@ interface Props {
 }
 
 export const DesktopNavigation = ({ items }: Props) => {
-  const [active, setActive] = useState<string | null>(null);
+  const [active, setActive] = useAtom(desktopNavigationActiveAtom);
+
+  const handleMouseLeave = () => {
+    setActive(null);
+  };
 
   return (
     <nav
       aria-label="Primary"
-      onMouseLeave={() => setActive(null)}
+      onMouseLeave={handleMouseLeave}
       className={cn("hidden justify-center space-x-4 px-8 py-6 md:flex")}
     >
       {items.map((item) => {
