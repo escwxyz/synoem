@@ -24,8 +24,8 @@ export const MenuBanner = ({ banner }: MenuBannerProps) => {
               src={getUrl(media.value.url || "")}
               alt={media.value.alt}
               className="rounded-md dark:brightness-70 object-cover"
-              loading="lazy"
-              priority={false}
+              sizes="(max-width: 768px) 100vw, 50vw"
+              priority={true}
               fill
               {...(media.value.blurDataUrl
                 ? {
