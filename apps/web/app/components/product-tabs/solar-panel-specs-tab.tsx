@@ -54,9 +54,7 @@ export const SolarPanelSpecificationsTab = ({ solarPanel }: Props) => {
       <div className="grid grid-cols-1 gap-8">
         <div className="bg-background md:bg-card md:rounded-xl p-0 md:p-6 md:shadow-sm grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
-            <h3 className="text-xl font-bold mb-4 text-emerald-700">
-              {t("physicalSpecifications")}
-            </h3>
+            <h3 className="text-xl font-bold mb-4 text-primary">{t("physicalSpecifications")}</h3>
             <Table>
               <TableBody>
                 {hasDimensions && (
@@ -128,9 +126,7 @@ export const SolarPanelSpecificationsTab = ({ solarPanel }: Props) => {
           </div>
 
           <div>
-            <h3 className="text-xl font-bold mb-4 text-emerald-700">
-              {t("environmentalConditions")}
-            </h3>
+            <h3 className="text-xl font-bold mb-4 text-primary">{t("environmentalConditions")}</h3>
             <Table>
               <TableBody>
                 <TableRow>
@@ -153,9 +149,7 @@ export const SolarPanelSpecificationsTab = ({ solarPanel }: Props) => {
         </div>
         {hasPowerPoints && (
           <div className="bg-background md:bg-card md:rounded-xl p-0 md:p-6 md:shadow-sm overflow-x-auto">
-            <h3 className="text-xl font-bold mb-4 text-emerald-700">
-              {t("electricalSpecifications")}
-            </h3>
+            <h3 className="text-xl font-bold mb-4 text-primary">{t("electricalSpecifications")}</h3>
             <p className="text-sm text-gray-500 mb-4">{t("standardTestConditions")}</p>
             <Table className="w-full">
               <TableHeader>

@@ -11,8 +11,6 @@ import { getProductCached } from "~/data/get-product";
 import { generateProductPath } from "~/data/generate-product-path";
 import { getPageMetadata } from "@/app/data/get-page-metadata";
 
-export const dynamicParams = true;
-
 export const dynamic = "force-static";
 
 interface PageProps {

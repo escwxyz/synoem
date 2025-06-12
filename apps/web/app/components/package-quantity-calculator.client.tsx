@@ -310,7 +310,7 @@ export const PackageQuantityCalculator = ({
                   description={t("panelsNeeded")}
                   icon="lucide:zap"
                   blockType="featureBlock"
-                  className="bg-muted-foreground/10 text-primary"
+                  className="bg-muted-foreground/10"
                   alignment="between-reverse"
                 />
 
@@ -321,7 +321,7 @@ export const PackageQuantityCalculator = ({
                     description={t("containersNeeded")}
                     icon="lucide:truck"
                     blockType="featureBlock"
-                    className="bg-muted-foreground/10 text-primary"
+                    className="bg-muted-foreground/10"
                     alignment="between"
                   />
 
@@ -331,7 +331,7 @@ export const PackageQuantityCalculator = ({
                     description={t("palletsNeeded")}
                     icon="lucide:package"
                     blockType="featureBlock"
-                    className="bg-muted-foreground/10 text-primary"
+                    className="bg-muted-foreground/10"
                     alignment="between"
                   />
                 </div>
