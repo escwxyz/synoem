@@ -1861,7 +1861,6 @@ export interface Config {
   };
   jobs: {
     tasks: {
-      'send-newsletter-confirmation-email': TaskSendNewsletterConfirmationEmail;
       schedulePublish: TaskSchedulePublish;
       inline: {
         input: unknown;
@@ -3721,7 +3720,7 @@ export interface PayloadJob {
     | {
         executedAt: string;
         completedAt: string;
-        taskSlug: 'inline' | 'send-newsletter-confirmation-email' | 'schedulePublish';
+        taskSlug: 'inline' | 'schedulePublish';
         taskID: string;
         input?:
           | {
@@ -3754,7 +3753,7 @@ export interface PayloadJob {
         id?: string | null;
       }[]
     | null;
-  taskSlug?: ('inline' | 'send-newsletter-confirmation-email' | 'schedulePublish') | null;
+  taskSlug?: ('inline' | 'schedulePublish') | null;
   queue?: string | null;
   waitUntil?: string | null;
   processing?: boolean | null;
@@ -5157,18 +5156,6 @@ export interface LinkItemsSelect<T extends boolean = true> {
   description?: T;
   link?: T | LinkTypeSelect<T>;
   id?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TaskSend-newsletter-confirmation-email".
- */
-export interface TaskSendNewsletterConfirmationEmail {
-  input: {
-    email: string;
-    createdAt: string;
-    token: string;
-  };
-  output?: unknown;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

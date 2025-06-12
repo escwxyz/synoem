@@ -32,7 +32,7 @@ import {
   Industries,
   Faqs,
 } from "./collections";
-import { sendNewsletterConfirmationEmail } from "./tasks/send-newsletter-confirmation-email";
+// import { sendNewsletterConfirmationEmail } from "./tasks/send-newsletter-confirmation-email";
 import { UNIQUE_PATH_COLLECTIONS } from "./fields";
 
 const filename = fileURLToPath(import.meta.url);
@@ -176,37 +176,37 @@ export default buildConfig({
     apiKey: process.env.RESEND_API_KEY || "",
   }),
   jobs: {
-    autoRun: [
-      {
-        cron: "0/5 * * * *",
-        limit: 10,
-        queue: "every-5-minutes",
-      },
-    ],
-    tasks: [
-      {
-        slug: "send-newsletter-confirmation-email",
-        label: "Send Newsletter Confirmation Email to User",
-        inputSchema: [
-          {
-            name: "email",
-            type: "text",
-            required: true,
-          },
-          {
-            name: "createdAt",
-            type: "text",
-            required: true,
-          },
-          {
-            name: "token",
-            type: "text",
-            required: true,
-          },
-        ],
-        handler: sendNewsletterConfirmationEmail,
-      },
-    ],
+    // autoRun: [
+    //   {
+    //     cron: "0/5 * * * *",
+    //     limit: 10,
+    //     queue: "every-5-minutes",
+    //   },
+    // ],
+    // tasks: [
+    //   {
+    //     slug: "send-newsletter-confirmation-email",
+    //     label: "Send Newsletter Confirmation Email to User",
+    //     inputSchema: [
+    //       {
+    //         name: "email",
+    //         type: "text",
+    //         required: true,
+    //       },
+    //       {
+    //         name: "createdAt",
+    //         type: "text",
+    //         required: true,
+    //       },
+    //       {
+    //         name: "token",
+    //         type: "text",
+    //         required: true,
+    //       },
+    //     ],
+    //     handler: sendNewsletterConfirmationEmail,
+    //   },
+    // ],
     jobsCollectionOverrides: ({ defaultJobsCollection }) => {
       if (!defaultJobsCollection.admin) {
         defaultJobsCollection.admin = {};
