@@ -44,13 +44,13 @@ export const ProductHero = ({
     <section className="relative h-[600px] md:h-[600px] overflow-hidden text-white rounded-xl mb-4">
       {hasHeroImage ? (
         <Image
-          height={600}
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
           src={getUrl(heroImage?.url ?? "")}
           alt="Product cover image"
           className="w-full h-full absolute inset-0 object-cover"
           priority={true}
           loading="eager"
-          width={heroImage.width || 1200}
         />
       ) : (
         <ImagePlaceholder

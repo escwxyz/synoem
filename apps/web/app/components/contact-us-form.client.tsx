@@ -57,7 +57,7 @@ export const ContactUsForm = () => {
           background: "radial-gradient(circle at center, #e60a64, transparent 70%)",
         }}
       />
-      <div className="container relative z-10 mx-auto px-4 md:px-6">
+      <div className="container relative z-10 mx-auto md:px-6">
         <div className="mx-auto max-w-5xl overflow-hidden rounded-[28px] border border-border/40 bg-secondary/20 shadow-xl backdrop-blur-sm">
           <div className="grid md:grid-cols-2 gap-4">
             <motion.div

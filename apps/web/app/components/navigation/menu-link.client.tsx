@@ -20,7 +20,7 @@ export const MenuLink = ({ href, openInNewTab, children, className }: MenuLinkPr
     return pathname === href || pathname.startsWith(`${href}/`);
   }, [href, pathname]);
 
-  const isExternal = /^https?:\/\//i.test(href);
+  const isExternal = /^(https?:)?\/\//i.test(href) || /^[a-z]+:/i.test(href);
 
   return (
     <Link

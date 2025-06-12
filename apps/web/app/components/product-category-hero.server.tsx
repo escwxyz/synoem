@@ -57,21 +57,17 @@ export const ProductCategoryHero = async ({
     <div className="relative h-[600px] md:h-[600px] overflow-hidden text-primary-foreground rounded-xl mb-4">
       {imageUrl && (
         <Image
-          height={600}
-          width={
-            typeof productCategory?.heroImage === "object"
-              ? productCategory?.heroImage?.width || 1920
-              : 1920
-          }
           src={productCategory ? getUrl(imageUrl) : imageUrl}
           alt={title}
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
           priority={true}
           loading="eager"
           className="w-full h-full object-cover absolute inset-0"
         />
       )}
       <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-black/70 dark:from-black/70 dark:to-black/30 md:to-transparent" />
-      <div className="absolute top-0 left-0 z-20 p-4 md:p-8 backdrop-blur-sm md:backdrop-blur-none">
+      <div className="absolute top-0 left-0 z-20 p-4 md:p-8">
         <ProductBreadcrumbs productCategory={productCategory} productTypeId={productTypeId} />
       </div>
 

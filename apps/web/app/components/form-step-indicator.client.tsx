@@ -28,7 +28,7 @@ export const FormStepIndicator = ({
   return (
     <>
       {style === "progress" ? (
-        <div className="mb-8">
+        <div className="mb-2 md:mb-4">
           <div className={cn("mb-2 flex justify-between")}>
             <span className="text-sm font-medium">
               {t("step", { step: currentStep + 1, total: steps.length })}

@@ -2,7 +2,7 @@
 
 import type { HeroBlockType } from "@synoem/types";
 import { motion, type MotionValue, useScroll, useSpring, useTransform } from "motion/react";
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import Image from "next/image";
 import { getUrl } from "~/utils";
 import dynamic from "next/dynamic";
@@ -38,8 +38,12 @@ export const HeroParallax = ({
 
   const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
 
-  const initialTranslateY = isMobile ? -250 * rows.length : -300 * rows.length;
-  const finalTranslateY = isMobile ? 100 : 120;
+  const { initialTranslateY, finalTranslateY } = useMemo(() => {
+    return {
+      initialTranslateY: (isMobile ? -250 : -300) * rows.length,
+      finalTranslateY: isMobile ? 100 : 120,
+    };
+  }, [isMobile, rows.length]);
 
   const translateY = useSpring(
     useTransform(scrollYProgress, [0, 0.4], [initialTranslateY, finalTranslateY]),

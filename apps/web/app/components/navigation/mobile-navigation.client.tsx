@@ -8,10 +8,9 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 import { LanguageSwitcher } from "~/components/language-switcher.client";
-import type { MenuItemProps, MenuLinkProps, NavigationProps } from "./types";
-import { ChevronDown, ExternalLinkIcon } from "lucide-react";
+import type { MenuItemProps, NavigationProps } from "./types";
+import { ChevronDown } from "lucide-react";
 import { cn } from "@synoem/ui/lib/utils";
-import { Link } from "@/i18n/navigation";
 import { getLinkConfig } from "~/utils";
 import { MenuBanner } from "./menu-banner.client";
 import { MenuLinkSection } from "./menu-link-section.client";
@@ -179,8 +178,11 @@ function MenuExpandable({ title, icon, children }: MenuExpandableProps) {
   const setScrollLock = useSetAtom(scrollLockAtom);
 
   const handleExpanded = () => {
-    setExpanded((e) => !e);
-    setScrollLock(expanded);
+    setExpanded((prev) => {
+      const next = !prev;
+      setScrollLock(next);
+      return next;
+    });
   };
   return (
     <>

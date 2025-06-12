@@ -1,5 +1,7 @@
 "use client";
 
+// TODO: fix image issue
+
 import { Button } from "@synoem/ui/components/button";
 import { cn } from "@synoem/ui/lib/utils";
 import { Dialog, DialogClose, DialogPortal, DialogTrigger } from "@synoem/ui/components/dialog";
